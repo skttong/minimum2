@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thailand Dashboard</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        #chartContainer {
+            width: 80%;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thailand Dashboard</h1>
+    <div id="map"></div>
+    <div id="chartContainer">
+        <canvas id="myChart"></canvas>
+    </div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([13.736717, 100.523186], 6);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+        }).addTo(map);
+
+        // GeoJSON data for Thailand polygons
+        var thailandGeoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {"name": "Bangkok"},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[[100.407, 13.646], [100.514, 13.775], [100.613, 13.722], [100.514, 13.645], [100.407, 13.646]]]
+                    }
+                }
+                // Add more regions as needed
+            ]
+        };
+
+        // Add GeoJSON layer to the map
+        L.geoJSON(thailandGeoJSON, {
+            style: function (feature) {
+                return {color: 'blue'};
+            }
+        }).addTo(map);
+
+        // Create a Chart.js chart
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Bangkok', 'Chiang Mai', 'Phuket', 'Khon Kaen', 'Hat Yai'],
+                datasets: [{
+                    label: 'Population',
+                    data: [8281000, 127240, 416582, 113754, 157672],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

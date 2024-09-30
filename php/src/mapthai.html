@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimal Data Set</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #ff9999;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .container {
+            display: flex;
+        }
+        .sidebar {
+            width: 20%;
+            background-color: #ff4d4d;
+            color: white;
+            padding: 20px;
+        }
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        .sidebar ul li {
+            margin: 10px 0;
+        }
+        .main-content {
+            width: 80%;
+            padding: 20px;
+        }
+        .card {
+            background-color: #e6f7ff;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .data-section {
+            display: flex;
+            justify-content: space-between;
+        }
+        .chart-section {
+            margin-top: 20px;
+        }
+        .chart {
+            background-color: #ccf2ff;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .footer {
+            margin-top: 20px;
+            text-align: right;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Minimal Data Set</h1>
+        <p>กรมสุขภาพจิต</p>
+    </div>
+    <div class="container">
+        <div class="sidebar">
+            <ul>
+                <li>ข้อมูลภาพรวม</li>
+                <li>ข้อมูลทรัพยากรบุคลากร</li>
+                <li>ข้อมูลทรัพยากรบริการ</li>
+                <li>ข้อมูลทรัพยากร MCATT</li>
+                <li>ข้อมูลการบริการจิตเวชและยาเสพติด</li>
+            </ul>
+        </div>
+        <div class="main-content">
+            <div class="data-section">
+                <div class="card">
+                    <div class="card-title">จิตแพทย์ผู้ใหญ่</div>
+                    <p>XX คน</p>
+                    <p>xx: 1แสน ประชากร</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">จิตแพทย์เด็กและวัยรุ่น</div>
+                    <p>XX คน</p>
+                    <p>xx: 1แสน ประชากร</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">เตียงจิตเวช</div>
+                    <p>XX เตียง</p>
+                    <p>xx: 1แสน ประชากร</p>
+                </div>
+                <div class="card">
+                    <div class="card-title">อัตราการครองเตียง</div>
+                    <p>XX %</p>
+                </div>
+            </div>
+            <div class="chart-section">
+                <div class="chart">
+                    <!-- Your chart here -->
+                </div>
+                <div class="footer">
+                    <button>Download</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

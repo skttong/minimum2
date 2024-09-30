@@ -1,0 +1,1301 @@
+<?PHP
+session_start();
+
+include('connect/conn.php');
+/*
+$HosType	 	= $_SESSION["HosType"];
+$codeprovince   = $_SESSION["codeprovince"];
+$HosMOHP		= $_SESSION["HostHMOO"];
+
+$SQL_H = "";
+//ทั้งหมด
+if($_POST['CODE_HMOO']<>'ทั้งหมด'){
+	if (isset($_POST['CODE_HMOO']))
+	{
+		$SQL_H = $SQL_H." and hosn.CODE_HMOO = '".$_POST['CODE_HMOO']."'";
+
+	}
+}
+if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
+	if (isset($_POST['TYPE_SERVICE']))
+	{
+		$SQL_H = $SQL_H." and hosn.TYPE_SERVICE = '".$_POST['CODE_HMOO']."'";
+
+	}
+}
+if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
+if (isset($_POST['CODE_PROVINCE']))
+	{
+		$SQL_H = $SQL_H." and hosn.CODE_PROVINCE = '".$_POST['CODE_HMOO']."'";
+	}
+}
+*/
+
+$sqlfcenter = "SELECT mhpsID, qustype, HospitalID, qus1_1, qus1_2, qus1_3, qus1_4, qus2_1, qus3_1, qus3_2, qus3_3, qus3_4, qus3_5, number_patients, problems_obstacles, feedback, DevelopmentPlan, statusfinal  FROM serviceform "; 
+
+//$sqlfcenter = "SELECT mhpsID, qustype, HospitalID, qus1_1, qus1_2, qus1_3, qus1_4, qus2_1, qus3_1, qus3_2, qus3_3, qus3_4, qus3_5,number_patients, problems_obstacles, feedback, DevelopmentPlan, statusfinal  FROM serviceform WHERE HospitalID = '10676'; "; 	
+
+$queryfcenter = mysqli_query($con, $sqlfcenter);
+
+$q1total = 0;
+$q2total = 0;
+$q3total = 0;
+$q4total = 0;
+
+while($resultfcenter = mysqli_fetch_array($queryfcenter)){ 
+		$mhpsID = $resultfcenter['mhpsID'];
+		$qustype = $resultfcenter['qustype'];
+		$qus1_1 = preg_split ("/\,/", $resultfcenter['qus1_1']); 	
+		$qus1_2 = preg_split ("/\,/", $resultfcenter['qus1_2']);
+		$qus1_3 = preg_split ("/\,/", $resultfcenter['qus1_3']);
+		$qus1_4 = preg_split ("/\,/", $resultfcenter['qus1_4']);
+		$qus2_1 = preg_split ("/\,/", $resultfcenter['qus2_1']);	
+		$qus3_1 = preg_split ("/\,/", $resultfcenter['qus3_1']);
+		$qus3_2 = preg_split ("/\,/", $resultfcenter['qus3_2']);
+		$qus3_3 = preg_split ("/\,/", $resultfcenter['qus3_3']);
+		$qus3_4 = preg_split ("/\,/", $resultfcenter['qus3_4']);
+		$qus3_5 = preg_split ("/\,/", $resultfcenter['qus3_5']);
+		$number_patients = preg_split ("/\,/", $resultfcenter['number_patients']);
+		$problems_obstacles = $resultfcenter['problems_obstacles'];
+		$feedback	= $resultfcenter['feedback'];
+		$DevelopmentPlan = $resultfcenter['DevelopmentPlan'];
+		$statusfinal 	= $resultfcenter['statusfinal'];
+
+		if($qustype=='1'){
+			$q1total = $q1total+$qus1_1[4];
+			$q2total = $q2total+$qus1_1[6];
+			$q3total = $q3total+$qus3_1[1];
+			$q4total = $q4total+$qus3_4[1];
+		}elseif($qustype=='2'){
+			$q1total = $q1total+$qus1_1[3];
+			//$q2total = $q2total+$qus1_1[6];
+			$q3total = $q3total+$qus3_1[1];
+			$q4total = $q4total+$qus3_3[1];
+		}elseif($qustype=='3'){
+			$q1total = $q1total+$qus1_1[8];
+			//$q2total = $q2total+$qus1_1[6];
+			//$q3total = $q3total+$qus3_1[1];
+			//$q4total = $q4total+$qus3_[1];
+		}
+}
+
+/*
+echo $q1total ;
+echo "<br>";
+echo $q2total ;
+echo "<br>";
+echo $q3total ;
+echo "<br>";
+echo $q4total ;
+echo "<br>";
+*/
+
+$msql1 = "SELECT
+  m.CODE_map02,
+  m.CODE_PROVINCETH,
+  hn.CODE5,
+  hn.CODE_PROVINCE,
+  sf.qustype,
+  sf.qus1_1, 
+  sf.qus3_1, 
+  sf.qus3_3, 
+  sf.qus3_4
+FROM
+  hospitalnew hn
+left JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
+JOIN serviceform sf ON sf.HospitalID = hn.CODE5
+WHERE 1 
+";
+
+  
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $msql1 = $msql1."AND YEAR(sf.mhpsDate) = '".$Year."'" ;
+} 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $msql1 = $msql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['mySelect'])) {
+  if ($_POST['mySelect']<> 'ทั้งหมด') {
+    $mySelect = $_POST['mySelect'];
+    $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+	$msql1 = $msql1."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+	}
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+	$CODE_HOS = $_POST['CODE_HOS'];
+	$msql1 = $msql1."AND hn.CODE5 = '".$CODE_HOS."'" ;
+	}
+  } 
+
+$mobj1 = mysqli_query($con, $msql1);
+
+$datamap1 ='';
+$datamap2 ='';
+$datamap3 ='';
+$datamap4 ='';
+
+while($mrow1 = mysqli_fetch_array($mobj1))
+{
+
+	$qustype = $mrow1['qustype'];
+	$qus1_1 = preg_split ("/\,/", $mrow1['qus1_1']); 		
+	$qus3_1 = preg_split ("/\,/", $mrow1['qus3_1']);
+	$qus3_3 = preg_split ("/\,/", $mrow1['qus3_3']);
+
+	if($qustype=='1'){
+		$q1total = $q1total+$qus1_1[4];
+		$q2total = $q2total+$qus1_1[6];
+		$q3total = $q3total+$qus3_1[1];
+		$q4total = $q4total+$qus3_4[1];
+	}elseif($qustype=='2'){
+		$q1total = $q1total+$qus1_1[3];
+		//$q2total = $q2total+$qus1_1[6];
+		$q3total = $q3total+$qus3_1[1];
+		$q4total = $q4total+$qus3_3[1];
+	}elseif($qustype=='3'){
+		$q1total = $q1total+$qus1_1[8];
+		//$q2total = $q2total+$qus1_1[6];
+		//$q3total = $q3total+$qus3_1[1];
+		//$q4total = $q4total+$qus3_[1];
+	}
+	//$datamap1 = $datamap."['".$mrow1['CODE_map02']."',".$q1total."],";
+	//$datamap2 = $datamap."['".$mrow1['CODE_map02']."',".$q2total."],";
+	//$datamap3 = $datamap."['".$mrow1['CODE_map02']."',".$q3total."],";
+	//$datamap4 = $datamap."['".$mrow1['CODE_map02']."',".$q4total."],";
+
+  $datamap1 = $datamap1."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q1total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
+  $datamap2 = $datamap2."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q2total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
+  $datamap3 = $datamap3."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q3total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
+  $datamap4 = $datamap4."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q4total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
+	//['th-ct', 10],
+}
+
+$sqlall = "SELECT
+   hn.HOS_NAME,
+   hn.TYPE_SERVICE,
+   hn.CODE_PROVINCE 
+FROM
+  hospitalnew hn
+JOIN serviceform sf ON sf.HospitalID = hn.CODE5
+WHERE 1 
+";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sqlall = $sqlall."AND YEAR(sf.mhpsDate) = '".$Year."'" ;
+} 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlall = $sqlall."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['mySelect'])) {
+  if ($_POST['mySelect']<> 'ทั้งหมด') {
+    $mySelect = $_POST['mySelect'];
+    $sqlall = $sqlall."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+	$sqlall = $sqlall."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+	}
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+	$CODE_HOS = $_POST['CODE_HOS'];
+	$sqlall = $sqlall."AND hn.CODE5 = '".$CODE_HOS."'" ;
+	}
+  }  
+
+$objall = mysqli_query($con, $sqlall);
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ระบบทรัพยากรสุขภาพจิตและจิตเวช</title>
+
+  	
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://code.highcharts.com/maps/highmaps.js"></script>
+  <script src="https://code.highcharts.com/maps/modules/exporting.js"></script>
+  <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>	
+	
+
+  <!-- Google Font: Source Sans Pro -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/fonts-googleapis.css">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
+  <!-- DataTables -->
+  <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+  <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="dist/css/adminlte.min.css">
+  <link rel="stylesheet" href="dist/css/custom.css">
+  <!-- Control by jel -->
+  <link rel="stylesheet" href="dist/css/fontcontrol.css">
+
+	<?php include "header_font.php"; ?>
+
+  <style>
+	
+	  .divinfo{
+		 /* background-color: #e7f3fe;*/
+		  border-left: 3px solid #68AADF;
+	  }
+	  .top-right {
+		  position: absolute;
+		  top: 8px;
+		  right: 16px;
+	  }
+	  .callout2
+	  {
+		  margin: 0 0 0 0 ;
+		  padding: 15px 30px 7px 15px;
+	  }
+  </style>	
+</head>
+<body class="hold-transition sidebar-mini bodychange">
+<!-- Site wrapper -->
+<div class="wrapper">
+  <!-- Navbar -->
+  <?php include "nav_bar2.php" ?>
+  <!-- /.navbar -->
+
+  <!-- Main Sidebar Container -->
+  <?php include "menu2.php" ?>
+
+   <!-- Content Wrapper. Contains page content -->
+   <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h3>ระบบบริการจิตเวช</h3>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+             <!-- <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
+              <li class="breadcrumb-item active">Blank Page</li>-->
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+	
+	   <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+		  
+		<!-- SELECT2 EXAMPLE -->
+        <div class="card card-default">
+          <div class="card-header">
+            <h3 class="card-title"></h3>
+
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+			<form class="form-valide" action="dashboard06.php" method="post" id="myform1" name="foml">  
+      <div class="row">
+      <div class="col-md-2">
+                <div class="form-group">
+                  <label>ปีงบประมาณ</label>
+                  <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
+                   <!-- <option selected="selected" value="2567" >2567</option>
+                    <option value="2566">2566</option>
+                    <option value="2565">2565</option>
+                    <option value="2564">2564</option>
+                    <option value="2563">2563</option>-->
+                    <?PHP for($i=0; $i<= (5); $i++) {?>
+                    <option value="<?PHP echo ((date("Y")+543))-$i?>"><?PHP echo ((date("Y")+543))-$i?></option>
+                    <?PHP }?>
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2"  style="width: 100%;">
+                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="ในสังกัด">ในสังกัด</option>
+                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->
+			   <!-- /.col -->
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>เขตพื้นที่/Service Plan</label>
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
+                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
+                    <option value="เขตพื้นที่">เขตพื้นที่</option>
+                    <option value="ServicePlan">Service Plan</option>
+                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
+                  </select>
+				   
+				<script>
+					function myFunction() {
+						let elementarea 		= document.getElementById("area");
+						let elementlabelarea 	= document.getElementById("labelarea");
+						let elementservice 		= document.getElementById("service");
+						let elementlabelservice = document.getElementById("labelservice");
+						
+						selectElement = document.querySelector('#mySelect');	
+        				output = selectElement.value;
+						
+						if(output === "ServicePlan"){
+							//alert(output);
+							elementservice.removeAttribute("hidden");
+							elementlabelservice.removeAttribute("hidden");
+							
+							elementarea.setAttribute("hidden", "hidden");
+							elementlabelarea.setAttribute("hidden", "hidden");
+							
+						}else{
+							elementarea.removeAttribute("hidden");
+							elementlabelarea.removeAttribute("hidden");
+							
+							elementservice.setAttribute("hidden", "hidden");
+							elementlabelservice.setAttribute("hidden", "hidden");
+						
+							//alert("tong");
+						}
+						
+					}
+				</script> 
+				   
+                </div>
+              </div>
+              <!-- /.col -->	
+			 <!-- /.col -->
+              <div class="col-md-2">
+               <div class="form-group" id="labelarea">
+                  <label>เขตสุขภาพ</label>
+                  <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
+                    <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="1">เขต1</option>
+                    <option value="2">เขต2</option>
+                    <option value="3">เขต3</option>
+					          <option value="4">เขต4</option>
+                    <option value="5">เขต5</option>
+                    <option value="6">เขต6</option>
+					          <option value="7">เขต7</option>
+                    <option value="8">เขต8</option>
+                    <option value="9">เขต9</option>
+					          <option value="10">เขต10</option>
+                    <option value="11">เขต11</option>
+                    <option value="12">เขต12</option>
+					          <option value="13">เขต13</option>
+                   </select>
+                </div>
+                <script>
+                   function myFunction3() {
+                      const selectedValue = $('#area').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { moo_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_PROVINCE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+				<!-- /.form-group -->
+                <div class="form-group" id="labelservice" hidden="none">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" hidden="none" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_PROVINCE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>จังหวัด</label>
+                  <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
+                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP
+					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
+GROUP BY CODE_PROVINCE 
+ORDER BY NO_PROVINCE ASC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
+					  
+					<?PHP
+					}
+					?>
+
+                  </select>
+                </div>
+
+                <script>
+                   function myFunction4() {
+                      const selectedValue = $('#CODE_PROVINCE').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_hos.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { CODE_PROVINCE: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->	
+
+
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>โรงพยาบาล</label>
+                  <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
+                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP
+					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
+WHERE HOS_TYPE <> 'คลินิกเอกชน'
+ORDER BY hospitalnew.CODE_HMOO DESC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
+					  
+					<?PHP
+					}
+					?>
+
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->		
+            </div>
+            <!-- /.row -->
+		
+			<div class="card-footer">
+				  <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
+				   <button type="reset" class="btn btn-default"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
+			  	  <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
+			</div>  
+		</form>
+        </div>
+        <!-- /.card -->	  
+        <div class="row">
+          <div class="col-12">
+            
+            <div class="card">
+       
+         
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+
+    <!-- Main content -->
+    <section class="content">
+    
+    <!-- Default box -->
+    <div class="row">
+		<div class="col-md-6 col-sm-6 col-6">
+        <div class="row">
+			<div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #ECC8D9; color: black;">
+				  <div class="inner">
+                    
+                    <p>บริการบำบัดผู้ป่วยยาเสพติด</p>
+					<h3><?php echo $q1total;?> แห่ง</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			  <div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #F0EEC8; color: black;">
+				  <div class="inner">
+                    
+                    <p>บริการTelepsychiatry</p>
+					<h3><?php echo $q2total;?> แห่ง</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			 
+			</div>
+			<!-- ./row -->	
+			</div>
+
+		
+      
+        
+        
+		<div class="col-md-6">
+		  <div class="row">
+			<div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #C9FFDA; color: black;">
+                <div class="inner">
+                    
+                    <p>บริการจิตเวชเด็ก</p>
+					<h3><?php echo $q3total;?> แห่ง</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  <!--<div class="icon">
+					<i class="fas fa-file-medical-alt"></i>
+				  </div>-->
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			  <div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #C9ECFF; color: black;">
+                <div class="inner">
+                    
+                    <p>ยาสมาธิสั้น</p>
+					<h3><?php echo $q4total;?> แห่ง</h3>
+                    <!--<p> <small>&nbsp;</small></p>-->
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				 <!-- <div class="icon">
+					<i class="fas fa-file-medical-alt"></i>
+				  </div>-->
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			 
+			</div>
+			<!-- ./row -->	
+			</div>
+		</div>
+	  </div>
+      <!-- /.card -->
+		
+	  <!-- Default box -->
+      <div class="row">
+		
+	  <div class="col-md-12">
+			<div class="card">
+				<!--<div class="card-header">
+					<h3 class="card-title">ผู้ป่วยในจิตเวช</h3>
+				</div>-->
+				<div class="col-md-3" >
+                <div class="form-group">
+                  <!--<label> ประเภทบุคลากร</label>-->
+				  <br>
+                  <select name="position2" class="form-control select2" id="position2" style="width: 100%;">
+                    <option selected="selected" value="บริการบำบัดผู้ป่วยยาเสพติด" >บริการบำบัดผู้ป่วยยาเสพติด</option>
+					<option value="บริการTelepsychiatry" >บริการTelepsychiatry</option>
+					<option value="บริการจิตเวชเด็ก" >บริการจิตเวชเด็ก</option>
+					<option value="ยาสมาธิสั้น" >ยาสมาธิสั้น</option>
+                  </select>
+                </div>
+              </div>
+
+              
+				
+
+        <div id="map01" >
+          <div class="card-body">
+            <div id="container" style="height:500%;"></div>
+            
+          </div>
+        </div>
+
+        <div id="map02" class="disabled">
+          <div class="card-body">
+            <div id="container2" style="height:500%;"></div>
+            
+          </div>
+        </div>
+
+        <div id="map03" class="disabled">
+          <div class="card-body">
+            <div id="container3" style="height:500%;"></div>
+            
+          </div>
+        </div>
+
+        <div id="map04" class="disabled">
+          <div class="card-body">
+            <div id="container4" style="height:500%;"></div>
+            
+          </div>
+        </div>
+
+        <style>
+          .disabled {
+          display: none;
+                pointer-events: none;  /* Prevent any mouse events */
+                opacity: 0.1;          /* Make it look disabled */
+          
+            }
+        </style>
+
+              <script>
+				const dropdown = document.getElementById('position2');
+        const div1 = document.getElementById('map01');
+        const div2 = document.getElementById('map02');
+        const div3 = document.getElementById('map03');
+        const div4 = document.getElementById('map04');
+	
+				dropdown.addEventListener('change', function() {
+            //alert(dropdown.value);
+            if (dropdown.value === 'บริการบำบัดผู้ป่วยยาเสพติด') {
+                div1.classList.remove('disabled');
+                div2.classList.add('disabled');
+                div3.classList.add('disabled');
+                div4.classList.add('disabled');
+            }else if (dropdown.value === 'บริการTelepsychiatry') {
+                div1.classList.add('disabled');
+                div2.classList.remove('disabled');
+                div3.classList.add('disabled');
+                div4.classList.add('disabled');
+            }else if (dropdown.value === 'บริการจิตเวชเด็ก') {
+                div1.classList.add('disabled');
+                div2.classList.add('disabled');
+                div3.classList.remove('disabled');
+                div4.classList.add('disabled');
+            }else if (dropdown.value === 'ยาสมาธิสั้น') {
+                div1.classList.add('disabled');
+                div2.classList.add('disabled');
+                div3.classList.add('disabled');
+                div4.classList.remove('disabled');
+            }
+           // const div = document.getElementById('myMctt3');
+					 // div.classList.add('disabled');
+					 // document.getElementById("other_r1").disabled = false;
+				});
+
+			</script>
+
+
+			</div>
+            
+
+		</div>
+	  
+	</div>
+
+	<div class="container-fluid">
+        <div class="row">
+          <div class="col-12">
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title"></h3>
+              </div>
+              <!-- /.card-header -->
+              <div class="card-body">
+                <table id="example1" class="table table-bordered table-striped">
+                  <thead>
+                  <tr align="center">
+					  <th width="2%">#</th>
+					  <th width="12%">โรงพยาบาล/หน่วยงาน</th>
+					  <th width="12%">ระดับโรงพยาบาล</th>
+					  <th width="12%">จังหวัด</th>
+					  <th width="12%">รายละเอียด</th>
+				   </tr>
+                   </thead>
+                  <tbody>
+                  <?php
+				  		$i = 0;
+
+						while($rowall = mysqli_fetch_array($objall)){
+							$i++;
+				  ?>
+          <tr align="center">
+						<td width="2%"><?php echo $i;?></td>
+						<td width="12%"><?php echo $rowall['HOS_NAME'];?></td>
+						<td width="12%"><?php echo $rowall['TYPE_SERVICE'];?></td>
+            <td width="12%"><?php echo $rowall['CODE_PROVINCE'];?></td>
+            <td width="12%">รายละเอียด</td>
+				   </tr>
+				   <?php 
+						}
+				   ?>
+					</tbody>
+				  </table>
+              </div>
+              <!-- /.card-body -->
+            </div>
+            <!-- /.card -->
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+      </div>
+      <!-- /.container-fluid -->
+
+    
+
+	 
+    </div>
+       
+		
+   
+  <!-- /.content-wrapper -->
+	
+<script>
+	
+(async () => {
+
+    const topology = await fetch(
+        'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
+    ).then(response => response.json());
+
+    // Prepare demo data. The data is joined to map using value of 'hc-key'
+    // property by default. See API docs for 'joinBy' for more info on linking
+    // data and map.
+    const data = [
+       <?php echo $datamap1; ?>
+    ];
+
+    // Create the chart
+    Highcharts.mapChart('container', {
+        chart: {
+                map: topology,
+                // Responsive options:
+				height: 900, // Adjust the height as desired (e.g., 600, 800)
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 1000
+                        },
+                        chartOptions: {
+                            title: {
+                                style: {
+                                    display: 'none' // Hide title on small screens
+                                }
+                            },
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom' // Move legend below chart on small screens
+                            }
+                        }
+                    }]
+                }
+            },
+		
+        title: {
+            text: ' '
+        },
+
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+        /*
+		subtitle: {
+            text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
+        },
+		/*
+        mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+		*/ 
+        colorAxis: {
+            min: 1,
+            type: 'logarithmic',
+            minColor: '#cd0808',
+            maxColor: '#056934',
+            stops: [
+                [0, '#e3e3e2'],
+                [0.67, '#fbe036'],
+                [1, '#056934']
+            ]
+        },
+
+        series: [{
+            data: data,
+			/*
+            name: 'Random data',
+			
+            states: {
+                hover: {
+                    color: '#BADA55'
+                }
+            },
+			*/ 
+      dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                      format: '{point.name}'
+                    // Only show dataLabels for areas with high label rank
+                   // format: '{#if (lt point.properties.labelrank 5)}' +
+                    //    '{point.properties.iso-a2}' +
+                   //     '{/if}'
+                },
+			
+        }]
+    });
+
+})();
+
+(async () => {
+
+const topology = await fetch(
+    'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
+).then(response => response.json());
+
+// Prepare demo data. The data is joined to map using value of 'hc-key'
+// property by default. See API docs for 'joinBy' for more info on linking
+// data and map.
+const data = [
+   <?php echo $datamap2; ?>
+];
+
+// Create the chart
+Highcharts.mapChart('container2', {
+    chart: {
+            map: topology,
+            // Responsive options:
+    height: 900, // Adjust the height as desired (e.g., 600, 800)
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 1000
+                    },
+                    chartOptions: {
+                        title: {
+                            style: {
+                                display: 'none' // Hide title on small screens
+                            }
+                        },
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom' // Move legend below chart on small screens
+                        }
+                    }
+                }]
+            }
+        },
+
+    title: {
+        text: ' '
+    },
+
+    mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+    /*
+subtitle: {
+        text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
+    },
+/*
+    mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+*/ 
+    colorAxis: {
+        min: 1,
+        type: 'logarithmic',
+        minColor: '#cd0808',
+        maxColor: '#056934',
+        stops: [
+            [0, '#e3e3e2'],
+            [0.67, '#fbe036'],
+            [1, '#056934']
+        ]
+    },
+
+    series: [{
+        data: data,
+  /*
+        name: 'Random data',
+  
+        states: {
+            hover: {
+                color: '#BADA55'
+            }
+        },
+  
+        dataLabels: {
+            enabled: true,
+            format: '{point.name}'
+        }
+  */ 
+
+  dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                      format: '{point.name}'
+                    // Only show dataLabels for areas with high label rank
+                   // format: '{#if (lt point.properties.labelrank 5)}' +
+                    //    '{point.properties.iso-a2}' +
+                   //     '{/if}'
+                },
+    }]
+});
+
+})();
+
+(async () => {
+
+const topology = await fetch(
+    'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
+).then(response => response.json());
+
+// Prepare demo data. The data is joined to map using value of 'hc-key'
+// property by default. See API docs for 'joinBy' for more info on linking
+// data and map.
+const data = [
+   <?php echo $datamap3; ?>
+];
+
+// Create the chart
+Highcharts.mapChart('container3', {
+    chart: {
+            map: topology,
+            // Responsive options:
+    height: 900, // Adjust the height as desired (e.g., 600, 800)
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 1000
+                    },
+                    chartOptions: {
+                        title: {
+                            style: {
+                                display: 'none' // Hide title on small screens
+                            }
+                        },
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom' // Move legend below chart on small screens
+                        }
+                    }
+                }]
+            }
+        },
+
+    title: {
+        text: ' '
+    },
+
+    mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+    /*
+subtitle: {
+        text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
+    },
+/*
+    mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+*/ 
+    colorAxis: {
+        min: 1,
+        type: 'logarithmic',
+        minColor: '#cd0808',
+        maxColor: '#056934',
+        stops: [
+            [0, '#e3e3e2'],
+            [0.67, '#fbe036'],
+            [1, '#056934']
+        ]
+    },
+
+    series: [{
+        data: data,
+  /*
+        name: 'Random data',
+  
+        states: {
+            hover: {
+                color: '#BADA55'
+            }
+        },
+  
+        dataLabels: {
+            enabled: true,
+            format: '{point.name}'
+        }
+  */ 
+  dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                      format: '{point.name}'
+                    // Only show dataLabels for areas with high label rank
+                   // format: '{#if (lt point.properties.labelrank 5)}' +
+                    //    '{point.properties.iso-a2}' +
+                   //     '{/if}'
+                },
+
+    }]
+});
+
+})();
+
+(async () => {
+
+const topology = await fetch(
+    'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
+).then(response => response.json());
+
+// Prepare demo data. The data is joined to map using value of 'hc-key'
+// property by default. See API docs for 'joinBy' for more info on linking
+// data and map.
+const data = [
+   <?php echo $datamap4; ?>
+];
+
+// Create the chart
+Highcharts.mapChart('container4', {
+    chart: {
+            map: topology,
+            // Responsive options:
+    height: 900, // Adjust the height as desired (e.g., 600, 800)
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 1000
+                    },
+                    chartOptions: {
+                        title: {
+                            style: {
+                                display: 'none' // Hide title on small screens
+                            }
+                        },
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom' // Move legend below chart on small screens
+                        }
+                    }
+                }]
+            }
+        },
+
+    title: {
+        text: ' '
+    },
+
+    mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+
+    /*
+subtitle: {
+        text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
+    },
+/*
+    mapNavigation: {
+        enabled: true,
+        buttonOptions: {
+            verticalAlign: 'bottom'
+        }
+    },
+*/ 
+    colorAxis: {
+        min: 1,
+        type: 'logarithmic',
+        minColor: '#cd0808',
+        maxColor: '#056934',
+        stops: [
+            [0, '#e3e3e2'],
+            [0.67, '#fbe036'],
+            [1, '#056934']
+        ]
+    },
+
+    series: [{
+        data: data,
+  /*
+        name: 'Random data',
+  
+        states: {
+            hover: {
+                color: '#BADA55'
+            }
+        },
+  
+        dataLabels: {
+            enabled: true,
+            format: '{point.name}'
+        }
+  */ 
+  dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                      format: '{point.name}'
+                    // Only show dataLabels for areas with high label rank
+                   // format: '{#if (lt point.properties.labelrank 5)}' +
+                    //    '{point.properties.iso-a2}' +
+                   //     '{/if}'
+                },
+
+
+    }]
+});
+
+})();
+
+
+</script>
+ 
+
+ <?php include "footer.php" ?>
+
+  <!-- Control Sidebar -->
+  <aside class="control-sidebar control-sidebar-dark">
+    <!-- Control sidebar content goes here -->
+  </aside>
+  <!-- /.control-sidebar -->
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="plugins/jquery/jquery.min.js"></script>
+<!-- Bootstrap 4 -->
+<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+<!-- AdminLTE App -->
+<script src="dist/js/adminlte.min.js"></script>
+
+
+<script src="plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="plugins/datatables-buttons/js/dataTables.buttons.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+<script src="plugins/jszip/jszip.min.js"></script>
+<script src="plugins/pdfmake/pdfmake.min.js"></script>
+<script src="plugins/pdfmake/vfs_fonts.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.html5.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.print.min.js"></script>
+<script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+<script>
+  $(function () {
+    $("#example1").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf"]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+	$("#example2").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf"]
+    }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+  });
+  $("#example3").DataTable({
+      "responsive": true, "lengthChange": false, "autoWidth": false,
+      "buttons": ["copy", "csv", "excel", "pdf"]
+    }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
+</script>
+
+</body>
+</html>

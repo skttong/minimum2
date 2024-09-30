@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thailand Dashboard</title>
+    <style>
+        #map {
+            height: 500px;
+            width: 100%;
+        }
+        #chartContainer {
+            width: 80%;
+            margin: auto;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Thailand Dashboard</h1>
+    <div id="map"></div>
+    <div id="chartContainer">
+        <!-- Chart will be rendered here -->
+    </div>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script>
+        // Set up the width and height of the SVG container
+        var width = 800;
+        var height = 600;
+
+        // Define the SVG element
+        var svg = d3.select("#map")
+                    .append("svg")
+                    .attr("width", width)
+                    .attr("height", height);
+
+        // GeoJSON data for Thailand polygons
+        var thailandGeoJSON = {
+            "type": "FeatureCollection",
+            "features": [
+                {
+                    "type": "Feature",
+                    "properties": {"name": "Bangkok"},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[[100.407, 13.646], [100.514, 13.775], [100.613, 13.722], [100.514, 13.645], [100.407, 13.646]]]
+                    }
+                },
+                {
+                    "type": "Feature",
+                    "properties": {"name": "Chiang Mai"},
+                    "geometry": {
+                        "type": "Polygon",
+                        "coordinates": [[[98.981, 18.796], [99.081, 18.896], [99.081, 18.796], [98.981, 18.796]]]
+                    }
+                }
+                // Add more regions as needed
+            ]
+        };
+
+        // Projection and path generator
+        var projection = d3.geoMercator()
+                           .scale(1200)
+                           .center([100, 15]);
+
+        var path = d3.geoPath().projection(projection);
+
+        // Draw the map using GeoJSON data
+        svg.selectAll("path")
+           .data(thailandGeoJSON.features)
+           .enter()
+           .append("path")
+           .attr("d", path)
+           .style("stroke", "black")
+           .style("fill", "lightblue")
+           .style("stroke-width", "1");
+
+        // Example chart rendering (using D3)
+        var data = [8281000, 127240, 416582, 113754, 157672];
+        var labels = ['Bangkok', 'Chiang Mai', 'Phuket', 'Khon Kaen', 'Hat Yai'];
+
+        var chartContainer = d3.select("#chartContainer");
+
+        var chartSvg = chartContainer.append("svg")
+                                     .attr("width", "100%")
+                                     .attr("height", "300");
+
+        var barWidth = 50;
+        var barSpacing = 20;
+
+        chartSvg.selectAll("rect")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", function(d, i) { return i * (barWidth + barSpacing); })
+                .attr("y", function(d) { return 250 - d / 100000; }) // Adjust height scale as needed
+                .attr("width", barWidth)
+                .attr("height", function(d) { return d / 100000; }) // Adjust height scale as needed
+                .attr("fill", "steelblue");
+
+        chartSvg.selectAll("text")
+                .data(labels)
+                .enter()
+                .append("text")
+                .attr("x", function(d, i) { return i * (barWidth + barSpacing) + barWidth / 2; })
+                .attr("y", 280)
+                .attr("text-anchor", "middle")
+                .text(function(d) { return d; });
+
+    </script>
+</body>
+</html>

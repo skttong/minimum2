@@ -1,0 +1,17 @@
+.main-sidebar {
+    background-color: #FFFFFF !important; /* เปลี่ยนสีพื้นหลังเป็นสีแดง #FFC0CB */
+   
+}
+.brand-link{
+    color: black !important; 
+    background-color: rgb(237, 138, 127)!important; /* เปลี่ยนสีพื้นหลังเป็นสีแดง #FFC0CB */
+}
+.sidebar a{
+    color: black !important; 
+}
+.navbar-white{
+    background-color: rgb(237, 138, 127) !important; /* เปลี่ยนสีพื้นหลังเป็นสีแดง */
+}
+
+
+
