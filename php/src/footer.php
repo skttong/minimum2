@@ -11,11 +11,14 @@
 	อำเภอเมืองนนทบุรี จังหวัดนนทุบรี 11000 <br>
 	โทรศัพท์: 0 2590 8577
 	</strong>
-
+	<script src="dist/js/cookie.js"></script>
+	
 <!-- Cookie Consent by https://www.cookiewow.com -->
+ <!--
 <script type="text/javascript" src="https://cookiecdn.com/cwc.js"></script>
     <script id="cookieWow" type="text/javascript" src="https://cookiecdn.com/configs/Xhzn6H8VyR4LvnV9aAQZVqzh" data-cwcid="Xhzn6H8VyR4LvnV9aAQZVqzh"></script>
 
 	
 </footer>
+-->
 

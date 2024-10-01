@@ -619,7 +619,8 @@ while($rowprovince = mysqli_fetch_array($objprovince))
                             left JOIN prefix ON userhospital.prefixID = prefix.prefixID
                             WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
                             AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
-                           AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
+                            AND hospitalnew.CODE_HMOO = '$HosMOHP'";
+                          // AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
                           if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
                             $sqlservice = $sqlservice."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT'" ;
                           }
@@ -629,7 +630,20 @@ while($rowprovince = mysqli_fetch_array($objprovince))
                               $sqlservice = $sqlservice."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;
                             }
                           }
+                          if(isset($_POST["TYPE_SERVICE"])){	
+                            if($_POST["TYPE_SERVICE"]<>'ทั้งหมด'){					  
+                              $sqlservice = $sqlservice."AND hospitalnew.TYPE_SERVICE LIKE ('".$_POST['TYPE_SERVICE']."%')" ;
+                            }
+                          }
+                  
+                          if(isset($_POST["CODE_PROVINCE"])){	
+                            if($_POST["CODE_PROVINCE"]<>'ทั้งหมด'){					  
+                              $sqlservice = $sqlservice."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
+                            }
+                          }
           }
+
+          $sqlservice2 =$sqlservice;
 	
 					$objservice = mysqli_query($con, $sqlservice);
 					$i = 1;
@@ -736,6 +750,55 @@ while($rowprovince = mysqli_fetch_array($objprovince))
 					  }
 					}
 					</script>	
+
+
+<table id="example3" class="table table-bordered table-striped" hidden>
+                  <thead>
+                   <tr>
+					  <th width="2%">#</th>
+					  <th width="12%">ชื่อสถานพยาบาล</th>
+                      <th width="8%">อำเภอ</th>
+					  <th width="5%">ระดับ</th>
+					 
+					  <th width="5%">สังกัด</th>
+					  <th width="10%">ชื่อ</th>
+            <th width="10%">ตำแหน่ง</th>
+            <th width="10%">เบอร์โทรสำนักงาน</th>
+					  <th width="5%">สถานะการลงทะเบียน</th>
+					  
+
+					</tr>
+                   </thead>
+                  	<tbody>
+				 	<?php
+					
+	
+					$objservice2 = mysqli_query($con, $sqlservice2);
+					$j = 1;
+					while($rowservice2 = mysqli_fetch_array($objservice2))
+					{
+					?>
+					<tr>
+						<td><?php echo $j++; ?></td>
+						<td><?php echo $rowservice['HOS_NAME'];?></td>
+            <td><?php echo $rowservice2['CODE_DISTRICT'];?></td>
+            <td><?php echo $rowservice2['TYPE_SERVICE'];?></td>
+            <td><?php echo $rowservice2['Affiliation'];?></td>
+            <td><?php echo $rowservice2['prefixName'].$rowservice2['Name'].' '.$rowservice2['Lname'];?></td>
+            <td><?php echo $rowservice2['position'];?></td>
+            <td><?php echo $rowservice2['telephone'].' /<br> '.$rowservice2['mobile'];?></td>
+            <td><?php if($rowservice2['stausloginfirst'] == 1){
+                                                echo "ลงทะเบียนแล้ว";
+                                            }else{
+                                                echo "ยังไม่ได้ลงทะเบียน";
+                                            }?></td>		
+            </tr>
+					
+					<?php } ?> 	
+					</tbody>
+				  </table>
+
+
               </div>
               <!-- /.card-body -->
             </div>
@@ -785,7 +848,7 @@ while($rowprovince = mysqli_fetch_array($objprovince))
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf", "print"]
+      //"buttons": ["copy", "csv", "excel", "pdf", "print"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
@@ -796,6 +859,17 @@ while($rowprovince = mysqli_fetch_array($objprovince))
       "autoWidth": false,
       "responsive": true,
     });
+    $("#example3").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
 </body>

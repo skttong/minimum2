@@ -373,7 +373,7 @@ $sqlfcenter = "SELECT mhpsID, qustype, HospitalID, qus1_1, qus1_2, qus1_3, qus1_
 					  การฝึกซ้อมแผนเผชิญเหตุ
 					</span><br>
 					<span>
-                    <?php if($qus1_3[7] == '0'){ ?> 
+                    <?php if($qus1_3[6] == '0'){ ?> 
                     <input type="checkbox" name="qus1_3_7" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input name="qus1_3_7" type="checkbox" class="flat-red" value="1" checked="checked">&nbsp; 

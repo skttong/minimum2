@@ -15,7 +15,7 @@ session_start();
 			
 				  $HospitalID 	= $rowlogin["HospitalID"];
 			
-				  $sqlTYPESERVICE 		= "SELECT TYPE_SERVICE,HOS_TYPE,HOS_NAME,CODE_HMOO,CODE_PROVINCE,Affiliation FROM hospitalnew WHERE CODE5 = '$HospitalID';" ;
+				  $sqlTYPESERVICE 		= "SELECT TYPE_SERVICE,HOS_TYPE,HOS_NAME,CODE_HMOO,CODE_PROVINCE,NO_DISTRICT,Affiliation FROM hospitalnew WHERE CODE5 = '$HospitalID';" ;
 				  $resultTYPESERVICE 	= mysqli_query($con, $sqlTYPESERVICE);
 				  $rowTYPESERVICE 		= mysqli_fetch_array($resultTYPESERVICE);
 			
@@ -23,7 +23,8 @@ session_start();
 				  $HosType 		= $rowTYPESERVICE["HOS_TYPE"];
 				  $HospitalName	= $rowTYPESERVICE["HOS_NAME"];
 				  $HostHMOO		= $rowTYPESERVICE["CODE_HMOO"];
-			      $codeprovince = $rowTYPESERVICE["CODE_PROVINCE"];		
+			      $codeprovince = $rowTYPESERVICE["CODE_PROVINCE"];	
+				  $NO_DISTRICT  = $rowTYPESERVICE["NO_DISTRICT"];		
 				  $Affiliation  = $rowTYPESERVICE["Affiliation"];
 
 				  
@@ -38,6 +39,7 @@ session_start();
 						   	$_SESSION["HosType"] 		= $HosType;
 						    $_SESSION["HostHMOO"] 		= $HostHMOO;
 						    $_SESSION["codeprovince"] 	= $codeprovince;
+							$_SESSION["NO_DISTRICT"] 	= $NO_DISTRICT;
 							$_SESSION["HOS_NAME"]		= $HospitalName;
 							$_SESSION["Affiliation"]	= $Affiliation;
 
@@ -70,6 +72,7 @@ session_start();
 						    $_SESSION["HOS_NAME"]		= $HospitalName;
 						  	$_SESSION["HostHMOO"] 		= $HostHMOO;
 						    $_SESSION["codeprovince"] 	= $codeprovince;
+							$_SESSION["NO_DISTRICT"] 	= $NO_DISTRICT;
 							$_SESSION["Affiliation"]	= $Affiliation;
 
 							if($_SESSION["TypeUser"]!=""){ 

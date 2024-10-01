@@ -20,7 +20,7 @@ ORDER BY hospitalnew.TYPE_SERVICE DESC";
 }
 $result = mysqli_query($con, $sql);
 
-$html = '<option value="">ทั้งหมด</option>';
+$html = '<option value="ทั้งหมด">ทั้งหมด</option>';
 while ($row = mysqli_fetch_assoc($result)) {
   $html .= '<option value="' . $row['CODE5'] . '">' . $row['HOS_NAME'] . '</option>';
 }

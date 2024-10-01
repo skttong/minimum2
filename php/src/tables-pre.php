@@ -35,6 +35,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
   <link rel="stylesheet" href="plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
   <link rel="stylesheet" href="plugins/datatables-buttons/css/buttons.bootstrap4.min.css">
+
+
   <!-- Theme style -->
   <link rel="stylesheet" href="dist/css/adminlte.min.css">
   <link rel="stylesheet" href="dist/css/custom.css">
@@ -46,9 +48,12 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 		<meta http-equiv="Refresh" content="0;URL=tables-preall.php">
 	<?php }else if($_SESSION["HosType"] == 'ศูนย์วิชาการ'){ ?>
 		<meta http-equiv="Refresh" content="0;URL=tables-preall.php">
-	<?php }else if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){ ?>
-		<meta http-equiv="Refresh" content="0;URL=tables-preall.php">
+	<?php }else if($_SESSION["HosType"] == 'กรมสุขภาพจิต'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-preall2.php">
+		<?php }else if($_SESSION["TypeUser"] == "Admin"){ ?>
+      <meta http-equiv="Refresh" content="0;URL=tables-preall2.php">
 	<?php } ?>
+
 </head>
 <body class="hold-transition sidebar-mini bodychange">
 <div class="wrapper">
@@ -245,7 +250,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 
              <div class="card-header">
 			 <!--<input name="btnExport" type="button" value="Exportpdf" onClick="JavaScript:window.location='preexprotexcel2.php';">-->
-				  <a class="dropdown-item" href="preexprotexcel.php" target="_blank"><input name="btnExport" type="button" value="Exportexcel"></a>
+				 <!-- <a class="dropdown-item" href="preexprotexcel.php" target="_blank"><input name="btnExport" type="button" value="Exportexcel"></a>-->
                 <!--<h3 class="card-title">ข้อมูลจำนวนบุคลากรสุขภาพจิตและจิตเวช</h3>-->
 				<form id="myForm" method="post" action="tables-pre.php">
 				<?php if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){ ?>
@@ -332,6 +337,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											1
 										ORDER BY 
 											personnelID DESC; ";
+				$sqlpersonnel2 = $sqlpersonnel; 
 
 		}elseif (isset($_POST["positiontypeID"])) {
 				           $sqlpersonnel = "SELECT 
@@ -363,6 +369,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 										AND personnel.positiontypeID = '$positiontypeID'
 										ORDER BY 
 											personnelID DESC; ";
+						$sqlpersonnel2 = $sqlpersonnel; 
 		}else{
 
 		    $sqlpersonnel = "SELECT 
@@ -396,17 +403,77 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 		 $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE5 = '$HospitalID'";
 		 $sqlpersonnel = $sqlpersonnel."AND setdel = '1' ORDER BY personnelID DESC; ";
 
+		 $sqlpersonnel2 = $sqlpersonnel; 
+
 		}
-		//echo $sqlpersonnel;
+		//echo $sqlpersonnel2;
 					//echo $sqlpersonnel = "SELECT * FROM personnel JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID WHERE hospitalnew.CODE5 = '$HospitalID' ";
 
 				
 		
-				$objpersonnel = mysqli_query($con, $sqlpersonnel);
-				$i = 1;
+				$objpersonnel2 = mysqli_query($con, $sqlpersonnel2);
+				$j = 1;
 				//echo $PersonnelType; 
 	
 				/*if($PersonnelType == 1){*/?>
+				 <table id="example3" class="table table-bordered table-striped" hidden>
+                  <thead>
+                  <tr align="center">
+					  <th width="2%">#</th>
+					  <th width="12%">ชื่อ-นามสกุล</th>
+					  <th width="10%">วิชาชีพ</th>
+					  <th width="10%">ปฏิบัติงานวิกฤตสุขภาพจิต (MCATT)</th>
+					  <th width="10%">age</th>
+					  <th width="15%">positionAllName</th>
+					  <th width="15%">fixpositionAllName</th>
+					  <th width="10%">HOS_NAME</th>
+					  <th width="15%">positionrole</th>
+					  <th width="15%">congrat</th>
+					  <th width="10%">training</th>
+					  <th width="15%">cogratyear</th>
+					  <th width="15%">statuscong</th>
+					  <th width="10%">statuscong</th>
+					  <th width="15%">regislaw</th>
+				   </tr>
+                   </thead>
+                  <tbody>
+				  <?php
+						//echo $rowpersonnel['positiontypeID'] ;
+						while($rowpersonnel2 = mysqli_fetch_array($objpersonnel2))
+						{ 
+						?>
+						<tr>
+							<td><?php echo $j++; ?></td>
+							<td>
+								<?php 
+								echo $rowpersonnel2['prename'].$rowpersonnel2['firstname']." ".$rowpersonnel2['lastname'];
+								?>
+							</td>
+						
+						 	<td><?php echo $rowpersonnel2['Ptypename']; ?></td>
+							<td><?php echo $rowpersonnel2['Mcatt1']; ?></td>
+							<td><?php echo $rowpersonnel2['age']; ?></td>
+							<td><?php echo $rowpersonnel2['positionAllName']; ?></td>
+							<td><?php echo $rowpersonnel2['fixpositionAllName']; ?></td>
+							<td><?php echo $rowpersonnel2['HOS_NAME']; ?></td>
+							<td><?php echo $rowpersonnel2['positionrole']; ?></td>
+							<td><?php echo $rowpersonnel2['congrat']; ?></td>
+							<td><?php echo $rowpersonnel2['training']; ?></td>
+							<td><?php echo $rowpersonnel2['cogratyear']; ?></td>
+							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
+							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
+							<td><?php echo $rowpersonnel2['regislaw']; ?></td>
+						</tr>
+						<?php } ?> 	
+					</tbody>
+				  </table>
+
+
+
+<?php
+				  $objpersonnel = mysqli_query($con, $sqlpersonnel);
+				  $i = 1;
+?>
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr align="center">
@@ -1330,6 +1397,17 @@ $rowptype   = mysqli_fetch_array($objptype);*/
       "autoWidth": false,
       "responsive": true,
     });
+	$("#example3").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
 </body>

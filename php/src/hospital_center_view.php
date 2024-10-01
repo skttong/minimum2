@@ -1194,6 +1194,7 @@ echo "<br>";
 
       <!-- /.card -->
 	</form>
+	
     </section>
     <!-- /.content -->
   </div>

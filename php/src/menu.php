@@ -422,6 +422,12 @@
 						<i class="nav-icon fa fa-tasks" ></i>
 						<p>ตรวจสอบข้อมูลทรัพยากรบุคลากร</p>
 					    </a>
+
+					<?php }elseif($_SESSION["TypeUser"] == "Admin"){ ?>
+						<a href="tables-preall2.php" class="nav-link">
+						<i class="nav-icon fa fa-tasks" ></i>
+						<p>ตรวจสอบข้อมูลทรัพยากรบุคลากร</p>
+					    </a>
 					
 					<?php } else{ ?>	
 						<a href="tables-pre.php" class="nav-link">
@@ -432,10 +438,11 @@
 			<?php } ?>	
           </li>
 		  <li class="nav-header"></li>
-		  <?php 
-				if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขจังหวัด'){
-					if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){
-						if($_SESSION["HosType"] <> 'ศูนย์วิชาการ'){
+		  <?php /*
+				if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){
+					if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){
+						if($_SESSION["HosType"] == 'ศูนย์วิชาการ'){
+						*/
 				?> 
           <li class="nav-item">
             <a href="#" class="nav-link">
@@ -447,8 +454,7 @@
 			<ul class="nav nav-treeview">
 				
 			<?php if($_SESSION["HosType"] <> 'โรงพยาบาลส่งเสริมสุขภาพตำบล'){
-						if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขจังหวัด'){
-							if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){ 
+				if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){
 								if($_SESSION["HosType"] <> 'ศูนย์บริการสาธารณสุข อปท.'){?>
 					<li class="nav-item">
 					<a href="tables-bed.php" class="nav-link">
@@ -457,10 +463,9 @@
 						
 					</a>
 					</li>
-					<?php }}}} ?>
+					<?php }}} ?>
 					<?php if($_SESSION["HosType"] <> 'โรงพยาบาลส่งเสริมสุขภาพตำบล'){
-							if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขจังหวัด'){
-								if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){
+						if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){
 									if($_SESSION["HosType"] <> 'ศูนย์บริการสาธารณสุข อปท.'){?> 
 					<li class="nav-item">
 					<a href="tables-ect.php" class="nav-link">
@@ -469,7 +474,7 @@
 						
 					</a>
 					</li>
-					<?php }}}} ?>
+					<?php }}} ?>
 					<li class="nav-item">
 					<a href="tables-sys.php" class="nav-link">
 						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
@@ -481,7 +486,7 @@
 					
 				</ul>
           </li>
-		  <?php }}} ?>
+		  <?php /*}}}*/ ?>
 		
         <?php } ?>
         </ul>

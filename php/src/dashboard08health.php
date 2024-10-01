@@ -83,9 +83,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sql1 = $sql1."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -142,9 +142,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sql2 = $sql2."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -194,9 +194,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$MOOsql1 = $MOOsql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -355,9 +355,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sqlall = $sqlall."AND hg.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -411,9 +411,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sql2p = $sql2p."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -462,9 +462,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$MOOsql1p = $MOOsql1p."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }

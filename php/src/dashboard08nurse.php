@@ -88,9 +88,9 @@ $sql2 = $sql2."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $sql2 = $sql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }
@@ -191,9 +191,9 @@ $tsql2 = $tsql2."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $tsql2 = $tsql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }
@@ -290,9 +290,9 @@ $sql3 = $sql3."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $sql3 = $sql3."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }
@@ -348,9 +348,9 @@ $sql4 = $sql4."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $sql4 = $sql4."AND e.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }
@@ -427,9 +427,9 @@ $MOOsql1 = $MOOsql1."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $MOOsql1 = $MOOsql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }
@@ -613,9 +613,9 @@ $sqlall = $sqlall."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $sqlall = $sqlall."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }
@@ -688,9 +688,9 @@ $sql3p = $sql3p."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $sql3p = $sql3p."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }
@@ -746,9 +746,9 @@ $MOOsql1p = $MOOsql1p."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
 }
 }
 
-if (isset($_POST['mySelect'])) {
-if ($_POST['mySelect']<> 'ทั้งหมด') {
-$mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+$mySelect = $_POST['TYPE_SERVICE'];
 $MOOsql1p = $MOOsql1p."AND e.TYPE_SERVICE = '".$mySelect."'" ;
 }
 }

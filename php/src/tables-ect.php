@@ -28,6 +28,15 @@ $HosMOHP		= $_SESSION["HostHMOO"];
   <link rel="stylesheet" href="dist/css/custom.css">
   <!-- Control by jel -->
   <link rel="stylesheet" href="dist/css/fontcontrol.css">
+  <?php if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-ectall.php">
+	<?php }else if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-ectall.php">
+	<?php }else if($_SESSION["HosType"] == 'ศูนย์วิชาการ'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-ectall.php">
+	<?php }else if($_SESSION["HosType"] == 'กรมสุขภาพจิต'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-ectall.php">
+	<?php } ?>
 
 </head>
 <body class="hold-transition sidebar-mini bodychange">
@@ -71,7 +80,7 @@ $HosMOHP		= $_SESSION["HostHMOO"];
           <div class="col-sm-3">
             <ol class="breadcrumb float-sm-right">
               <li class="breadcrumb-item"><a href="tables-2.php">รายละเอียดข้อมูล</a></li>
-              <li class="breadcrumb-item active">เตียงจิตเวช</li>
+              <li class="breadcrumb-item active">ข้อมูลการรักษาด้วยไฟฟ้า</li>
             </ol>
           </div>
         </div>
@@ -132,6 +141,9 @@ $HosMOHP		= $_SESSION["HostHMOO"];
                ORDER BY ect.ectDate DESC; ";
            }
            }
+
+           $sqlpersonnel2 = $sqlpersonnel;
+           
            $objpersonnel = mysqli_query($con, $sqlpersonnel);
            $i = 1;
            while($rowpersonnel = mysqli_fetch_array($objpersonnel))
@@ -141,8 +153,8 @@ $HosMOHP		= $_SESSION["HostHMOO"];
 					?>
 					<tr>
 						<td><?php echo $i++; ?></td>
-						<td><center><?php echo $rowpersonnel['ect_no'];?></center></td>
-						<td><center><?php echo $rowpersonnel['tms_no']; ?></center></td>
+						<td><center><?php if($rowpersonnel['ect_no'] == ''){ echo 'ไม่มี';}else{ echo $rowpersonnel['ect_no']; } ?></center></td>
+						<td><center><?php if($rowpersonnel['tms_no'] == ''){ echo 'ไม่มี';}else{ echo $rowpersonnel['tms_no']; } ?></center></td>
             <td><center><a class="btn btn-info btn-sm " href="form_ectedit.php?ectID=<?php echo $rowpersonnel['ID'];?>"">
 									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
 								  </a>	</center></td>
@@ -158,6 +170,39 @@ $HosMOHP		= $_SESSION["HostHMOO"];
 						</center>
 						</td>
 						<?php } ?>
+					</tr>
+					<?php } ?>
+				   </tbody>
+				</table>
+
+
+       
+                <table id="example3" class="table table-bordered table-striped" hidden>
+                  <thead>
+                   <tr>
+					  <th>#</th>
+                      <th><center>ชื่อโรงพยาบาล</center></th>
+					  <th><center>จำนวน ECT</center></th>
+                      <th><center>จำนวน TMS</center></th>			
+					</tr>
+                   </thead>
+                   <tbody>
+					 <?php
+					 
+           $objpersonnel2 = mysqli_query($con, $sqlpersonnel2);
+           $j = 1;
+           while($rowpersonnel2 = mysqli_fetch_array($objpersonnel2))
+ 
+           {
+           
+					?>
+					<tr>
+						<td><?php echo $j++; ?></td>
+                        <td>
+							<?php echo $rowpersonnel2['HOS_NAME'];?>
+						</td>
+						<td><center><?php if($rowpersonnel2['ect_no'] == ''){ echo 'ไม่มี';}else{ echo $rowpersonnel2['ect_no']; } ?></center></td>
+						<td><center><?php if($rowpersonnel2['tms_no'] == ''){ echo 'ไม่มี';}else{ echo $rowpersonnel2['tms_no']; } ?></center></td>
 					</tr>
 					<?php } ?>
 				   </tbody>
@@ -212,7 +257,7 @@ $HosMOHP		= $_SESSION["HostHMOO"];
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": [ "csv", "excel", "pdf"]
+     // "buttons": [ "csv", "excel", "pdf"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
@@ -223,6 +268,17 @@ $HosMOHP		= $_SESSION["HostHMOO"];
       "autoWidth": false,
       "responsive": true,
     });
+    $("#example3").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
 </body>

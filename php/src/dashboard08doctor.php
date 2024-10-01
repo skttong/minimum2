@@ -88,9 +88,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sql1 = $sql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -151,9 +151,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sql3 = $sql3."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -216,9 +216,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sql4 = $sql4."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -273,9 +273,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$MOOsql1 = $MOOsql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -464,9 +464,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sqlall = $sqlall."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -528,9 +528,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$sql3p = $sql3p."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -583,9 +583,9 @@ if (isset($_POST['Year'])) {
 	}
   }
   
-  if (isset($_POST['mySelect'])) {
-	if ($_POST['mySelect']<> 'ทั้งหมด') {
-	$mySelect = $_POST['mySelect'];
+  if (isset($_POST['TYPE_SERVICE'])) {
+	if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+	$mySelect = $_POST['TYPE_SERVICE'];
 	$MOOsql1p = $MOOsql1p."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
 	}
   }
@@ -1705,7 +1705,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#6ce5e8',
                     borderColor: '#6ce5e8',
                     borderWidth: 1,
-                    stack: 'combined' // Enable stacking for this dataset
+                    stack: 'combined1' // Enable stacking for this dataset
                 },
                 {
                     label: 'ระดับจังหวัด',
@@ -1713,7 +1713,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#41b8d5',
                     borderColor: '#41b8d5',
                     borderWidth: 1,
-                    stack: 'combined' // Enable stacking for this dataset
+                    stack: 'combined2' // Enable stacking for this dataset
                 },
                 {
                     label: 'ระดับอำเภอ',
@@ -1721,7 +1721,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#2d8bba',
                     borderColor: '#2d8bba',
                     borderWidth: 1,
-                    stack: 'combined' // Enable stacking for this dataset
+                    stack: 'combined3' // Enable stacking for this dataset
 				},
                 {
                     label: 'ระดับตำบล',
@@ -1729,7 +1729,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#2d8bba',
                     borderColor: '#2d8bba',
                     borderWidth: 1,
-                    stack: 'combined' // Enable stacking for this dataset
+                    stack: 'combined4' // Enable stacking for this dataset
                 }]
             },
             options: {

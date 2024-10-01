@@ -55,10 +55,10 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
-  $sql1 = $sql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
+  $sql1 = $sql1."AND e.TYPE_SERVICE LIKE ('".$mySelect."%')" ;
   }
 }
 
@@ -75,7 +75,6 @@ if (isset($_POST['CODE_HOS'])) {
   $sql1 = $sql1."AND e.HospitalID = '".$CODE_HOS."'" ;
   }
 }
-
 
 
 $obj1 = mysqli_query($con, $sql1);
@@ -112,12 +111,13 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $tsql1 = $tsql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
+
 
 if (isset($_POST['CODE_PROVINCE'])) {
   if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
@@ -168,9 +168,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql2 = $sql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -268,9 +268,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $tsql2 = $tsql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -360,9 +360,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql3 = $sql3."AND h.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -409,9 +409,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql4 = $sql4."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -510,9 +510,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql5 = $sql5."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -566,9 +566,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql6 = $sql6."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -620,9 +620,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql7 = $sql7."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -674,9 +674,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql8 = $sql8."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -729,9 +729,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sqlhl = $sqlhl."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -784,9 +784,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-    $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
     $sql9 = $sql9."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -830,9 +830,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-    $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
     $sql11 = $sql11."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -892,9 +892,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -926,7 +926,7 @@ $datamap ='';
 while($mrow1 = mysqli_fetch_array($mobj1))
 {
 	if($mrow1['total_bed'] <> 0){
-		$datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".$mrow1['total_bed'].",name:'".$mrow1['CODE_PROVINCETH']."'},";
+		$datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".number_format(($mrow1['total_bed']/$Totalmidy*100000), 2, '.', ',').",name:'".$mrow1['CODE_PROVINCETH']."'},";
 	}
 	//['th-ct', 10],
 }
@@ -965,9 +965,9 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
-if (isset($_POST['mySelect'])) {
-  if ($_POST['mySelect']<> 'ทั้งหมด') {
-  $mySelect = $_POST['mySelect'];
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql10 = $sql10."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -1008,21 +1008,51 @@ if($total_bed == ''){
 
 
 $sqlhdc01 = "SELECT
-  groupcode,
-  SUM(CASE WHEN b_year = '2567' THEN total ELSE 0 END) AS total_2567,
-  SUM(CASE WHEN b_year = '2566' THEN total ELSE 0 END) AS total_2566,
-  SUM(CASE WHEN b_year = '2565' THEN total ELSE 0 END) AS total_2565,
-  SUM(CASE WHEN b_year = '2564' THEN total ELSE 0 END) AS total_2564,
-  SUM(CASE WHEN b_year = '2563' THEN total ELSE 0 END) AS total_2563
+  h.groupcode,
+  SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
+  SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
+  SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
+  SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
+  SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
 FROM
-  HDCTB01
+  HDCTB01 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
 WHERE 1  "
 ;
 
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
-  $sqlhdc01 = $sqlhdc01."AND b_year = '".$Year."'" ;
+  $sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
 }   
+
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sqlhdc01 = $sqlhdc01."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
+  $sqlhdc01 = $sqlhdc01."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sqlhdc01 = $sqlhdc01."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sqlhdc01 = $sqlhdc01."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
 
 $sqlhdc01 = $sqlhdc01."  
 GROUP BY
@@ -1054,14 +1084,15 @@ while($rowhdc01 = mysqli_fetch_array($objhdc01))
 }
 
 $sqlhdc02 = "SELECT
-  groupcode,
-  SUM(CASE WHEN b_year = '2567' THEN total ELSE 0 END) AS total_2567,
-  SUM(CASE WHEN b_year = '2566' THEN total ELSE 0 END) AS total_2566,
-  SUM(CASE WHEN b_year = '2565' THEN total ELSE 0 END) AS total_2565,
-  SUM(CASE WHEN b_year = '2564' THEN total ELSE 0 END) AS total_2564,
-  SUM(CASE WHEN b_year = '2563' THEN total ELSE 0 END) AS total_2563
+  h.groupcode,
+  SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
+  SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
+  SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
+  SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
+  SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
 FROM
-  HDCTB02
+  HDCTB02 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
 WHERE 1  "
 ;
 
@@ -1070,9 +1101,40 @@ if (isset($_POST['Year'])) {
   $sqlhdc02 = $sqlhdc02."AND b_year = '".$Year."'" ;
 }   
 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sqlhdc02 = $sqlhdc02."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
+  $sqlhdc02 = $sqlhdc02."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sqlhdc02 = $sqlhdc02."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sqlhdc02 = $sqlhdc02."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
 $sqlhdc02 = $sqlhdc02."  
 GROUP BY
   groupcode;";
+
+  //echo $sqlhdc01;
 
 $objhdc02 = mysqli_query($con, $sqlhdc02);
 //$rowhdc01 = mysqli_fetch_array($objhdc01);
@@ -1245,81 +1307,25 @@ while($rowhdc02 = mysqli_fetch_array($objhdc02))
                 </div>
               </div>
               <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2"  style="width: 100%;">
-                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="ในสังกัด">ในสังกัด</option>
-                    <option value="นอกสังกัด">นอกสังกัด</option>
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->
-			   <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
-                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
-                    <option value="เขตพื้นที่">เขตพื้นที่</option>
-                    <option value="ServicePlan">Service Plan</option>
-                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
-                  </select>
-				   
-				<script>
-					function myFunction() {
-						let elementarea 		= document.getElementById("area");
-						let elementlabelarea 	= document.getElementById("labelarea");
-						let elementservice 		= document.getElementById("service");
-						let elementlabelservice = document.getElementById("labelservice");
-						
-						selectElement = document.querySelector('#mySelect');	
-        				output = selectElement.value;
-						
-						if(output === "ServicePlan"){
-							//alert(output);
-							elementservice.removeAttribute("hidden");
-							elementlabelservice.removeAttribute("hidden");
-							
-							elementarea.setAttribute("hidden", "hidden");
-							elementlabelarea.setAttribute("hidden", "hidden");
-							
-						}else{
-							elementarea.removeAttribute("hidden");
-							elementlabelarea.removeAttribute("hidden");
-							
-							elementservice.setAttribute("hidden", "hidden");
-							elementlabelservice.setAttribute("hidden", "hidden");
-						
-							//alert("tong");
-						}
-						
-					}
-				</script> 
-				   
-                </div>
-              </div>
-              <!-- /.col -->	
-			 <!-- /.col -->
+
               <div class="col-md-2">
                <div class="form-group" id="labelarea">
                   <label>เขตสุขภาพ</label>
                   <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="1">เขต1</option>
-                    <option value="2">เขต2</option>
-                    <option value="3">เขต3</option>
-					          <option value="4">เขต4</option>
-                    <option value="5">เขต5</option>
-                    <option value="6">เขต6</option>
-					          <option value="7">เขต7</option>
-                    <option value="8">เขต8</option>
-                    <option value="9">เขต9</option>
-					          <option value="10">เขต10</option>
-                    <option value="11">เขต11</option>
-                    <option value="12">เขต12</option>
-					          <option value="13">เขต13</option>
+                    <option value="1">เขตสุขภาพ 1</option>
+                    <option value="2">เขตสุขภาพ 2</option>
+                    <option value="3">เขตสุขภาพ 3</option>
+					          <option value="4">เขตสุขภาพ 4</option>
+                    <option value="5">เขตสุขภาพ 5</option>
+                    <option value="6">เขตสุขภาพ 6</option>
+					          <option value="7">เขตสุขภาพ 7</option>
+                    <option value="8">เขตสุขภาพ 8</option>
+                    <option value="9">เขตสุขภาพ 9</option>
+					          <option value="10">เขตสุขภาพ 10</option>
+                    <option value="11">เขตสุขภาพ 11</option>
+                    <option value="12">เขตสุขภาพ 12</option>
+					          <option value="13">เขตสุขภาพ 13</option>
                    </select>
                 </div>
                 <script>
@@ -1335,34 +1341,14 @@ while($rowhdc02 = mysqli_fetch_array($objhdc02))
                           });
                     }
 			    	</script> 
+            
+			   <!-- /.col -->
+             
+			 <!-- /.col -->
+              
 				<!-- /.form-group -->
-                <div class="form-group" id="labelservice" hidden="none">
-                  <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" hidden="none" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-                <script>
-                   function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_PROVINCE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
+         
+               
               </div>
               <!-- /.col -->
               <div class="col-md-2">
@@ -1406,6 +1392,18 @@ ORDER BY NO_PROVINCE ASC;";
               </div>
               <!-- /.col -->	
 
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2"  style="width: 100%;">
+                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="ในสังกัด">ในสังกัด</option>
+                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->
+
 
               <div class="col-md-2">
                <div class="form-group">
@@ -1433,6 +1431,83 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 </div>
               </div>
               <!-- /.col -->		
+
+
+              <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
+<div class="col-md-2">
+               <div class="form-group">
+                  <label>เขตพื้นที่/Service Plan</label>
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
+                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
+                    <option value="เขตพื้นที่">เขตพื้นที่</option>
+                    <option value="ServicePlan">Service Plan</option>
+                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
+                  </select>
+				   
+				<script>
+					function myFunction() {
+						let elementarea 		= document.getElementById("area");
+						let elementlabelarea 	= document.getElementById("labelarea");
+						let elementservice 		= document.getElementById("service");
+						let elementlabelservice = document.getElementById("labelservice");
+						
+						selectElement = document.querySelector('#mySelect');	
+        				output = selectElement.value;
+						
+						if(output === "ServicePlan"){
+							//alert(output);
+							elementservice.removeAttribute("hidden");
+							elementlabelservice.removeAttribute("hidden");
+							
+							elementarea.setAttribute("hidden", "hidden");
+							elementlabelarea.setAttribute("hidden", "hidden");
+							
+						}else{
+							elementarea.removeAttribute("hidden");
+							elementlabelarea.removeAttribute("hidden");
+							
+							elementservice.setAttribute("hidden", "hidden");
+							elementlabelservice.setAttribute("hidden", "hidden");
+						
+							//alert("tong");
+						}
+						
+					}
+				</script> 
+				   
+                </div>
+              </div>
+              <!-- /.col -->	
+
+
+
             </div>
             <!-- /.row -->
 		
@@ -2384,7 +2459,7 @@ link.click();
             series: [{
                 data: data,
                 // Optional series options (uncomment if desired):
-                // name: 'Random data',
+                 name: 'Random data',
                 // states: {
                 //     hover: {
                 //         color: '#BADA55'

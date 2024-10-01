@@ -266,6 +266,27 @@ if($_POST['qus3_1_3'] <> ''){
 }else{
 	$qus3_1 = $qus3_1.','.'0';
 }
+if($_POST['qus3_1_4'] <> ''){
+	$qus3_1 = $qus3_1.','.$_POST['qus3_1_4'];
+}else{
+	$qus3_1 = $qus3_1.','.'0';
+}
+if($_POST['qus3_1_5'] <> ''){
+	$qus3_1 = $qus3_1.','.$_POST['qus3_1_5'];
+}else{
+	$qus3_1 = $qus3_1.','.'0';
+}
+if($_POST['qus3_1_6'] <> ''){
+	$qus3_1 = $qus3_1.','.$_POST['qus3_1_6'];
+}else{
+	$qus3_1 = $qus3_1.','.'0';
+}
+if($_POST['qus3_1_7'] <> ''){
+	$qus3_1 = $qus3_1.','.$_POST['qus3_1_7'];
+}else{
+	$qus3_1 = $qus3_1.','.'0';
+}
+
 
 if($_POST['qus3_2_1'] <> ''){
 
