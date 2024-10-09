@@ -33,6 +33,10 @@ $HosMOHP		= $_SESSION["HostHMOO"];
   <link rel="stylesheet" href="dist/css/custom.css">
   <!-- Control by jel -->
   <link rel="stylesheet" href="dist/css/fontcontrol.css">
+
+  <?php if($_SESSION["TypeUser"] == "Admin"){ ?>
+    <meta http-equiv="Refresh" content="0;URL=tables-memberalladmin.php">
+	<?php } ?>
 	
 	<?php include "header_font.php"; ?>
 	
@@ -620,9 +624,15 @@ while($rowprovince = mysqli_fetch_array($objprovince))
                             WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
                             AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
                             AND hospitalnew.CODE_HMOO = '$HosMOHP'";
+                           if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){					  
+                            $sqlservice = $sqlservice."AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
+                          }
                           // AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
                           if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
-                            $sqlservice = $sqlservice."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT'" ;
+                            $sqlservice = $sqlservice."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT'
+                            
+                            
+                            " ;
                           }
 
                           if(isset($_POST["CODE_HOS"])){	
@@ -641,6 +651,8 @@ while($rowprovince = mysqli_fetch_array($objprovince))
                               $sqlservice = $sqlservice."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
                             }
                           }
+
+                          $sqlservice = $sqlservice." ORDER BY stausloginfirst DESC " ;
           }
 
           $sqlservice2 =$sqlservice;

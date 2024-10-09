@@ -237,7 +237,15 @@ echo	$sql = "UPDATE personnel SET
 }elseif($positiontypeid == '6'){
 	
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
+	//$training 	= $_POST['training'];
+
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	//$sql = "INSERT INTO personnel( HospitalID, positiontypeID, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate) VALUES ('$HospitalID','$positiontypeid','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now());";
 	
@@ -250,6 +258,7 @@ echo	$sql = "UPDATE personnel SET
 								age				= '$age',
 								r2				= '$r2',
 								training		= '$training',
+								other_training  = '$other_training',
 								updatedetail	= Now(),
 								Mcatt1			= '$Mcatt1'	,
 								MWac1_1			= '$MWac1_1',
@@ -268,7 +277,15 @@ echo	$sql = "UPDATE personnel SET
 }elseif($positiontypeid == '7'){
 	
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
+	//$training 	= $_POST['training'];
+
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	//$sql = "INSERT INTO personnel( HospitalID, positiontypeID, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate) VALUES ('$HospitalID','$positiontypeid','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now());";
 	
@@ -281,6 +298,7 @@ echo	$sql = "UPDATE personnel SET
 								age				= '$age',
 								r2				= '$r2',
 								training		= '$training',
+								other_training  = '$other_training',
 								updatedetail	= Now(),
 								Mcatt1			= '$Mcatt1'	,
 								MWac1_1			= '$MWac1_1',
@@ -299,7 +317,15 @@ echo	$sql = "UPDATE personnel SET
 }elseif($positiontypeid == '8'){
 	
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
+	//$training 	= $_POST['training'];
+
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	//$sql = "INSERT INTO personnel( HospitalID, positiontypeID, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate) VALUES ('$HospitalID','$positiontypeid','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now());";
 	
@@ -312,6 +338,7 @@ echo	$sql = "UPDATE personnel SET
 								age				= '$age',
 								r2				= '$r2',
 								training		= '$training',
+								other_training  = '$other_training',
 								updatedetail	= Now(),
 								Mcatt1			= '$Mcatt1'	,
 								MWac1_1			= '$MWac1_1',
@@ -329,8 +356,13 @@ echo	$sql = "UPDATE personnel SET
 	
 }elseif($positiontypeid == '9'){
 	$r2 			= $_POST['r2working'];
-	$training 		= $_POST['training'];
-	$other_training = $_POST['other2_training'];
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	//$sql = "INSERT INTO personnel( HospitalID, positiontypeID, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, other_training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate) VALUES ('$HospitalID','$positiontypeid','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$other_training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now());";
 	
@@ -361,7 +393,13 @@ echo	$sql = "UPDATE personnel SET
 	
 }elseif($positiontypeid == '10'){
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	//$sql = "INSERT INTO personnel( HospitalID, positiontypeID, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate) VALUES ('$HospitalID','$positiontypeid','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now());";
 	
@@ -375,6 +413,7 @@ echo	$sql = "UPDATE personnel SET
 								r2				= '$r2',
 								position_other	= '$position_other',
 								training		= '$training',
+								other_training  = '$other_training',
 								updatedetail	= Now(),
 								Mcatt1			= '$Mcatt1'	,
 								MWac1_1			= '$MWac1_1',

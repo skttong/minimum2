@@ -165,6 +165,13 @@ $HosMOHP		= $_SESSION["HostHMOO"];
 							<a href="hospital_center_view.php?FID=<?php echo $rowpersonnel['mhpsID'];?>" >
 								<i class="fa fa-edit" style="color:darkyellow; font-size: 16pt">รายละเอียด</i>
 							</a></td>
+          <?php if($rowpersonnel['statusfinal'] == '1'){ ?>
+            <td colspan='3'>
+            <i class="fa fa-edit" style="color:darkgreen; font-size: 16pt">ดำเนินการส่งข้อมูลแล้ว</i>
+            </td>
+					<?php	
+					}else{
+            ?>
 						<td>
               <a href="hospital_center_edit.php?FID=<?php echo $rowpersonnel['mhpsID'];?>" >
 								<i class="fa fa-edit" style="color:darkblue; font-size: 16pt">เพิ่มปรับปรุงข้อมูล</i>
@@ -177,7 +184,7 @@ $HosMOHP		= $_SESSION["HostHMOO"];
               <a href="hospital_send.php?mhpsID=<?=$rowpersonnel['mhpsID'];?>" onclick="showAlert2()">
 								<i class="far fa-edit" style="color: darkgreen; font-size: 16pt">ส่งข้อมูลข้อมูล</i>
 							</a></td>
-              
+             <?php } ?> 
              
 						<?php 
               if($_SESSION["TypeUser"] == "Admin"){?>
@@ -202,6 +209,14 @@ $HosMOHP		= $_SESSION["HostHMOO"];
 							<a href="hospital_community_view.php?FID=<?php echo $rowpersonnel['mhpsID'];?>" >
 								<i class="fa fa-edit" style="color:darkyellow; font-size: 16pt">รายละเอียด</i>
 							</a></td>
+              <?php if($rowpersonnel['statusfinal'] == '1'){ ?>
+                <td colspan='3'>
+            <i class="fa fa-edit" style="color:darkgreen; font-size: 16pt">ดำเนินการส่งข้อมูลแล้ว</i>
+            </td>
+					
+					<?php	
+					}else{
+            ?>
 						<td>
               <a href="hospital_community_edit.php?FID=<?php echo $rowpersonnel['mhpsID'];?>" >
 								<i class="fa fa-edit" style="color:darkblue; font-size: 16pt">เพิ่มปรับปรุงข้อมูล</i>
@@ -214,7 +229,7 @@ $HosMOHP		= $_SESSION["HostHMOO"];
               <a href="hospital_send.php?mhpsID=<?=$rowpersonnel['mhpsID'];?>" onclick="showAlert2()">
 								<i class="far fa-edit" style="color: darkgreen; font-size: 16pt">ส่งข้อมูลข้อมูล</i>
 							</a></td>
-              
+              <?php } ?>
 
              
 						<?php if($_SESSION["TypeUser"] == "Admin"){?>
@@ -239,6 +254,14 @@ $HosMOHP		= $_SESSION["HostHMOO"];
 							<a href="hospital_tambon_view.php?FID=<?php echo $rowpersonnel['mhpsID'];?>" >
 								<i class="fa fa-edit" style="color:darkyellow; font-size: 16pt">รายละเอียด</i>
 							</a></td>
+              <?php if($rowpersonnel['statusfinal'] == '1'){ ?>
+                <td colspan='3'>
+            <i class="fa fa-edit" style="color:darkgreen; font-size: 16pt">ดำเนินการส่งข้อมูลแล้ว</i>
+            </td>
+					
+					<?php	
+					}else{
+					?>
 						<td>
               <a href="hospital_tambon_edit.php?FID=<?php echo $rowpersonnel['mhpsID'];?>" >
 								<i class="fa fa-edit" style="color:darkblue; font-size: 16pt">เพิ่มปรับปรุงข้อมูล</i>
@@ -251,6 +274,10 @@ $HosMOHP		= $_SESSION["HostHMOO"];
               <a href="hospital_send.php?mhpsID=<?=$rowpersonnel['mhpsID'];?>" onclick="showAlert2()">
 								<i class="far fa-edit" style="color: darkgreen; font-size: 16pt">ส่งข้อมูลข้อมูล</i>
 							</a></td>
+					<?php	
+					}
+					?>
+						
 
              
 						<?php if($_SESSION["TypeUser"] == "Admin"){?>

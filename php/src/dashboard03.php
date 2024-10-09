@@ -91,13 +91,14 @@ $Unit_no = $row9['Unit_no'];
 $sqlbed = "SELECT
   hn.CODE_HMOO,
   SUM(CASE WHEN b.Wardall = 'Psychiatric Ward' THEN 1 ELSE 0 END) AS Psychiatric_Ward_Count,
-  SUM(CASE WHEN b.Wardall = 'Psychiatric Unit' THEN 1 ELSE 0 END) AS Psychiatric_Unit_Count,
+  SUM(CASE WHEN b.Wardall = 'Psychiatric Unit/ Co-Ward' THEN 1 ELSE 0 END) AS Psychiatric_Unit_Count,
   SUM(CASE WHEN b.Wardall = 'Integrated Bed' THEN 1 ELSE 0 END) AS Integrated_Bed_Count
 FROM
   hospitalnew hn
 LEFT JOIN bed b ON hn.CODE5 = b.hospitalCode5  -- Assuming CODE5 is the linking column
 
 where 1 ";
+
 
 if (isset($_POST['position'])) {
   if ($_POST['position']<> 'ทั้งหมด') {
@@ -153,15 +154,135 @@ $b01 = '';
 $b02 = '';
 $b03 = '';
 
+$hmoo_1 = '';
+$b01_1 = '';
+$b02_1 = '';
+$b03_1 = '';
+$hmoo_2 = '';
+$b01_2 = '';
+$b02_2 = '';
+$b03_2 = '';
+$hmoo_3 = '';
+$b01_3 = '';
+$b02_3 = '';
+$b03_3 = '';
+$hmoo_4 = '';
+$b01_4 = '';
+$b02_4 = '';
+$b03_4 = '';
+$hmoo_5 = '';
+$b01_5 = '';
+$b02_5 = '';
+$b03_5 = '';
+$hmoo_6 = '';
+$b01_6 = '';
+$b02_6 = '';
+$b03_6 = '';
+$hmoo_7 = '';
+$b01_7 = '';
+$b02_7 = '';
+$b03_7 = '';
+$hmoo_8 = '';
+$b01_8 = '';
+$b02_8 = '';
+$b03_8 = '';
+$hmoo_9 = '';
+$b01_9 = '';
+$b02_9 = '';
+$b03_9 = '';
+$hmoo_10 = '';
+$b01_10 = '';
+$b02_10 = '';
+$b03_10 = '';
+$hmoo_11 = '';
+$b01_11 = '';
+$b02_11 = '';
+$b03_11 = '';
+$hmoo_12 = '';
+$b01_12 = '';
+$b02_12 = '';
+$b03_12 = '';
+$hmoo_13 = '';
+$b01_13 = '';
+$b02_13 = '';
+$b03_13 = '';
+
 
 while($rowbed = mysqli_fetch_array($objbed))
 {
-	$hmoo = $hmoo."'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."',";
-	$b01 = $b01."'".$rowbed['Psychiatric_Ward_Count']."',";
-	$b02 = $b02."'".$rowbed['Psychiatric_Unit_Count']."',";
-	$b03 = $b03."'".$rowbed['Integrated_Bed_Count']."',";
+  if($rowbed['CODE_HMOO']== '1'){
+    $hmoo_1 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_1 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_1 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_1 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '2'){
+    $hmoo_2 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_2 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_2 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_2 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '3'){
+    $hmoo_3 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_3 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_3 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_3 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '4'){
+    $hmoo_4 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_4 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_4 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_4 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '5'){
+    $hmoo_5 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_5 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_5 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_5 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '6'){
+    $hmoo_6 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_6 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_6 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_6 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '7'){
+    $hmoo_7 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_7 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_7 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_7 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '8'){
+    $hmoo_8 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_8 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_8 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_8 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '9'){
+    $hmoo_9 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_9 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_9 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_9 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '10'){
+    $hmoo_10 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_10 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_10 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_10 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '11'){
+    $hmoo_11 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_11 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_11 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_11 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '12'){
+    $hmoo_12 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_12 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_12 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_12 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }else if($rowbed['CODE_HMOO']== '13'){
+    $hmoo_13 = "'เขตสุขภาพที่ ".$rowbed['CODE_HMOO']."'";
+    $b01_13 = "'".$rowbed['Psychiatric_Ward_Count']."'";
+    $b02_13 = "'".$rowbed['Psychiatric_Unit_Count']."'";
+    $b03_13 = "'".$rowbed['Integrated_Bed_Count']."'";
+  }
 	
 }
+
+$hmoo = $hmoo_1.','.$hmoo_2.','.$hmoo_3.','.$hmoo_4.','.$hmoo_5.','.$hmoo_6.','.$hmoo_7.','.$hmoo_8.','.$hmoo_9.','.$hmoo_10.','.$hmoo_11.','.$hmoo_12.','.$hmoo_13;
+$b01 = $b01_1.','.$b01_2.','.$b01_3.','.$b01_4.','.$b01_5.','.$b01_6.','.$b01_7.','.$b01_8.','.$b01_9.','.$b01_10.','.$b01_11.','.$b01_12.','.$b01_13;
+$b02 = $b02_1.','.$b02_2.','.$b02_3.','.$b02_4.','.$b02_5.','.$b02_6.','.$b02_7.','.$b02_8.','.$b02_9.','.$b02_10.','.$b02_11.','.$b02_12.','.$b02_13;
+$b03 = $b03_1.','.$b03_2.','.$b03_3.','.$b03_4.','.$b03_5.','.$b03_6.','.$b03_7.','.$b03_8.','.$b03_9.','.$b03_10.','.$b03_11.','.$b03_12.','.$b03_13;
 
 
 $sqlmid = "SELECT
@@ -251,9 +372,9 @@ while($mrow1 = mysqli_fetch_array($mobj1))
 $bsql1 = "SELECT
   hn.CODE_HMOO,
   COUNT(DISTINCT b.Wardall) AS total_beds, 
-  SUM(b.Ward_no) AS total_ward_no,
-  SUM(b.Unit) AS total_unit,
-  SUM(b.Unit_no) AS total_unit_no
+  SUM(COALESCE(b.Ward_no, 0)) AS total_ward_no,
+  SUM(COALESCE(b.Unit, 0)) AS total_unit,
+  SUM(COALESCE(b.Unit_no, 0)) AS total_unit_no
 FROM
   bed b
 right JOIN hospitalnew hn ON hn.CODE5 = b.hospitalCode5
@@ -312,14 +433,162 @@ $b202 = '';
 $b203 = '';
 $b204 = '';
 
+$hmoo2_1 = '';
+$b201_1 = '';
+$b202_1 = '';
+$b203_1 = '';
+$b204_1 = '';
+$hmoo2_2 = '';
+$b201_2 = '';
+$b202_2 = '';
+$b203_2 = '';
+$b204_2 = '';
+$hmoo2_3 = '';
+$b201_3 = '';
+$b202_3 = '';
+$b203_3 = '';
+$b204_3 = '';
+$hmoo2_4 = '';
+$b201_4 = '';
+$b202_4 = '';
+$b203_4 = '';
+$b204_4 = '';
+$hmoo2_5 = '';
+$b201_5 = '';
+$b202_5 = '';
+$b203_5 = '';
+$b204_5 = '';
+$hmoo2_6 = '';
+$b201_6 = '';
+$b202_6 = '';
+$b203_6 = '';
+$b204_6 = '';
+$hmoo2_7 = '';
+$b201_7 = '';
+$b202_7 = '';
+$b203_7 = '';
+$b204_7 = '';
+$hmoo2_8 = '';
+$b201_8 = '';
+$b202_8 = '';
+$b203_8 = '';
+$b204_8 = '';
+$hmoo2_9 = '';
+$b201_9 = '';
+$b202_9 = '';
+$b203_9 = '';
+$b204_9 = '';
+$hmoo2_10 = '';
+$b201_10 = '';
+$b202_10 = '';
+$b203_10 = '';
+$b204_10 = '';
+$hmoo2_11 = '';
+$b201_11 = '';
+$b202_11 = '';
+$b203_11 = '';
+$b204_11 = '';
+$hmoo2_12 = '';
+$b201_12 = '';
+$b202_12 = '';
+$b203_12 = '';
+$b204_12 = '';
+$hmoo2_13 = '';
+$b201_13 = '';
+$b202_13 = '';
+$b203_13 = '';
+$b204_13 = '';
+
+
 while($rowb01 = mysqli_fetch_array($objb01))
 {
-	$hmoo2 = $hmoo."'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."',";
-	$b201 = $b201."'".$rowb01['total_beds']."',";
-	$b202 = $b202."'".$rowb01['total_ward_no']."',";
-	$b203 = $b203."'".$rowb01['total_unit']."',";
-	$b204 = $b204."'".$rowb01['total_unit']."',";
+  if($rowb01['CODE_HMOO']== '1'){
+    $hmoo2_1 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_1 = "'".$rowb01['total_beds']."'";
+    $b202_1 = "'".$rowb01['total_ward_no']."'";
+    $b203_1 = "'".$rowb01['total_unit']."'";
+    $b204_1 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '2'){
+    $hmoo2_2 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_2 = "'".$rowb01['total_beds']."'";
+    $b202_2 = "'".$rowb01['total_ward_no']."'";
+    $b203_2 = "'".$rowb01['total_unit']."'";
+    $b204_2 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '3'){
+    $hmoo2_3 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_3 = "'".$rowb01['total_beds']."'";
+    $b202_3 = "'".$rowb01['total_ward_no']."'";
+    $b203_3 = "'".$rowb01['total_unit']."'";
+    $b204_3 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '4'){
+    $hmoo2_4 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_4 = "'".$rowb01['total_beds']."'";
+    $b202_4 = "'".$rowb01['total_ward_no']."'";
+    $b203_4 = "'".$rowb01['total_unit']."'";
+    $b204_4 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '5'){
+    $hmoo2_5 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_5 = "'".$rowb01['total_beds']."'";
+    $b202_5 = "'".$rowb01['total_ward_no']."'";
+    $b203_5 = "'".$rowb01['total_unit']."'";
+    $b204_5 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '6'){
+    $hmoo2_6 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_6 = "'".$rowb01['total_beds']."'";
+    $b202_6 = "'".$rowb01['total_ward_no']."'";
+    $b203_6 = "'".$rowb01['total_unit']."'";
+    $b204_6 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '7'){
+    $hmoo2_7 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_7 = "'".$rowb01['total_beds']."'";
+    $b202_7 = "'".$rowb01['total_ward_no']."'";
+    $b203_7 = "'".$rowb01['total_unit']."'";
+    $b204_7 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '8'){
+    $hmoo2_8 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_8 = "'".$rowb01['total_beds']."'";
+    $b202_8 = "'".$rowb01['total_ward_no']."'";
+    $b203_8 = "'".$rowb01['total_unit']."'";
+    $b204_8 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '9'){
+    $hmoo2_9 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_9 = "'".$rowb01['total_beds']."'";
+    $b202_9 = "'".$rowb01['total_ward_no']."'";
+    $b203_9 = "'".$rowb01['total_unit']."'";
+    $b204_9 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '10'){
+    $hmoo2_10 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_10 = "'".$rowb01['total_beds']."'";
+    $b202_10 = "'".$rowb01['total_ward_no']."'";
+    $b203_10 = "'".$rowb01['total_unit']."'";
+    $b204_10 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '11'){
+    $hmoo2_11 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_11 = "'".$rowb01['total_beds']."'";
+    $b202_11 = "'".$rowb01['total_ward_no']."'";
+    $b203_11 = "'".$rowb01['total_unit']."'";
+    $b204_11 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '12'){
+    $hmoo2_12 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_12 = "'".$rowb01['total_beds']."'";
+    $b202_12 = "'".$rowb01['total_ward_no']."'";
+    $b203_12 = "'".$rowb01['total_unit']."'";
+    $b204_12 = "'".$rowb01['total_unit']."'";
+  }else if($rowb01['CODE_HMOO']== '13'){
+    $hmoo2_13 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
+    $b201_13 = "'".$rowb01['total_beds']."'";
+    $b202_13 = "'".$rowb01['total_ward_no']."'";
+    $b203_13 = "'".$rowb01['total_unit']."'";
+    $b204_13 = "'".$rowb01['total_unit']."'";
+  }
+	
 }
+
+$hmoo2 = $hmoo2_1.','.$hmoo2_2.','.$hmoo2_3.','.$hmoo2_4.','.$hmoo2_5.','.$hmoo2_6.','.$hmoo2_7.','.$hmoo2_8.','.$hmoo2_9.','.$hmoo2_10.','.$hmoo2_11.','.$hmoo2_12.','.$hmoo2_13;
+$b201 = $b201_1.','.$b201_2.','.$b201_3.','.$b201_4.','.$b201_5.','.$b201_6.','.$b201_7.','.$b201_8.','.$b201_9.','.$b201_10.','.$b201_11.','.$b201_12.','.$b201_13;
+$b202 = $b202_1.','.$b202_2.','.$b202_3.','.$b202_4.','.$b202_5.','.$b202_6.','.$b202_7.','.$b202_8.','.$b202_9.','.$b202_10.','.$b202_11.','.$b202_12.','.$b202_13;
+$b203 = $b203_1.','.$b203_2.','.$b203_3.','.$b203_4.','.$b203_5.','.$b203_6.','.$b203_7.','.$b203_8.','.$b203_9.','.$b203_10.','.$b203_11.','.$b203_12.','.$b203_13;
+$b204 = $b203_1.','.$b203_2.','.$b203_3.','.$b203_4.','.$b203_5.','.$b203_6.','.$b203_7.','.$b203_8.','.$b203_9.','.$b203_10.','.$b203_11.','.$b203_12.','.$b203_13;
 
 
 $bsqlall1 = "SELECT
@@ -373,7 +642,9 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	}
   }
 
+$bsqlall1_1 = $bsqlall1 ;
 $objb01all = mysqli_query($con, $bsqlall1);
+$objb01all1 = mysqli_query($con, $bsqlall1_1);
 //$rowb01all = mysqli_fetch_array($objb01all);
 
 $bsqlall2 = "SELECT
@@ -428,7 +699,10 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	}
   }
 
+$bsqlall2_1 = $bsqlall2;
+
 $objb02all = mysqli_query($con, $bsqlall2);
+$objb02all2 = mysqli_query($con, $bsqlall2_1);
 //$rowb02all = mysqli_fetch_array($objb02all);
 
 
@@ -540,7 +814,7 @@ $objb02all = mysqli_query($con, $bsqlall2);
           <div class="card-body">
 			<form class="form-valide" action="dashboard03.php" method="post" id="myform1" name="foml">  
       <div class="row">
-      <div class="col-md-2">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
                   <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
@@ -556,81 +830,25 @@ $objb02all = mysqli_query($con, $bsqlall2);
                 </div>
               </div>
               <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2"  style="width: 100%;">
-                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="ในสังกัด">ในสังกัด</option>
-                    <option value="นอกสังกัด">นอกสังกัด</option>
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->
-			   <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
-                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
-                    <option value="เขตพื้นที่">เขตพื้นที่</option>
-                    <option value="ServicePlan">Service Plan</option>
-                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
-                  </select>
-				   
-				<script>
-					function myFunction() {
-						let elementarea 		= document.getElementById("area");
-						let elementlabelarea 	= document.getElementById("labelarea");
-						let elementservice 		= document.getElementById("service");
-						let elementlabelservice = document.getElementById("labelservice");
-						
-						selectElement = document.querySelector('#mySelect');	
-        				output = selectElement.value;
-						
-						if(output === "ServicePlan"){
-							//alert(output);
-							elementservice.removeAttribute("hidden");
-							elementlabelservice.removeAttribute("hidden");
-							
-							elementarea.setAttribute("hidden", "hidden");
-							elementlabelarea.setAttribute("hidden", "hidden");
-							
-						}else{
-							elementarea.removeAttribute("hidden");
-							elementlabelarea.removeAttribute("hidden");
-							
-							elementservice.setAttribute("hidden", "hidden");
-							elementlabelservice.setAttribute("hidden", "hidden");
-						
-							//alert("tong");
-						}
-						
-					}
-				</script> 
-				   
-                </div>
-              </div>
-              <!-- /.col -->	
-			 <!-- /.col -->
+
               <div class="col-md-2">
                <div class="form-group" id="labelarea">
                   <label>เขตสุขภาพ</label>
                   <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="1">เขต1</option>
-                    <option value="2">เขต2</option>
-                    <option value="3">เขต3</option>
-					          <option value="4">เขต4</option>
-                    <option value="5">เขต5</option>
-                    <option value="6">เขต6</option>
-					          <option value="7">เขต7</option>
-                    <option value="8">เขต8</option>
-                    <option value="9">เขต9</option>
-					          <option value="10">เขต10</option>
-                    <option value="11">เขต11</option>
-                    <option value="12">เขต12</option>
-					          <option value="13">เขต13</option>
+                    <option value="1">เขตสุขภาพ 1</option>
+                    <option value="2">เขตสุขภาพ 2</option>
+                    <option value="3">เขตสุขภาพ 3</option>
+					          <option value="4">เขตสุขภาพ 4</option>
+                    <option value="5">เขตสุขภาพ 5</option>
+                    <option value="6">เขตสุขภาพ 6</option>
+					          <option value="7">เขตสุขภาพ 7</option>
+                    <option value="8">เขตสุขภาพ 8</option>
+                    <option value="9">เขตสุขภาพ 9</option>
+					          <option value="10">เขตสุขภาพ 10</option>
+                    <option value="11">เขตสุขภาพ 11</option>
+                    <option value="12">เขตสุขภาพ 12</option>
+					          <option value="13">เขตสุขภาพ 13</option>
                    </select>
                 </div>
                 <script>
@@ -646,34 +864,14 @@ $objb02all = mysqli_query($con, $bsqlall2);
                           });
                     }
 			    	</script> 
+            
+			   <!-- /.col -->
+             
+			 <!-- /.col -->
+              
 				<!-- /.form-group -->
-                <div class="form-group" id="labelservice" hidden="none">
-                  <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" hidden="none" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-                <script>
-                   function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_PROVINCE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
+         
+               
               </div>
               <!-- /.col -->
               <div class="col-md-2">
@@ -717,6 +915,47 @@ ORDER BY NO_PROVINCE ASC;";
               </div>
               <!-- /.col -->	
 
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2"  style="width: 100%;">
+                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="ในสังกัด">ในสังกัด</option>
+                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->
+
+
+              <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
 
               <div class="col-md-2">
                <div class="form-group">
@@ -743,6 +982,54 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                   </select>
                 </div>
               </div>
+              <!-- /.col -->		
+
+
+              
+
+<!--<div class="col-md-2">
+               <div class="form-group">
+                  <label>เขตพื้นที่/Service Plan</label>
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
+                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
+                    <option value="เขตพื้นที่">เขตพื้นที่</option>
+                    <option value="ServicePlan">Service Plan</option>
+                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
+                  </select>
+				   
+				<script>
+					function myFunction() {
+						let elementarea 		= document.getElementById("area");
+						let elementlabelarea 	= document.getElementById("labelarea");
+						let elementservice 		= document.getElementById("service");
+						let elementlabelservice = document.getElementById("labelservice");
+						
+						selectElement = document.querySelector('#mySelect');	
+        				output = selectElement.value;
+						
+						if(output === "ServicePlan"){
+							//alert(output);
+							elementservice.removeAttribute("hidden");
+							elementlabelservice.removeAttribute("hidden");
+							
+							elementarea.setAttribute("hidden", "hidden");
+							elementlabelarea.setAttribute("hidden", "hidden");
+							
+						}else{
+							elementarea.removeAttribute("hidden");
+							elementlabelarea.removeAttribute("hidden");
+							
+							elementservice.setAttribute("hidden", "hidden");
+							elementlabelservice.setAttribute("hidden", "hidden");
+						
+							//alert("tong");
+						}
+						
+					}
+				</script> 
+				   
+                </div>
+              </div>-->
               <!-- /.col -->			
  
 			  <div class="col-md-2">
@@ -835,7 +1122,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 									backgroundColor: '#41b8d5',
 									borderColor: '#41b8d5',
 									borderWidth: 1,
-									stack: 'combined' // Enable stacking for this dataset
+									stack: 'combined1' // Enable stacking for this dataset
 								},
 								{
 									label: 'Integrated Bed',
@@ -843,7 +1130,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 									backgroundColor: '#2d8bba',
 									borderColor: '#2d8bba',
 									borderWidth: 1,
-									stack: 'combined' // Enable stacking for this dataset
+									stack: 'combined2' // Enable stacking for this dataset
 								}]
 							},
 							options: {
@@ -1123,7 +1410,7 @@ downloadButton4.addEventListener('click', function() {
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example2" class="table table-bordered table-striped">
+                <table id="example1" class="table table-bordered table-striped">
                   <thead>
                   <tr align="center">
                     <th rowspan="2" width="2%">#</th>
@@ -1158,6 +1445,44 @@ downloadButton4.addEventListener('click', function() {
 				   ?>
 					</tbody>
 				  </table>
+
+          <table id="example3" class="table table-bordered table-striped" hidden>
+                  <thead>
+                  <tr align="center">
+                    <th rowspan="2" width="2%">#</th>
+                    <th rowspan="2" width="12%">โรงพยาบาล/หน่วยงาน</th>
+                    <th rowspan="2" width="15%">ชนิดเตียง</th>
+                    <th colspan="2" width="6%">จำนวนเตียง</th>
+                    <th rowspan="2" width="15%">อัตราการครองเตียง</th>
+                  </tr>
+                  <tr align="center">
+                      <th width="6%">ผู้หญิง</th>
+                      <th width="6%">ผู้ชาย</th>
+                  </tr>
+                   </thead>
+                  <tbody>
+                  <?php
+				  		$j = 0;
+
+						while($rowb01all1 = mysqli_fetch_array($objb01all1)){
+							$j++;
+				  ?>
+          <tr align="center">
+						<td width="2%"><?php echo $j;?></td>
+						<td width="12%"><?php echo $rowb01all1['HOS_NAME'];?></td>
+						<td width="12%"><?php echo $rowb01all1['Wardall'];?></td>
+           <?php /* ?> <td width="12%"><?php echo $rowb01all['Ward_no'];?></td>  <?php */ ?>
+            <td width="12%"><?php echo $rowb01all1['Unit'];?></td>
+            <td width="12%"><?php echo $rowb01all1['Unit_no'];?></td>
+            <td width="12%"></td>
+				   </tr>
+				   <?php 
+						}
+				   ?>
+					</tbody>
+				  </table>
+
+
               </div>
               <!-- /.card-body -->
             </div>
@@ -1178,7 +1503,7 @@ downloadButton4.addEventListener('click', function() {
               </div>
               <!-- /.card-header -->
               <div class="card-body">
-                <table id="example3" class="table table-bordered table-striped">
+                <table id="example2" class="table table-bordered table-striped">
                   <thead>
                     <tr align="center">
                       <th rowspan="2" width="2%">#</th>
@@ -1206,6 +1531,43 @@ downloadButton4.addEventListener('click', function() {
             <?php /* ?><td width="12%"><?php echo $rowb02all['MM1'];?></td><?php */ ?>
             <td width="12%"><?php echo $rowb02all['MM2'];?></td>
             <td width="12%"><?php echo $rowb02all['MM3'];?></td>
+            <td width="12%"></td>
+				   </tr>
+				   <?php 
+						}
+				   ?>
+					</tbody>
+				  </table>
+
+
+          <table id="example4" class="table table-bordered table-striped" hidden>
+                  <thead>
+                    <tr align="center">
+                      <th rowspan="2" width="2%">#</th>
+                      <th rowspan="2" width="12%">โรงพยาบาล/หน่วยงาน</th>
+                      <th rowspan="2" width="12%">มินิธัญญารักษ์ ชนิดเตียง</th>
+                      <th colspan="2" width="12%">จำนวนเตียง</th>
+                      <th rowspan="2" width="12%">อัตราการครองเตียง</th>
+                    </tr>
+                    <tr align="center">
+                        <th width="6%">ผู้หญิง</th>
+                        <th width="6%">ผู้ชาย</th>
+                    </tr>
+                   </thead>
+                  <tbody>
+                  <?php
+				  		$y = 0;
+
+						while($rowb02all1 = mysqli_fetch_array($objb02all2)){
+							$y++;
+				  ?>
+          <tr align="center">
+						<td width="2%"><?php echo $y;?></td>
+						<td width="12%"><?php echo $rowb02all1['HOS_NAME'];?></td>
+						<td width="12%"><?php echo $rowb02all1['TN2'];?></td>
+            <?php /* ?><td width="12%"><?php echo $rowb02all['MM1'];?></td><?php */ ?>
+            <td width="12%"><?php echo $rowb02all1['MM2'];?></td>
+            <td width="12%"><?php echo $rowb02all1['MM3'];?></td>
             <td width="12%"></td>
 				   </tr>
 				   <?php 
@@ -1295,17 +1657,48 @@ downloadButton4.addEventListener('click', function() {
 				   }
 			   },
 			   */ 
-			   colorAxis: {
-				min: 1,
-            type: 'logarithmic',
-            minColor: '#cd0808',
-            maxColor: '#056934',
-            stops: [
-                [0, '#cd0808'],
-                [0.67, '#fbe036'],
-                [1, '#056934']
-            ]
-			   },
+			  legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+            colorAxis: {
+                dataClasses: [{           
+                    from: 1.7,
+                    color: '#056934',
+                    name: 'มี Psychiatric Ward'
+                }, {
+                    from: 1.7,
+                    to: 1,
+                    color: '#fbe036',
+                    name: 'มีแต่ Psychiatric Unit / Integrated Bed'
+                }, {
+                    to: 0,
+                    color: '#e3e3e2',
+                    name: 'ไม่มี '
+                }]
+            },
 	   
 			   series: [{
 				   data: data,
@@ -1401,17 +1794,48 @@ downloadButton4.addEventListener('click', function() {
 				   }
 			   },
 			   */ 
-			   colorAxis: {
-				min: 1,
-            type: 'logarithmic',
-            minColor: '#cd0808',
-            maxColor: '#056934',
-            stops: [
-                [0, '#cd0808'],
-                [0.67, '#fbe036'],
-                [1, '#056934']
-            ]
-			   },
+			  legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+            colorAxis: {
+                dataClasses: [{           
+                    from: 100,
+                    color: '#bf3c26',
+                    name: '> 100%'
+                }, {
+                    from: 100,
+                    to: 50,
+                    color: '#45a834',
+                    name: '50 - 100%'
+                }, {
+                    to: 50,
+                    color: '#e3e3e2',
+                    name: '< 50%'
+                }]
+            },
 	   
 			   series: [{
 				   data: data,
@@ -1481,25 +1905,34 @@ downloadButton4.addEventListener('click', function() {
    $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": [ "csv", "excel", "pdf"]
+     // "buttons": [ "csv", "excel", "pdf"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
 	$("#example2").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": [ "csv", "excel", "pdf"]
+     // "buttons": [ "csv", "excel", "pdf"]
     }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
-	$("#example3").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": [ "csv", "excel", "pdf"]
-    }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
-    $('#example4').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "responsive": true,
-    });
+    $("#example3").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+    $("#example4").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
   });
 </script>
 

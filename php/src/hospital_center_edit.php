@@ -759,7 +759,7 @@ echo "<br>";
 
 				<div class="card-body">
 					<span>
-                    <?php if($qus3_4[0] == '0'){ ?> 
+                    <?php if($qus3_4[1] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_1" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_1" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -768,7 +768,7 @@ echo "<br>";
 					  มียา methylphenidate (Short acting)
 					</span><br>
 					<span>
-                    <?php if($qus3_4[1] == '0'){ ?> 
+                    <?php if($qus3_4[2] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_2" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_2" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -778,7 +778,7 @@ echo "<br>";
 					  มียา methylphenidate (long acting)
 					</span><br>
 					<span>
-                    <?php if($qus3_4[2] == '0'){ ?> 
+                    <?php if($qus3_4[3] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_3" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_3" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -788,7 +788,7 @@ echo "<br>";
 					  มียา Clonidine
 					</span><br>
 					<span>
-                    <?php if($qus3_4[3] == '0'){ ?> 
+                    <?php if($qus3_4[4] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_4" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_4" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -798,7 +798,7 @@ echo "<br>";
 					  มียา Aripripazole
 					</span><br>
 					<span>
-                    <?php if($qus3_4[4] == '0'){ ?> 
+                    <?php if($qus3_4[5] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_5" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_5" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -808,7 +808,7 @@ echo "<br>";
 					  มียา Risperidone solution
 					</span><br>
 					<span>
-                    <?php if($qus3_4[5] == '0'){ ?> 
+                    <?php if($qus3_4[6] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_6" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_6" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -818,7 +818,7 @@ echo "<br>";
 					  แบบประเมินระดับสติปัญญา WISC III/IV
 					</span><br>
 					<span>
-                    <?php if($qus3_4[6] == '0'){ ?> 
+                    <?php if($qus3_4[7] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_7" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_7" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -828,7 +828,7 @@ echo "<br>";
 					  การวัดผลสัมฤทธิ์ทางการเรียน Wide Range Achievement Test หรือ WRAT-Thai
 					</span><br>
 					<span>
-                    <?php if($qus3_4[7] == '0'){ ?> 
+                    <?php if($qus3_4[8] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_8" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_8" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -838,7 +838,7 @@ echo "<br>";
 					  ห้อง Seclusion room (อย่างน้อย1ห้อง)
 					</span><br>
 					<span>
-                    <?php if($qus3_4[8] == '0'){ ?> 
+                    <?php if($qus3_4[9] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_9" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_9" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -848,7 +848,7 @@ echo "<br>";
 					  ห้องกระตุ้นพัฒนาการที่ได้สัดส่วนถาวร (อย่างน้อย 1ห้อง)
 					</span><br>
 					<span>
-                    <?php if($qus3_4[9] == '0'){ ?> 
+                    <?php if($qus3_4[10] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_10" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_10" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -858,7 +858,7 @@ echo "<br>";
 					  TEDA4I
 					</span><br>
 					<span>
-                    <?php if($qus3_4[10] == '0'){ ?> 
+                    <?php if($qus3_4[11] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_11" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_11" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -868,7 +868,7 @@ echo "<br>";
 					  แบบบันทึก การเฝ้าระวังและส่งเสริมพัฒนาการ เด็กปฐมวัย DSPM
 					</span><br>
 					<span>
-                    <?php if($qus3_4[11] == '0'){ ?> 
+                    <?php if($qus3_4[12] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_12" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_12" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -878,7 +878,7 @@ echo "<br>";
 					  แบบคัดกรองDAIM
 					</span><br>
 					<span>
-                    <?php if($qus3_4[12] == '0'){ ?> 
+                    <?php if($qus3_4[13] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_13" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_13" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -888,7 +888,7 @@ echo "<br>";
 					  แบบประเมินพฤติกรรม  SNAP-IV
 					</span><br>
 					<span>
-                    <?php if($qus3_4[13] == '0'){ ?> 
+                    <?php if($qus3_4[14] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_14" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_14" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -898,7 +898,7 @@ echo "<br>";
 					  แบบประเมินจุดแข็งและจุดอ่อน SDQ
 					</span><br>
 					<span>
-                    <?php if($qus3_4[14] == '0'){ ?> 
+                    <?php if($qus3_4[15] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_15" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_15" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -908,7 +908,7 @@ echo "<br>";
 					  แบบคัดกรองโรคในกลุ่มพัฒนาการผิดปกติอย่างรอบด้าน PDDSQ
 					</span><br>
 					<span>
-                    <?php if($qus3_4[15] == '0'){ ?> 
+                    <?php if($qus3_4[16] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_16" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_16" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -918,7 +918,7 @@ echo "<br>";
 					  แบบประเมินภาวะซึมเศร้าในวัยรุ่น PHQ-A
 					</span><br>
 					<span>
-                    <?php if($qus3_4[16] == '0'){ ?> 
+                    <?php if($qus3_4[17] == '0'){ ?> 
 					    <input type="checkbox" name="qus3_4_17" class="flat-red" value="1">&nbsp; 
 					<?php }else{ ?>
 					  <input type="checkbox" name="qus3_4_17" class="flat-red" value="1" checked="checked">&nbsp;	
@@ -1186,8 +1186,20 @@ echo "<br>";
 			<div class="text-muted mt-3">
 			  <div class="row">
 				  <div class="col-md-6">
-					  <button type="submit" class="btn btn-primary"> เพิ่มปรับปรุงข้อมูล &nbsp;<i class="fa fas fa-plus"></i></button>
-					  <a href="#" class="btn btn-default"> ลบ &nbsp;<i class="fa fas fa-undo"></i></a>
+					<?php if($statusfinal == '1'){ ?>
+						<button type="submit" class="btn btn-primary" disabled> 
+							เพิ่มปรับปรุงข้อมูล &nbsp;<i class="fa fas fa-plus"></i>
+						</button>
+					
+					<?php	
+					}else{
+					?>
+						 <button type="submit" class="btn btn-primary"> เพิ่มปรับปรุงข้อมูล &nbsp;<i class="fa fas fa-plus"></i></button>
+					<?php	
+					}
+					?>
+					 
+					  <a href="tables-sys.php" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
 				  </div>
 				 <!-- <div class="col-md-6" align="right">
 					  <button type="submit" class="btn btn-success"> ส่งข้อมูล &nbsp;<i class="fa fas fa-paper-plane"></i></button>

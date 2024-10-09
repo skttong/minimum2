@@ -72,7 +72,29 @@ include('session_permission.php');
     <!-- Main content -->
     <section class="content">
 		<form class="form-valide" action="ect_add_all.php" method="post" id="myform1" name="foml">
-			<input type="hidden" name="txtHospitalID" value="<?php echo $HospitalID; ?>"> 
+		<?php if($_SESSION["TypeUser"] == "Admin"){ ?>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="form-group">
+					<label>หน่วยบริการ</label><b><span style="color:red;">*</span></b>
+					<select name="txtHospitalID" class="form-control select2" style="width: 100%;" required>
+						<option selected disabled value="">กรุณากรอกรหัสหน่วยบริการ 5 หลักหรือชื่อหน่วยบริการ</option>
+						<?php
+							$query = $con->query("SELECT * FROM hospitalnew") or die(mysqli_error());
+							while($fetch = $query->fetch_assoc()){
+
+							echo '<option value = "'.$fetch['CODE5'].'">'.$fetch['CODE5'].'-'.$fetch['HOS_NAME'].'</option>';
+							}
+						?>
+					</select>
+			   </div>
+				<!-- /.form-group -->
+			</div>
+			<!-- /.col --> 
+		</div>
+			<?php }else{ ?>
+			  <input type="hidden" value="<?php echo $HospitalID; ?>" name="txtHospitalID">	
+			  <?php } ?>
 
 			  <!-- Default box -->
 			  <div class="card card-success card-outline">

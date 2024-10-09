@@ -328,7 +328,11 @@ if($row1['birthday'] == '0000'){
 
 					
 				</script>  
-	<div id="myMctt3" class="disabled">
+	<?php if($row1['r1'] == "กำลังศึกษา") { ?>
+	<div id="myMctt3" >
+		<?php }else{?>
+			<div id="myMctt3" class="disabled">
+<?php } ?>
 		<div class="row"   style="padding-bottom: 10px;"> 
 		
 		  <div class="col-md-8">

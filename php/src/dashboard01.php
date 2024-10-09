@@ -41,6 +41,7 @@ FROM
   personnel p
 JOIN hospitalnew e ON e.CODE5 = p.HospitalID
 WHERE 1
+AND p.r2 = 'Full-Time'
 ";
 
 if (isset($_POST['Year'])) {
@@ -65,7 +66,7 @@ if (isset($_POST['TYPE_SERVICE'])) {
 if (isset($_POST['CODE_PROVINCE'])) {
   if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
   $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-  $sql1 = $sql1."AND p.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  $sql1 = $sql1."AND e.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
   }
 }
 
@@ -1098,7 +1099,7 @@ WHERE 1  "
 
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
-  $sqlhdc02 = $sqlhdc02."AND b_year = '".$Year."'" ;
+  $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
 }   
 
 
@@ -1404,6 +1405,34 @@ ORDER BY NO_PROVINCE ASC;";
               </div>
               <!-- /.col -->
 
+              <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
 
               <div class="col-md-2">
                <div class="form-group">
@@ -1433,38 +1462,12 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
               <!-- /.col -->		
 
 
-              <div class="form-group" id="labelservice">
-                  <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-                <script>
-                   function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_HOS').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-
+             
+<!--
 <div class="col-md-2">
                <div class="form-group">
                   <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
                     <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
                     <option value="เขตพื้นที่">เขตพื้นที่</option>
                     <option value="ServicePlan">Service Plan</option>
@@ -1501,9 +1504,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 						
 					}
 				</script> 
+                  
 				   
                 </div>
-              </div>
+              </div>-->
               <!-- /.col -->	
 
 
@@ -2435,7 +2439,7 @@ link.click();
             title: {
                 text: 'เตียงจิตเวช' // Optional title
             },
-
+ 
             mapNavigation: {
             enabled: true,
             buttonOptions: {
@@ -2459,7 +2463,7 @@ link.click();
             series: [{
                 data: data,
                 // Optional series options (uncomment if desired):
-                 name: 'Random data',
+                 name: 'จำนวนต่อแสนประชากร',
                 // states: {
                 //     hover: {
                 //         color: '#BADA55'

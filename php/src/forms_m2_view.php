@@ -213,7 +213,7 @@ $statuscong			= explode(",",$statuscong_radi);
 		  <div class="col-md-4">
 			  <div class="form-group">
 				  <label for="firstname">ชื่อจริง</label><b><span style="color:red;">*</span></b>
-				  <input name="firstname" type="text" class="form-control" id="firstname" value="<?php echo $row1['firstname'] ;?> placeholder="กรอกชื่อจริง" required>
+				  <input name="firstname" type="text" class="form-control" id="firstname" value="<?php echo $row1['firstname'] ;?>" placeholder="กรอกชื่อจริง" required>
 				  <div class="invalid-feedback" style="font-size: 100%">
 					  โปรดกรอกชื่อจริง
 				  </div>
@@ -461,32 +461,32 @@ $statuscong			= explode(",",$statuscong_radi);
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="statuscong1" name="statuscong" value="การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)" onclick="disablestatuscong();" 
-                    <?php if($statuscong_radi[0] == "การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)"){echo 'checked';} ?>>
+                    <?php if($statuscong[0] == "การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="statuscong1"></label>การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="statuscong2" name="statuscong" value="การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้สูงอายุ)" onclick="disablestatuscong();" 
-                    <?php if($statuscong_radi[1] == "การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้สูงอายุ)"){echo 'checked';} ?>>
+                    <?php if($statuscong[1] == "การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้สูงอายุ)"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="statuscong2"></label>การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้สูงอายุ)
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="statuscong3" name="statuscong" value="การพยาบาลเฉพาะทางสุขภาพจิตและจิตเวชเด็กและวัยรุ่น" onclick="disablestatuscong();" 
-                    <?php if($statuscong_radi[2] == "การพยาบาลเฉพาะทางสุขภาพจิตและจิตเวชเด็กและวัยรุ่น"){echo 'checked';} ?>>
+                    <?php if($statuscong[2] == "การพยาบาลเฉพาะทางสุขภาพจิตและจิตเวชเด็กและวัยรุ่น"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="statuscong3"></label>การพยาบาลเฉพาะทางสุขภาพจิตและจิตเวชเด็กและวัยรุ่น
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="statuscong4" name="statuscong" value="การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด" onclick="disablestatuscong();"
-                    <?php if($statuscong_radi[3] == "การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด"){echo 'checked';} ?>>
+                    <?php if($statuscong[3] == "การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="statuscong4"></label>การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="statuscong5" name="statuscong" value="การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน" onclick="disablestatuscong();"
-                    <?php if($statuscong_radi[4] == "การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน"){echo 'checked';} ?>>
+                    <?php if($statuscong[4] == "การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="statuscong5"></label>การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="statuscong6" name="statuscong" value="อื่น ๆ" onclick="enablestatuscong();"
-                    <?php if($statuscong_radi[5] == "อื่น ๆ"){echo 'checked';} ?>>
+                    <?php if($statuscong[5] == "อื่น ๆ"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="statuscong6"></label>อื่น ๆ โปรดระบุ
 					<!--<div class="invalid-feedback" style="font-size: 100%">โปรดเลือกกำลังศึกษา (สถานะกำลังศึกษา)</div>-->
 			    </div>
@@ -528,7 +528,7 @@ $statuscong			= explode(",",$statuscong_radi);
 			  <div class="form-group">
 				 <label for="cogratyear">ปีที่คาดว่าจะจบ</label>
 				 <select name="cogratyear" class="form-control select2" style="width: 100%;">
-					  <option selected disabled value="">-- เลือกปี พ.ศ. --</option>
+					  <option selected value="<?php echo $row1['cogratyear'];?>"><?php echo $row1['cogratyear'];?></option>
 					  <?PHP for($i=0; $i<=10; $i++) {?>
 						<option value="<?PHP echo date("Y")+$i+543?>"><?PHP echo date("Y")+$i+543?></option>
 					  <?PHP }?>

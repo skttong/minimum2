@@ -19,6 +19,7 @@ if($FORMTYPE == 6){
 //-------------------DATA-------------------------/-END
 
 
+
 //$FORMTYPE 	 = $_GET['type'];
 $personnelID = $_GET['personnelID'];
 
@@ -279,7 +280,15 @@ if($row1['birthday'] == '0000'){
 		</div>
 		<?php } ?>	
 
-		<?php if($FORMTYPE <> 9){ ?>	
+		<?php 
+
+			$training = preg_split ("/\,/", $row1['training']); 
+
+			//print_r($training);
+
+			?>
+
+		<?php //if($FORMTYPE <> 9){ ?>	
 			
 		<div class="row" style="padding-bottom: 10px;"> 
 		  <div class="col-md-8">
@@ -304,7 +313,7 @@ if($row1['birthday'] == '0000'){
 			  <div class="form-group"></div>
 		  </div>
 		</div>
-		<?php } ?>	
+		<?php //} ?>	
 			
 		<!-- /.row --> 
 		<?php //if($FORMTYPE <> 9){ ?>
@@ -318,34 +327,36 @@ if($row1['birthday'] == '0000'){
 				</span>
 				<p></p>-->
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_1" name="training" value="ไม่เคยผ่านการอบรมเฉพาะทาง" onclick="checkCheckbox2();" 
-                    <?php if($row1['training'] == "ไม่เคยผ่านการอบรมเฉพาะทาง"){echo 'checked';} ?>>
+					<input type="checkbox" class="custom-control-input" id="training_1" name="training_1" value="ไม่เคยผ่านการอบรมเฉพาะทาง" onclick="checkCheckbox2();" 
+                    <?php if($training[0] == "ไม่เคยผ่านการอบรมเฉพาะทาง"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_1"></label>ไม่เคยผ่านการอบรมเฉพาะทาง
 			    </div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_2" name="training" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt2();" 
-                    <?php if($row1['training'] == "ด้านสุขภาพจิตและจิตเวช"){echo 'checked';} ?>>
+					<input type="checkbox" class="custom-control-input" id="training_2" name="training_2" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt2();" 
+                    <?php if($training[0] == "ด้านสุขภาพจิตและจิตเวช"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_2"></label>ด้านสุขภาพจิตและจิตเวช
 			    </div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_3" name="training" value="ด้านยาเสพติด" onclick="disableTxt2();"
-                    <?php if($row1['training'] == "ด้านยาเสพติด"){echo 'checked';} ?>>
+					<input type="checkbox" class="custom-control-input" id="training_3" name="training_3" value="ด้านยาเสพติด" onclick="disableTxt2();"
+                    <?php if($training[1] == "ด้านยาเสพติด"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_3"></label>ด้านยาเสพติด
 			    </div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_4" name="training" value="อื่น ๆ" onclick="enableTxt2();" 
-                    <?php if($row1['training'] == "อื่น ๆ"){echo 'checked';} ?>>
+					<input type="checkbox" class="custom-control-input" id="training_4" name="training_4" value="อื่น ๆ" onclick="enableTxt2();" 
+                    <?php if($training[2] == "อื่น ๆ"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_4"></label>อื่น ๆ
 					<div class="invalid-feedback" style="font-size: 100%">โปรดเลือกการอบรมเฉพาะทาง</div>
 			    </div> 	
 				<div class="col-6" style="margin-top: 10px;">
                   <span for="other_training2">โปรดระบุ</span>
-                  <?php if($row1['training'] == "อื่น ๆ"){?>
-                    <input name="other_training2" type="text" class="form-control" id="other_training2" placeholder="โปรดระบุ" value="<?php echo $row1['other_training']; ?>"  required>
+                  <?php if($training[2] == "อื่น ๆ"){?>
+                    <input name="other_training2" type="text" class="form-control" id="other_training2" placeholder="โปรดระบุ" value="<?php echo $row1['other_training']; ?>"  >
 				  <?php }else{?>
                     <input name="other_training2" type="text" class="form-control" id="other_training2" placeholder="โปรดระบุ" disabled required>
 				  <?php }?>
                 </div>
+
+				
 				
 				<script>
 					function disableTxt2() {
@@ -354,11 +365,23 @@ if($row1['birthday'] == '0000'){
 					  
 					  var training_1 = document.getElementById('training_1');
 					  training_1.checked = false;
-
-					  
 					}
 					function enableTxt2() {
-					  document.getElementById("other_training2").disabled = false;
+					  
+						var checkbox2 = document.getElementById('training_4');
+					  if (checkbox2.checked) {
+
+						document.getElementById("other_training2").disabled = false;
+						var training_1 = document.getElementById('training_1');
+						training_1.checked = false;
+						document.getElementById("other_training2").required = true;
+					}else{
+						checkbox2.checked = false;
+						document.getElementById("other_training2").disabled = true;
+						var training_1 = document.getElementById('training_1');
+						training_1.checked = false;
+						document.getElementById("other_training2").required = false;  
+					}
 					}
 
 					function checkCheckbox2() {
@@ -377,7 +400,6 @@ if($row1['birthday'] == '0000'){
 							training_2.checked = false;
 							training_3.checked = false;
 							training_4.checked = false;
-							//training_1.checked = true;
 							
 							document.getElementById("other_training2").disabled = true;
 							document.getElementById("other_training2").value = "";

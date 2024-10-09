@@ -218,11 +218,12 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 		}
 
 					//echo $sqlpersonnel = "SELECT * FROM personnel JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID WHERE hospitalnew.CODE5 = '$HospitalID' ";
-
-				
-		
-				$objpersonnel = mysqli_query($con, $sqlpersonnel);
-				$i = 1;
+					$sqlpersonnel2 = $sqlpersonnel; 
+					$objpersonnel = mysqli_query($con, $sqlpersonnel);
+					$i = 1;
+	
+					$objpersonnel2 = mysqli_query($con, $sqlpersonnel2);
+					$j = 1;
 				//echo $PersonnelType; 
 	
 				/*if($PersonnelType == 1){*/?>
@@ -395,6 +396,61 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							</center>
 							</td>
 							<?php } */?>
+						</tr>
+						<?php } ?> 	
+					</tbody>
+				  </table>
+
+
+
+
+				  <table id="example3" class="table table-bordered table-striped" hidden>
+                  <thead>
+                  <tr align="center">
+					  <th width="2%">#</th>
+					  <th width="12%">ชื่อ-นามสกุล</th>
+					  <th width="10%">วิชาชีพ</th>
+					  <th width="10%">ปฏิบัติงานวิกฤตสุขภาพจิต (MCATT)</th>
+					  <th width="10%">age</th>
+					  <th width="15%">positionAllName</th>
+					  <th width="15%">fixpositionAllName</th>
+					  <th width="10%">HOS_NAME</th>
+					  <th width="15%">positionrole</th>
+					  <th width="15%">congrat</th>
+					  <th width="10%">training</th>
+					  <th width="15%">cogratyear</th>
+					  <th width="15%">statuscong</th>
+					  <th width="10%">statuscong</th>
+					  <th width="15%">regislaw</th>
+				   </tr>
+                   </thead>
+                  <tbody>
+				  <?php
+						//echo $rowpersonnel['positiontypeID'] ;
+						while($rowpersonnel2 = mysqli_fetch_array($objpersonnel2))
+						{ 
+						?>
+						<tr>
+							<td><?php echo $j++; ?></td>
+							<td>
+								<?php 
+								echo $rowpersonnel2['prename'].$rowpersonnel2['firstname']." ".$rowpersonnel2['lastname'];
+								?>
+							</td>
+						
+						 	<td><?php echo $rowpersonnel2['Ptypename']; ?></td>
+							<td><?php echo $rowpersonnel2['Mcatt1']; ?></td>
+							<td><?php echo $rowpersonnel2['age']; ?></td>
+							<td><?php echo $rowpersonnel2['positionAllName']; ?></td>
+							<td><?php echo $rowpersonnel2['fixpositionAllName']; ?></td>
+							<td><?php echo $rowpersonnel2['HOS_NAME']; ?></td>
+							<td><?php echo $rowpersonnel2['positionrole']; ?></td>
+							<td><?php echo $rowpersonnel2['congrat']; ?></td>
+							<td><?php echo $rowpersonnel2['training']; ?></td>
+							<td><?php echo $rowpersonnel2['cogratyear']; ?></td>
+							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
+							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
+							<td><?php echo $rowpersonnel2['regislaw']; ?></td>
 						</tr>
 						<?php } ?> 	
 					</tbody>
@@ -1137,10 +1193,10 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 
 <!-- Page specific script -->
 <script>
-  $(function () {
+   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf"]
+      //"buttons": ["copy", "csv", "excel", "pdf"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
     $('#example2').DataTable({
       "paging": true,
@@ -1151,6 +1207,17 @@ $rowptype   = mysqli_fetch_array($objptype);*/
       "autoWidth": false,
       "responsive": true,
     });
+	$("#example3").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
 </body>

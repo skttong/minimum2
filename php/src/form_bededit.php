@@ -376,7 +376,7 @@ $row1 	= mysqli_fetch_array($query);
 						<div class="col-md-5">&nbsp;&nbsp;จำนวนเตียงจิตเวช <span class="disabledspan"></span>
 						</div>
 						<div class="col-md-4">
-							<input name="number_patients_1" min="1" type="number" class="form-control" id="number_patients_1" value="<?php echo $row1['Ward_no'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " >
+							<input name="number_patients_1" min="1" type="number" class="form-control" id="number_patients_1" value="<?php echo $row1['Ward_no'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " onchange="calculateTotal()>
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
@@ -384,7 +384,7 @@ $row1 	= mysqli_fetch_array($query);
 						<div class="col-md-5">&nbsp;&nbsp;เตียงผู้หญิง 
 						</div>
 						<div class="col-md-4">
-							<input name="number_patients_2" min="1" type="number" class="form-control" id="number_patients_2" value="<?php echo $row1['Unit'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " >
+							<input name="number_patients_2" min="1" type="number" class="form-control" id="number_patients_2" value="<?php echo $row1['Unit'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " onchange="calculateTotal()>
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
@@ -392,7 +392,7 @@ $row1 	= mysqli_fetch_array($query);
 						<div class="col-md-5">&nbsp;&nbsp;เตียงผู้ชาย 
 						</div>
 						<div class="col-md-4">
-							<input name="number_patients_3" min="1" type="number" class="form-control" id="number_patients_3" value="<?php echo $row1['Unit_no'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " >
+							<input name="number_patients_3" min="1" type="number" class="form-control" id="number_patients_3" value="<?php echo $row1['Unit_no'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " onchange="calculateTotal() >
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
@@ -453,6 +453,24 @@ OTHER, External Cause : X60-X84</span>
 			  </div>
 			  </div>
 				</div>
+
+				<script>
+			
+			function calculateTotal() {
+
+				const number_patients_1 = parseFloat(document.getElementById('number_patients_1').value) || 0;
+				const number_patients_2 = parseFloat(document.getElementById('number_patients_2').value) || 0; // แก้ไข id เป็น 'number_patients_17'
+				const number_patients_3 = parseFloat(document.getElementById('number_patients_3').value) || 0;
+
+				result1 = number_patients_2 + number_patients_3;
+				//alert(number_patients_2);
+				//alert(number_patients_3);
+
+				//document.getElementById('number_patients_22').value = result2;
+				document.getElementById('number_patients_1').value = result1;
+
+			}
+		</script>
 
 		<div class="card-body">
 				<p><b><i class="fas fa-file-alt"></i>&nbsp;&nbsp;&nbsp;ปัจจุบัน สถานบริการของท่าน มีการเปิด มินิธัญญารักษ์ หรือ ไม่ <span class="text-danger">*</span></b></p>
@@ -603,7 +621,7 @@ OTHER, External Cause : X60-X84</span>
 						<div class="col-md-4">&nbsp;&nbsp;จำนวนเตียงจิตเวช <span class="disabledspan"></span>
 						</div>
 						<div class="col-md-4">
-							<input name="number_p1tients_2_1" min="1" type="number" class="form-control" id="number_p1tients_2_1" value="<?php echo $row1['MM1'];?>"  placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " >
+							<input name="number_p1tients_2_1" min="1" type="number" class="form-control" id="number_p1tients_2_1" value="<?php echo $row1['MM1'];?>"  placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " onchange="calculateTotal3()" >
 						</div>
 						<div class="col-md-4">เตียง</div>
 				</div>
@@ -611,7 +629,7 @@ OTHER, External Cause : X60-X84</span>
 						<div class="col-md-4">&nbsp;&nbsp;เตียงผู้หญิง 
 						</div>
 						<div class="col-md-4">
-							<input name="number_p1tients_2_2" min="1" type="number" class="form-control" id="number_p1tients_2_2" value="<?php echo $row1['MM2'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " >
+							<input name="number_p1tients_2_2" min="1" type="number" class="form-control" id="number_p1tients_2_2" value="<?php echo $row1['MM2'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " onchange="calculateTotal3()" >
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
@@ -619,10 +637,11 @@ OTHER, External Cause : X60-X84</span>
 						<div class="col-md-4">&nbsp;&nbsp;เตียงผู้ชาย 
 						</div>
 						<div class="col-md-4">
-							<input name="number_p1tients_2_3" min="1" type="number" class="form-control" id="number_p1tients_2_3" value="<?php echo $row1['MM3'];?>"  placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " >
+							<input name="number_p1tients_2_3" min="1" type="number" class="form-control" id="number_p1tients_2_3" value="<?php echo $row1['MM3'];?>"  placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " onchange="calculateTotal3()" >
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
+				
 				<!--<div class="row" style="padding-bottom: 5px;">	
 						<div class="col-md-5">&nbsp;&nbsp;จำนวนผู้ป่วยจิตเวชและยาเสพติดจำหน่ายทั้งหมด 
 						<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
@@ -679,40 +698,18 @@ OTHER, External Cause : X60-X84</span>
           </div>
 		  <script>
 			
-			function calculateTotal2() {
+			function calculateTotal3() {
 
-					const input20 = parseFloat(document.getElementById('number_patients_20').value) || 0;
-					const input17 = parseFloat(document.getElementById('number_patients_17').value) || 1; // แก้ไข id เป็น 'number_patients_17'
-					const input21 = parseFloat(document.getElementById('number_patients_21').value) || 0;
+				const number_p1tients_2_1 = parseFloat(document.getElementById('number_p1tients_2_1').value) || 0;
+				const number_p1tients_2_2 = parseFloat(document.getElementById('number_p1tients_2_2').value) || 0; // แก้ไข id เป็น 'number_patients_17'
+				const number_p1tients_2_3 = parseFloat(document.getElementById('number_p1tients_2_3').value) || 0;
 
-					let result1, result2;
+				result1 = number_p1tients_2_2 + number_p1tients_2_3;
+				//alert(number_patients_2);
+				//alert(number_patients_3);
 
-					const currentDate = new Date();
-					const currentYear = currentDate.getFullYear();
-					const fiscalStartMonth = 9; // ตุลาคมคือเดือน 9 ใน JavaScript (เดือนเริ่มต้นที่ 0)
-					const fiscalYearStart = new Date(currentYear - 1, fiscalStartMonth, 1); // วันที่ 1 ตุลาคมของปีที่แล้ว
-
-					const today = new Date(); // วันที่ปัจจุบัน
-
-					const timeDiff = Math.abs(today - fiscalYearStart);
-					const diffDays = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
-
-					//alert(input17 * diffDays);
-					
-					if (input17 !== 0) {
-					result1 = ((input20 * 100) / (input17 * diffDays)).toFixed(2);;
-					} else {
-					result1 = "ไม่สามารถหารด้วย 0 ได้";
-					}
-
-					if (input20 !== 0) {
-					result2 = input21 / input20;
-					} else {
-					result2 = "ไม่สามารถหารด้วย 0 ได้";
-					}
-
-					document.getElementById('number_patients_22').value = result2;
-					document.getElementById('number_patients_23').value = result1;
+				//document.getElementById('number_patients_22').value = result2;
+				document.getElementById('number_p1tients_2_1').value = result1;
 			}
 		</script>
           </div>
@@ -935,7 +932,7 @@ OTHER, External Cause : X60-X84</span>
 						<div class="col-md-5">&nbsp;&nbsp;จำนวนเตียงจิตเวช <span class="disabledspan"></span>
 						</div>
 						<div class="col-md-4">
-							<input name="number_patients_1" min="1" type="number" class="form-control" id="number_patients_1" value="<?php echo $row1['Ward_no'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " required>
+							<input name="number_patients_1" min="1" type="number" class="form-control" id="number_patients_1" value="<?php echo $row1['Ward_no'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " required onchange="calculateTotal2()">
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
@@ -943,7 +940,7 @@ OTHER, External Cause : X60-X84</span>
 						<div class="col-md-5">&nbsp;&nbsp;เตียงผู้หญิง 
 						</div>
 						<div class="col-md-4">
-							<input name="number_patients_2" min="1" type="number" class="form-control" id="number_patients_2" value="<?php echo $row1['Unit'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " required>
+							<input name="number_patients_2" min="1" type="number" class="form-control" id="number_patients_2" value="<?php echo $row1['Unit'];?>" placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " required onchange="calculateTotal2()">
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
@@ -951,7 +948,7 @@ OTHER, External Cause : X60-X84</span>
 						<div class="col-md-5">&nbsp;&nbsp;เตียงผู้ชาย 
 						</div>
 						<div class="col-md-4">
-							<input name="number_patients_3" min="1" type="number" class="form-control" id="number_patients_3" value="<?php echo $row1['Unit_no'];?>"  placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " required>
+							<input name="number_patients_3" min="1" type="number" class="form-control" id="number_patients_3" value="<?php echo $row1['Unit_no'];?>"  placeholder="กรอกจำนวน (เฉพาะตัวเลขเท่านั้น)  " required onchange="calculateTotal2()">
 						</div>
 						<div class="col-md-2">เตียง</div>
 				</div>
@@ -1005,8 +1002,20 @@ OTHER, External Cause : X60-X84</span>
           </div>
 		  <script>
 			
-
 			function calculateTotal2() {
+
+				const number_patients_1 = parseFloat(document.getElementById('number_patients_1').value) || 0;
+				const number_patients_2 = parseFloat(document.getElementById('number_patients_2').value) || 0; // แก้ไข id เป็น 'number_patients_17'
+				const number_patients_3 = parseFloat(document.getElementById('number_patients_3').value) || 0;
+
+				result1 = number_patients_2 + number_patients_3;
+				//alert(number_patients_2);
+				//alert(number_patients_3);
+
+				//document.getElementById('number_patients_22').value = result2;
+				document.getElementById('number_patients_1').value = result1;
+
+				/*
 
 					const input20 = parseFloat(document.getElementById('number_patients_20').value) || 0;
 					const input17 = parseFloat(document.getElementById('number_patients_17').value) || 1; // แก้ไข id เป็น 'number_patients_17'
@@ -1040,6 +1049,8 @@ OTHER, External Cause : X60-X84</span>
 
 					document.getElementById('number_patients_22').value = result2;
 					document.getElementById('number_patients_23').value = result1;
+
+					*/
 			}
 		</script>
 		  <div class="col-md-4">

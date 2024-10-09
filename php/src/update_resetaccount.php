@@ -7,9 +7,19 @@ $HospitalID 	= $_POST['HospitalID'];
 $UserID 		= $_SESSION["UserID"];	
 
 $sql = "UPDATE userhospital SET 
-							Password	= '$HospitalID',
-							regupdate	= Now(),
-							stausloginfirst	= '0' 
+							`Password`	= '$HospitalID',
+							 `prefixID` = 0, 
+							`Name` = '', 
+							`Lname` = '', 
+							`telephone` = '', 
+							`mobile` = '', 
+							`useremail` = '', 
+							`position` = '', 
+							`TypeUser` = 'User_h', 
+							`status` = '0', 
+							`regupdate` = Now(), 
+							`lock` = '0', 
+							`stausloginfirst` = 0 
 						WHERE 
 							HospitalID = '$HospitalID';";
 
@@ -30,6 +40,7 @@ if($result){
 	}else{
 		echo "<script type='text/javascript'>";
 		echo "alert('Error : ไม่สามารถรีเซ็ตข้อมูลนี้ได้ โปรดตรวจสอบข้อมูลอีกครั้ง');";
+		echo "window.location = 'tables-memberalladmin.php'; ";
 		echo "</script>";
 }
 

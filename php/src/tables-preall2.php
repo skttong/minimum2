@@ -94,6 +94,179 @@ $rowptype   = mysqli_fetch_array($objptype);*/
     <section class="content">
       <div class="container-fluid">
 	  <div class="card-body">
+		<?php if($_SESSION["TypeUser"] == "Admin"){ ?>
+	  <form class="form-valide" action="tables-preall2.php" method="post" id="myform1" name="foml">  
+            <div class="row">
+              
+
+              <div class="col-md-2">
+               <div class="form-group" id="labelarea">
+                  <label>เขตสุขภาพ</label>
+                  <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
+                    <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="1">เขตสุขภาพ 1</option>
+                    <option value="2">เขตสุขภาพ 2</option>
+                    <option value="3">เขตสุขภาพ 3</option>
+					          <option value="4">เขตสุขภาพ 4</option>
+                    <option value="5">เขตสุขภาพ 5</option>
+                    <option value="6">เขตสุขภาพ 6</option>
+					          <option value="7">เขตสุขภาพ 7</option>
+                    <option value="8">เขตสุขภาพ 8</option>
+                    <option value="9">เขตสุขภาพ 9</option>
+					          <option value="10">เขตสุขภาพ 10</option>
+                    <option value="11">เขตสุขภาพ 11</option>
+                    <option value="12">เขตสุขภาพ 12</option>
+					          <option value="13">เขตสุขภาพ 13</option>
+                   </select>
+                </div>
+                <script>
+                   function myFunction3() {
+                      const selectedValue = $('#area').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { moo_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_PROVINCE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+            
+			   <!-- /.col -->
+             
+			 <!-- /.col -->
+              
+				<!-- /.form-group -->
+         
+               
+              </div>
+              <!-- /.col -->
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>จังหวัด</label>
+                  <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
+                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP
+					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
+GROUP BY CODE_PROVINCE 
+ORDER BY NO_PROVINCE ASC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
+					  
+					<?PHP
+					}
+					?>
+
+                  </select>
+                </div>
+
+                <script>
+                   function myFunction4() {
+                      const selectedValue = $('#CODE_PROVINCE').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_hos.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { CODE_PROVINCE: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->	
+
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2"  style="width: 100%;">
+                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="ในสังกัด">ในสังกัด</option>
+                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->
+
+
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>โรงพยาบาล</label>
+                  <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
+                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP
+					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
+WHERE HOS_TYPE <> 'คลินิกเอกชน'
+ORDER BY hospitalnew.CODE_HMOO DESC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
+					  
+					<?PHP
+					}
+					?>
+
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->		
+
+              <div class="col-md-2">
+              <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
+              </div>
+              <!-- /.col -->	
+
+
+
+            </div>
+            <!-- /.row -->
+		
+			<div class="card-footer">
+				  <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
+				   <button type="reset" class="btn btn-default"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
+			  	  <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
+			</div>  
+		</form>
+		<?php }else{ ?>
 			<form class="form-valide" action="tables-preall2.php" method="post" id="myform1" name="foml">  
             <div class="row">
               <?php /* ?>
@@ -305,6 +478,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 			  	  <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
 			</div>  
 		</form>
+		<?php } ?>
         </div>
         <!-- /.card -->	 
         <div class="row">
@@ -428,9 +602,10 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 
 			 if($_SESSION["TypeUser"] == "Admin"){ 
 
-            $sqlpersonnel = "SELECT *
+            $sqlpersonnel = "SELECT *, count(*) AS 'tcount' 
 								  FROM userhospital 
 								  INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
+								  INNER JOIN personnel ON personnel.HospitalID = hospitalnew.CODE5
 								  WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 								  AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
                                 ";
@@ -452,11 +627,14 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 						}
 					}
 
+					$sqlpersonnel = $sqlpersonnel." GROUP BY hospitalnew.CODE5 " ;
+
 			 }else{
 
-				$sqlpersonnel = "SELECT *
+				$sqlpersonnel = "SELECT *, count(*) AS 'tcount' 
 				FROM userhospital 
 				INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
+				INNER JOIN personnel ON personnel.HospitalID = hospitalnew.CODE5
 				WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 				AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
 				AND hospitalnew.CODE_HMOO = '$HosMOHP'";
@@ -477,6 +655,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 						$sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
 					}
 				}
+
+				$sqlpersonnel = $sqlpersonnel." GROUP BY hospitalnew.CODE5 " ;
 
 			 }
 

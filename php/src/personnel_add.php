@@ -103,13 +103,14 @@ if($positiontypeid == '1'){
 	$statuscong 		= $_POST['statuscong'];
 	$other_statuscong 	= $_POST['other_statuscong'];
 	
+
 	if($statuscong == 'อื่น ๆ'){
 		$statuscong = $statuscong.','.$other_statuscong;	
 	}
 	
 	$cogratyear = $_POST['cogratyear'];
 	
-	  $sql = "INSERT INTO personnel( HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age,  congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt)  
+	echo   $sql = "INSERT INTO personnel( HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age,  congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt)  
 	 VALUES ('$HospitalID','$positiontypeid','$position_other','$prename', '$firstname', '$lastname', '$birthday', '$age', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now() , '$Mcatt1', '$MWac1_1', '$MWac1_2', '$MWac1_3', '$MWac1_4', '$MWac1_5', '$MWac1_6', '$MWac1_7', '$MWac1_8', '$MWac1_9', '$other2_mcatt');";
 	
 }elseif($positiontypeid == '3'){
@@ -142,17 +143,31 @@ if($positiontypeid == '1'){
 }elseif($positiontypeid == '6'){
 	
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
-	$other_training = $_POST['other2_training'];
+	//$training 	= $_POST['training'];
+
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	$sql = "INSERT INTO personnel(HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age,  r2, training, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt)  VALUES 
-	('$HospitalID','$positiontypeid','$prename','$position_other', '$firstname', '$lastname', '$birthday', '$age', '$r2', '$training', '$UserID', Now(), '$Mcatt1', '$MWac1_1', '$MWac1_2', '$MWac1_3', '$MWac1_4', '$MWac1_5', '$MWac1_6', '$MWac1_7', '$MWac1_8', '$MWac1_9', '$other2_mcatt');";
+	('$HospitalID','$positiontypeid','$position_other', '$prename','$firstname', '$lastname', '$birthday', '$age', '$r2', '$training', '$UserID', Now(), '$Mcatt1', '$MWac1_1', '$MWac1_2', '$MWac1_3', '$MWac1_4', '$MWac1_5', '$MWac1_6', '$MWac1_7', '$MWac1_8', '$MWac1_9', '$other2_mcatt');";
 	
 }elseif($positiontypeid == '7'){
 	
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
-	$other_training = $_POST['other2_training'];
+	//$training 	= $_POST['training'];
+
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	$sql = "INSERT INTO personnel( HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt) 
 	 VALUES ('$HospitalID','$positiontypeid','$position_other','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now(), '$Mcatt1', '$MWac1_1', '$MWac1_2', '$MWac1_3', '$MWac1_4', '$MWac1_5', '$MWac1_6', '$MWac1_7', '$MWac1_8', '$MWac1_9', '$other2_mcatt');";
@@ -160,8 +175,15 @@ if($positiontypeid == '1'){
 }elseif($positiontypeid == '8'){
 	
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
-	$other_training = $_POST['other2_training'];
+	//$training 	= $_POST['training'];
+
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
 	$sql = "INSERT INTO personnel( HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt) 
 	 VALUES ('$HospitalID','$positiontypeid','$position_other','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now(), '$Mcatt1', '$MWac1_1', '$MWac1_2', '$MWac1_3', '$MWac1_4', '$MWac1_5', '$MWac1_6', '$MWac1_7', '$MWac1_8', '$MWac1_9', '$other2_mcatt');";
@@ -169,8 +191,13 @@ if($positiontypeid == '1'){
 }elseif($positiontypeid == '9'){
 	
 	$r2 			= $_POST['r2working'];
-	$training 		= $_POST['training'];
-	$other_training = $_POST['other2_training'];
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+	//print_r($training);
+	$other_training = $_POST['other_training2'];
 	//echo "<br>";
 	
 	$sql = "INSERT INTO personnel( HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, other_training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt) 
@@ -178,10 +205,18 @@ if($positiontypeid == '1'){
 	
 }elseif($positiontypeid == '10'){
 	$r2 		= $_POST['r2working'];
-	$training 	= $_POST['training'];
+	//$training 	= $_POST['training'];
+
+	if($_POST['training_1']<>'ไม่เคยผ่านการอบรมเฉพาะทาง'){
+		$training = $_POST['training_2'].','.$_POST['training_3'].','.$_POST['training_4'];
+	}else{
+		$training = $_POST['training_1'];
+	}
+
+	$other_training = $_POST['other_training2'];
 	
-	 $sql = "INSERT INTO personnel( HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt) 
-	 VALUES ('$HospitalID','$positiontypeid','$position_other' ,'$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now(), '$Mcatt1', '$MWac1_1', '$MWac1_2', '$MWac1_3', '$MWac1_4', '$MWac1_5', '$MWac1_6', '$MWac1_7', '$MWac1_8', '$MWac1_9', '$other2_mcatt');";
+	 $sql = "INSERT INTO personnel( HospitalID, positiontypeID, position_other, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, other_training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate,  Mcatt1, MWac1_1, MWac1_2, MWac1_3, MWac1_4, MWac1_5, MWac1_6, MWac1_7, MWac1_8, MWac1_9, other2_mcatt) 
+	 VALUES ('$HospitalID','$positiontypeid','$position_other' ,'$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$other_training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now(), '$Mcatt1', '$MWac1_1', '$MWac1_2', '$MWac1_3', '$MWac1_4', '$MWac1_5', '$MWac1_6', '$MWac1_7', '$MWac1_8', '$MWac1_9', '$other2_mcatt');";
 }
 
 	//$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
@@ -245,5 +280,7 @@ if($positiontypeid == '1'){
 		echo "window.location = 'forms_m6.php?type=10'; ";
 		echo "</script>";
 	}
+
+	
 	
 ?>

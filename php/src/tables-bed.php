@@ -36,6 +36,8 @@ $HosMOHP		= $_SESSION["HostHMOO"];
 		<meta http-equiv="Refresh" content="0;URL=tables-bedall.php">
 	<?php }else if($_SESSION["HosType"] == 'กรมสุขภาพจิต'){ ?>
 		<meta http-equiv="Refresh" content="0;URL=tables-bedall.php">
+  <?php }else if($_SESSION["TypeUser"] == "Admin"){ ?>
+      <meta http-equiv="Refresh" content="0;URL=tables-bedall.php">
 	<?php } ?>
 
 </head>

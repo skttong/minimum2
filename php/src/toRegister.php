@@ -43,6 +43,12 @@ session_start();
 							$_SESSION["HOS_NAME"]		= $HospitalName;
 							$_SESSION["Affiliation"]	= $Affiliation;
 
+							$sqllogon 		= "UPDATE userhospital SET `lock` = '1' WHERE UserID = '".$rowlogin["UserID"]."';" ;
+							$resultlogon  	= mysqli_query($con, $sqllogon);
+							
+
+							
+
 							if($_SESSION["TypeUser"] !=""){ 
 
 							  //Header("Location: detail-1.php");

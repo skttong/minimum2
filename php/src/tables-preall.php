@@ -97,6 +97,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
       </div><!-- /.container-fluid -->
     </section>
 
+	
     <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
@@ -353,9 +354,10 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnelID DESC; ";
 		}else{
 
-            $sqlpersonnel = "SELECT *
+            $sqlpersonnel = "SELECT *, count(*) AS 'tcount' 
 								  FROM userhospital 
 								  INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
+								  INNER JOIN personnel ON personnel.HospitalID = hospitalnew.CODE5
 								  WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 								  AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
 								  AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
@@ -368,6 +370,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE5 = '".$_POST['CODE_PROVINCE']."'" ;
 				}
 			}
+
+			$sqlpersonnel = $sqlpersonnel." GROUP BY hospitalnew.CODE5 " ;
 		
 
 		   /* echo  $sqlpersonnel = "SELECT 
@@ -467,7 +471,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					</tbody>
 				  </table>
 
-				  <table id="example3" class="table table-bordered table-striped" >
+				  <table id="example3" class="table table-bordered table-striped" hidden >
                   <thead>
                   <tr align="center">
 					  <th width="2%">#</th>

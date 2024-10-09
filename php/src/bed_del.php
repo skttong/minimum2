@@ -12,7 +12,7 @@ if (!empty($_POST['ispostback']) && $_POST['ispostback'] == 'true') {
     }
 }
  */
- $sqluser = "DELETE FROM bed WHERE bedID = '".$_GET['id']."'";
+ $sqluser = "DELETE FROM bed WHERE bedID = '".$_GET['bedID']."'";
  $resultuser = mysqli_query($con, $sqluser);
 /*
 if($PERTYPE != 0){

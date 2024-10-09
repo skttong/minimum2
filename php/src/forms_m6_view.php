@@ -277,6 +277,15 @@ if($row1['birthday'] == '0000'){
 		</div>
 		<?php } ?>	
 
+		
+		<?php 
+
+			$training = preg_split ("/\,/", $row1['training']); 
+
+			//print_r($training);
+
+			?>
+
 		<?php if($FORMTYPE <> 9){ ?>	
 			
 		<div class="row" style="padding-bottom: 10px;"> 
@@ -286,12 +295,12 @@ if($row1['birthday'] == '0000'){
 				<br>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="r2working_1" name="r2working" value="ปฏิบัติงานสุขภาพจิต" required
-                    <?php if($R2WORK6 == "ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
+                    <?php if($row1['r2'] == "ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="r2working_1"></label>ปฏิบัติงานสุขภาพจิต
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="r2working_2" name="r2working" value="ไม่ได้ปฏิบัติงานสุขภาพจิต" required
-                    <?php if($R2WORK6 == "ไม่ได้ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
+                    <?php if($row1['r2'] == "ไม่ได้ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="r2working_2"></label>ไม่ได้ปฏิบัติงานสุขภาพจิต
 					<div class="invalid-feedback" style="font-size: 100%">โปรดเลือกการปฏิบัติงานสุขภาพจิต</div>
 			    </div> 				
@@ -315,30 +324,32 @@ if($row1['birthday'] == '0000'){
 				  <input name="training" type="text" class="form-control" id="training" placeholder="โปรดระบุ" >
 				</span>
 				<p></p>-->
-				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1" name="training" value="ไม่เคยผ่านการอบรมเฉพาะทาง" onclick="disableTxt2();" required
-                    <?php if($row1['training'] == "ด้านสุขภาพจิตและจิตเวช"){echo 'checked';} ?>>
+
+				
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_1" name="training_1" value="ไม่เคยผ่านการอบรมเฉพาะทาง" onclick="disableTxt2();" required
+                    <?php if($training[0] == "ไม่เคยผ่านการอบรมเฉพาะทาง"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_1"></label>ไม่เคยผ่านการอบรมเฉพาะทาง
 			    </div>
-				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_2" name="training" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt2();" required
-                    <?php if($row1['training'] == "ด้านสุขภาพจิตและจิตเวช"){echo 'checked';} ?>>
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_2" name="training_2" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt2();" required
+                    <?php if($training[0] == "ด้านสุขภาพจิตและจิตเวช"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_2"></label>ด้านสุขภาพจิตและจิตเวช
 			    </div>
-				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_3" name="training" value="ด้านยาเสพติด" onclick="disableTxt2();"required
-                    <?php if($row1['training'] == "ด้านยาเสพติด"){echo 'checked';} ?>>
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_3" name="training_3" value="ด้านยาเสพติด" onclick="disableTxt2();"required
+                    <?php if($training[1] == "ด้านยาเสพติด"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_3"></label>ด้านยาเสพติด
 			    </div>
-				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_4" name="training" value="อื่น ๆ" onclick="enableTxt2();" required
-                    <?php if($row1['training'] == "อื่น ๆ"){echo 'checked';} ?>>
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_4" name="training_4" value="อื่น ๆ" onclick="enableTxt2();" required
+                    <?php if($training[2] == "อื่น ๆ"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="training_4"></label>อื่น ๆ
 					<div class="invalid-feedback" style="font-size: 100%">โปรดเลือกการอบรมเฉพาะทาง</div>
 			    </div> 	
 				<div class="col-6" style="margin-top: 10px;">
                   <span for="other_training2">โปรดระบุ</span>
-                  <?php if($row1['training'] == "อื่น ๆ"){?>
+                  <?php if($training[2] == "อื่น ๆ"){?>
                     <input name="other_training2" type="text" class="form-control" id="other_training2" placeholder="โปรดระบุ" value="<?php echo $row1['other_training']; ?>"  required>
 				  <?php }else{?>
                     <input name="other_training2" type="text" class="form-control" id="other_training2" placeholder="โปรดระบุ" disabled required>
@@ -369,12 +380,12 @@ if($row1['birthday'] == '0000'){
 				<br>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="r2working_1" name="r2working" value="ปฏิบัติงานสุขภาพจิต" required
-                    <?php if($R2WORK6 == "ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
+                    <?php if($row1['r2'] == "ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="r2working_1"></label>ปฏิบัติงานสุขภาพจิต
 			    </div>
 				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="r2working_2" name="r2working" value="ไม่ได้ปฏิบัติงานสุขภาพจิต" required
-                    <?php if($R2WORK6 == "ไม่ได้ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
+                    <?php if($row1['r2'] == "ไม่ได้ปฏิบัติงานสุขภาพจิต"){echo 'checked';} ?>>
 					<label class="custom-control-label" for="r2working_2"></label>ไม่ได้ปฏิบัติงานสุขภาพจิต
 					<div class="invalid-feedback" style="font-size: 100%">โปรดเลือกการปฏิบัติงานสุขภาพจิต</div>
 			    </div> 				
@@ -390,22 +401,27 @@ if($row1['birthday'] == '0000'){
 			  <div class="form-group">
 				<label><i class="fas fa-file-alt"></i>&nbsp;&nbsp;&nbsp;การอบรมเฉพาะทาง</label>
 			  	<br>
-				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1" name="training" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt();" required
-                    <?php if($row1['training'] == "ด้านสุขภาพจิตและจิตเวช"){echo 'checked';} ?>>
-					<label class="custom-control-label" for="training_1"></label>ด้านสุขภาพจิตและจิตเวช
+				  <div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_1" name="training_1" value="ไม่เคยผ่านการอบรมเฉพาะทาง" onclick="disableTxt2();" required
+                    <?php if($training[0] == "ไม่เคยผ่านการอบรมเฉพาะทาง"){echo 'checked';} ?>>
+					<label class="custom-control-label" for="training_1"></label>ไม่เคยผ่านการอบรมเฉพาะทาง
 			    </div>
-				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_2" name="training" value="ด้านยาเสพติด" onclick="disableTxt();"required
-                    <?php if($row1['training'] == "ด้านยาเสพติด"){echo 'checked';} ?>>
-					<label class="custom-control-label" for="training_2"></label>ด้านยาเสพติด
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_2" name="training_2" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt2();" required
+                    <?php if($training[0] == "ด้านสุขภาพจิตและจิตเวช"){echo 'checked';} ?>>
+					<label class="custom-control-label" for="training_2"></label>ด้านสุขภาพจิตและจิตเวช
 			    </div>
-				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_3" name="training" value="อื่น ๆ" onclick="enableTxt();" required
-                    <?php if($row1['training'] == "อื่น ๆ"){echo 'checked';} ?>>
-					<label class="custom-control-label" for="training_3"></label>อื่น ๆ
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_3" name="training_3" value="ด้านยาเสพติด" onclick="disableTxt2();"required
+                    <?php if($training[1] == "ด้านยาเสพติด"){echo 'checked';} ?>>
+					<label class="custom-control-label" for="training_3"></label>ด้านยาเสพติด
+			    </div>
+				<div class="custom-control custom-checkbox">
+					<input type="checkbox" class="custom-control-input" id="training_4" name="training_4" value="อื่น ๆ" onclick="enableTxt2();" required
+                    <?php if($training[2] == "อื่น ๆ"){echo 'checked';} ?>>
+					<label class="custom-control-label" for="training_4"></label>อื่น ๆ
 					<div class="invalid-feedback" style="font-size: 100%">โปรดเลือกการอบรมเฉพาะทาง</div>
-			    </div> 	
+			    </div> 		 	
 				<div class="col-6" style="margin-top: 10px;">
                   <span for="other_training">โปรดระบุ</span>
                   <?php if($row1['training'] == "อื่น ๆ"){?>

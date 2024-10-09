@@ -51,6 +51,7 @@ $Total = $rowmid['Total'];
 $msql1 = "SELECT
   m.CODE_map02,
     m.CODE_PROVINCETH,
+    m2.CODE_TOTAL ,
   SUM(ho.result1) AS total_result1,
   SUM(ho.result2) AS total_result2,
   SUM(ho.result1 + ho.result2) AS total_all
@@ -58,11 +59,43 @@ FROM
   HDCTB21OLD ho
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
+JOIN Midyear m2 ON m2.CODE_PROVINCE = m.CODE_PROVINCE 
 WHERE
-  ho.b_year = '2567'  -- Add a filter for the year
+    1 ";
+    
+if (isset($_POST['Year'])) {
+    $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
+  }
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $msql1 = $msql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
+    $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $msql1 = $msql1."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $msql1 = $msql1."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+$msql1 = $msql1."  
 GROUP BY
-  m.CODE_map02,   m.CODE_PROVINCETH;
-
+  m.CODE_map02,   m.CODE_PROVINCETH
 ";
 
 $mobj1 = mysqli_query($con, $msql1);
@@ -72,7 +105,7 @@ while($mrow1 = mysqli_fetch_array($mobj1))
 {
 	if($mrow1['total_result2'] <> 0){
 		//$datamap = $datamap."['".$mrow1['CODE_map02']."',".$mrow1['total_result2']."],";
-        $datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".$mrow1['total_result2'].",name:'".$mrow1['CODE_PROVINCETH']."'},";
+        $datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".number_format(($mrow1['total_result2']/$mrow1['CODE_TOTAL']*100000), 2, '.', ',').",name:'".$mrow1['CODE_PROVINCETH']."'},";
 	}
 	//['th-ct', 10],
 }
@@ -86,7 +119,43 @@ $sqlhdc01 = "SELECT
   SUM(CASE WHEN b_year = '2564' THEN total ELSE 0 END) AS total_2564,
   SUM(CASE WHEN b_year = '2563' THEN total ELSE 0 END) AS total_2563
 FROM
-  HDCTB01
+  HDCTB01 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+if (isset($_POST['Year'])) {
+    $sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
+  }
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlhdc01 = $sqlhdc01."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
+    $sqlhdc01 = $sqlhdc01."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlhdc01 = $sqlhdc01."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlhdc01 = $sqlhdc01."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlhdc01 = $sqlhdc01."  
 GROUP BY
   groupcode;";
 $objhdc01 = mysqli_query($con, $sqlhdc01);
@@ -132,7 +201,43 @@ $sqlhdc02 = "SELECT
   SUM(CASE WHEN b_year = '2564' THEN total ELSE 0 END) AS total_2564,
   SUM(CASE WHEN b_year = '2563' THEN total ELSE 0 END) AS total_2563
 FROM
-  HDCTB02
+  HDCTB02 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+if (isset($_POST['Year'])) {
+    $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
+  }
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlhdc02 = $sqlhdc02."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
+    $sqlhdc02 = $sqlhdc02."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlhdc02 = $sqlhdc02."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlhdc02 = $sqlhdc02."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlhdc02 = $sqlhdc02."  
 GROUP BY
   groupcode;";
 $objhdc02 = mysqli_query($con, $sqlhdc02);
@@ -179,10 +284,46 @@ $sqlHD21OLD = "SELECT
     SUM(ho.result1 + ho.result2) AS total_all
 FROM
     HDCTB21OLD ho
-WHERE 
-	1
+JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+    if (isset($_POST['Year'])) {
+        $sqlHD21OLD = $sqlHD21OLD."AND ho.b_year = '".$Year."'" ;
+      }
+      
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlHD21OLD = $sqlHD21OLD."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
+    $sqlHD21OLD = $sqlHD21OLD."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlHD21OLD = $sqlHD21OLD."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlHD21OLD = $sqlHD21OLD."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlHD21OLD = $sqlHD21OLD." 
 GROUP BY
     ho.b_year";
+
 $objHD21OLD = mysqli_query($con, $sqlHD21OLD);
 $rowHD21OLD = mysqli_fetch_array($objHD21OLD);
 
@@ -224,10 +365,45 @@ $sqlHD18OLD = "SELECT
     SUM(ho.f19_m)+SUM(ho.f19_f) AS sum_f19_all
 FROM
     HDCTB18OLD ho
-WHERE 
-    1
-Group by 
-	ho.b_year";	
+JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+    if (isset($_POST['Year'])) {
+        $sqlHD18OLD = $sqlHD18OLD."AND ho.b_year = '".$Year."'" ;
+      }
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlHD18OLD = $sqlHD18OLD."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
+    $sqlHD18OLD = $sqlHD18OLD."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlHD18OLD = $sqlHD18OLD."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlHD18OLD = $sqlHD18OLD."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlHD18OLD = $sqlHD18OLD." 
+GROUP BY
+    ho.b_year";
+
 
 
 $labels = '';
@@ -276,13 +452,48 @@ while($rowHD18OLD = mysqli_fetch_array($objHD18OLD))
 
 $sqlHD18_1OLD = "SELECT
 	ho.b_year,
-    SUM(ho.r_new) AS sum_r_new
+	SUM(ho.r_new) AS sum_r_new,
+    (ho.f10_m+ho.f11_m+ho.f12_m+ho.f13_m+ho.f14_m+ho.f15_m+ho.f16_m+ho.f17_m+ho.f18_m+ho.f19_m) AS sum_r_new_m ,
+    (ho.f10_f+ho.f11_f+ho.f12_f+ho.f13_f+ho.f14_f+ho.f15_f+ho.f16_f+ho.f17_f+ho.f18_f+ho.f19_f) AS sum_r_new_f
 FROM
     HDCTB18OLD ho
-WHERE 
-    1
-Group by 
-	ho.b_year";	
+JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+    if (isset($_POST['Year'])) {
+        $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
+      }
+      
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlHD18_1OLD = $sqlHD18_1OLD."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
+    $sqlHD18_1OLD = $sqlHD18_1OLD."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlHD18_1OLD = $sqlHD18_1OLD."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlHD18_1OLD = $sqlHD18_1OLD."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+
 
 $objHD18_1OLD = mysqli_query($con, $sqlHD18_1OLD);
 $rowHD18_1OLD = mysqli_fetch_array($objHD18_1OLD);
@@ -290,6 +501,11 @@ $rowHD18_1OLD = mysqli_fetch_array($objHD18_1OLD);
 $sum_r_new =0;
 
 $sum_r_new = $rowHD18_1OLD['sum_r_new'];
+
+$sum_r_new_m = $rowHD18_1OLD['sum_r_new_m'];
+
+$sum_r_new_f = $rowHD18_1OLD['sum_r_new_f'];
+
 
 
 $sqlHD21OLD_2 = "SELECT
@@ -299,6 +515,43 @@ $sqlHD21OLD_2 = "SELECT
     SUM(ho.result1 + ho.result2) AS total_all
 FROM
     HDCTB21OLD ho
+JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+    if (isset($_POST['Year'])) {
+        $sqlHD21OLD_2 = $sqlHD21OLD_2."AND ho.b_year = '".$Year."'" ;
+      }
+      
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlHD21OLD_2 = $sqlHD21OLD_2."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
+    $sqlHD21OLD_2 = $sqlHD21OLD_2."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlHD21OLD_2 = $sqlHD21OLD_2."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlHD21OLD_2 = $sqlHD21OLD_2."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlHD21OLD_2 = $sqlHD21OLD_2."
 GROUP BY
     ho.b_year";
 $objHD21OLD_2 = mysqli_query($con, $sqlHD21OLD_2);
@@ -494,7 +747,7 @@ $total_all_20old = $rowhdc20old['total_all_20old'];
           <div class="card-body">
 			<form class="form-valide" action="dashboard09.php" method="post" id="myform1" name="foml">  
             <div class="row">
-            <div class="col-md-2">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
                   <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
@@ -510,81 +763,25 @@ $total_all_20old = $rowhdc20old['total_all_20old'];
                 </div>
               </div>
               <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2"  style="width: 100%;">
-                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="ในสังกัด">ในสังกัด</option>
-                    <option value="นอกสังกัด">นอกสังกัด</option>
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->
-			   <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
-                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
-                    <option value="เขตพื้นที่">เขตพื้นที่</option>
-                    <option value="ServicePlan">Service Plan</option>
-                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
-                  </select>
-				   
-				<script>
-					function myFunction() {
-						let elementarea 		= document.getElementById("area");
-						let elementlabelarea 	= document.getElementById("labelarea");
-						let elementservice 		= document.getElementById("service");
-						let elementlabelservice = document.getElementById("labelservice");
-						
-						selectElement = document.querySelector('#mySelect');	
-        				output = selectElement.value;
-						
-						if(output === "ServicePlan"){
-							//alert(output);
-							elementservice.removeAttribute("hidden");
-							elementlabelservice.removeAttribute("hidden");
-							
-							elementarea.setAttribute("hidden", "hidden");
-							elementlabelarea.setAttribute("hidden", "hidden");
-							
-						}else{
-							elementarea.removeAttribute("hidden");
-							elementlabelarea.removeAttribute("hidden");
-							
-							elementservice.setAttribute("hidden", "hidden");
-							elementlabelservice.setAttribute("hidden", "hidden");
-						
-							//alert("tong");
-						}
-						
-					}
-				</script> 
-				   
-                </div>
-              </div>
-              <!-- /.col -->	
-			 <!-- /.col -->
+
               <div class="col-md-2">
                <div class="form-group" id="labelarea">
                   <label>เขตสุขภาพ</label>
                   <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="1">เขต1</option>
-                    <option value="2">เขต2</option>
-                    <option value="3">เขต3</option>
-					          <option value="4">เขต4</option>
-                    <option value="5">เขต5</option>
-                    <option value="6">เขต6</option>
-					          <option value="7">เขต7</option>
-                    <option value="8">เขต8</option>
-                    <option value="9">เขต9</option>
-					          <option value="10">เขต10</option>
-                    <option value="11">เขต11</option>
-                    <option value="12">เขต12</option>
-					          <option value="13">เขต13</option>
+                    <option value="1">เขตสุขภาพ 1</option>
+                    <option value="2">เขตสุขภาพ 2</option>
+                    <option value="3">เขตสุขภาพ 3</option>
+					          <option value="4">เขตสุขภาพ 4</option>
+                    <option value="5">เขตสุขภาพ 5</option>
+                    <option value="6">เขตสุขภาพ 6</option>
+					          <option value="7">เขตสุขภาพ 7</option>
+                    <option value="8">เขตสุขภาพ 8</option>
+                    <option value="9">เขตสุขภาพ 9</option>
+					          <option value="10">เขตสุขภาพ 10</option>
+                    <option value="11">เขตสุขภาพ 11</option>
+                    <option value="12">เขตสุขภาพ 12</option>
+					          <option value="13">เขตสุขภาพ 13</option>
                    </select>
                 </div>
                 <script>
@@ -600,34 +797,14 @@ $total_all_20old = $rowhdc20old['total_all_20old'];
                           });
                     }
 			    	</script> 
+            
+			   <!-- /.col -->
+             
+			 <!-- /.col -->
+              
 				<!-- /.form-group -->
-                <div class="form-group" id="labelservice" hidden="none">
-                  <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" hidden="none" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-                <script>
-                   function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_PROVINCE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
+         
+               
               </div>
               <!-- /.col -->
               <div class="col-md-2">
@@ -671,6 +848,46 @@ ORDER BY NO_PROVINCE ASC;";
               </div>
               <!-- /.col -->	
 
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2"  style="width: 100%;">
+                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="ในสังกัด">ในสังกัด</option>
+                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->
+
+              <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
 
               <div class="col-md-2">
                <div class="form-group">
@@ -684,7 +901,6 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					$objprovince = mysqli_query($con, $sqlprovince);
 					
 					while($rowprovince = mysqli_fetch_array($objprovince))
-
 					{
 	
 					?>
@@ -697,7 +913,55 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                   </select>
                 </div>
               </div>
-              <!-- /.col -->				
+              <!-- /.col -->		
+
+
+              
+
+<!--<div class="col-md-2">
+               <div class="form-group">
+                  <label>เขตพื้นที่/Service Plan</label>
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
+                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
+                    <option value="เขตพื้นที่">เขตพื้นที่</option>
+                    <option value="ServicePlan">Service Plan</option>
+                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
+                  </select>
+				   
+				<script>
+					function myFunction() {
+						let elementarea 		= document.getElementById("area");
+						let elementlabelarea 	= document.getElementById("labelarea");
+						let elementservice 		= document.getElementById("service");
+						let elementlabelservice = document.getElementById("labelservice");
+						
+						selectElement = document.querySelector('#mySelect');	
+        				output = selectElement.value;
+						
+						if(output === "ServicePlan"){
+							//alert(output);
+							elementservice.removeAttribute("hidden");
+							elementlabelservice.removeAttribute("hidden");
+							
+							elementarea.setAttribute("hidden", "hidden");
+							elementlabelarea.setAttribute("hidden", "hidden");
+							
+						}else{
+							elementarea.removeAttribute("hidden");
+							elementlabelarea.removeAttribute("hidden");
+							
+							elementservice.setAttribute("hidden", "hidden");
+							elementlabelservice.setAttribute("hidden", "hidden");
+						
+							//alert("tong");
+						}
+						
+					}
+				</script> 
+				   
+                </div>
+              </div>-->
+              <!-- /.col -->					
             </div>
             <!-- /.row -->
 		
@@ -804,8 +1068,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 <div class="inner">
                 
                 <p>ฆ่าตัวตายสำเร็จ</p>
-                <h3><?php echo number_format($total_all, 0, '.', ',');?> คน</h3>
-                <p><?php echo number_format((($total_all/ $Total)*100000), 4, '.', ',');?>: 1แสน ประชากร</p>
+                <h3><?php echo number_format($total_result1, 0, '.', ',');?> คน</h3>
+                <p><?php echo number_format((($total_result1/ $Total)*100000), 4, '.', ',');?>: 1แสน ประชากร</p>
                 
                 </div>
                 
@@ -1003,200 +1267,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
         </div>
 
         <div class="row">
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">ผู้ป่วยจิตเภท</h3>
-                        <div align="right">
-                            <button class="btn btn-navbar" id="download-button5"><img width="10%" src="images/downloand.png"></button>
-                        </div>
-                    
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myChart7" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
-                        <script>
-                            const ctx7 = document.getElementById('myChart7');
-                            
-                            
-                            const downloadButton7 = document.getElementById('download-button7');
-
-                            const myChart7 = new Chart(ctx7, {
-                                type: 'bar',
-                                data: {
-                                    labels: [''],
-                                    datasets: [{
-                                        label: '15++',
-                                        data: [<?php echo $total_result2_17old; ?>], // ข้อมูลจำนวนประชากรชายแต่ละกลุ่มอายุ
-                                        backgroundColor: 'blue',
-                                        borderColor: 'blue',
-                                        borderWidth: 1
-                                    }
-                                    /*,{
-                                        label: 'Female',
-                                        data: [-10000, -11000, -12000], // ข้อมูลจำนวนประชากรหญิงแต่ละกลุ่มอายุ
-                                        backgroundColor: 'pink',
-                                        borderColor: 'pink',
-                                        borderWidth: 1
-                                    }*/]
-                                },
-                                options: {
-                                    plugins: {
-                        tooltip: {
-                        intersect: true,
-                        callbacks: {
-                            label: function(context) {
-                            var label = context.dataset.label || '';
-                            var value = context.formattedValue;
-                            var positiveOnly = value < 0 ? -value : value;
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed.y !== null) {
-                                label += positiveOnly
-                            }
-                            return label;
-                            },
-                        },
-                        },
-                        legend: {
-                        position: "bottom",
-                        },
-                    },
-                    responsive: true,
-                                    indexAxis: 'y', // แสดงกราฟแบบแนวนอน
-                                    scales: {
-                                    x: {
-                                    stacked: false,
-                                    ticks: {
-                                        beginAtZero: true,
-                                        callback: (v) => {
-                                        return v < 0 ? -v : v;
-                                        },
-                                    },
-                                    },
-                                    y: {
-                                    stacked: true,
-                                    ticks: {
-                                        beginAtZero: true,
-                                    },
-                                    position: "left",
-                                    },
-                                },
-                                }
-                            });
-
-                    downloadButton.addEventListener('click', function() {
-                        const chartData = myChart7.toBase64Image(); // Get chart image data
-                        const link = document.createElement('a');
-                        link.href = chartData;
-                        link.download = 'stacked-barchart.png'; // Set download filename
-                        link.click();
-                    });
-                    </script>
-                        
-                    </div>
-
-                </div>
-                
-
-            </div>
-            <div class="col-md-4">
-                <div class="card">
-                    <div class="card-header">
-                        <h3 class="card-title">ผู้ป่วยซึมเศร้า</h3>
-                        
-                        <div align="right">
-                            <button class="btn btn-navbar" id="download-button8"><img width="10%" src="images/downloand.png"></button>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <canvas id="myChart8" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
-                        <script>
-                            const ctx8 = document.getElementById('myChart8');
-                            
-                            
-                            const downloadButton8 = document.getElementById('download-button8');
-
-                            const myChart8 = new Chart(ctx8, {
-                                type: 'bar',
-                                data: {
-                                    labels: [''],
-                                    datasets: [/*{
-                                        label: 'Male',
-                                        data: [15000, 12000, 10000], // ข้อมูลจำนวนประชากรชายแต่ละกลุ่มอายุ
-                                        backgroundColor: 'blue',
-                                        borderColor: 'blue',
-                                        borderWidth: 1
-                                    },*/{
-                                        label: '15++',
-                                        data: [<?php echo $total_result2_20old ; ?>], // ข้อมูลจำนวนประชากรหญิงแต่ละกลุ่มอายุ
-                                        backgroundColor: 'pink',
-                                        borderColor: 'pink',
-                                        borderWidth: 1
-                                    }]
-                                },
-                                options: {
-                                    plugins: {
-                        tooltip: {
-                        intersect: true,
-                        callbacks: {
-                            label: function(context) {
-                            var label = context.dataset.label || '';
-                            var value = context.formattedValue;
-                            var positiveOnly = value < 0 ? -value : value;
-                            if (label) {
-                                label += ': ';
-                            }
-                            if (context.parsed.y !== null) {
-                                label += positiveOnly
-                            }
-                            return label;
-                            },
-                        },
-                        },
-                        legend: {
-                        position: "bottom",
-                        },
-                    },
-                    responsive: true,
-                                    indexAxis: 'y', // แสดงกราฟแบบแนวนอน
-                                    scales: {
-                                    x: {
-                                    stacked: false,
-                                    ticks: {
-                                        beginAtZero: true,
-                                        callback: (v) => {
-                                        return v < 0 ? -v : v;
-                                        },
-                                    },
-                                    },
-                                    y: {
-                                    stacked: true,
-                                    ticks: {
-                                        beginAtZero: true,
-                                    },
-                                    position: "left",
-                                    },
-                                },
-                                }
-                            });
-
-                    downloadButton.addEventListener('click', function() {
-                        const chartData = myChart8.toBase64Image(); // Get chart image data
-                        const link = document.createElement('a');
-                        link.href = chartData;
-                        link.download = 'stacked-barchart.png'; // Set download filename
-                        link.click();
-                    });
-                        </script>
-                        
-                    </div>
-
-                </div>
-                
-                
-
-            </div> 
+           
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
@@ -1218,15 +1289,15 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                 type: 'bar',
                                 data: {
                                     labels: [''],
-                                    datasets: [/*{
+                                    datasets: [{
                                         label: 'Male',
-                                        data: [15000, 12000, 10000], // ข้อมูลจำนวนประชากรชายแต่ละกลุ่มอายุ
+                                        data: [<?php echo $sum_r_new_m ; ?>], // ข้อมูลจำนวนประชากรชายแต่ละกลุ่มอายุ
                                         backgroundColor: 'blue',
                                         borderColor: 'blue',
                                         borderWidth: 1
-                                    },*/{
-                                        label: '15++',
-                                        data: [<?php echo $sum_r_new ; ?>], // ข้อมูลจำนวนประชากรหญิงแต่ละกลุ่มอายุ
+                                    },{
+                                        label: 'Female',
+                                        data: [<?php echo -$sum_r_new_f ; ?>], // ข้อมูลจำนวนประชากรหญิงแต่ละกลุ่มอายุ
                                         backgroundColor: 'pink',
                                         borderColor: 'pink',
                                         borderWidth: 1
@@ -1477,6 +1548,16 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">ผู้ป่วยSMIV</h3>
+                        <div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
+							<span class="tooltiptext"> 
+								<ul>
+									<li>1B030 : การประเมิน ผู้ป่วยจิตเวชที่มีความเสี่ยงสูง พบทำร้ายตนเองด้วยวิธีรุนแรง  มุ่งหวังให้เสียชีวิต</li>
+									<li>1B031 : การประเมิน ผู้ป่วยจิตเวชที่มีความเสี่ยงสูง พบทำร้ายผู้อื่นด้วยวิธีรุนแรง/ก่อเหตุการณ์รุนแรงในชุมชน</li>
+									<li>1B032 : การประเมิน ผู้ป่วยจิตเวชที่มีความเสี่ยงสูง พบมีอาการหลงผิด มีความคิดทำร้าย ผู้อื่นให้ถึงกับชีวิต หรือมุ่งร้ายผู้อื่นแบบเฉพาะเจาะจง เช่น ระบุชื่อคนที่จะมุ่งร้าย</li>
+									<li>1B033 : การประเมิน ผู้ป่วยจิตเวชที่มีความเสี่ยงสูง พบก่อคดีอาชญากรรมรุนแรง  (ฆ่า พยายามฆ่า ข่มขืน วางเพลิง)</li>
+								</ul>
+							</span>
+						</div>
                         
                         <div align="right">
                             <button class="btn btn-navbar" id="download-button11"><img width="10%" src="images/downloand.png"></button>
@@ -1596,8 +1677,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				  <div class="inner">
                     
                     <p>อัตราการฆ่าตัวตาย</p>
-					<h3><?php echo number_format($total_result2, 0, '.', ',');?> คน</h3>
-                    <p><?php echo number_format((($total_result2 / $Total)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
+					<h3><?php echo number_format($total_result1, 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format((($total_result1 / $Total)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  
@@ -1613,8 +1694,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				  <div class="inner">
                     
                     <p>อัตราการพยายามฆ่าตัวตาย</p>
-					<h3><?php echo number_format($total_result1, 0, '.', ',');?> คน</h3>
-                    <p><?php echo number_format((($total_result1 / $Total)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
+					<h3><?php echo number_format($total_result2, 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format((($total_result2 / $Total)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  
@@ -1978,16 +2059,51 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
             }
         },
 
-            colorAxis: {
-				min: 1,
-            type: 'logarithmic',
-            minColor: '#056934',
-            maxColor: '#cd0808',
-            stops: [
-                [0, '#056934'],
-                [0.67, '#fbe036'],
-                [1, '#cd0808']
-            ]
+        legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+          colorAxis: {
+                dataClasses: [{
+                    from: 8,
+                    color: '#ff3131',
+                    name: '> 8 : แสนประชากร '
+                }, {
+                    from: 8,
+                    to: 6.3,
+                    color: '#ff914d',
+                    name: '6.3 - 8 : แสนประชากร '
+                }, {
+                    to: 6.3,
+                    color: '#ffde59',
+                    name: '< 6.3 : แสนประชากร ' 
+                }, {
+                    to: 0,
+                    color: '#7ed957',
+                    name: 'ไม่มี '
+                }]
             },
 
             series: [{

@@ -154,7 +154,7 @@ include('session_permission.php');
 			   </div>
 				<!-- /.form-group -->
 			</div>
-			<!-- /.col -->
+			<!-- /.col --> 
 		</div>
 			<?php }else{ ?>
 			  <input type="hidden" value="<?php echo $HospitalID; ?>" name="txtHospitalID">	
@@ -306,6 +306,12 @@ include('session_permission.php');
 					  const div = document.getElementById('myMctt3');
 					  div.classList.add('disabled');
 					  document.getElementById("other_r1").disabled = false;
+					  const element = document.getElementById('other_r1');
+					  element.required = true;
+					  const training1 = document.getElementById('training1');
+					  training1.required = true;
+					  const cogratyear = document.getElementById('cogratyear');
+					  cogratyear.required = true;
 					}
 
 					
@@ -348,6 +354,7 @@ include('session_permission.php');
 					  document.getElementById("other_training").value = "";	
 					  const element = document.getElementById('other_training');
 					  element.required = false;
+					  
 					  
 					}
 					function enabletraining() {

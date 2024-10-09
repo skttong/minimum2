@@ -338,11 +338,19 @@ if($row1['birthday'] == '0000'){
 					  const div = document.getElementById('myMctt3');
 					  div.classList.add('disabled');
 					  document.getElementById("other_r1").disabled = false;
+					  const cogratyear = document.getElementById('cogratyear');
+					  cogratyear.required = true;
+					  const training1 = document.getElementById('training1');
+					  training1.required = true;
 					}
 
 					
 				</script>  
-	<div id="myMctt3" class="disabled">
+	<?php if($row1['r1'] == "กำลังศึกษา") { ?>
+	<div id="myMctt3" >
+		<?php }else{?>
+			<div id="myMctt3" class="disabled">
+<?php } ?>
 		<div class="row"   style="padding-bottom: 10px;"> 
 		
 		  <div class="col-md-8">

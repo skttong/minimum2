@@ -324,8 +324,7 @@ include('connect/conn.php');
     </div>
 
   </div>
-</div
-	>
+</div>
 <script language="JavaScript" type="text/JavaScript">
 function check_key_number() {
 	use_key=event.keyCode

@@ -19,7 +19,7 @@
         <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="http://110.164.222.69/vcare/app/home/dashboard" target="_blank">V Care</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="https://cms.srph.go.th/api/v2/public-dashboard-view" target="_blank">HERO</a>
+          <a class="dropdown-item" href="" target="_blank">HERO</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="https://earlychildhood.dmh.go.th" target="_blank">Triple P</a>
           <div class="dropdown-divider"></div>
@@ -77,11 +77,19 @@
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="dashboard01.php">ตรวจสอบข้อมูล</a>
           <div class="dropdown-divider"></div>
+          <a class="dropdown-item" href="editmember.php?id=<?php echo $_SESSION["UserID"];?>">แก้ไขข้อมูล</a>
+          <div class="dropdown-divider"></div>
           
           <!--<div class="dropdown-divider"></div>
           <a class="dropdown-item" href="#">Something else here</a>-->
         </div>
       </li>
+      <li class="nav-item dropdown">
+		<a class="nav-link"  href="contactus.php">
+		<i class="fas fa-envelope"></i> 
+		 <span><?php echo 'ติดต่อเรา';?></span>
+		</a>
+	  </li>
       <li class="nav-item dropdown">
 		<a class="nav-link"  href="logout.php">
 		<i class="fas fa-sign-out-alt"></i> 

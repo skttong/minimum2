@@ -341,7 +341,19 @@
          </li>
 		<?php } */ ?> 
 		 <li class="nav-header"></li>
+		 <?php
+					if($_SESSION["TypeUser"] == "Admin"){
+		?>
           <li class="nav-item">
+            <a href="tables-surveyapp.php" class="nav-link">
+              <i class="nav-icon fa fa-tasks"></i>
+              <p>
+                สรุปสำรวจความพึงพอใจ
+              </p>
+            </a>
+          </li>
+		  <?php }else{ ?>
+		  <li class="nav-item">
             <a href="surveyapp.php" class="nav-link">
               <i class="nav-icon fa fa-tasks"></i>
               <p>
@@ -349,6 +361,7 @@
               </p>
             </a>
           </li>
+		  <?php } ?>
 		  <li class="nav-header"></li>
 		 
           <li class="nav-item">

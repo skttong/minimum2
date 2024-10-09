@@ -266,7 +266,7 @@ if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
 	$MOOsql2 = $MOOsql2."AND YEAR(p.personnelDate) = '".$Year."'" ;
   }
-  
+   
   if (isset($_POST['CODE_HMOO'])) {
 	if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
 	$CODE_HMOO = $_POST['CODE_HMOO'];
@@ -285,14 +285,14 @@ if (isset($_POST['Year'])) {
   if (isset($_POST['CODE_PROVINCE'])) {
 	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
 	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-	$msql2 = $msql2."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+	$MOOsql2 = $MOOsql2."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
 	}
   }
   
   if (isset($_POST['CODE_HOS'])) {
 	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
 	$CODE_HOS = $_POST['CODE_HOS'];
-	$msql2 = $msql2."AND hn.CODE5 = '".$CODE_HOS."'" ;
+	$MOOsql2 = $MOOsql2."AND hn.CODE5 = '".$CODE_HOS."'" ;
 	}
   } 
 
@@ -354,7 +354,7 @@ $vMhoo = $Hmoo01.",".$Hmoo02.",".$Hmoo03.",".$Hmoo04.",".$Hmoo05.",".$Hmoo06.","
 
 
 $sql3 = "SELECT
-  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต') THEN 1 ELSE 0 END) AS 'MA01',
+  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
@@ -407,7 +407,7 @@ $MA04 = $row3['MA04'];
 
 $MOOsql1 = "SELECT
   hn.CODE_HMOO,
-  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต') THEN 1 ELSE 0 END) AS 'MA01',
+  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
@@ -592,7 +592,7 @@ $vMhoo1_4 = $Hmoo01_4.",".$Hmoo02_4.",".$Hmoo03_4.",".$Hmoo04_4.",".$Hmoo05_4.",
 
 $MOOsql1p = "SELECT
   hn.CODE_PROVINCE ,
-  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต') THEN 1 ELSE 0 END) AS 'MA01',
+  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
@@ -677,7 +677,7 @@ while($row1p = mysqli_fetch_array($obj1p))
 
 
 $sql3p = "SELECT
-  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต') THEN 1 ELSE 0 END) AS 'MA01',
+  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
@@ -784,18 +784,46 @@ if (isset($_POST['Year'])) {
 	hn.CODE_PROVINCE;"
 	;
 
+$sqlall1 =  $sqlall;
+
 $objall = mysqli_query($con, $sqlall);
+$objall1 = mysqli_query($con, $sqlall1);
 
   $sqlall2 = "SELECT
-  hn.CODE_PROVINCE,
-  hn.CODE_HMOO,
-  COUNT(*) AS TOTAL,
-  (SELECT count(*) FROM CMSreports c WHERE c.amphur_code = hn.NO_DISTRICT) as 'total_b' 
-FROM
-  hospitalnew hn
+    hn.CODE_HMOO,
+    hn.CODE_PROVINCE,
+    COALESCE(report_counts.total_reports, 0) AS total_reports,
+    COALESCE(personnel_counts.total_personnel, 0) AS total_personnel
+FROM 
+    hospitalnew hn
+LEFT JOIN (
+    SELECT 
+        hn.CODE_PROVINCE,
+        COUNT(c.amphur_code) AS total_reports
+    FROM 
+        CMSreports c
+    JOIN 
+        hospitalnew hn ON c.amphur_code = hn.NO_DISTRICT
+    GROUP BY 
+        hn.CODE_PROVINCE
+) report_counts ON hn.CODE_PROVINCE = report_counts.CODE_PROVINCE
+LEFT JOIN (
+    SELECT 
+        hn.CODE_PROVINCE,
+        COUNT(*) AS total_personnel
+    FROM 
+        personnel p
+    JOIN 
+        hospitalnew hn ON hn.CODE5 = p.HospitalID
+    WHERE 
+        p.Mcatt1 = 'ใช่'
+	AND
+  		p.MWac1_9 <> 'ไม่ผ่านการอบรม'
+    GROUP BY 
+        hn.CODE_PROVINCE
+) personnel_counts ON hn.CODE_PROVINCE = personnel_counts.CODE_PROVINCE
 JOIN personnel p ON hn.CODE5 = p.HospitalID
-WHERE
-  p.Mcatt1 = 'ใช่'
+WHERE total_personnel <> 0
 ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -836,7 +864,10 @@ if (isset($_POST['Year'])) {
    	hn.CODE_PROVINCE,hn.CODE_HMOO;"
 	;
 
+$sqlall2_1 = $sqlall2;	
+
 $objall2 = mysqli_query($con, $sqlall2);
+$objall2_1 = mysqli_query($con, $sqlall2_1);
 
 ?>
 
@@ -972,7 +1003,7 @@ $objall2 = mysqli_query($con, $sqlall2);
           <div class="card-body">
 			<form class="form-valide" action="dashboard07.php" method="post" id="myform1" name="foml">  
 			<div class="row">
-			<div class="col-md-2">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
                   <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
@@ -988,6 +1019,91 @@ $objall2 = mysqli_query($con, $sqlall2);
                 </div>
               </div>
               <!-- /.col -->
+
+              <div class="col-md-2">
+               <div class="form-group" id="labelarea">
+                  <label>เขตสุขภาพ</label>
+                  <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
+                    <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="1">เขตสุขภาพ 1</option>
+                    <option value="2">เขตสุขภาพ 2</option>
+                    <option value="3">เขตสุขภาพ 3</option>
+					          <option value="4">เขตสุขภาพ 4</option>
+                    <option value="5">เขตสุขภาพ 5</option>
+                    <option value="6">เขตสุขภาพ 6</option>
+					          <option value="7">เขตสุขภาพ 7</option>
+                    <option value="8">เขตสุขภาพ 8</option>
+                    <option value="9">เขตสุขภาพ 9</option>
+					          <option value="10">เขตสุขภาพ 10</option>
+                    <option value="11">เขตสุขภาพ 11</option>
+                    <option value="12">เขตสุขภาพ 12</option>
+					          <option value="13">เขตสุขภาพ 13</option>
+                   </select>
+                </div>
+                <script>
+                   function myFunction3() {
+                      const selectedValue = $('#area').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { moo_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_PROVINCE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+            
+			   <!-- /.col -->
+             
+			 <!-- /.col -->
+              
+				<!-- /.form-group -->
+         
+               
+              </div>
+              <!-- /.col -->
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>จังหวัด</label>
+                  <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
+                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP
+					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
+GROUP BY CODE_PROVINCE 
+ORDER BY NO_PROVINCE ASC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
+					  
+					<?PHP
+					}
+					?>
+
+                  </select>
+                </div>
+
+                <script>
+                   function myFunction4() {
+                      const selectedValue = $('#CODE_PROVINCE').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_hos.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { CODE_PROVINCE: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->	
+
               <div class="col-md-2">
                <div class="form-group">
                   <label>หน่วยงานใน/นอกสังกัด</label>
@@ -999,11 +1115,71 @@ $objall2 = mysqli_query($con, $sqlall2);
                 </div>
               </div>
               <!-- /.col -->
-			   <!-- /.col -->
+
+
+			  <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
+
               <div class="col-md-2">
                <div class="form-group">
+                  <label>โรงพยาบาล</label>
+                  <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
+                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP
+					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
+WHERE HOS_TYPE <> 'คลินิกเอกชน'
+ORDER BY hospitalnew.CODE_HMOO DESC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
+					  
+					<?PHP
+					}
+					?>
+
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->		
+
+
+              
+
+<!--<div class="col-md-2">
+               <div class="form-group">
                   <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
                     <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
                     <option value="เขตพื้นที่">เขตพื้นที่</option>
                     <option value="ServicePlan">Service Plan</option>
@@ -1042,140 +1218,9 @@ $objall2 = mysqli_query($con, $sqlall2);
 				</script> 
 				   
                 </div>
-              </div>
+              </div>-->
               <!-- /.col -->	
-			 <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group" id="labelarea">
-                  <label>เขตสุขภาพ</label>
-                  <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
-                    <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="1">เขต1</option>
-                    <option value="2">เขต2</option>
-                    <option value="3">เขต3</option>
-					          <option value="4">เขต4</option>
-                    <option value="5">เขต5</option>
-                    <option value="6">เขต6</option>
-					          <option value="7">เขต7</option>
-                    <option value="8">เขต8</option>
-                    <option value="9">เขต9</option>
-					          <option value="10">เขต10</option>
-                    <option value="11">เขต11</option>
-                    <option value="12">เขต12</option>
-					          <option value="13">เขต13</option>
-                   </select>
-                </div>
-                <script>
-                   function myFunction3() {
-                      const selectedValue = $('#area').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { moo_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_PROVINCE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-				<!-- /.form-group -->
-                <div class="form-group" id="labelservice" hidden="none">
-                  <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" hidden="none" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-                <script>
-                   function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_PROVINCE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-              </div>
-              <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>จังหวัด</label>
-                  <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP
-					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
-					GROUP BY CODE_PROVINCE 
-					ORDER BY NO_PROVINCE ASC;";
-					$objprovince = mysqli_query($con, $sqlprovince);
-					
-					while($rowprovince = mysqli_fetch_array($objprovince))
-
-					{
-	
-					?>
-					  <option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
-					  
-					<?PHP
-					}
-					?>
-
-                  </select>
-                </div>
-
-                <script>
-                   function myFunction4() {
-                      const selectedValue = $('#CODE_PROVINCE').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_hos.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { CODE_PROVINCE: selectedValue },
-                            success: function(data) {
-                              $('#CODE_HOS').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-              </div>
-              <!-- /.col -->	
-
-
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>โรงพยาบาล</label>
-                  <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP
-					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
-					WHERE HOS_TYPE <> 'คลินิกเอกชน'
-					ORDER BY hospitalnew.CODE_HMOO DESC;";
-					$objprovince = mysqli_query($con, $sqlprovince);
-					
-					while($rowprovince = mysqli_fetch_array($objprovince))
-
-					{
-	
-					?>
-					  <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
-					  
-					<?PHP
-					}
-					?>
-
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->			
+			   		
             </div>
             <!-- /.row -->
 		
@@ -1268,7 +1313,7 @@ $objall2 = mysqli_query($con, $sqlall2);
 				  <div class="inner">
                     
                     <p>สังคมสงเคราะห์</p>
-					<h3><?php echo number_format($PL03, 0, '.', ',');?> คน</h3>
+					<h3><?php echo number_format($PL05, 0, '.', ',');?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
 				  </div>
@@ -1290,7 +1335,7 @@ $objall2 = mysqli_query($con, $sqlall2);
 				  <div class="inner">
                     
                     <p>นักวิชาการสาธารณสุข</p>
-					<h3><?php echo number_format($PL04, 0, '.', ',');?> คน</h3>
+					<h3><?php echo number_format($PL09, 0, '.', ',');?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
 				  </div>
@@ -1307,7 +1352,7 @@ $objall2 = mysqli_query($con, $sqlall2);
 				  <div class="inner">
                     
                     <p>นักจิตวิทยา</p>
-					<h3><?php echo number_format($PL05, 0, '.', ',');?> คน</h3>
+					<h3><?php echo number_format($PL04, 0, '.', ',');?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
 				  </div>
@@ -1346,7 +1391,7 @@ $objall2 = mysqli_query($con, $sqlall2);
 				  <div class="inner">
                     
                     <p>เภสัชกร</p>
-					<h3><?php echo number_format($PL07, 0, '.', ',');?> คน</h3>
+					<h3><?php echo number_format($PL03, 0, '.', ',');?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
 				  </div>
@@ -1363,7 +1408,7 @@ $objall2 = mysqli_query($con, $sqlall2);
 				  <div class="inner">
                     
                     <p>นักเวชศาสตร์สื่อความหมาย</p>
-					<h3><?php echo number_format($PL08, 0, '.', ',');?> คน</h3>
+					<h3><?php echo number_format($PL07, 0, '.', ',');?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
 				  </div>
@@ -1380,7 +1425,7 @@ $objall2 = mysqli_query($con, $sqlall2);
 				  <div class="inner">
                     
                     <p>นักวิชาการศึกษาพิเศษ</p>
-					<h3><?php echo number_format($PL09, 0, '.', ',');?> คน</h3>
+					<h3><?php echo number_format($PL08, 0, '.', ',');?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
 				  </div>
@@ -1616,7 +1661,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #AADFEF; color: black;">
 				  <div class="inner">
                     
-                    <p>ระดับกรมสุขภาพจิต</p>
+                    <div class="tooltip2"><h5>ระดับกรมสุขภาพจิต<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+									<li>MCATT ระดับกรมสุขภาพจิต</li>
+                  <ul>
+									<li>สถาบัน/โรงพยาบาล/ศูนย์ สังกัดกรมสุขภาพจิต</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>
 					<h3><?php echo $MA01;?> คน</h3>
                    <!-- <p>xx : 1แสน ประชากร</p>-->
 					
@@ -1633,7 +1688,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #AADFEF; color: black;">
 				  <div class="inner">
                     
-                    <p>ระดับจังหวัด</p>
+                    <div class="tooltip2"><h5>ระดับจังหวัด<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+                  <li>MCATT ระดับจังหวัด</li>
+                  <ul>
+									<li>สสจ./โรงพยาบาลศูนย์/โรงพยาบาลทั่วไป</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>
 					<h3><?php echo $MA02;?> คน</h3>
                    <!-- <p>xx : 1แสน ประชากร</p>-->
 					
@@ -1661,7 +1726,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #B5F7F8; color: black;">
                 <div class="inner">
                     
-                    <p>ระดับอำเภอ</p>
+                     <div class="tooltip2"><h5>ระดับอำเภอ<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+              <li>MCATT ระดับอำเภอ</li>
+                  <ul>
+									<li>สสอ./โรงพยาบาลชุมชน</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>
 					<h3><?php echo $MA03;?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
@@ -1680,7 +1755,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #B5F7F8; color: black;">
                 <div class="inner">
                     
-                    <p>ระดับตำบล</p>
+                    <div class="tooltip2"><h5>ระดับตำบล<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+              <li>MCATT ระดับตำบล</li>
+                  <ul>
+									<li>โรงพยาบาลส่งเสริมสุขภาพตำบล</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>   
 					<h3><?php echo $MA04;?> คน</h3>
                     
                     <!--<p>xx : 1แสน ประชากร</p>-->
@@ -1765,16 +1850,16 @@ downloadButton.addEventListener('click', function() {
                 datasets: [{
                     label: 'ระดับกรมสุขภาพจิต',
                     data: [<?php echo $vMhoo1_1; ?>],
-                    backgroundColor: '#6ce5e8',
-                    borderColor: '#6ce5e8',
+                    backgroundColor: '#00cadc',
+                    borderColor: '#00cadc',
                     borderWidth: 1,
                     stack: 'combined' // Enable stacking for this dataset
                 },
                 {
                     label: 'ระดับจังหวัด',
                     data: [<?php echo $vMhoo1_2; ?>],
-                    backgroundColor: '#41b8d5',
-                    borderColor: '#41b8d5',
+                    backgroundColor: '#49c3fb',
+                    borderColor: '#49c3fb',
                     borderWidth: 1,
                     stack: 'combined' // Enable stacking for this dataset
                 },
@@ -1789,8 +1874,8 @@ downloadButton.addEventListener('click', function() {
                 {
                     label: 'ระดับตำบล',
                     data: [<?php echo $vMhoo1_4; ?>],
-                    backgroundColor: '#2d8bba',
-                    borderColor: '#2d8bba',
+                    backgroundColor: '#7e80e7',
+                    borderColor: '#7e80e7',
                     borderWidth: 1,
                     stack: 'combined' // Enable stacking for this dataset
                 }]
@@ -1864,7 +1949,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #AADFEF; color: black;">
 				  <div class="inner">
                     
-                    <p>ระดับกรมสุขภาพจิต</p>
+                    <div class="tooltip2"><h5>ระดับกรมสุขภาพจิต<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+									<li>MCATT ระดับกรมสุขภาพจิต</li>
+                  <ul>
+									<li>สถาบัน/โรงพยาบาล/ศูนย์ สังกัดกรมสุขภาพจิต</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>
 					<h3><?php echo $MA01p;?> คน</h3>
                    <!-- <p>xx : 1แสน ประชากร</p>-->
 					
@@ -1881,7 +1976,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #AADFEF; color: black;">
 				  <div class="inner">
                     
-                    <p>ระดับจังหวัด</p>
+                    <div class="tooltip2"><h5>ระดับจังหวัด<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+                  <li>MCATT ระดับจังหวัด</li>
+                  <ul>
+									<li>สสจ./โรงพยาบาลศูนย์/โรงพยาบาลทั่วไป</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>
 					<h3><?php echo $MA02p;?> คน</h3>
                    <!-- <p>xx : 1แสน ประชากร</p>-->
 					
@@ -1909,7 +2014,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #B5F7F8; color: black;">
                 <div class="inner">
                     
-                    <p>ระดับอำเภอ</p>
+                     <div class="tooltip2"><h5>ระดับอำเภอ<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+              <li>MCATT ระดับอำเภอ</li>
+                  <ul>
+									<li>สสอ./โรงพยาบาลชุมชน</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>
 					<h3><?php echo $MA03p;?> คน</h3>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
@@ -1928,7 +2043,17 @@ downloadButton.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #B5F7F8; color: black;">
                 <div class="inner">
                     
-                    <p>ระดับตำบล</p>
+                    <div class="tooltip2"><h5>ระดับตำบล<i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i></h5>
+							<span class="tooltiptext"> 
+
+              <ul>
+              <li>MCATT ระดับตำบล</li>
+                  <ul>
+									<li>โรงพยาบาลส่งเสริมสุขภาพตำบล</li>
+                  </ul>
+								</ul>
+							</span>
+						</div>   
 					<h3><?php echo $MA04p;?> คน</h3>
                     
                     <!--<p>xx : 1แสน ประชากร</p>-->
@@ -1971,16 +2096,16 @@ downloadButton.addEventListener('click', function() {
                 datasets: [{
                     label: 'ระดับกรมสุขภาพจิต',
                     data: [<?php echo $vMhoo1_1p; ?>],
-                    backgroundColor: '#6ce5e8',
-                    borderColor: '#6ce5e8',
+                    backgroundColor: '#00cadc',
+                    borderColor: '#00cadc',
                     borderWidth: 1,
                     stack: 'combined1' // Enable stacking for this dataset
                 },
                 {
                     label: 'ระดับจังหวัด',
                     data: [<?php echo $vMhoo1_2p; ?>],
-                    backgroundColor: '#41b8d5',
-                    borderColor: '#41b8d5',
+                    backgroundColor: '#49c3fb',
+                    borderColor: '#49c3fb',
                     borderWidth: 1,
                     stack: 'combined2' // Enable stacking for this dataset
                 },
@@ -1995,8 +2120,8 @@ downloadButton.addEventListener('click', function() {
                 {
                     label: 'ระดับตำบล',
                     data: [<?php echo $vMhoo1_4p; ?>],
-                    backgroundColor: '#2d8bba',
-                    borderColor: '#2d8bba',
+                    backgroundColor: '#7e80e7',
+                    borderColor: '#7e80e7',
                     borderWidth: 1,
                     stack: 'combined4' // Enable stacking for this dataset
                 }]
@@ -2060,16 +2185,17 @@ downloadButton.addEventListener('click', function() {
                   <thead>
                   <tr align="center">
 						<th width="5%">จังหวัด</th>
-						<th width="12%">รวมทั้งหมด(คน)</th>
-						<th width="12%">แพทย์(คน)</th>
-						<th width="12%">พยาบาล(คน)</th>
-						<th width="12%">นักสังคมสงเคราะห์(คน)</th>
-						<th width="12%">นักจิตวิทยา(คน)</th>
-						<th width="12%">นักกิจกรรมบำบัด(คน)</th>
-						<th width="12%">เภสัชกร(คน)</th>
-						<th width="12%">นักเวชศาสตร์สื่อความหมาย(คน)</th>
-						<th width="12%">นักวิชาการศึกษาพิเศษ(คน)</th>
-						<th width="12%">อื่นๆ (คน)</th>			  
+						<th width="30%">รวมทั้งหมด(คน)</th>
+						<th width="30%">แพทย์(คน)</th>
+						<th width="30%">พยาบาล(คน)</th>
+						<th width="30%">นักสังคมสงเคราะห์(คน)</th>
+						<th width="30%">นักจิตวิทยา(คน)</th>
+						<th width="30%">นักกิจกรรมบำบัด(คน)</th>
+						<th width="30%">เภสัชกร(คน)</th>
+						<th width="30%">นักเวชศาสตร์สื่อความหมาย(คน)</th>
+						<th width="30%">นักวิชาการศึกษาพิเศษ(คน)</th>
+						<th width="30%">นักวิชาการสาธารณสุข</th>
+						<th width="30%">อื่นๆ (คน)</th>			  
 				   </tr>
                    </thead>
                   <tbody>
@@ -2082,16 +2208,67 @@ downloadButton.addEventListener('click', function() {
 				  ?>
           <tr align="center">
 						<td width="5%"><?php echo $rowall['CODE_PROVINCE'];?></td>
-						<td width="12%"><?php echo $rowall['PA01'];?></td>
-						<td width="12%"><?php echo $rowall['PA02'];?></td>
-						<td width="12%"><?php echo $rowall['PA03'];?></td>
-						<td width="12%"><?php echo $rowall['PA04'];?></td>
-						<td width="12%"><?php echo $rowall['PA05'];?></td>
-						<td width="12%"><?php echo $rowall['PA06'];?></td>
-						<td width="12%"><?php echo $rowall['PA07'];?></td>
-						<td width="12%"><?php echo $rowall['PA08'];?></td>
-						<td width="12%"><?php echo $rowall['PA09'];?></td>
-						<td width="12%"><?php echo $rowall['PA10'];?></td>
+						<td width="30%"><?php 
+							echo $rowall['PA01']+$rowall['PA02']+$rowall['PA03']+$rowall['PA04']+$rowall['PA05']+$rowall['PA06']+$rowall['PA07']+$rowall['PA08']+$rowall['PA09']+$rowall['PA10'];
+						?></td>
+						<td width="30%"><?php echo $rowall['PA01'];?></td>
+						<td width="30%"><?php echo $rowall['PA02'];?></td>
+						<td width="30%"><?php echo $rowall['PA05'];?></td>
+						<td width="30%"><?php echo $rowall['PA04'];?></td>
+						<td width="30%"><?php echo $rowall['PA06'];?></td>
+						<td width="30%"><?php echo $rowall['PA03'];?></td>
+						<td width="30%"><?php echo $rowall['PA07'];?></td>
+						<td width="30%"><?php echo $rowall['PA08'];?></td>
+						<td width="30%"><?php echo $rowall['PA09'];?></td>
+						<td width="30%"><?php echo $rowall['PA10'];?></td>
+				   </tr>
+				   <?php 
+						}
+				   ?>
+				
+					</tbody>
+				  </table>
+
+				  <table id="example3" class="table table-bordered table-striped" hidden>
+                  <thead>
+                  <tr align="center">
+						<th width="5%">จังหวัด</th>
+						<th width="12%">รวมทั้งหมด(คน)</th>
+						<th width="12%">แพทย์(คน)</th>
+						<th width="12%">พยาบาล(คน)</th>
+						<th width="12%">นักสังคมสงเคราะห์(คน)</th>
+						<th width="12%">นักจิตวิทยา(คน)</th>
+						<th width="12%">นักกิจกรรมบำบัด(คน)</th>
+						<th width="12%">เภสัชกร(คน)</th>
+						<th width="12%">นักเวชศาสตร์สื่อความหมาย(คน)</th>
+						<th width="12%">นักวิชาการศึกษาพิเศษ(คน)</th>
+						<th width="12%">นักวิชาการสาธารณสุข</th>
+						<th width="12%">อื่นๆ (คน)</th>			  
+				   </tr>
+                   </thead>
+                  <tbody>
+
+				  <?php
+				  		$j = 0;
+
+						while($rowall1 = mysqli_fetch_array($objall1)){
+							$j++;
+				  ?>
+          <tr align="center">
+						<td width="5%"><?php echo $rowall1['CODE_PROVINCE'];?></td>
+						<td width="12%"><?php 
+							echo $rowall1['PA01']+$rowall1['PA02']+$rowall1['PA03']+$rowall1['PA04']+$rowall1['PA05']+$rowall1['PA06']+$rowall1['PA07']+$rowall1['PA08']+$rowall1['PA09']+$rowall1['PA10'];
+						?></td>
+						<td width="12%"><?php echo $rowall1['PA01'];?></td>
+						<td width="12%"><?php echo $rowall1['PA02'];?></td>
+						<td width="12%"><?php echo $rowall1['PA03'];?></td>
+						<td width="12%"><?php echo $rowall1['PA04'];?></td>
+						<td width="12%"><?php echo $rowall1['PA05'];?></td>
+						<td width="12%"><?php echo $rowall1['PA06'];?></td>
+						<td width="12%"><?php echo $rowall1['PA07'];?></td>
+						<td width="12%"><?php echo $rowall1['PA08'];?></td>
+						<td width="12%"><?php echo $rowall1['PA09'];?></td>
+						<td width="12%"><?php echo $rowall1['PA10'];?></td>
 				   </tr>
 				   <?php 
 						}
@@ -2139,9 +2316,41 @@ downloadButton.addEventListener('click', function() {
           			<tr align="center">
 						<td width="5%"><?php echo $rowall2['CODE_HMOO'];?></td>
 						<td width="12%"><?php echo $rowall2['CODE_PROVINCE'];?></td>
-						<td width="12%"><?php echo $rowall2['TOTAL'];?></td>
-						<td width="12%"><?php echo $rowall2['total_b'];?></td>
-						<td width="12%"><?php echo '1'.':'.number_format($rowall2['total_b']/$rowall2['TOTAL'], 2, '.', ',');?></td>
+						<td width="12%"><?php echo $rowall2['total_personnel'];?></td>
+						<td width="12%"><?php echo $rowall2['total_reports'];?></td>
+						<td width="12%"><?php echo '1'.':'.number_format($rowall2['total_reports']/$rowall2['total_personnel'], 2, '.', ',');?></td>
+						
+
+				   </tr>
+				   <?php 
+						}
+				   ?>
+					</tbody>
+				  </table>
+
+				  <table id="example4" class="table table-bordered table-striped" hidden>
+                  <thead>
+                  <tr align="center">
+					  <th width="5%">เขตสุขภาพ</th>
+					  <th width="12%">จังหวัด</th>
+					  <th width="12%">บุคลากรที่ผ่านการอบรม หลักสูตร MCATT (คน)</th>
+					  <th width="12%">ผู้ได้รับผลกระทบจากเหตุการณ์วิกฤต/ภัยพิบัติ (คน)</th>
+					  <th width="12%">สัดส่วน (บุคลากร : ผู้ได้รับผลกระทบ)</th>
+				   </tr>
+                   </thead>
+                  <tbody>
+				  <?php
+				  		$j = 0;
+
+						while($rowall2_1 = mysqli_fetch_array($objall2_1)){
+							$j++;
+				  ?>
+          			<tr align="center">
+						<td width="5%"><?php echo $rowall2_1['CODE_HMOO'];?></td>
+						<td width="12%"><?php echo $rowall2_1['CODE_PROVINCE'];?></td>
+						<td width="12%"><?php echo $rowall2_1['total_personnel'];?></td>
+						<td width="12%"><?php echo $rowall2_1['total_reports'];?></td>
+						<td width="12%"><?php echo '1'.':'.number_format($rowall2_1['total_reports']/$rowall2_1['total_personnel'], 2, '.', ',');?></td>
 						
 
 				   </tr>
@@ -2281,11 +2490,58 @@ downloadButton.addEventListener('click', function() {
             ]
         },
 
+		legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+            colorAxis: {
+                dataClasses: [{           
+                    from: 10,
+                    color: '#318fb5',
+                    name: ''
+				},{
+					from: 10,
+                    to: 5,
+                    color: '#98d6fc',
+                    name: ''
+                },{
+                    to: 5,
+                    color: '#d4edf4',
+                    name: ''
+                }, {
+                    to: 0,
+                    color: '#f8f8f8',
+                    name: ''
+                }]
+            },
+
         series: [{
             data: data,
-			/*
-            name: 'Random data',
 			
+            name: ' ',
+			/*
             states: {
                 hover: {
                     color: '#BADA55'
@@ -2376,24 +2632,58 @@ downloadButton.addEventListener('click', function() {
             }
         },
 		*/ 
-        colorAxis: {
-            min: 1,
-            type: 'logarithmic',
-            minColor: '#f8f8f8',
-            maxColor: '#318fb5',
-            stops: [
-                [0, '#f8f8f8'],
-                [0.4, '#d4edf4'],
-				[0.8, '#98d6fc'],
-                [700, '#318fb5']
-            ]
-        },
+        legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+            colorAxis: {
+                dataClasses: [{           
+                    from: 700,
+                    color: '#318fb5',
+                    name: ''
+				},{
+					from: 699,
+                    to: 200,
+                    color: '#98d6fc',
+                    name: ''
+                },{
+                    to: 299,
+                    color: '#d4edf4',
+                    name: ''
+                }, {
+                    to: 0,
+                    color: '#f8f8f8',
+                    name: ''
+                }]
+            },
 
         series: [{
             data: data,
-			/*
-            name: 'Random data',
 			
+            name: ' ',
+			/*
             states: {
                 hover: {
                     color: '#BADA55'
@@ -2453,18 +2743,38 @@ downloadButton.addEventListener('click', function() {
 <script>
   $(function () {
     $("#example1").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf"]
+      "responsive": false, "lengthChange": false, "autoWidth": false,
+   	  "scrollX": 500,
+     // "buttons": ["copy", "csv", "excel", "pdf"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-	$("#example2").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf"]
+	$('#example2').DataTable({
+	  "responsive": true, "lengthChange": false, "autoWidth": true,
+   	  "scrollX": 300,
+     // "buttons": ["copy", "csv", "excel", "pdf"]
+    });
+    $("#example3").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
+	$("#example4").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
     }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
   });
-  $("#example3").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf"]
-    }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
 </script>
 
 </body>

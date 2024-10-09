@@ -1,0 +1,2 @@
+# สำรองข้อมูล MySQL ทุกวันเวลาเที่ยงคืน
+0 0 * * * MYSQL_USER='user123' MYSQL_PASSWORD='password123' MYSQL_DATABASE='db_minimum' mysqldump --no-tablespaces -h db -u$MYSQL_USER -p$MYSQL_PASSWORD $MYSQL_DATABASE > /backup/db_backup_$(date +\%F_\%T).sql 2>> /backup/cron_error.log

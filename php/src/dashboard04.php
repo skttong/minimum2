@@ -129,10 +129,10 @@ GROUP BY
 $object = mysqli_query($con, $sqlect);
 //$rowbed = mysqli_fetch_array($objbed);
 
+/*
 $hmoo = '';
 $b01 = '';
 $b02 = '';
-
 
 
 
@@ -143,6 +143,118 @@ while($rowect = mysqli_fetch_array($object))
 	$b02 = $b02."'".$rowect['total_tms_no']."',";
 	
 }
+
+*/
+
+$hmoo = '';
+$b01 = '';
+$b02 = '';
+
+$hmoo_1 = '';
+$b01_1 = '';
+$b02_1 = '';
+$hmoo_2 = '';
+$b01_2 = '';
+$b02_2 = '';
+$hmoo_3 = '';
+$b01_3 = '';
+$b02_3 = '';
+$hmoo_4 = '';
+$b01_4 = '';
+$b02_4 = '';
+$hmoo_5 = '';
+$b01_5 = '';
+$b02_5 = '';
+$hmoo_6 = '';
+$b01_6 = '';
+$b02_6 = '';
+$hmoo_7 = '';
+$b01_7 = '';
+$b02_7 = '';
+$hmoo_8 = '';
+$b01_8 = '';
+$b02_8 = '';
+$hmoo_9 = '';
+$b01_9 = '';
+$b02_9 = '';
+$hmoo_10 = '';
+$b01_10 = '';
+$b02_10 = '';
+$hmoo_11 = '';
+$b01_11 = '';
+$b02_11 = '';
+$hmoo_12 = '';
+$b01_12 = '';
+$b02_12 = '';
+$hmoo_13 = '';
+$b01_13 = '';
+$b02_13 = '';
+
+
+
+while($rowect = mysqli_fetch_array($object))
+{
+  if($rowect['CODE_HMOO']== '1'){
+    $hmoo_1 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_1 = "'".$rowect['total_ect_no']."'";
+    $b02_1 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '2'){
+    $hmoo_2 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_2 = "'".$rowect['total_ect_no']."'";
+    $b02_2 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '3'){
+    $hmoo_3 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_3 = "'".$rowect['total_ect_no']."'";
+    $b02_3 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '4'){
+    $hmoo_4 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_4 = "'".$rowect['total_ect_no']."'";
+    $b02_4 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '5'){
+    $hmoo_5 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_5 = "'".$rowect['total_ect_no']."'";
+    $b02_5 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '6'){
+    $hmoo_6 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_6 = "'".$rowect['total_ect_no']."'";
+    $b02_6 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '7'){
+    $hmoo_7 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_7 = "'".$rowect['total_ect_no']."'";
+    $b02_7 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '8'){
+    $hmoo_8 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_8 = "'".$rowect['total_ect_no']."'";
+    $b02_8 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '9'){
+    $hmoo_9 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_9 = "'".$rowect['total_ect_no']."'";
+    $b02_9 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '10'){
+    $hmoo_10 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_10 = "'".$rowect['total_ect_no']."'";
+    $b02_10 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '11'){
+    $hmoo_11 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_11 = "'".$rowect['total_ect_no']."'";
+    $b02_11 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '12'){
+    $hmoo_12 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_12 = "'".$rowect['total_ect_no']."'";
+    $b02_12 = "'".$rowect['total_tms_no']."'";
+  }else if($rowect['CODE_HMOO']== '13'){
+    $hmoo_13 = "'เขตสุขภาพที่ ".$rowect['CODE_HMOO']."'";
+    $b01_13 = "'".$rowect['total_ect_no']."'";
+    $b02_13 = "'".$rowect['total_tms_no']."'";
+  }
+	
+}
+
+$hmoo = $hmoo_1.','.$hmoo_2.','.$hmoo_3.','.$hmoo_4.','.$hmoo_5.','.$hmoo_6.','.$hmoo_7.','.$hmoo_8.','.$hmoo_9.','.$hmoo_10.','.$hmoo_11.','.$hmoo_12.','.$hmoo_13;
+$b01 = $b01_1.','.$b01_2.','.$b01_3.','.$b01_4.','.$b01_5.','.$b01_6.','.$b01_7.','.$b01_8.','.$b01_9.','.$b01_10.','.$b01_11.','.$b01_12.','.$b01_13;
+$b02 = $b02_1.','.$b02_2.','.$b02_3.','.$b02_4.','.$b02_5.','.$b02_6.','.$b02_7.','.$b02_8.','.$b02_9.','.$b02_10.','.$b02_11.','.$b02_12.','.$b02_13;
+//$b03 = $b03_1.','.$b03_2.','.$b03_3.','.$b03_4.','.$b03_5.','.$b03_6.','.$b03_7.','.$b03_8.','.$b03_9.','.$b03_10.','.$b03_11.','.$b03_12.','.$b03_13;
+
 
 
 $sqlmid = "SELECT
@@ -346,8 +458,12 @@ GROUP BY
 ;
 
 //echo $sqlall;
+$sqlall1 = $sqlall ;
 
 $objall = mysqli_query($con, $sqlall);
+$objall1 = mysqli_query($con, $sqlall1);
+
+
 
 
 ?>
@@ -451,7 +567,7 @@ $objall = mysqli_query($con, $sqlall);
           <div class="card-body">
 			<form class="form-valide" action="dashboard04.php" method="post" id="myform1" name="foml">  
       <div class="row">
-      <div class="col-md-2">
+              <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
                   <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
@@ -467,81 +583,25 @@ $objall = mysqli_query($con, $sqlall);
                 </div>
               </div>
               <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2"  style="width: 100%;">
-                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="ในสังกัด">ในสังกัด</option>
-                    <option value="นอกสังกัด">นอกสังกัด</option>
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->
-			   <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
-                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
-                    <option value="เขตพื้นที่">เขตพื้นที่</option>
-                    <option value="ServicePlan">Service Plan</option>
-                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
-                  </select>
-				   
-				<script>
-					function myFunction() {
-						let elementarea 		= document.getElementById("area");
-						let elementlabelarea 	= document.getElementById("labelarea");
-						let elementservice 		= document.getElementById("service");
-						let elementlabelservice = document.getElementById("labelservice");
-						
-						selectElement = document.querySelector('#mySelect');	
-        				output = selectElement.value;
-						
-						if(output === "ServicePlan"){
-							//alert(output);
-							elementservice.removeAttribute("hidden");
-							elementlabelservice.removeAttribute("hidden");
-							
-							elementarea.setAttribute("hidden", "hidden");
-							elementlabelarea.setAttribute("hidden", "hidden");
-							
-						}else{
-							elementarea.removeAttribute("hidden");
-							elementlabelarea.removeAttribute("hidden");
-							
-							elementservice.setAttribute("hidden", "hidden");
-							elementlabelservice.setAttribute("hidden", "hidden");
-						
-							//alert("tong");
-						}
-						
-					}
-				</script> 
-				   
-                </div>
-              </div>
-              <!-- /.col -->	
-			 <!-- /.col -->
+
               <div class="col-md-2">
                <div class="form-group" id="labelarea">
                   <label>เขตสุขภาพ</label>
                   <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="1">เขต1</option>
-                    <option value="2">เขต2</option>
-                    <option value="3">เขต3</option>
-					          <option value="4">เขต4</option>
-                    <option value="5">เขต5</option>
-                    <option value="6">เขต6</option>
-					          <option value="7">เขต7</option>
-                    <option value="8">เขต8</option>
-                    <option value="9">เขต9</option>
-					          <option value="10">เขต10</option>
-                    <option value="11">เขต11</option>
-                    <option value="12">เขต12</option>
-					          <option value="13">เขต13</option>
+                    <option value="1">เขตสุขภาพ 1</option>
+                    <option value="2">เขตสุขภาพ 2</option>
+                    <option value="3">เขตสุขภาพ 3</option>
+					          <option value="4">เขตสุขภาพ 4</option>
+                    <option value="5">เขตสุขภาพ 5</option>
+                    <option value="6">เขตสุขภาพ 6</option>
+					          <option value="7">เขตสุขภาพ 7</option>
+                    <option value="8">เขตสุขภาพ 8</option>
+                    <option value="9">เขตสุขภาพ 9</option>
+					          <option value="10">เขตสุขภาพ 10</option>
+                    <option value="11">เขตสุขภาพ 11</option>
+                    <option value="12">เขตสุขภาพ 12</option>
+					          <option value="13">เขตสุขภาพ 13</option>
                    </select>
                 </div>
                 <script>
@@ -557,34 +617,14 @@ $objall = mysqli_query($con, $sqlall);
                           });
                     }
 			    	</script> 
+            
+			   <!-- /.col -->
+             
+			 <!-- /.col -->
+              
 				<!-- /.form-group -->
-                <div class="form-group" id="labelservice" hidden="none">
-                  <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" hidden="none" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-                <script>
-                   function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_PROVINCE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
+         
+               
               </div>
               <!-- /.col -->
               <div class="col-md-2">
@@ -628,6 +668,47 @@ ORDER BY NO_PROVINCE ASC;";
               </div>
               <!-- /.col -->	
 
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2"  style="width: 100%;">
+                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="ในสังกัด">ในสังกัด</option>
+                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->
+
+
+              <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
+                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
+                    <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#service').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
 
               <div class="col-md-2">
                <div class="form-group">
@@ -654,6 +735,54 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                   </select>
                 </div>
               </div>
+              <!-- /.col -->		
+
+
+              
+
+<!--<div class="col-md-2">
+               <div class="form-group">
+                  <label>เขตพื้นที่/Service Plan</label>
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
+                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
+                    <option value="เขตพื้นที่">เขตพื้นที่</option>
+                    <option value="ServicePlan">Service Plan</option>
+                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
+                  </select>
+				   
+				<script>
+					function myFunction() {
+						let elementarea 		= document.getElementById("area");
+						let elementlabelarea 	= document.getElementById("labelarea");
+						let elementservice 		= document.getElementById("service");
+						let elementlabelservice = document.getElementById("labelservice");
+						
+						selectElement = document.querySelector('#mySelect');	
+        				output = selectElement.value;
+						
+						if(output === "ServicePlan"){
+							//alert(output);
+							elementservice.removeAttribute("hidden");
+							elementlabelservice.removeAttribute("hidden");
+							
+							elementarea.setAttribute("hidden", "hidden");
+							elementlabelarea.setAttribute("hidden", "hidden");
+							
+						}else{
+							elementarea.removeAttribute("hidden");
+							elementlabelarea.removeAttribute("hidden");
+							
+							elementservice.setAttribute("hidden", "hidden");
+							elementlabelservice.setAttribute("hidden", "hidden");
+						
+							//alert("tong");
+						}
+						
+					}
+				</script> 
+				   
+                </div>
+              </div>-->
               <!-- /.col -->		
               </div>
               <!-- /.row -->
@@ -719,7 +848,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                     backgroundColor: '#41b8d5',
                     borderColor: '#41b8d5',
                     borderWidth: 1,
-                    stack: 'combined' // Enable stacking for this dataset
+                    stack: 'combined1' // Enable stacking for this dataset
                 }]
             },
             options: {
@@ -750,7 +879,7 @@ downloadButton.addEventListener('click', function() {
 
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">มินิธัญญารักษ์</h3>
+					<h3 class="card-title">Electroconvulsive therapy (ECT) & Transcranial Magnetic Stimulation (TMS) (เครื่อง)</h3>
 				</div>
 				<div class="card-body">
 				<table id="example1" class="table table-bordered table-striped">
@@ -774,6 +903,35 @@ downloadButton.addEventListener('click', function() {
 						<td width="12%"><?php echo $rowall['HOS_NAME'];?></td>
 						<td width="12%"><?php echo $rowall['total_ect_no'];?></td>
 						<td width="12%"><?php echo $rowall['total_tms_no'];?></td>
+						
+				   </tr>
+				   <?php 
+						}
+				   ?>
+					</tbody>
+				  </table>
+
+          <table id="example3" class="table table-bordered table-striped" hidden >
+                  <thead>
+                  <tr align="center">
+					  <th width="2%">#</th>
+					  <th width="12%">โรงพยาบาล/หน่วยงาน</th>
+					  <th width="15%">จำนวน ECT</th>
+					  <th width="15%">จำนวน TMS</th>
+				   </tr>
+                   </thead>
+                  <tbody>
+				  <?php
+				  		$j = 0;
+
+						while($rowall1 = mysqli_fetch_array($objall1)){
+							$j++;
+				  ?>
+          <tr align="center">
+						<td width="2%"><?php echo $j;?></td>
+						<td width="12%"><?php echo $rowall1['HOS_NAME'];?></td>
+						<td width="12%"><?php echo $rowall1['total_ect_no'];?></td>
+						<td width="12%"><?php echo $rowall1['total_tms_no'];?></td>
 						
 				   </tr>
 				   <?php 
@@ -974,17 +1132,43 @@ downloadButton.addEventListener('click', function() {
 					   }
 				   },
 				   */ 
-				   colorAxis: {
-					min: 1,
-            type: 'logarithmic',
-            minColor: '#cd0808',
-            maxColor: '#056934',
-            stops: [
-                [0, '#cd0808'],
-                [0.67, '#fbe036'],
-                [1, '#056934']
-            ]
-				   },
+          legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+            colorAxis: {
+                dataClasses: [{           
+                    from: 1,
+                    color: '#056934',
+                    name: 'มี'
+                }, {
+                    to: 0,
+                    color: '#e3e3e2',
+                    name: 'ไม่มี'
+                }]
+            },
 		   
 				   series: [{
 					   data: data,
@@ -1076,17 +1260,43 @@ downloadButton.addEventListener('click', function() {
            }
          },
          */ 
-         colorAxis: {
-        min: 1,
-          type: 'logarithmic',
-          minColor: '#cd0808',
-          maxColor: '#056934',
-          stops: [
-              [0, '#cd0808'],
-              [0.67, '#fbe036'],
-              [1, '#056934']
-          ]
-         },
+        legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+            colorAxis: {
+                dataClasses: [{           
+                    from: 1,
+                    color: '#056934',
+                    name: 'มี'
+                }, {
+                    to: 0,
+                    color: '#e3e3e2',
+                    name: 'ไม่มี'
+                }]
+            },
      
          series: [{
            data: data,
@@ -1157,17 +1367,29 @@ downloadButton.addEventListener('click', function() {
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf"]
+     // "buttons": ["copy", "csv", "excel", "pdf"]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
-	$("#example2").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf"]
-    }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
+    $('#example2').DataTable({
+      "paging": true,
+      "lengthChange": false,
+      "searching": false,
+      "ordering": true,
+      "info": true,
+      "autoWidth": false,
+      "responsive": true,
+    });
+    $("#example3").DataTable({
+      "responsive": false, "lengthChange": false, "autoWidth": true,
+	  "searching": false, "lengthChange": false, "info": false,
+	  "paging": false,
+      "buttons": ["copy", "csv", "excel", { 
+      extend: 'print',
+      text: 'PDF'
+   },
+    //"print"
+	]
+    }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
-  $("#example3").DataTable({
-      "responsive": true, "lengthChange": false, "autoWidth": false,
-      "buttons": ["copy", "csv", "excel", "pdf"]
-    }).buttons().container().appendTo('#example3_wrapper .col-md-6:eq(0)');
 </script>
 
 </body>

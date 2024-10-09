@@ -253,7 +253,7 @@ if($FORMTYPE == 6){
 		</div>
 		<?php } ?>	
 
-		<?php if($FORMTYPE <> 9){ ?>	
+		<?php //if($FORMTYPE <> 9){ ?>	
 			
 		<div class="row" style="padding-bottom: 10px;"> 
 		  <div class="col-md-8">
@@ -276,7 +276,7 @@ if($FORMTYPE == 6){
 			  <div class="form-group"></div>
 		  </div>
 		</div>
-		<?php } ?>	
+		<?php //} ?>	
 			
 		<!-- /.row --> 
 		<?php //if($FORMTYPE <> 9){ ?>
@@ -290,19 +290,20 @@ if($FORMTYPE == 6){
 				</span>
 				<p></p>-->
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_1" name="training" value="ไม่เคยผ่านการอบรมเฉพาะทาง" onclick="checkCheckbox2();" checked>
+					<input type="checkbox" class="custom-control-input" id="training_1" name="training_1" value="ไม่เคยผ่านการอบรมเฉพาะทาง" onclick="checkCheckbox2();" checked>
 					<label class="custom-control-label" for="training_1"></label>ไม่เคยผ่านการอบรมเฉพาะทาง
 			    </div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_2" name="training" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt2();" >
+					<input type="checkbox" class="custom-control-input" id="training_2" name="training_2" value="ด้านสุขภาพจิตและจิตเวช" onclick="disableTxt2();" >
 					<label class="custom-control-label" for="training_2"></label>ด้านสุขภาพจิตและจิตเวช
 			    </div>
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_3" name="training" value="ด้านยาเสพติด" onclick="disableTxt2();" >
+					<input type="checkbox" class="custom-control-input" id="training_3" name="training_3" value="ด้านยาเสพติด" onclick="disableTxt2();" >
 					<label class="custom-control-label" for="training_3"></label>ด้านยาเสพติด
 			    </div>
+
 				<div class="custom-control custom-checkbox">
-					<input type="checkbox" class="custom-control-input" id="training_4" name="training" value="อื่น ๆ" onclick="enableTxt2();" >
+					<input type="checkbox" class="custom-control-input" id="training_4" name="training_4" value="อื่น ๆ" onclick="enableTxt2();" >
 					<label class="custom-control-label" for="training_4"></label>อื่น ๆ
 					<div class="invalid-feedback" style="font-size: 100%">โปรดเลือกการอบรมเฉพาะทาง</div>
 			    </div> 	
@@ -320,7 +321,21 @@ if($FORMTYPE == 6){
 					  training_1.checked = false;
 					}
 					function enableTxt2() {
-					  document.getElementById("other_training2").disabled = false;
+
+					  var checkbox2 = document.getElementById('training_4');
+					  if (checkbox2.checked) {
+
+						document.getElementById("other_training2").disabled = false;
+						var training_1 = document.getElementById('training_1');
+						training_1.checked = false;
+						document.getElementById("other_training2").required = true;
+					}else{
+						checkbox2.checked = false;
+						document.getElementById("other_training2").disabled = true;
+						var training_1 = document.getElementById('training_1');
+						training_1.checked = false;
+						document.getElementById("other_training2").required = false;  
+					}
 					}
 
 					function checkCheckbox2() {
@@ -585,6 +600,8 @@ if($FORMTYPE == 6){
 						//var checkbox = document.getElementById('MWac1_8');
 						  //checkbox.checked = true;
 						  document.getElementById("other2_mcatt").required = false;
+						  
+						  
 					}
 				}
 				function uncheckCheckbox() {

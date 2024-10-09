@@ -29,6 +29,19 @@ $HosMOHP		= $_SESSION["HostHMOO"];
   <link rel="stylesheet" href="dist/css/custom.css">
   <!-- Control by jel -->
   <link rel="stylesheet" href="dist/css/fontcontrol.css">
+
+  <?php if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-memberall2.php">
+	<?php }else if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-memberall2.php">
+	<?php }else if($_SESSION["HosType"] == 'ศูนย์วิชาการ'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-memberall2.php">
+	<?php }else if($_SESSION["HosType"] == 'กรมสุขภาพจิต'){ ?>
+		<meta http-equiv="Refresh" content="0;URL=tables-memberall2.php">
+  <?php }else if($_SESSION["TypeUser"] == "Admin"){ ?>
+      <meta http-equiv="Refresh" content="0;URL=tables-memberalladmin.php">
+	<?php } ?>
+
 	
 	<?php include "header_font.php"; ?>
 	

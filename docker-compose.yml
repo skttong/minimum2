@@ -11,17 +11,21 @@ services:
       - ./php/src:/var/www/html/
     ports:
       - 8080:80
+
   db:
     container_name: dbmm
     image: mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: 1234
-      MYSQL_DATABASE: MYSQL_DATABASE
-      MYSQL_USER: MYSQL_USER
-      MYSQL_PASSWORD: MYSQL_PASSWORD
+      MYSQL_DATABASE: db_minimum
+      MYSQL_USER: user123
+      MYSQL_PASSWORD: password123
     ports:
       - "9906:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
@@ -32,4 +36,21 @@ services:
       UPLOAD_LIMIT: 5000M
     depends_on:
       - db
-      
+
+  db-backup:
+    container_name: db_backup
+    build:
+      context: ./db-backup
+    depends_on:
+      - db
+    volumes:
+      - ./backup:/backup
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_minimum
+      MYSQL_USER: user123
+      MYSQL_PASSWORD: password123
+
+volumes:
+  db_data:
+  backup:
