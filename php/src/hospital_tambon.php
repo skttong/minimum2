@@ -106,7 +106,9 @@ $resultupdate = mysqli_fetch_array($queryupdate);
 		if($_SESSION["TypeUser"] == "Admin"){
 			//echo 'แอดมินส่วนกลาง';
 		}else{
-			$sql_u 		= "SELECT HOS_NAME FROM hospitalnew WHERE hospitalnew.CODE5 = $HospitalID";
+			$sql_u 		= "SELECT HOS_NAME FROM hospitalnew WHERE hospitalnew.CODE5 = $HospitalID
+						
+						 ";
 			$query_u 	= mysqli_query($con, $sql_u);
 			$result_u 	= mysqli_fetch_array($query_u);
 		  $HOS_NAME = $result_u['HOS_NAME']; 
@@ -142,7 +144,7 @@ $resultupdate = mysqli_fetch_array($queryupdate);
 					<select name="txtHospitalID" class="form-control select2" style="width: 100%;" required>
 						<option selected disabled value="">กรุณากรอกรหัสหน่วยบริการ 5 หลักหรือชื่อหน่วยบริการ</option>
 						<?php
-							$query = $con->query("SELECT * FROM hospitalnew") or die(mysqli_error());
+							$query = $con->query("SELECT * FROM hospitalnew WHERE hospitalnew.HOS_TYPE = 'โรงพยาบาลส่งเสริมสุขภาพตำบล' OR hospitalnew.HOS_TYPE = 'ศูนย์บริการสาธารณสุข อปท.' ") or die(mysqli_error());
 							while($fetch = $query->fetch_assoc()){
 
 							echo '<option value = "'.$fetch['CODE5'].'">'.$fetch['CODE5'].'-'.$fetch['HOS_NAME'].'</option>';

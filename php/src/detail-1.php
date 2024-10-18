@@ -115,7 +115,7 @@ p {
       case 'สำนักงานสาธารณสุขอำเภอ':
    
           // Code for all other HosTypes
-          
+          if($_SESSION["TypeUser"] <> 'Admin'){
            /* if(($_SESSION["HosType"] <> 'ศูนย์วิชาการ')||
 							($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขจังหวัด')||
 								($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ')){ */?>
@@ -179,6 +179,79 @@ p {
 
 
     <?php 
+
+}else{
+  ?>
+
+<div class="row">
+
+<div class="card-body">
+            <div class="row justify-content-center align-self-center">
+              <div class="col-md-12 col-lg-6 col-xl-2">
+                <div class="mb-2">
+                <img class="card-img-top" src="images/group.png" alt="doctor">
+                </div>
+              </div>
+               <div class="col-md-12 col-lg-6 col-xl-2">
+                <div class="mb-2">
+                <img class="card-img-top" src="images/arrow.png" alt="doctor">
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-6 col-xl-2">
+                <div class="mb-2">
+                <img class="card-img-top" src="images/plus.png" alt="doctor">
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-6 col-xl-2">
+                <div class="mb-2">
+                <img class="card-img-top" src="images/arrow.png" alt="doctor">
+                </div>
+              </div>
+              <div class="col-md-12 col-lg-6 col-xl-2">
+                <div class="mb-2">
+                <img class="card-img-top" src="images/like.png" alt="doctor">
+                </div>
+              </div>
+              
+            </div>
+
+          </div>
+
+<div class="row">
+  
+<h4>คำชี้แจง การลงข้อมูลทรัพยากร</h4>
+    <br>
+
+    <h4>
+        1. แบบบันทึกข้อมูลทรัพยากรมีวัตถุประสงค์ เพื่อรวบรวมและวิเคราะห์ข้อมูลทรัพยากรด้านสุขภาพจิตเเละจิตเวชในเขตสุขภาพ รวมถึงสนับสนุนข้อมูลให้หน่วยงานที่เกี่ยวข้อง ในการวางแผนกำลังคนและพัฒนาระบบบริการสุขภาพจิตและจิตเวช
+    </h4>
+    <br>
+
+    <h4>
+        2. แบบบันทึกข้อมูลทรัพยากรมี 3 ส่วน ประกอบด้วย
+    </h4>
+    <br>
+
+    <h4>
+        <ul>
+            <li>ส่วนที่ 1 แบบบันทึกข้อมูลทรัพยากรบุคลากรสุขภาพจิตและจิตเวช ในกรณีที่บุคลากรปฏิบัติงานด้านวิกฤตสุขภาพจิต (MCATT) จะมีการบันทึกข้อมูลการอบรมเฉพาะทางด้านวิกฤตสุขภาพจิตเพิ่มเติมโดยกรณีที่บันทึกข้อมูลผิดพลาดสามารถกดตรวจสอบเพื่อแก้ไขหรือลบข้อมูลของตนเองที่บันทึกได้</li>
+            <li>ส่วนที่ 2 แบบบันทึกข้อมูลทรัพยากรบริการข้อคำถามจะแสดงขึ้นตามระดับสถานบริการ ให้บันทึกให้ครบถ้วนตามรายละเอียดที่เว็บไซต์กำหนด โดยสามารถกดบันทึกข้อมูลไว้ เพื่อบันทึกข้อมูลเพิ่มเติม หากบันทึกข้อมูลครบถ้วนจึง กดส่งออก</li>
+            <li>ส่วนที่ 3 แบบประเมินความพึงพอใจ  ประกอบด้วย ข้อคำถามระดับพึงพอใจน้อยที่สุด-มากที่สุด และสอบถามความคิดเห็น</li>
+        </ul>
+    </h4>
+
+		  
+		</div>
+		<!-- /.box-body -->
+	  	<div class="card-footer">
+          &nbsp;
+        </div>
+        <!-- /.card-footer-->
+	  </div>
+	  <!-- /.box -->
+
+  <?php
+}
          // Code for these specific HosTypes
           // ...
           break;

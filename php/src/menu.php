@@ -166,10 +166,68 @@
 					</li>
 				</ul>
 			</li>
-	<?php 
+			<?php 
+			if($_SESSION["TypeUser"] == 'Admin'){
+			?>
+
+		<li class="nav-item">
+				<a href="#" class="nav-link">
+					<i class="nav-icon fas fa-bed"></i>
+					<p>
+					แบบบันทึกข้อมูลทรัพยากรบริการ
+					<!--<i class="fas fa-angle-left right"></i>-->
+					</p>
+				</a>
+				<ul class="nav nav-treeview">
+					<li class="nav-item">
+					<a href="form_bed.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>เตียงจิตเวช</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="form_bed2.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>เตียงจิตเวชชุมชน</p>
+					</a>
+					</li>
+				
+					<li class="nav-item">
+					<a href="form_ect.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>การรักษาด้วย ECT/ TMS</p>
+					</a>
+					</li>
+					<li class="nav-item">
+            <a href="hospital_tambon.php" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>รพ.ส่งเสริมสุขภาพตำบล</p>
+            </a>
+          </li>
+			
+		  <li class="nav-item">
+            <a href="hospital_community.php" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>รพ.ชุมชน</p>
+            </a>
+          </li>
+			
+		  <li class="nav-item">
+            <a href="hospital_center.php" class="nav-link">
+              <i class="nav-icon fas fa-edit"></i>
+              <p>รพ.ศูนย์/รพ.ทั่วไป</p>
+            </a>
+          </li>
+			</ul>
+		</li>
+
+
+	<?php }else{
 						if($_SESSION["HosType"] <> 'ศูนย์วิชาการ'){ 
 							if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขจังหวัด'){
-								if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){ ?>
+								if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){ 
+									
+?>
 			<li class="nav-item">
 				<a href="#" class="nav-link">
 					<i class="nav-icon fas fa-bed"></i>
@@ -282,7 +340,7 @@
 				</ul>
 			</li>
 
-			<?php }}} ?>
+			<?php }}} } ?>
 			<!--<li class="nav-item">
 				<a href="#" class="nav-link">
 					<i class="nav-icon fas fa-file-medical-alt"></i>

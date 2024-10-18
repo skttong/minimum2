@@ -16,7 +16,7 @@ if($_POST['CODE_HMOO']<>'ทั้งหมด'){
 
 	}
 }
-if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
+if(trim($_POST['TYPE_SERVICE'])<>'ทั้งหมด'){
 	if (isset($_POST['TYPE_SERVICE']))
 	{
 		$SQL_H = $SQL_H." and hosn.TYPE_SERVICE = '".$_POST['CODE_HMOO']."'";

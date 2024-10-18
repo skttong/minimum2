@@ -6,10 +6,10 @@ $curl = curl_init();
 
 date("Y")+543;
 
- $YEAR = date("Y")+543 ;
+ $YEAR = date("Y")+543;
 
 curl_setopt_array($curl, array(
-  CURLOPT_URL => 'https://opendata.moph.go.th/api/report_data/s_mental_group/'.$YEAR,
+  CURLOPT_URL => 'https://opendata.moph.go.th/api/report_data/s_smiv_visit_diag/'.$YEAR,
   CURLOPT_RETURNTRANSFER => true,
   CURLOPT_ENCODING => '',
   CURLOPT_MAXREDIRS => 10,
@@ -46,8 +46,8 @@ if (isset($data)) {
 	//mysqli_close($con);
 
 
-  $stmt = mysqli_prepare($con, "INSERT INTO HDCTB04(id, hospcode, areacode, date_com, b_year, groupcode, total, ofc, sss, ucs, nrd, oth, v_total, v_ofc, v_sss, v_ucs, v_nrd, v_oth) 
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
+  $stmt = mysqli_prepare($con, "INSERT INTO HDCTB04(id, hospcode, areacode, date_com, b_year, smiv, total, f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, other, x60_x84) 
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
   
   foreach ($data as $row) {
     $id = $row['id']; 
@@ -55,21 +55,24 @@ if (isset($data)) {
     $areacode = $row['areacode']; 
     $date_com = $row['date_com']; 
     $b_year = $row['b_year']; 
-    $groupcode = $row['groupcode']; 
+    $smiv = $row['smiv']; 
     $total = $row['total']; 
-    $ofc = $row['ofc']; 
-    $sss = $row['sss']; 
-    $ucs = $row['ucs']; 
-    $nrd = $row['nrd']; 
-    $oth = $row['oth']; 
-    $v_total = $row['v_total']; 
-    $v_ofc = $row['v_ofc']; 
-    $v_sss = $row['v_sss']; 
-    $v_ucs = $row['v_ucs']; 
-    $v_nrd = $row['v_nrd']; 
-    $v_oth = $row['v_oth']; 
+    $f0 = $row['f0']; 
+    $f1 = $row['f1']; 
+    $f2 = $row['f2']; 
+    $f3 = $row['f3']; 
+    $f4 = $row['f4']; 
+    $f5 = $row['f5']; 
+    $f6 = $row['f6']; 
+    $f7 = $row['f7']; 
+    $f8 = $row['f8']; 
+    $f9 = $row['f9']; 
+    $other = $row['other']; 
+    $x60_x84 = $row['x60_x84']; 
+
     
-    mysqli_stmt_bind_param($stmt, "ssssssssssssssssss", $id, $hospcode, $areacode, $date_com, $b_year, $groupcode, $total, $ofc, $sss, $ucs, $nrd, $oth, $v_total, $v_ofc, $v_sss, $v_ucs, $v_nrd, $v_oth);
+    
+    mysqli_stmt_bind_param($stmt, "sssssssssssssssssss", $id, $hospcode, $areacode, $date_com, $b_year, $smiv, $total, $f0, $f1, $f2, $f3, $f4, $f5, $f6, $f7, $f8, $f9, $other, $x60_x84);
     $result = mysqli_stmt_execute($stmt);
 
     if (!$result) {

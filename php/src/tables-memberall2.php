@@ -688,7 +688,9 @@ while($rowprovince = mysqli_fetch_array($objprovince))
                                 <br>
                                 ตำแหน่ง :<?php echo $rowservice['position'];?>
                                 <br>
-                                เบอร์โทรสำนักงาน :<?php echo $rowservice['telephone'].' /<br> '.$rowservice['mobile'];?>
+                                เบอร์โทรสำนักงาน :<?php echo $rowservice['telephone'];?>
+                                <br>
+                                เบอร์โทรมือถือ :<?php echo $rowservice['mobile'];?>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

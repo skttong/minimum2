@@ -18,7 +18,11 @@ if(isset($_SESSION['timeout'])) {
 $_SESSION['timeout'] = time();
 if($_SESSION['UserID'] == "")
 	{
-		Header("Location: form_login.php"); //ไม่พบผู้ใช้กระโดดกลับไปหน้า login form 
+		//Header("Location: form_login.php"); //ไม่พบผู้ใช้กระโดดกลับไปหน้า login form 
+        echo "<script type='text/javascript'>";
+        //echo "alert('Error!!');";
+        echo "window.location = 'form_login.php'; ";
+        echo "</script>";
 		exit();
 	}
 	$_SESSION["UserID"];

@@ -17,14 +17,14 @@ if($_POST['CODE_HMOO']<>'ทั้งหมด'){
 
 	}
 }
-if(trim($_POST['TYPE_SERVICE'])<>'ทั้งหมด'){
+if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
 	if (isset($_POST['TYPE_SERVICE']))
 	{
 		$SQL_H = $SQL_H." and hosn.TYPE_SERVICE = '".$_POST['CODE_HMOO']."'";
 
 	}
 }
-if(trim($_POST['TYPE_SERVICE'])<>'ทั้งหมด'){
+if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
 if (isset($_POST['CODE_PROVINCE']))
 	{
 		$SQL_H = $SQL_H." and hosn.CODE_PROVINCE = '".$_POST['CODE_HMOO']."'";
@@ -59,8 +59,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql1 = $sql1."AND e.TYPE_SERVICE LIKE ('".$mySelect."%')" ;
   }
 }
@@ -115,8 +115,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $tsql1 = $tsql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -172,8 +172,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql2 = $sql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -272,8 +272,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $tsql2 = $tsql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -364,8 +364,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql3 = $sql3."AND h.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -413,8 +413,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql4 = $sql4."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -514,8 +514,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql5 = $sql5."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -570,8 +570,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql6 = $sql6."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -624,8 +624,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql7 = $sql7."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -678,8 +678,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql8 = $sql8."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -733,8 +733,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sqlhl = $sqlhl."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -788,8 +788,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-    $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
     $sql9 = $sql9."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -834,8 +834,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-    $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+    $mySelect = $_POST['TYPE_SERVICE'];
     $sql11 = $sql11."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -903,8 +903,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -982,8 +982,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sql10 = $sql10."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -1050,8 +1050,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sqlhdc01 = $sqlhdc01."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -1126,8 +1126,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-  $mySelect = trim($_POST['TYPE_SERVICE']);
+  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
+  $mySelect = $_POST['TYPE_SERVICE'];
   $sqlhdc02 = $sqlhdc02."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -1303,7 +1303,7 @@ while($rowhdc02 = mysqli_fetch_array($objhdc02))
               </button>
             </div>
           </div>
-          <!-- /.card-header --> 
+          <!-- /.card-header -->
           <div class="card-body">
 			<form class="form-valide" action="dashboard01.php" method="post" id="myform1" name="foml">  
             <div class="row">
@@ -1372,7 +1372,7 @@ while($rowhdc02 = mysqli_fetch_array($objhdc02))
                   <label>จังหวัด</label>
                   <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
                      <option value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP /*
+					<?PHP 
           if($_POST['CODE_PROVINCE'] <> 'ทั้งหมด'){
 					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
           WHERE  NO_PROVINCE = ".$_POST['CODE_PROVINCE']."
@@ -1392,7 +1392,7 @@ ORDER BY NO_PROVINCE ASC;";
         }else{
 					?>
                <option value="ทั้งหมด" >ทั้งหมด</option>
-        <?php } */ ?>
+        <?php } ?>
                   </select>
                 </div>
 
@@ -1448,9 +1448,9 @@ ORDER BY NO_PROVINCE ASC;";
                   <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
                      <option value="ทั้งหมด">ทั้งหมด</option>
                      <?PHP 
-                       if(trim($_POST['TYPE_SERVICE']) <> ''){
+                       if($_POST['TYPE_SERVICE'] <> ''){
                      ?>
-                    <option selected="selected"  value="<?php echo trim($_POST['TYPE_SERVICE']); ?> "><?php echo trim($_POST['TYPE_SERVICE']); ?> </option>
+                    <option selected="selected"  value="<?php echo $_POST['TYPE_SERVICE']; ?> "><?php echo $_POST['TYPE_SERVICE']; ?> </option>
                     <?php } ?>
                    <!-- <option value="A">A</option>
                     <option value="S">S</option>
@@ -1483,7 +1483,7 @@ ORDER BY NO_PROVINCE ASC;";
                   <label>โรงพยาบาล</label>
                   <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
                     <option value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP /*
+					<?PHP 
           if($_POST['CODE_HOS'] <> ''){
 					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
 WHERE HOS_TYPE <> 'คลินิกเอกชน'
@@ -1500,7 +1500,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					  
 					<?PHP
 					} 
-        } */
+        }
 					?>
 
                   </select>

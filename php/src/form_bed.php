@@ -149,7 +149,7 @@ include('session_permission.php');
 					<select name="txtHospitalID" class="form-control select2" style="width: 100%;" required>
 						<option selected disabled value="">กรุณากรอกรหัสหน่วยบริการ 5 หลักหรือชื่อหน่วยบริการ</option>
 						<?php
-							$query = $con->query("SELECT * FROM hospitalnew") or die(mysqli_error());
+							$query = $con->query("SELECT * FROM hospitalnew where HOS_TYPE <> 'โรงพยาบาลชุมชน'") or die(mysqli_error());
 							while($fetch = $query->fetch_assoc()){
 
 							echo '<option value = "'.$fetch['CODE5'].'">'.$fetch['CODE5'].'-'.$fetch['HOS_NAME'].'</option>';

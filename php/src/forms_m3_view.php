@@ -526,7 +526,13 @@ if($row1['birthday'] == '0000'){
         <!-- /.card-body -->
         <div class="card-footer" align="right">
          <!-- <button type="submit" class="btn btn-primary"> บันทึกข้อมูล &nbsp;<i class="fa fas fa-plus"></i></button>-->
-		  <a href="tables-pre.php" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
+		  <!--<a href="tables-pre.php" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>-->
+		  <?php if($row1['HospitalID'] <> $HospitalID ){ ?>
+		  		<!--<a href="tables-pre.php" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>-->
+				<a href="tables-prealldetail.php?code=<?php echo $row1['HospitalID'];?>" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
+		  <?php }else{ ?>
+				<a href="tables-prealldetail2.php?code=<?php echo $row1['HospitalID'];?>" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
+		  <?php } ?>
         </div>
         <!-- /.card-footer-->
 		</form>

@@ -52,8 +52,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $sqlfcenter = $sqlfcenter."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -105,15 +105,15 @@ while($resultfcenter = mysqli_fetch_array($queryfcenter)){
 		if($qustype=='1'){
 			$q1total_1 = $q1total_1+$qus1_1[3];
 			$q2total_1 = $q2total_1+$qus1_1[5];
-			$q3total_1 = $q3total_1+$qus3_1[1];
-			$q4total_1 = $q4total_1+$qus3_4[4];
+			$q3total_1 = $q3total_1+$qus3_1[0];
+			$q4total_1 = $q4total_1+$qus3_4[5];
 		}elseif($qustype=='2'){
-			$q1total_1 = $q1total_1+$qus1_1[2];
-      $q2total_1 = $q2total_1+$qus1_1[5];
-			$q3total_1 = $q3total_1+$qus3_1[1];
-			$q4total_1 = $q4total_1+$qus3_3[1];
+			$q1total_1 = $q1total_1+$qus1_1[1];
+      $q2total_1 = $q2total_1+$qus1_1[4];
+			$q3total_1 = $q3total_1+$qus3_1[0];
+			$q4total_1 = $q4total_1+$qus3_2[1];
 		}elseif($qustype=='3'){
-			$q1total_1 = $q1total_1+$qus1_1[7];
+			$q1total_1 = $q1total_1+$qus2_1[1];
 			//$q2total = $q2total+$qus1_1[6];
 			//$q3total = $q3total+$qus3_1[1];
 			//$q4total = $q4total+$qus3_[1];
@@ -137,8 +137,10 @@ $msql1 = "SELECT
   hn.CODE5,
   hn.CODE_PROVINCE,
   sf.qustype,
-  sf.qus1_1, 
+  sf.qus1_1,
+  sf.qus2_1, 
   sf.qus3_1, 
+  sf.qus3_2, 
   sf.qus3_3, 
   sf.qus3_4
 FROM
@@ -162,8 +164,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -195,22 +197,24 @@ while($mrow1 = mysqli_fetch_array($mobj1))
 
 	$qustype = $mrow1['qustype'];
 	$qus1_1 = preg_split ("/\,/", $mrow1['qus1_1']); 		
+  $qus2_1 = preg_split ("/\,/", $mrow1['qus2_1']); 		
 	$qus3_1 = preg_split ("/\,/", $mrow1['qus3_1']);
+  $qus3_2 = preg_split ("/\,/", $mrow1['qus3_2']);
 	$qus3_3 = preg_split ("/\,/", $mrow1['qus3_3']);
   $qus3_4 = preg_split ("/\,/", $mrow1['qus3_4']);
 
 	if($qustype=='1'){
-		$q1total = $q1total+$qus1_1[4];
-		$q2total = $q2total+$qus1_1[6];
-		$q3total = $q3total+$qus3_1[1];
-		$q4total = $q4total+$qus3_4[1];
-	}elseif($qustype=='2'){
 		$q1total = $q1total+$qus1_1[3];
-		//$q2total = $q2total+$qus1_1[6];
-		$q3total = $q3total+$qus3_1[1];
-		$q4total = $q4total+$qus3_3[1];
+		$q2total = $q2total+$qus1_1[5];
+		$q3total = $q3total+$qus3_1[0];
+		$q4total = $q4total+$qus3_4[5];
+	}elseif($qustype=='2'){
+		$q1total = $q1total+$qus1_1[1];
+		$q2total = $q2total+$qus1_1[4];
+		$q3total = $q3total+$qus3_1[0];
+		$q4total = $q4total+$qus3_2[1];
 	}elseif($qustype=='3'){
-		$q1total = $q1total+$qus1_1[8];
+		$q1total = $q1total+$qus2_1[1];
 		//$q2total = $q2total+$qus1_1[6];
 		//$q3total = $q3total+$qus3_1[1];
 		//$q4total = $q4total+$qus3_[1];
@@ -250,8 +254,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $sqlall = $sqlall."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }

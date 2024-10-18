@@ -60,8 +60,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $sql9 = $sql9."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -120,8 +120,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $sqlbed = $sqlbed."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -330,8 +330,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -400,8 +400,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $bsql1 = $bsql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -420,7 +420,7 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	}
   }
 
-$bsql1 = $bsql1."
+ $bsql1 = $bsql1."
 GROUP BY
   hn.CODE_HMOO;";
 
@@ -507,88 +507,88 @@ while($rowb01 = mysqli_fetch_array($objb01))
     $b201_1 = "'".$rowb01['total_beds']."'";
     $b202_1 = "'".$rowb01['total_ward_no']."'";
     $b203_1 = "'".$rowb01['total_unit']."'";
-    $b204_1 = "'".$rowb01['total_unit']."'";
+    $b204_1 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '2'){
     $hmoo2_2 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_2 = "'".$rowb01['total_beds']."'";
     $b202_2 = "'".$rowb01['total_ward_no']."'";
     $b203_2 = "'".$rowb01['total_unit']."'";
-    $b204_2 = "'".$rowb01['total_unit']."'";
+    $b204_2 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '3'){
     $hmoo2_3 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_3 = "'".$rowb01['total_beds']."'";
     $b202_3 = "'".$rowb01['total_ward_no']."'";
     $b203_3 = "'".$rowb01['total_unit']."'";
-    $b204_3 = "'".$rowb01['total_unit']."'";
+    $b204_3 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '4'){
     $hmoo2_4 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_4 = "'".$rowb01['total_beds']."'";
     $b202_4 = "'".$rowb01['total_ward_no']."'";
     $b203_4 = "'".$rowb01['total_unit']."'";
-    $b204_4 = "'".$rowb01['total_unit']."'";
+    $b204_4 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '5'){
     $hmoo2_5 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_5 = "'".$rowb01['total_beds']."'";
     $b202_5 = "'".$rowb01['total_ward_no']."'";
     $b203_5 = "'".$rowb01['total_unit']."'";
-    $b204_5 = "'".$rowb01['total_unit']."'";
+    $b204_5 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '6'){
     $hmoo2_6 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_6 = "'".$rowb01['total_beds']."'";
     $b202_6 = "'".$rowb01['total_ward_no']."'";
     $b203_6 = "'".$rowb01['total_unit']."'";
-    $b204_6 = "'".$rowb01['total_unit']."'";
+    $b204_6 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '7'){
     $hmoo2_7 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_7 = "'".$rowb01['total_beds']."'";
     $b202_7 = "'".$rowb01['total_ward_no']."'";
     $b203_7 = "'".$rowb01['total_unit']."'";
-    $b204_7 = "'".$rowb01['total_unit']."'";
+    $b204_7 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '8'){
     $hmoo2_8 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_8 = "'".$rowb01['total_beds']."'";
     $b202_8 = "'".$rowb01['total_ward_no']."'";
     $b203_8 = "'".$rowb01['total_unit']."'";
-    $b204_8 = "'".$rowb01['total_unit']."'";
+    $b204_8 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '9'){
     $hmoo2_9 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_9 = "'".$rowb01['total_beds']."'";
     $b202_9 = "'".$rowb01['total_ward_no']."'";
     $b203_9 = "'".$rowb01['total_unit']."'";
-    $b204_9 = "'".$rowb01['total_unit']."'";
+    $b204_9 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '10'){
     $hmoo2_10 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_10 = "'".$rowb01['total_beds']."'";
     $b202_10 = "'".$rowb01['total_ward_no']."'";
     $b203_10 = "'".$rowb01['total_unit']."'";
-    $b204_10 = "'".$rowb01['total_unit']."'";
+    $b204_10 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '11'){
     $hmoo2_11 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_11 = "'".$rowb01['total_beds']."'";
     $b202_11 = "'".$rowb01['total_ward_no']."'";
     $b203_11 = "'".$rowb01['total_unit']."'";
-    $b204_11 = "'".$rowb01['total_unit']."'";
+    $b204_11 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '12'){
     $hmoo2_12 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_12 = "'".$rowb01['total_beds']."'";
     $b202_12 = "'".$rowb01['total_ward_no']."'";
     $b203_12 = "'".$rowb01['total_unit']."'";
-    $b204_12 = "'".$rowb01['total_unit']."'";
+    $b204_12 = "'".$rowb01['total_unit_no']."'";
   }else if($rowb01['CODE_HMOO']== '13'){
     $hmoo2_13 = "'เขตสุขภาพที่ ".$rowb01['CODE_HMOO']."'";
     $b201_13 = "'".$rowb01['total_beds']."'";
     $b202_13 = "'".$rowb01['total_ward_no']."'";
     $b203_13 = "'".$rowb01['total_unit']."'";
-    $b204_13 = "'".$rowb01['total_unit']."'";
+    $b204_13 = "'".$rowb01['total_unit_no']."'";
   }
 	
 }
 
-$hmoo2 = $hmoo2_1.','.$hmoo2_2.','.$hmoo2_3.','.$hmoo2_4.','.$hmoo2_5.','.$hmoo2_6.','.$hmoo2_7.','.$hmoo2_8.','.$hmoo2_9.','.$hmoo2_10.','.$hmoo2_11.','.$hmoo2_12.','.$hmoo2_13;
-$b201 = $b201_1.','.$b201_2.','.$b201_3.','.$b201_4.','.$b201_5.','.$b201_6.','.$b201_7.','.$b201_8.','.$b201_9.','.$b201_10.','.$b201_11.','.$b201_12.','.$b201_13;
-$b202 = $b202_1.','.$b202_2.','.$b202_3.','.$b202_4.','.$b202_5.','.$b202_6.','.$b202_7.','.$b202_8.','.$b202_9.','.$b202_10.','.$b202_11.','.$b202_12.','.$b202_13;
-$b203 = $b203_1.','.$b203_2.','.$b203_3.','.$b203_4.','.$b203_5.','.$b203_6.','.$b203_7.','.$b203_8.','.$b203_9.','.$b203_10.','.$b203_11.','.$b203_12.','.$b203_13;
-$b204 = $b203_1.','.$b203_2.','.$b203_3.','.$b203_4.','.$b203_5.','.$b203_6.','.$b203_7.','.$b203_8.','.$b203_9.','.$b203_10.','.$b203_11.','.$b203_12.','.$b203_13;
+ $hmoo2 = $hmoo2_1.','.$hmoo2_2.','.$hmoo2_3.','.$hmoo2_4.','.$hmoo2_5.','.$hmoo2_6.','.$hmoo2_7.','.$hmoo2_8.','.$hmoo2_9.','.$hmoo2_10.','.$hmoo2_11.','.$hmoo2_12.','.$hmoo2_13;
+ $b201 = $b201_1.','.$b201_2.','.$b201_3.','.$b201_4.','.$b201_5.','.$b201_6.','.$b201_7.','.$b201_8.','.$b201_9.','.$b201_10.','.$b201_11.','.$b201_12.','.$b201_13;
+ $b202 = $b202_1.','.$b202_2.','.$b202_3.','.$b202_4.','.$b202_5.','.$b202_6.','.$b202_7.','.$b202_8.','.$b202_9.','.$b202_10.','.$b202_11.','.$b202_12.','.$b202_13;
+ $b203 = $b203_1.','.$b203_2.','.$b203_3.','.$b203_4.','.$b203_5.','.$b203_6.','.$b203_7.','.$b203_8.','.$b203_9.','.$b203_10.','.$b203_11.','.$b203_12.','.$b203_13;
+ $b204 = $b204_1.','.$b204_2.','.$b204_3.','.$b204_4.','.$b204_5.','.$b204_6.','.$b204_7.','.$b204_8.','.$b204_9.','.$b204_10.','.$b204_11.','.$b204_12.','.$b204_13;
 
 
 $bsqlall1 = "SELECT
@@ -622,8 +622,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $bsqlall1 = $bsqlall1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -679,8 +679,8 @@ if (isset($_POST['CODE_HMOO'])) {
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
-  if ($_POST['TYPE_SERVICE']<> 'ทั้งหมด') {
-    $mySelect = $_POST['TYPE_SERVICE'];
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
     $bsqlall2 = $bsqlall2."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
@@ -824,7 +824,7 @@ $objb02all2 = mysqli_query($con, $bsqlall2_1);
                     <option value="2564">2564</option>
                     <option value="2563">2563</option>-->
                     <?PHP for($i=0; $i<= (5); $i++) {?>
-                    <option value="<?PHP echo ((date("Y")+543))-$i?>"><?PHP echo ((date("Y")+543))-$i?></option>
+                    <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
                     <?PHP }?>
                   </select>
                 </div>
@@ -834,26 +834,26 @@ $objb02all2 = mysqli_query($con, $bsqlall2_1);
               <div class="col-md-2">
                <div class="form-group" id="labelarea">
                   <label>เขตสุขภาพ</label>
-                  <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
-                    <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="1">เขตสุขภาพ 1</option>
-                    <option value="2">เขตสุขภาพ 2</option>
-                    <option value="3">เขตสุขภาพ 3</option>
-					          <option value="4">เขตสุขภาพ 4</option>
-                    <option value="5">เขตสุขภาพ 5</option>
-                    <option value="6">เขตสุขภาพ 6</option>
-					          <option value="7">เขตสุขภาพ 7</option>
-                    <option value="8">เขตสุขภาพ 8</option>
-                    <option value="9">เขตสุขภาพ 9</option>
-					          <option value="10">เขตสุขภาพ 10</option>
-                    <option value="11">เขตสุขภาพ 11</option>
-                    <option value="12">เขตสุขภาพ 12</option>
-					          <option value="13">เขตสุขภาพ 13</option>
+                  <select name="CODE_HMOO" class="form-control select2" id="CODE_HMOO" style="width: 100%;" onChange="myFunction3()">
+                    <option <?php if ($_POST['CODE_HMOO'] == 'ทั้งหมด'){?> selected="selected" <?php } ?>  value="ทั้งหมด">ทั้งหมด</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '1'){?> selected="selected" <?php } ?> value="1">เขตสุขภาพ 1</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '2'){?> selected="selected" <?php } ?> value="2">เขตสุขภาพ 2</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '3'){?> selected="selected" <?php } ?> value="3">เขตสุขภาพ 3</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '4'){?> selected="selected" <?php } ?> value="4">เขตสุขภาพ 4</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '5'){?> selected="selected" <?php } ?> value="5">เขตสุขภาพ 5</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '6'){?> selected="selected" <?php } ?> value="6">เขตสุขภาพ 6</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '7'){?> selected="selected" <?php } ?> value="7">เขตสุขภาพ 7</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '8'){?> selected="selected" <?php } ?> value="8">เขตสุขภาพ 8</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '9'){?> selected="selected" <?php } ?> value="9">เขตสุขภาพ 9</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '10'){?> selected="selected" <?php } ?> value="10">เขตสุขภาพ 10</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '11'){?> selected="selected" <?php } ?> value="11">เขตสุขภาพ 11</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '12'){?> selected="selected" <?php } ?> value="12">เขตสุขภาพ 12</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '13'){?> selected="selected" <?php } ?> value="13">เขตสุขภาพ 13</option>
                    </select>
                 </div>
                 <script>
                    function myFunction3() {
-                      const selectedValue = $('#area').val();
+                      const selectedValue = $('#CODE_HMOO').val();
                          // alert(selectedValue);
                           $.ajax({
                             url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
@@ -878,9 +878,11 @@ $objb02all2 = mysqli_query($con, $bsqlall2_1);
                <div class="form-group">
                   <label>จังหวัด</label>
                   <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP
+                     <option value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP /*
+          if($_POST['CODE_PROVINCE'] <> 'ทั้งหมด'){
 					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
+          WHERE  NO_PROVINCE = ".$_POST['CODE_PROVINCE']."
 GROUP BY CODE_PROVINCE 
 ORDER BY NO_PROVINCE ASC;";
 					$objprovince = mysqli_query($con, $sqlprovince);
@@ -890,12 +892,14 @@ ORDER BY NO_PROVINCE ASC;";
 					{
 	
 					?>
-					  <option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
+					  <option selected="selected" value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
 					  
 					<?PHP
-					}
+					} 
+        }else{
 					?>
-
+               <option value="ทั้งหมด" >ทั้งหมด</option>
+        <?php } */ ?>
                   </select>
                 </div>
 
@@ -904,10 +908,10 @@ ORDER BY NO_PROVINCE ASC;";
                       const selectedValue = $('#CODE_PROVINCE').val();
                          // alert(selectedValue);
                           $.ajax({
-                            url: 'get_hos.php', // ไฟล์ PHP ที่จะประมวลผล
+                            url: 'get_affiliation.php', // ไฟล์ PHP ที่จะประมวลผล
                             data: { CODE_PROVINCE: selectedValue },
                             success: function(data) {
-                              $('#CODE_HOS').html(data);
+                              $('#Affiliation').html(data);
                             }
                           });
                     }
@@ -918,37 +922,61 @@ ORDER BY NO_PROVINCE ASC;";
               <div class="col-md-2">
                <div class="form-group">
                   <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2"  style="width: 100%;">
-                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="ในสังกัด">ในสังกัด</option>
-                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['Affiliation']; ?> "><?php echo $_POST['Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
                   </select>
                 </div>
+
+                <script>
+                   function myFunction5() {
+                      const selectedValue = $('#Affiliation').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_servicetype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { Affiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#TYPE_SERVICE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
               </div>
               <!-- /.col -->
 
-
               <div class="form-group" id="labelservice">
                   <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
+                     <option value="ทั้งหมด">ทั้งหมด</option>
+                     <?PHP 
+                       if(trim($_POST['TYPE_SERVICE']) <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo trim($_POST['TYPE_SERVICE']); ?> "><?php echo trim($_POST['TYPE_SERVICE']); ?> </option>
+                    <?php } ?>
+                   <!-- <option value="A">A</option>
                     <option value="S">S</option>
                     <option value="M1">M1</option>
                     <option value="M2">M2</option>
                     <option value="F1">F1</option>
 					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
+					          <option value="F3">F3</option>  -->
                   </select>
                 </div>
                 <!-- /.form-group -->  
                 <script>
                    function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
+                      const selectedValue = $('#TYPE_SERVICE').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                          //alert(selectedValue);
                           $.ajax({
                             url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
+                            data: { service_id: selectedValue , codeprovince: codeprovince},
                             success: function(data) {
                               $('#CODE_HOS').html(data);
                             }
@@ -961,10 +989,12 @@ ORDER BY NO_PROVINCE ASC;";
                <div class="form-group">
                   <label>โรงพยาบาล</label>
                   <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP /*
+          if($_POST['CODE_HOS'] <> ''){
 					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
 WHERE HOS_TYPE <> 'คลินิกเอกชน'
+AND CODE5 = ".$_POST['CODE_HOS']."
 ORDER BY hospitalnew.CODE_HMOO DESC;";
 					$objprovince = mysqli_query($con, $sqlprovince);
 					
@@ -973,10 +1003,11 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					{
 	
 					?>
-					  <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
+					  <option selected="selected"  value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
 					  
 					<?PHP
-					}
+					} 
+        } */
 					?>
 
                   </select>
@@ -1177,7 +1208,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 labels: [<?php echo $hmoo2; ?>],
                 datasets: [{
                     label: 'จำนวนเตียง (ผู้หญิง)',
-                    data: [<?php echo $b203; ?>],
+                    data: [<?php echo $b202; ?>],
                     backgroundColor: '#9ce7fa',
                     borderColor: '#9ce7fa',
                     borderWidth: 1,
@@ -1185,7 +1216,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 },
                 {
                     label: 'จำนวนเตียง (ผู้ชาย)',
-                    data: [<?php echo $b204; ?>],
+                    data: [<?php echo $b201; ?>],
                     backgroundColor: '#ffb9c2',
                     borderColor: '#ffb9c2',
                     borderWidth: 1,

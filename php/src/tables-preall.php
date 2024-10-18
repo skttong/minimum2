@@ -7,6 +7,7 @@ $HosType	 	= $_SESSION["HosType"];
 $codeprovince   = $_SESSION["codeprovince"];
 $HosMOHP		= $_SESSION["HostHMOO"];
 //$codeprovince	= $_SESSION["codeprovince"];
+$NO_DISTRICT	= $_SESSION["NO_DISTRICT"];
 
 if (isset($_POST["positiontypeID"])) {
 	$positiontypeID		= $_POST["positiontypeID"];
@@ -232,7 +233,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
 					AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
 					if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
-					$sqlprovince = $sqlprovince."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ' " ;
+					$sqlprovince = $sqlprovince."AND hospitalnew.NO_DISTRICT LIKE  '%$NO_DISTRICT' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ' " ;
 					}
 					$objprovince = mysqli_query($con, $sqlprovince);
 					
@@ -244,13 +245,14 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					  <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
 					  
 					<?PHP
-					}
+					} 
 					?>
 
                   </select>
                 </div>
               </div>
-              <!-- /.col -->		
+              <!-- /.col -->	
+			   	
             </div>
             <!-- /.row -->
 		
@@ -330,8 +332,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnel.firstname, 
 											personnel.lastname,  
 											personnel.age,
-											personnel.r1 as 'positionAllName', 
-											personnel.r2 as 'fixpositionAllName', 
+											personnel.r1 , 
+											personnel.r2 , 
 											hospitalnew.HOS_NAME,
 											personnel.positionrole, 
 											personnel.congrat, 
@@ -341,7 +343,23 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnel.regislaw,
                                             personneltype.Ptypename,
 											personnel.positiontypeID,
-											personnel.Mcatt1
+											personnel.Mcatt1,
+											personnel.HospitalID,
+											personnel.position_other,
+											personnel.birthday,
+											personnel.other_r1,
+											personnel.other_training,
+											personnel.MWac1_1,
+											personnel.MWac1_2,
+											personnel.MWac1_3,
+											personnel.MWac1_4,
+											personnel.MWac1_5,
+											personnel.MWac1_6,
+											personnel.MWac1_7,
+											personnel.MWac1_8,
+											personnel.MWac1_9,
+											personnel.other2_mcatt
+
 										FROM 
 											personnel 
                                         JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
@@ -358,11 +376,12 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 								  FROM userhospital 
 								  INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
 								  INNER JOIN personnel ON personnel.HospitalID = hospitalnew.CODE5
+								  JOIN personneltype ON personneltype.PtypeID = personnel.positiontypeID
 								  WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 								  AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
 								  AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
 			if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
-				$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT'" ;
+				$sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_DISTRICT LIKE  '%$NO_DISTRICT'" ;
 			}
 
 			if(isset($_POST["CODE_PROVINCE"])){	
@@ -489,6 +508,22 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					  <th width="15%">statuscong</th>
 					  <th width="10%">statuscong</th>
 					  <th width="15%">regislaw</th>
+					  <th width="15%">positiontypeID</th>
+					  <th width="15%">HospitalID</th>
+					  <th width="15%">position_other</th>
+					  <th width="15%">birthday</th>
+					  <th width="15%">other_r1</th>
+					  <th width="15%">other_training</th>
+					  <th width="15%">MWac1_1</th>
+					  <th width="15%">MWac1_2</th>
+					  <th width="15%">MWac1_3</th>
+					  <th width="15%">MWac1_4</th>
+					  <th width="15%">MWac1_5</th>
+					  <th width="15%">MWac1_6</th>
+					  <th width="15%">MWac1_7</th>
+					  <th width="15%">MWac1_8</th>
+					  <th width="15%">MWac1_9</th>
+					  <th width="15%">other2_mcatt</th>
 				   </tr>
                    </thead>
                   <tbody>
@@ -508,8 +543,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 						 	<td><?php echo $rowpersonnel2['Ptypename']; ?></td>
 							<td><?php echo $rowpersonnel2['Mcatt1']; ?></td>
 							<td><?php echo $rowpersonnel2['age']; ?></td>
-							<td><?php echo $rowpersonnel2['positionAllName']; ?></td>
-							<td><?php echo $rowpersonnel2['fixpositionAllName']; ?></td>
+							<td><?php echo $rowpersonnel2['r1']; ?></td>
+							<td><?php echo $rowpersonnel2['r2']; ?></td>
 							<td><?php echo $rowpersonnel2['HOS_NAME']; ?></td>
 							<td><?php echo $rowpersonnel2['positionrole']; ?></td>
 							<td><?php echo $rowpersonnel2['congrat']; ?></td>
@@ -518,6 +553,24 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
 							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
 							<td><?php echo $rowpersonnel2['regislaw']; ?></td>
+							<td><?php echo $rowpersonnel2['positiontypeID']; ?></td>
+							<td><?php echo $rowpersonnel2['HospitalID']; ?></td>
+							<td><?php echo $rowpersonnel2['position_other']; ?></td>
+							<td><?php echo $rowpersonnel2['birthday']; ?></td>
+							<td><?php echo $rowpersonnel2['other_r1']; ?></td>
+							<td><?php echo $rowpersonnel2['other_training']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_1']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_2']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_3']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_4']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_5']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_6']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_7']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_8']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_9']; ?></td>
+							<td><?php echo $rowpersonnel2['other2_mcatt']; ?></td>
+
+							
 						</tr>
 						<?php } ?> 	
 					</tbody>
