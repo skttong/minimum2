@@ -3,7 +3,7 @@ include('connect/conn.php');
 
 		$sql = "INSERT INTO userhospital(Username, Password, prefixID, Name, Lname, HospitalID, TypeUser, status, stausloginfirst) 
 		VALUES 
-		('".$_POST['username']."','".$_POST['password']."','".$_POST['prename']."','".$_POST['firstname']."','".$_POST['lastname']."','".$_POST['CODE_HOS']."','".$_POST['usertype']."','0','0')";
+		('".$_POST['username']."','".$_POST['password']."','".$_POST['prename']."','".$_POST['firstname']."','".$_POST['lastname']."','".$_POST['CODE_HOS']."','".$_POST['usertype']."','0','1')";
 		
 		//$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
 		$result = mysqli_query($con, $sql);

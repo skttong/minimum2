@@ -52,18 +52,21 @@ $msql1 = "SELECT
   m.CODE_map02,
     m.CODE_PROVINCETH,
     m2.CODE_TOTAL ,
-  SUM(ho.result1) AS total_result1,
-  SUM(ho.result2) AS total_result2,
-  SUM(ho.result1 + ho.result2) AS total_all
+    IFNULL(SUM(ho.result1), 0) AS total_result1,
+  IFNULL(SUM(ho.result2), 0) AS total_result2,
+  IFNULL(SUM(ho.result1 + ho.result2), 0)AS total_all
 FROM
   HDCTB21OLD ho
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
-JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
+RIGHT JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
 JOIN Midyear m2 ON m2.CODE_PROVINCE = m.CODE_PROVINCE 
 WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
+  }else{
     $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
   }
   if (isset($_POST['CODE_HMOO'])) {
@@ -103,10 +106,10 @@ $mobj1 = mysqli_query($con, $msql1);
 $datamap ='';
 while($mrow1 = mysqli_fetch_array($mobj1))
 {
-	if($mrow1['total_result2'] <> 0){
+	//if($mrow1['total_result2'] <> 0){
 		//$datamap = $datamap."['".$mrow1['CODE_map02']."',".$mrow1['total_result2']."],";
         $datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".number_format(($mrow1['total_result2']/$mrow1['CODE_TOTAL']*100000), 2, '.', ',').",name:'".$mrow1['CODE_PROVINCETH']."'},";
-	}
+	//}
 	//['th-ct', 10],
 }
 
@@ -125,9 +128,8 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
     $sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
-  }else{
-    $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
   }
   
   if (isset($_POST['CODE_HMOO'])) {
@@ -209,9 +211,8 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
     $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
-  }else{
-    $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
   }
   
   if (isset($_POST['CODE_HMOO'])) {
@@ -279,7 +280,86 @@ while($rowhdc02 = mysqli_fetch_array($objhdc02))
 	//['th-ct', 10],
 }
 
-;
+$sqlhdc04 = "SELECT
+  smiv,
+  SUM(CASE WHEN b_year = '2567' THEN total ELSE 0 END) AS total_2567,
+  SUM(CASE WHEN b_year = '2566' THEN total ELSE 0 END) AS total_2566,
+  SUM(CASE WHEN b_year = '2565' THEN total ELSE 0 END) AS total_2565,
+  SUM(CASE WHEN b_year = '2564' THEN total ELSE 0 END) AS total_2564,
+  SUM(CASE WHEN b_year = '2563' THEN total ELSE 0 END) AS total_2563
+FROM
+  HDCTB04 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlhdc04 = $sqlhdc04."AND h.b_year = '".$Year."'" ;
+  }
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlhdc04 = $sqlhdc04."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
+    $sqlhdc04 = $sqlhdc04."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlhdc04 = $sqlhdc04."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlhdc04 = $sqlhdc04."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlhdc04 = $sqlhdc04."  
+GROUP BY
+  smiv;";
+$objhdc04 = mysqli_query($con, $sqlhdc04);
+//$rowhdc01 = mysqli_fetch_array($objhdc01);
+
+$hdc04_1 ='';
+$hdc04_2 ='';
+$hdc04_3 ='';
+$hdc04_4 ='';
+$hdc04tatal1='';
+$hdc04tatal2='';
+$hdc04tatal3='';
+$hdc04tatal4='';
+
+
+while($rowhdc04 = mysqli_fetch_array($objhdc04))
+{
+	if($rowhdc04['smiv'] == '0'){
+		$hdc04_1 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
+        $hdc04tatal1 = $rowhdc04['total_2567'];
+	}else if($rowhdc04['smiv'] == '1'){
+		$hdc04_2 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
+        $hdc04tatal2 = $rowhdc04['total_2567'];
+	}else if($rowhdc04['smiv'] == '2'){
+		$hdc04_3 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
+        $hdc04tatal3 = $rowhdc04['total_2567'];
+	}else if($rowhdc04['smiv'] == '3'){
+		$hdc04_4 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
+        $hdc04tatal4 = $rowhdc04['total_2567'];
+	}
+	//['th-ct', 10],
+}
+
+
 
 $sqlHD21OLD = "SELECT
  	ho.b_year,
@@ -293,9 +373,8 @@ WHERE
     1 ";
     
     if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
         $sqlHD21OLD = $sqlHD21OLD."AND ho.b_year = '".$Year."'" ;
-      }else{
-        $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
       }
       
   
@@ -377,6 +456,7 @@ WHERE
     1 ";
     
     if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
         $sqlHD18OLD = $sqlHD18OLD."AND ho.b_year = '".$Year."'" ;
       }else{
         $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
@@ -471,6 +551,7 @@ WHERE
     1 ";
     
     if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
         $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
       }else{
         $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
@@ -531,6 +612,7 @@ WHERE
     1 ";
     
     if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
         $sqlHD21OLD_2 = $sqlHD21OLD_2."AND ho.b_year = '".$Year."'" ;
       }
       
@@ -655,12 +737,11 @@ FROM
     HDCTB22OLD ho
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
-    1";
+    1 ";
     
     if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
         $sqlHD22OLD = $sqlHD22OLD."AND ho.b_year = '".$Year."'" ;
-      }else{
-        $sqlHD18_1OLD = $sqlHD18_1OLD."AND ho.b_year = '".$Year."'" ;
       }
       
   
@@ -1750,18 +1831,18 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                 type: 'line',
 
                                     data: {
-                                    labels: ['ปี 2563', 'ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+                                    labels: [ 'ปี 2565', 'ปี 2566', 'ปี 2567'],
                                     datasets: [{
                                         label: '1B030',
                                         data: [12, 22, 32, 22, 22],
-                                        data: [<?php echo $hdc02_2;?>],
+                                        data: [<?php echo $hdc04_1;?>],
                                         borderColor: '#49c3fb',
                                         borderWidth: 1,
                                         stack: 'combined2' // Enable stacking for this dataset
                                     },
                                     {
                                         label: '1B031',
-                                        data: [<?php echo $hdc02_3;?>],
+                                        data: [<?php echo $hdc04_2;?>],
                                         backgroundColor: '#65a6fa',
                                         borderColor: '#65a6fa',
                                         borderWidth: 1,
@@ -1769,7 +1850,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                     },
                                     {
                                         label: '1B032',
-                                        data: [<?php echo $hdc01_1;?>],
+                                        data: [<?php echo $hdc04_3;?>],
                                         backgroundColor: '#7e80e7',
                                         borderColor: '#7e80e7',
                                         borderWidth: 1,
@@ -1777,7 +1858,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                     },
                                     {
                                         label: '1B033',
-                                        data: [<?php echo $hdc01_2;?>],
+                                        data: [<?php echo $hdc04_4;?>],
                                         backgroundColor: '#9b57cc',
                                         borderColor: '#9b57cc',
                                         borderWidth: 1,
@@ -1870,8 +1951,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				  <div class="inner">
                     
                     <p>อัตราการพยายามฆ่าตัวตาย</p>
-					<h3><?php echo number_format($total_result2, 0, '.', ',');?> คน</h3>
-                    <p><?php echo number_format((($total_result2 / $Total)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
+					<h3><?php echo number_format($total_result_22_1, 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format((($total_result_22_1 / $Total)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  

@@ -165,9 +165,10 @@ if($row1['birthday'] == '0000'){
 				<div class="form-group">
 					<label>หน่วยบริการ</label><b><span style="color:red;">*</span></b>
 					<select name="txtHospitalID" class="form-control select2" style="width: 100%;" required>
-						<option selected disabled value="">กรุณากรอกรหัสหน่วยบริการ 5 หลักหรือชื่อหน่วยบริการ</option>
+						<!--<option selected disabled value="">กรุณากรอกรหัสหน่วยบริการ 5 หลักหรือชื่อหน่วยบริการ</option>-->
 						<?php
-							$query = $con->query("SELECT * FROM hospitalnew") or die(mysqli_error());
+							$HospitalID = $row1['HospitalID'];
+							$query = $con->query("SELECT * FROM hospitalnew where CODE5 = '".$HospitalID."' ") or die(mysqli_error());
 							while($fetch = $query->fetch_assoc()){
 
 							echo '<option value = "'.$fetch['CODE5'].'">'.$fetch['CODE5'].'-'.$fetch['HOS_NAME'].'</option>';
@@ -613,8 +614,8 @@ if($row1['birthday'] == '0000'){
 				
 					</div>
 					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="MWac1_6" name="MWac1_6" value="Psychotraumatology & Stabilization Techniques" onclick="uncheckCheckbox();"
-						<?php if($row1['MWac1_6'] == "Psychotraumatology & Stabilization Techniques"){echo 'checked';} ?>>
+						<input type="checkbox" class="custom-control-input" id="MWac1_6" name="MWac1_6" value="หลักสูตร ICS100" onclick="uncheckCheckbox();"
+						<?php if($row1['MWac1_6'] == "หลักสูตร ICS100"){echo 'checked';} ?>>
 						<label class="custom-control-label" for="MWac1_6"></label>หลักสูตร ICS100
 						<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 							<span class="tooltiptext">หลักสูตรการจัดการภาวะฉุกเฉินทางสาธารณสุข (Public health emergency management, PHEM) ระบบบัญชาการเหตุการณ์ (Incident Command System, ICS) และศูนย์ปฏิบัติการภาวะฉุกเฉิน (Emergency Operations Center, EOC)</span>
@@ -754,6 +755,8 @@ if($row1['birthday'] == '0000'){
 		  <?php if($row1['HospitalID'] <> $HospitalID ){ ?>
 		  		<!--<a href="tables-pre.php" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>-->
 				<a href="tables-prealldetail.php?code=<?php echo $row1['HospitalID'];?>" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
+		  <?php }else	if($_SESSION["TypeUser"] == "Admin"){	?>
+				<a href="tables-prealldetail.php?code=<?php echo $row1['HospitalID'];?>" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
 		  <?php }else{ ?>
 				<a href="tables-prealldetail2.php?code=<?php echo $row1['HospitalID'];?>" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
 		  <?php } ?>
@@ -780,6 +783,7 @@ if($row1['birthday'] == '0000'){
 	var MWac1_5 = document.getElementById('MWac1_5');
 	var MWac1_6 = document.getElementById('MWac1_6');
 	var MWac1_7 = document.getElementById('MWac1_7');
+	var MWac1_8 = document.getElementById('MWac1_8');
 	var MWac1_10 = document.getElementById('MWac1_10');
   	// ถ้าวนลูปครบแล้วไม่พบ Checkbox ที่ถูกเลือก ให้แสดงข้อความแจ้ง
 	
@@ -793,8 +797,9 @@ if($row1['birthday'] == '0000'){
 			MWac1_5.required = false;
 			MWac1_6.required = false;
 			MWac1_7.required = false;
+			MWac1_8.required = false;
 
-		if (MWac1_1.checked || MWac1_2.checked || MWac1_3.checked || MWac1_4.checked || MWac1_5.checked || MWac1_6.checked || MWac1_7.checked) {
+		if (MWac1_1.checked || MWac1_2.checked || MWac1_3.checked || MWac1_4.checked || MWac1_5.checked || MWac1_6.checked || MWac1_7.checked || MWac1_8.checked) {
 				return true;
 		} else {
 			// Set required attributes if necessary
@@ -805,6 +810,7 @@ if($row1['birthday'] == '0000'){
 			MWac1_5.required = true;
 			MWac1_6.required = true;
 			MWac1_7.required = true;
+			MWac1_8.required = true;
 			return false;
 		}
 	}

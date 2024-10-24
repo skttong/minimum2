@@ -10,7 +10,7 @@ $codeprovince = $_GET['codeprovince'];
 
 
 if($codeprovince  <> 'ทั้งหมด'){
-echo $sql = "SELECT TYPE_SERVICE  FROM hospitalnew 
+$sql = "SELECT TYPE_SERVICE  FROM hospitalnew 
 WHERE HOS_TYPE = '".$Affiliation."'
 AND hospitalnew.NO_PROVINCE =  '".$codeprovince."' 
 GROUP BY hospitalnew.TYPE_SERVICE 

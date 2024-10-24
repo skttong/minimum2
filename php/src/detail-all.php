@@ -188,6 +188,25 @@ if($_SESSION["TypeUser"] == "Admin"){
           <?php }}}}} ?>
        <!-- </div>-->
 
+       <?php if($_SESSION["TypeUser"] == "Admin"){ ?>
+          <div class="row justify-content-center align-self-center">
+          <div class="col-md-12 col-lg-12 col-xl-12">
+          <h3 class="text-center">แบบบันทึกทรัพยากรบริการ</h3>  
+          </div>
+          <div class="col-md-12 col-lg-6 col-xl-3">
+              <div class="mb-2">
+                    <a href="form_bed.php" ><img class="card-img-top" width= "30%"  src="images/bed.png" alt="bed"></a>
+                    </div>
+                  </div>
+                  <div class="col-md-12 col-lg-6 col-xl-3">
+                    <div class="mb-2">
+                    <a href="form_ect.php" ><img class="card-img-top" width= "30%"  src="images/electric.png" alt="electric"></a>
+                    </div>
+                  </div>
+          </div>
+          <?php }?>
+       <!-- </div>-->
+
 	  	<div class="card-footer">
           &nbsp;
         </div>

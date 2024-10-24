@@ -25,6 +25,9 @@ services:
       - "9906:3306"
     volumes:
       - db_data:/var/lib/mysql
+      - ./my-custom.cnf:/etc/mysql/conf.d/my.cnf # เพิ่มการเชื่อมโยงไฟล์ config
+    command: --sql-mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
@@ -33,7 +36,7 @@ services:
     restart: always
     environment:
       PMA_HOST: db
-      UPLOAD_LIMIT: 5000M
+      UPLOAD_LIMIT: 15000M
     depends_on:
       - db
 

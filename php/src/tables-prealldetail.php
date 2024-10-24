@@ -186,25 +186,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnelID DESC; ";
 		}else{
 
-		    $sqlpersonnel = "SELECT 
-			personnel.personnelID, 
-			personnel.positiontypeID,
-			personnel.prename, 
-			personnel.firstname, 
-			personnel.lastname,  
-			personnel.age,
-			personnel.r1 as 'positionAllName', 
-			personnel.r2 as 'fixpositionAllName', 
-			hospitalnew.HOS_NAME,
-			personnel.positionrole, 
-			personnel.congrat, 
-			personnel.training, 
-			personnel.cogratyear, 
-			personnel.statuscong,
-			personnel.regislaw,
-			personneltype.Ptypename,
-			personnel.positiontypeID,
-			personnel.Mcatt1
+		    $sqlpersonnel = "SELECT *, count(*) AS 'tcount' 
 		FROM 
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
@@ -241,11 +223,11 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					  <!--
 					  <th width="5%">						  
 						  <center>แก้ไข</center></th>-->
-					  <?php /* if($_SESSION["TypeUser"] == "Admin"){?>
+					  <?php  if($_SESSION["TypeUser"] == "Admin"){?>
 					  <!--<th width="5%"><center>ลบข้อมูล</center></th>-->
-					  <th width="5%"></th>
-					  <th width="5%"></th>
-					  <?php }else{?>
+					  <th width="5%">แก้ไขข้อมูล</th>
+					  <!--<th width="5%"></th>-->
+					  <?php }/*else{?>
 					  <th width="15%">แก้ไขข้อมูล</th>
 					  <?php } */?>
 				   </tr>
@@ -313,95 +295,22 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							<?php /*
 							<td><?php echo $rowpersonnel['cogratyear'];  ?></td>
 							<td><?php echo $rowpersonnel['HOS_NAME'];?></td> */ ?>
-                            <?php /*
+                           <?php  if($_SESSION["TypeUser"] == "Admin"){ ?>
 					        <td>
-							<?php if($HosType == "กรมสุขภาพจิต"){?>
-							<center>
-							<?php if($rowpersonnel['positiontypeID']== '1'){?>
-								<a class="btn btn-info btn-sm " href="forms_m1_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>
-							<?php }elseif($rowpersonnel['positiontypeID']== '2'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m2_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>
-							<?php }elseif($rowpersonnel['positiontypeID']== '3'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m3_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>  
-							<?php }elseif($rowpersonnel['positiontypeID']== '4'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m4_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>  
-							<?php }elseif($rowpersonnel['positiontypeID']== '5'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m5_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>
-							<?php }else{ ?>
-								<a class="btn btn-info btn-sm " href="forms_m6_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>	  	  
-
-							<?php } ?>
 							
-								<!--
-								<a href="forms_m1_edit.php?personnelID=<?php//echo $rowpersonnel['personnelID'];?>&&type=<?php// echo $PersonnelType;?>">
-									<i class="fa fa-edit" style="color:darkgreen; font-size: 16pt"></i>	
-								</a>-->
-							</center>
-							<?php }elseif($HosType != "กรมสุขภาพจิต"){?>
-								<center>
-								<?php if($rowpersonnel['positiontypeID']== '1'){?>
+							<center>
+							
 								<a class="btn btn-info btn-sm " href="forms_m1_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
 									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
 								  </a>
-							<?php }elseif($rowpersonnel['positiontypeID']== '2'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m2_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>
-							<?php }elseif($rowpersonnel['positiontypeID']== '3'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m3_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>  
-							<?php }elseif($rowpersonnel['positiontypeID']== '4'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m4_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>  
-							<?php }elseif($rowpersonnel['positiontypeID']== '5'){ ?>
-								<a class="btn btn-info btn-sm " href="forms_m5_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>
-							<?php }else{ ?>
-								<a class="btn btn-info btn-sm " href="forms_m6_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
-								  </a>	  	  
-
-							<?php } ?>
-							</center>
-							<?php }?>
-							</td>
-							<?php if($_SESSION["TypeUser"] == "Admin"){?>
-							<td><center>
-								<!--
-								<a href="personnel_form_edit.php?personnelID=<?//=$rowpersonnel['personnelID'];?>&&positionAllID=<?//=$rowpersonnel['positiontypeName'];?>">
-									<i class="fa fa-edit" style="color:darkgreen; font-size: 16pt"></i>
-								</a> -->
-								<a class="btn btn-danger btn-sm" href="personnel_del.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-trash"></i> ลบ
-								</a>
-								<!--
-								<a href="personnel_del.php?personnelID=<?php// echo $rowpersonnel['personnelID'];?>&&t=<?php// echo $PersonnelType;?>">
-									<i class="far fa-trash-alt" style="color: darkred; font-size: 16pt"></i>
-								</a>-->
+								 
 							</center>
 							</td>
-							<?php } */?>
+							<?php } ?> 	
 						</tr>
 						<?php } ?> 	
 					</tbody>
 				  </table>
-
-
 
 
 				  <table id="example3" class="table table-bordered table-striped" hidden>
@@ -422,6 +331,22 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					  <th width="15%">statuscong</th>
 					  <th width="10%">statuscong</th>
 					  <th width="15%">regislaw</th>
+					  <th width="15%">positiontypeID</th>
+					  <th width="15%">HospitalID</th>
+					  <th width="15%">position_other</th>
+					  <th width="15%">birthday</th>
+					  <th width="15%">other_r1</th>
+					  <th width="15%">other_training</th>
+					  <th width="15%">MWac1_1</th>
+					  <th width="15%">MWac1_2</th>
+					  <th width="15%">MWac1_3</th>
+					  <th width="15%">MWac1_4</th>
+					  <th width="15%">MWac1_5</th>
+					  <th width="15%">MWac1_6</th>
+					  <th width="15%">MWac1_7</th>
+					  <th width="15%">MWac1_8</th>
+					  <th width="15%">MWac1_9</th>
+					  <th width="15%">other2_mcatt</th>
 				   </tr>
                    </thead>
                   <tbody>
@@ -451,10 +376,28 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
 							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
 							<td><?php echo $rowpersonnel2['regislaw']; ?></td>
+							<td><?php echo $rowpersonnel2['positiontypeID']; ?></td>
+							<td><?php echo $rowpersonnel2['HospitalID']; ?></td>
+							<td><?php echo $rowpersonnel2['position_other']; ?></td>
+							<td><?php echo $rowpersonnel2['birthday']; ?></td>
+							<td><?php echo $rowpersonnel2['other_r1']; ?></td>
+							<td><?php echo $rowpersonnel2['other_training']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_1']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_2']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_3']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_4']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_5']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_6']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_7']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_8']; ?></td>
+							<td><?php echo $rowpersonnel2['MWac1_9']; ?></td>
+							<td><?php echo $rowpersonnel2['other2_mcatt']; ?></td>
 						</tr>
 						<?php } ?> 	
 					</tbody>
 				  </table>
+
+
 				<?php /*} 
 				elseif($PersonnelType == 2){?>
 					<table id="example1" class="table table-bordered table-striped">

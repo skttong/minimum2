@@ -16,14 +16,14 @@ if($_POST['CODE_HMOO']<>'ทั้งหมด'){
 
 	}
 }
-if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
+if(trim($_POST['TYPE_SERVICE'])<>'ทั้งหมด'){
 	if (isset($_POST['TYPE_SERVICE']))
 	{
 		$SQL_H = $SQL_H." and hosn.TYPE_SERVICE = '".$_POST['CODE_HMOO']."'";
 
 	}
 }
-if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
+if(trim($_POST['TYPE_SERVICE'])<>'ทั้งหมด'){
 if (isset($_POST['CODE_PROVINCE']))
 	{
 		$SQL_H = $SQL_H." and hosn.CODE_PROVINCE = '".$_POST['CODE_HMOO']."'";
@@ -31,342 +31,370 @@ if (isset($_POST['CODE_PROVINCE']))
 }
 */
 
-$MOOsql1 = "SELECT
-  				hn.CODE_HMOO,
-  				COUNT(CASE WHEN SUBSTRING_INDEX(s.qus1_1, ',', 1) = '1' THEN 1 ELSE NULL END) AS Countries1
-			FROM
-  				serviceform s
-			JOIN hospitalnew hn ON hn.CODE5 = s.HospitalID
-      WHERE
-  				1
-      AND hn.HOS_TYPE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์')
-      ";
 
-      		/*
-    	WHERE
-  				s.statusfinal = '1'
-      ";*/
-  
-if (isset($_POST['Year'])) {
-  $Year = $_POST['Year']-543;
-  $MOOsql1 = $MOOsql1."AND YEAR(s.mhpsDate) = '".$Year."'" ;
-} 
 
-if (isset($_POST['CODE_HMOO'])) {
-  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
-    $CODE_HMOO = $_POST['CODE_HMOO'];
-    $MOOsql1 = $MOOsql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
-  }
-}
+if (isset($_POST['position'])) {
+	$position = $_POST['position'];
 
-if (isset($_POST['TYPE_SERVICE'])) {
-  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-    $mySelect = trim($_POST['TYPE_SERVICE']);
-    $MOOsql1 = $MOOsql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
-  }
-}
-
-if (isset($_POST['CODE_PROVINCE'])) {
-	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
-	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-	$MOOsql1 = $MOOsql1."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+	/*if($position == 'แพทย์'){
+		header("Location: dashboard02doctor.php");
+	}else*/
+	if($position == 'พยาบาล'){
+		header("Location: dashboard02nurse.php");
+	}elseif($position == 'เภสัชกร'){
+		header("Location: dashboard02medicine.php");
+	}elseif($position == 'นักจิตวิทยา'){
+		header("Location: dashboard02heart.php");
+	}elseif($position == 'นักสังคมสงเคราะห์'){
+		header("Location: dashboard02social.php");
+	}elseif($position == 'นักกิจกรรมบำบัด'){
+		header("Location: dashboard02physical-therapy.php");
+	}elseif($position == 'เวชศาสตร์สื่อความหมาย'){
+		header("Location: dashboard02translation.php");
+	}elseif($position == 'นักวิชาการศึกษาพิเศษ'){
+		header("Location: dashboard02education.php");
+	}elseif($position == 'นักวิชาการสาธารณสุข'){
+		header("Location: dashboard02health.php");
+	}elseif($position == 'วิชาชีพอื่นๆ'){
+		header("Location: dashboard02other.php");
 	}
-  }
+}
   
-  if (isset($_POST['CODE_HOS'])) {
-	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
-	$CODE_HOS = $_POST['CODE_HOS'];
-	$MOOsql1 = $MOOsql1."AND hn.CODE5 = '".$CODE_HOS."'" ;
-	}
-  }
-  
-  
-  $MOOsql1 = $MOOsql1."        
-			GROUP BY
-  				hn.CODE_HMOO
-			;
-		  ";
-  $Mobj1 = mysqli_query($con, $MOOsql1);
-  //$row2 = mysqli_fetch_array($obj2);
-  $Hmoo01_1 = 0 ;
-  $Hmoo02_1 = 0 ;
-  $Hmoo03_1 = 0 ;
-  $Hmoo04_1 = 0 ;
-  $Hmoo05_1 = 0 ;
-  $Hmoo06_1 = 0 ;
-  $Hmoo07_1 = 0 ;
-  $Hmoo08_1 = 0 ;
-  $Hmoo09_1 = 0 ;
-  $Hmoo10_1 = 0 ;
-  $Hmoo11_1 = 0 ;
-  $Hmoo12_1 = 0 ;
-  $Hmoo13_1 = 0 ;
- 
-  
-  while($Mrow1 = mysqli_fetch_array($Mobj1))
-  {
-	  if($Mrow1['CODE_HMOO'] == 1){
-		  $Hmoo01_1 = $Mrow1['Countries1'];
-		//  $Hmoo01_2 = $Mrow1['nu01_2'];
-	  }elseif($Mrow1['CODE_HMOO'] == 2){
-		  $Hmoo02_1 = $Mrow1['Countries1'];
-		//  $Hmoo02_2 = $Mrow1['nu01_2'];
-	  }elseif($Mrow1['CODE_HMOO'] == 3){
-		  $Hmoo03_1 = $Mrow1['Countries1'];
-		//  $Hmoo03_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 4){
-		  $Hmoo04_1 = $Mrow1['Countries1'];
-		//  $Hmoo04_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 5){
-		  $Hmoo05_1 = $Mrow1['Countries1'];
-		//  $Hmoo05_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 6){
-		  $Hmoo06_1 = $Mrow1['Countries1'];
-		//  $Hmoo06_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 7){
-		  $Hmoo07_1 = $Mrow1['Countries1'];
-		//  $Hmoo07_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 8){
-		  $Hmoo08_1 = $Mrow1['Countries1'];
-		//  $Hmoo08_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 9){
-		  $Hmoo09_1 = $Mrow1['Countries1'];
-		//  $Hmoo09_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 10){
-		  $Hmoo10_1 = $Mrow1['Countries1'];
-		//  $Hmoo10_2 = $Mrow1['nu01_2'];
-		  
-	  }elseif($Mrow1['CODE_HMOO'] == 11){
-		  $Hmoo11_1 = $Mrow1['Countries1'];
-		//  $Hmoo11_2 = $Mrow1['nu01_2'];
-  
-	  }elseif($Mrow1['CODE_HMOO'] == 12){
-		  $Hmoo12_1 = $Mrow1['Countries1'];
-		 // $Hmoo12_2 = $Mrow1['nu01_2'];
-	  
-	  }elseif($Mrow1['CODE_HMOO'] == 13){
-		  $Hmoo13_1 = $Mrow1['Countries1'];
-		 // $Hmoo13_2 = $Mrow1['nu01_2'];
-  
-	  }
-	  //['th-ct', 10],
-  }
-  
-  $dHMOO1 = "'เขตสุขภาพที่ 1', 'เขตสุขภาพที่ 2', 'เขตสุขภาพที่ 3', 'เขตสุขภาพที่ 4', 'เขตสุขภาพที่ 5', 'เขตสุขภาพที่ 6', 'เขตสุขภาพที่ 7', 'เขตสุขภาพที่ 8', 'เขตสุขภาพที่ 9', 'เขตสุขภาพที่ 10', 'เขตสุขภาพที่ 11', 'เขตสุขภาพที่ 12', 'เขตสุขภาพที่ 13'";
-  
-   $vMhoo1_1 = $Hmoo01_1.",".$Hmoo02_1.",".$Hmoo03_1.",".$Hmoo04_1.",".$Hmoo05_1.",".$Hmoo06_1.",".$Hmoo07_1.",".$Hmoo08_1.",".$Hmoo09_1.",".$Hmoo10_1.",".$Hmoo11_1.",".$Hmoo12_1.",".$Hmoo13_1 ;
-   
-
 
 
 $sql1 = "SELECT
-			hn.CODE_HMOO,
-			COUNT(CASE WHEN SUBSTRING_INDEX(s.qus1_1, ',', 1) = 'desired_value' THEN 1 ELSE NULL END) AS Countries1
-		FROM
-			serviceform s
-		JOIN hospitalnew hn ON hn.CODE5 = s.HospitalID
-		WHERE
-			s.statusfinal = '1'
-    AND hn.HOS_TYPE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์')
-      ";
-  
+  SUM(CASE WHEN r1 = 'จิตแพทย์ทั่วไป' THEN 1 ELSE 0 END) AS 'dr01', 
+  SUM(CASE WHEN r1 = 'จิตแพทย์เด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'dr02', 
+  SUM(CASE WHEN r1 = 'แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. หรือ วว.)' THEN 1 ELSE 0 END) AS 'dr03', 
+  SUM(CASE WHEN r1 = 'แพทย์สาขาอื่น ที่ปฏิบัติงานด้านจิตเวชผู้ใหญ่และจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'dr04' 
+FROM
+  personnel p
+JOIN hospitalnew e ON e.CODE5 = p.HospitalID
+WHERE 1
+AND p.r2 = 'Full-Time'
+
+";
+
+
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
-  $sql1 = $sql1."AND YEAR(s.mhpsDate) = '".$Year."'" ;
-} 
+  $sql1 = $sql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
-    $CODE_HMOO = $_POST['CODE_HMOO'];
-    $sql1 = $sql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql1 = $sql1."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
   }
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-    $mySelect = trim($_POST['TYPE_SERVICE']);
-    $sql1 = $sql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql1 = $sql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
 
 if (isset($_POST['CODE_PROVINCE'])) {
-	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
-	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-	$sql1 = $sql1."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
-	}
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql1 = $sql1."AND e.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
   }
-  
-  if (isset($_POST['CODE_HOS'])) {
-	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
-	$CODE_HOS = $_POST['CODE_HOS'];
-	$sql1 = $sql1."AND hn.CODE5 = '".$CODE_HOS."'" ;
-	}
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql1 = $sql1."AND p.HospitalID = '".$CODE_HOS."'" ;
   }
-  
-  
-  $sql1 = $sql1."        
-			GROUP BY
-  				hn.CODE_HMOO
-			;
-		  ";
+}
+
+
+
 $obj1 = mysqli_query($con, $sql1);
 $row1 = mysqli_fetch_array($obj1);
 
-$totalse01 =  $row1['Countries1'];
+$dr01 =  $row1['dr01'];
+$dr02 =  $row1['dr02'];
+$dr03 =  $row1['dr03'];
+$dr04 =  $row1['dr04'];
 
 
-$msql1 = "WITH HospitalCounts AS (
-    SELECT
-        h.CODE_PROVINCE,
-        h.CODE_HMOO,
-        h.CODE5,
-        h.TYPE_SERVICE,
-        s.mhpsDate,
-        COUNT(*) AS total_hospitals,
-        COUNT(CASE WHEN SUBSTRING_INDEX(s.qus1_1, ',', 1) = '1' THEN 1 END) AS Countries1
-    FROM hospitalnew h
-    LEFT JOIN serviceform s ON h.CODE5 = s.HospitalID
-    WHERE h.HOS_TYPE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์')
-    GROUP BY h.CODE_PROVINCE
-)
-SELECT
-    hc.CODE_PROVINCE,
-    m.CODE_map02,
-    m.CODE_PROVINCETH,
-    hc.total_hospitals,
-    hc.Countries1
-FROM HospitalCounts hc
-JOIN mapdetail m ON hc.CODE_PROVINCE = m.CODE_PROVINCE
-      ";
-  
+$tsql1 = "SELECT
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'จิตเวชศาสตร์/จิตแพทย์ทั่วไป' THEN 1 ELSE 0 END) AS 'tdr01',
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'จิตแพทย์เด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'tdr02',
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'แพทย์เวชศาสตร์ป้องกันแขนงสุขภาพจิตชุมชน (อว. หรือ วว.)' THEN 1 ELSE 0 END) AS 'tdr03',
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'อื่น ๆ' THEN 1 ELSE 0 END) AS 'tdr04'
+FROM
+  personnel p
+JOIN hospitalnew e ON e.CODE5 = p.HospitalID
+WHERE 1
+AND p.r2 = 'Full-Time'
+
+";
+
+
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
-  $msql1 = $msql1."AND YEAR(hc.mhpsDate) = '".$Year."'" ;
-} 
+  $tsql1 = $tsql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
-    $CODE_HMOO = $_POST['CODE_HMOO'];
-    $msql1 = $msql1."AND hc.CODE_HMOO = '".$CODE_HMOO."'" ;
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $tsql1 = $tsql1."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
   }
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-    $mySelect = trim($_POST['TYPE_SERVICE']);
-    $msql1 = $msql1."AND hc.TYPE_SERVICE = '".$mySelect."'" ;
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $tsql1 = $tsql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
 
 if (isset($_POST['CODE_PROVINCE'])) {
-	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
-	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-	$msql1 = $msql1."AND hc.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
-	}
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $tsql1 = $tsql1."AND e.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
   }
-  
-  if (isset($_POST['CODE_HOS'])) {
-	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
-	$CODE_HOS = $_POST['CODE_HOS'];
-	$msql1 = $msql1."AND hc.CODE5 = '".$CODE_HOS."'" ;
-	}
-  } 
- 
-/*
-echo $msql1 = $msql1."        
-GROUP BY
-	m.CODE_map02, m.CODE_PROVINCETH
-;
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $tsql1 = $tsql1."AND p.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+$tobj1 = mysqli_query($con, $tsql1);
+$trow1 = mysqli_fetch_array($tobj1);
+
+$tdr01 =  $trow1['tdr01'];
+$tdr02 =  $trow1['tdr02'];
+$tdr03 =  $trow1['tdr03'];
+$tdr04 =  $trow1['tdr04'];
+
+$maptitle = 'จิตแพทย์ทั่วไป';
+
+ $msql1 = "SELECT 
+    h.CODE_PROVINCE,
+    m.CODE_map02,
+    m.CODE_PROVINCETH,
+    COUNT(DISTINCT COALESCE(p.personnelID, 0)) AS total_personnel,
+    m2.CODE_TOTAl
+FROM 
+    hospitalnew h
+LEFT JOIN  
+    personnel p ON h.CODE5 = p.HospitalID
+JOIN mapdetail m ON h.CODE_PROVINCE = m.CODE_PROVINCE
+JOIN Midyear m2 ON h.CODE_PROVINCE = m2.CODE_PROVINCE 
+WHERE 
+    p.r1 = '$maptitle'
+" ;
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $msql1 = $msql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $msql1 = $msql1."AND h.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $msql1 = $msql1."AND h.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $msql1 = $msql1."AND h.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $msql1 = $msql1."AND h.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+
+
+$msql1 = $msql1 ."
+GROUP BY 
+    h.CODE_PROVINCE, m.CODE_map02, m.CODE_PROVINCETH;
+
 ";
-*/
+
 
 $mobj1 = mysqli_query($con, $msql1);
-//echo $msql1;
+
 $datamap ='';
 while($mrow1 = mysqli_fetch_array($mobj1))
 {
-	if($mrow1['Countries1'] <> 0){
-		//$datamap = $datamap."['".$mrow1['CODE_map02']."',".$mrow1['Countries1']."],";
-    $datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".$mrow1['Countries1']*100/$mrow1['total_hospitals'].",name:'".$mrow1['CODE_PROVINCETH']."'},";
+	if($mrow1['total_personnel'] <> 0){
+		$datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".number_format(($mrow1['total_personnel']/$mrow1['CODE_TOTAl']*100000), 2, '.', ',').",name:'".$mrow1['CODE_PROVINCETH']."'},";
 	}
 	//['th-ct', 10],
 }
 
-/*
-$sqlall = "SELECT
-	hn.HOS_NAME ,
-	COUNT(CASE WHEN SUBSTRING_INDEX(s.qus1_1, ',', 1) = '1' THEN 1 ELSE NULL END) AS Countries1
-FROM
-	serviceform s
-JOIN hospitalnew hn ON hn.CODE5 = s.HospitalID
-WHERE
-	1
-  ";
- */ 
+//echo $datamap ;
 
- $sqlall = "SELECT
- hn.HOS_NAME ,
- SUBSTRING_INDEX(s.qus1_1, ',', 1) AS Countries1
-FROM
- serviceform s
-JOIN hospitalnew hn ON hn.CODE5 = s.HospitalID
-WHERE
- 1
-AND hn.HOS_TYPE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์')
-AND  SUBSTRING_INDEX(s.qus1_1, ',', 1)  <> 0
- ";
+$maptitle2 = 'จิตแพทย์เด็กและวัยรุ่น';
+
+ $msql2 = "SELECT 
+    h.CODE_PROVINCE,
+    m.CODE_map02,
+    m.CODE_PROVINCETH,
+    COUNT(DISTINCT p.personnelID) AS total_personnel,
+    m2.CODE_TOTAl
+FROM 
+    hospitalnew h
+LEFT JOIN  
+    personnel p ON h.CODE5 = p.HospitalID
+JOIN mapdetail m ON h.CODE_PROVINCE = m.CODE_PROVINCE
+JOIN Midyear m2 ON h.CODE_PROVINCE = m2.CODE_PROVINCE 
+WHERE 
+    p.r1 = '$maptitle2'
+AND p.r2 = 'Full-Time'
+" ;
 
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
-  $sqlall = $sqlall."AND YEAR(s.mhpsDate) = '".$Year."'" ;
-} 
+  $msql2 = $msql2."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
-    $CODE_HMOO = $_POST['CODE_HMOO'];
-    $sqlall = $sqlall."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $msql2 = $msql2."AND h.CODE_HMOO = '".$CODE_HMOO."'" ;
   }
 }
 
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
-    $mySelect = trim($_POST['TYPE_SERVICE']);
-    $sqlall = $sqlall."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $msql2 = $msql2."AND h.TYPE_SERVICE = '".$mySelect."'" ;
   }
 }
 
 if (isset($_POST['CODE_PROVINCE'])) {
-	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
-	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-	$sqlall = $sqlall."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
-	}
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $msql2 = $msql2."AND h.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
   }
-  
-  if (isset($_POST['CODE_HOS'])) {
-	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
-	$CODE_HOS = $_POST['CODE_HOS'];
-	$sqlall = $sqlall."AND hn.CODE5 = '".$CODE_HOS."'" ;
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $msql2 = $msql2."AND h.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+
+$msql2 = $msql2 ."
+GROUP BY 
+    h.CODE_PROVINCE, m.CODE_map02, m.CODE_PROVINCETH;
+
+";
+
+
+$mobj2 = mysqli_query($con, $msql2);
+
+$datamap2 ='';
+while($mrow2 = mysqli_fetch_array($mobj2))
+{
+	if($mrow2['total_personnel'] <> 0){
+		$datamap2 = $datamap2."{'hc-key':'".$mrow2['CODE_map02']."',value:".number_format(($mrow2['total_personnel']/$mrow2['CODE_TOTAl']*100000), 2, '.', ',').",name:'".$mrow2['CODE_PROVINCETH']."'},";
 	}
-  } 
+	//['th-ct', 10],
+}
 
-  /*$sqlall = $sqlall."        
-			GROUP BY
-  				hn.CODE_HMOO
-			;
-		  ";
-*/
+//echo $datamap ;
 
-$sqlall1 = $sqlall ;
+
+
+$sqlmid = "SELECT
+    SUM(CODE_MALE) AS Total_Male,
+    SUM(CODE_FEMALE) AS Total_Female,
+    SUM(CODE_TOTAL) AS Total
+FROM Midyear
+GROUP BY CODE_PROVINCE, YEAR;";
+$objmid = mysqli_query($con, $sqlmid);
+$rowmid = mysqli_fetch_array($objmid);
+
+$Total_Male = $rowmid['Total_Male'];
+$Total_Female = $rowmid['Total_Female'];
+$Total = $rowmid['Total'];
+
+
+$sqlall = "SELECT
+  h.CODE5,
+  h.HOS_NAME,
+  COUNT(CASE WHEN p.r1 = 'จิตแพทย์ทั่วไป' THEN 1 END) AS dr01,
+  COUNT(CASE WHEN p.r1 = 'จิตแพทย์เด็กและวัยรุ่น' THEN 1 END) AS dr02,
+  COUNT(CASE WHEN p.r1 = 'แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. หรือ วว.)' THEN 1 END) AS dr03,
+  COUNT(CASE WHEN p.r1 = 'แพทย์สาขาอื่น ที่ปฏิบัติงานด้านจิตเวชผู้ใหญ่และจิตเวชเด็กและวัยรุ่น' THEN 1 END) AS dr04
+FROM
+  hospitalnew h
+JOIN personnel p ON h.CODE5 = p.HospitalID 
+WHERE 1 
+AND p.r2 = 'Full-Time'
+";
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sqlall = $sqlall."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sqlall = $sqlall."AND h.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sqlall = $sqlall."AND h.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sqlall = $sqlall."AND h.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sqlall = $sqlall."AND h.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+
+$sqlall = $sqlall."
+GROUP BY
+  h.CODE5, h.HOS_NAME;"
+  ;
+
+$sqlall2 = $sqlall;
 
 $objall = mysqli_query($con, $sqlall);
-$objall1 = mysqli_query($con, $sqlall1);
+$objall2 = mysqli_query($con, $sqlall2);
+
+
 
 ?>
 
@@ -435,7 +463,7 @@ $objall1 = mysqli_query($con, $sqlall1);
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>กลุ่มงานสุขภาพจิตและยาเสพติด</h3>
+              <h3>ข้อมูลทรัพยากรบุคลากร แพทย์ </h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -467,7 +495,7 @@ $objall1 = mysqli_query($con, $sqlall1);
           </div>
           <!-- /.card-header -->
           <div class="card-body">
-			<form class="form-valide" action="dashboard05.php" method="post" id="myform1" name="foml">  
+			<form class="form-valide" action="dashboard02doctor.php" method="post" id="myform1" name="foml">  
       <div class="row">
               <div class="col-md-2">
                 <div class="form-group">
@@ -577,6 +605,17 @@ ORDER BY NO_PROVINCE ASC;";
               <div class="col-md-2">
                <div class="form-group">
                   <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2" name="Affiliation2" id="Affiliation2" style="width: 100%;" onChange="myFunction7()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="นอกสังกัด">ในสังกัด</option>
+                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  </select>
+                </div>
+                </div>
+                <!-- /.col -->	
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>หน่วยงานใน/นอกสังกัด</label>
                   <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
                     <option value="ทั้งหมด" >ทั้งหมด</option>
                     <?PHP 
@@ -670,6 +709,9 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
               </div>
               <!-- /.col -->		
 
+
+              
+
 <!--<div class="col-md-2">
                <div class="form-group">
                   <label>เขตพื้นที่/Service Plan</label>
@@ -713,8 +755,26 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				   
                 </div>
               </div>-->
-              <!-- /.col -->	
+              <!-- /.col -->		
+			  <div class="col-md-2">
+               <div class="form-group">
+                  <label> ประเภทบุคลากร</label>
+                  <select name="position" class="form-control select2" id="position" style="width: 100%;">
+					<option selected="selected"value="แพทย์" >แพทย์</option>
+					<option value="พยาบาล" >พยาบาล</option>
+					<option value="เภสัชกร" >เภสัชกร</option>
+					<option value="นักจิตวิทยา" >นักจิตวิทยา</option>
+					<option value="นักสังคมสงเคราะห์" >นักสังคมสงเคราะห์</option>
+					<option value="นักกิจกรรมบำบัด" >นักกิจกรรมบำบัด</option>
+					<option value="เวชศาสตร์สื่อความหมาย" >เวชศาสตร์สื่อความหมาย</option>
+					<option value="นักวิชาการศึกษาพิเศษ" >นักวิชาการศึกษาพิเศษ</option>
+					<option value="นักวิชาการสาธารณสุข" >นักวิชาการสาธารณสุข</option>
+					<option value="วิชาชีพอื่นๆ" >วิชาชีพอื่นๆ</option>
 
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->		
             </div>
             <!-- /.row -->
 		
@@ -741,35 +801,42 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
       </div>
       <!-- /.container-fluid -->
 
-    
-
 	  <!-- Default box -->
       <div class="row">
 		<div class="col-md-6">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">โรงพยาบาลที่มีกลุ่มงานสุขภาพจิตและยาเสพติด</h3>
+					<h3 class="card-title">แพทย์</h3>
 					<div align="right">
 						<button class="btn btn-navbar" id="download-button" align="right" ><img width="10%" src="images/downloand.png"></button>
 					</div>
 				</div>
 				<div class="card-body">
-					<a href="#"><canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<a href=#"><canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+		
 					<script>
         const ctx = document.getElementById('myChart3');
         
         
         const downloadButton = document.getElementById('download-button');
-		
+
         const myChart3 = new Chart(ctx, {
             type: 'bar',
-            data: {
-                labels: [<?PHP echo $dHMOO1;?>],
+			data: {
+                labels: ['จิตแพทย์ผู้ใหญ่', 'จิตแพทย์เด็กและวัยรุ่น', 'เวชศาสตร์ป้องกัน สาขาจิตเวชชุมชน', 'อื่นๆ'],
                 datasets: [{
-                    label: 'ร้อยละโรงพยาบาลที่มีกลุ่มงานสุขภาพจิตและยาเสพติด',
-                    data: [<?PHP echo $vMhoo1_1;?>],
-                    backgroundColor: '#6ce5e8',
-                    borderColor: '#6ce5e8',
+                    label: 'ปฏิบัติงาน',
+                    data: [<?php echo $dr01.','.$dr02.','.$dr03.','.$dr04;?>],
+                    backgroundColor: '#6CE5E8',
+                    borderColor: '#6CE5E8',
+                    borderWidth: 1,
+                    stack: 'combined' // Enable stacking for this dataset
+                },
+                {
+                    label: 'กำลังศึกษาต่อเฉพาะทาง',
+                    data: [<?php echo $tdr01.','.$tdr02.','.$tdr03.','.$tdr04;?>],
+                    backgroundColor: '#41B8D5',
+                    borderColor: '#41B8D5',
                     borderWidth: 1,
                     stack: 'combined' // Enable stacking for this dataset
                 }]
@@ -799,8 +866,9 @@ downloadButton.addEventListener('click', function() {
 				
 
 			</div>
-
-      <div class="card">
+			<div class="row">
+			<div class="col-md-12">
+			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title"></h3>
 				</div>
@@ -810,24 +878,32 @@ downloadButton.addEventListener('click', function() {
                   <tr align="center">
 					  <th width="2%">#</th>
 					  <th width="12%">โรงพยาบาล/หน่วยงาน</th>
-					  <th width="15%">มีกลุ่มงานสุขภาพจิตและยาเสพติด</th>
+					  <th width="15%">จิตแพทย์ผู้ใหญ่</th>
+					  <th width="12%">จิตแพทย์เด็กและวัยรุ่น</th>
+					  <th width="15%">เวชศาสตร์ป้องกัน สาขาจิตเวชชุมชน</th>
+					  <th width="15%">อื่นๆ</th>
 				   </tr>
                    </thead>
                   <tbody>
-                  <?php
+
+				  <?php
 				  		$i = 0;
 
 						while($rowall = mysqli_fetch_array($objall)){
 							$i++;
 				  ?>
-          <tr align="center">
+				  <tr align="center">
 						<td width="2%"><?php echo $i;?></td>
 						<td width="12%"><?php echo $rowall['HOS_NAME'];?></td>
-						<td width="12%"><?php echo $rowall['Countries1'];?></td>
+						<td width="12%"><?php echo $rowall['dr01'];?></td>
+						<td width="12%"><?php echo $rowall['dr02'];?></td>
+						<td width="12%"><?php echo $rowall['dr03'];?></td>
+						<td width="12%"><?php echo $rowall['dr04'];?></td>
 				   </tr>
 				   <?php 
 						}
 				   ?>
+
 					</tbody>
 				  </table>
 
@@ -836,74 +912,213 @@ downloadButton.addEventListener('click', function() {
                   <tr align="center">
 					  <th width="2%">#</th>
 					  <th width="12%">โรงพยาบาล/หน่วยงาน</th>
-					  <th width="15%">มีกลุ่มงานสุขภาพจิตและยาเสพติด</th>
+					  <th width="15%">จิตแพทย์ผู้ใหญ่</th>
+					  <th width="12%">จิตแพทย์เด็กและวัยรุ่น</th>
+					  <th width="15%">เวชศาสตร์ป้องกัน สาขาจิตเวชชุมชน</th>
+					  <th width="15%">อื่นๆ</th>
 				   </tr>
                    </thead>
                   <tbody>
-                  <?php
+
+				  <?php
 				  		$j = 0;
 
-						while($rowall1 = mysqli_fetch_array($objall1)){
+						while($rowall2 = mysqli_fetch_array($objall2)){
 							$j++;
 				  ?>
-          <tr align="center">
+				  <tr align="center">
 						<td width="2%"><?php echo $j;?></td>
-						<td width="12%"><?php echo $rowall1['HOS_NAME'];?></td>
-						<td width="12%"><?php echo $rowall1['Countries1'];?></td>
+						<td width="12%"><?php echo $rowall2['HOS_NAME'];?></td>
+						<td width="12%"><?php echo $rowall2['dr01'];?></td>
+						<td width="12%"><?php echo $rowall2['dr02'];?></td>
+						<td width="12%"><?php echo $rowall2['dr03'];?></td>
+						<td width="12%"><?php echo $rowall2['dr04'];?></td>
 				   </tr>
 				   <?php 
 						}
 				   ?>
+
 					</tbody>
 				  </table>
 				</div>
 			</div>	
-
-		  
+				
+			</div>
+			</div>
 		
 		</div>
+		
+		<div class="col-md-6">
 
-        <div class="col-md-6">
-			<div class="card">
+
+		<div class="row">
+			<div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #C9ECFF; color: black;">
+                <div class="inner">
+                    
+				<p>จิตแพทย์ผู้ใหญ่</p> 
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($dr01), 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format((($dr01/$Total)*100000), 4, '.', ',') ;?> : 1แสน ประชากร</p>
+					
+				  </div>
+				  <!--<div class="icon">
+					<i class="fas fa-file-medical-alt"></i>
+				  </div>-->
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			  <div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #D9D9D9; color: black;">
+                <div class="inner">
+                    
+                    
+					<p>จิตแพทย์เด็กและวัยรุ่น</p>
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($dr02), 0, '.', ',');?> คน</h3>
+					<p><?php echo number_format((($dr02/$Total)*100000), 4, '.', ',') ;?> : 1แสน ประชากร</p>
+					
+				  </div>
+				 <!-- <div class="icon">
+					<i class="fas fa-file-medical-alt"></i>
+				  </div>-->
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			  <div class="col-lg-12">
+			  <div class="card">
 				<!--<div class="card-header">
 					<h3 class="card-title">ผู้ป่วยในจิตเวช</h3>
 				</div>-->
-				<div class="card-body">
-					<div id="container"></div>
-					
-				</div>
+				<div class="col-md-4" >
+                <div class="form-group">
+                  <!--<label> ประเภทบุคลากร</label>-->
+				  <br>
+                  <select name="position2" class="form-control select2" id="position2" style="width: 100%;">
+                    <option selected="selected" value="จิตแพทย์ผู้ใหญ่" >จิตแพทย์ผู้ใหญ่</option>
+					          <option value="จิตแพทย์เด็กและวัยรุ่น" >จิตแพทย์เด็กและวัยรุ่น</option>
+                  </select>
+                </div>
+              </div>
+        <div id="map01">
+          <div class="card-body">
+            <div id="container"></div>
+            
+          </div>
+        </div>
+
+        <div id="map02" class="disabled">
+          <div class="card-body">
+            <div id="container2"></div>
+            
+          </div>
+        </div>
+
+        <style>
+          .disabled {
+          display: none;
+                pointer-events: none;  /* Prevent any mouse events */
+                opacity: 0.1;          /* Make it look disabled */
+          
+            }
+        </style>
+
+        <script>
+				const dropdown = document.getElementById('position2');
+        const div1 = document.getElementById('map01');
+        const div2 = document.getElementById('map02');
+	
+				dropdown.addEventListener('change', function() {
+            //alert(dropdown.value);
+            if (dropdown.value === 'จิตแพทย์เด็กและวัยรุ่น') {
+                div2.classList.remove('disabled');
+                div1.classList.add('disabled');
+            }else{
+                div2.classList.add('disabled');
+                div1.classList.remove('disabled');
+            }
+           // const div = document.getElementById('myMctt3');
+					 // div.classList.add('disabled');
+					 // document.getElementById("other_r1").disabled = false;
+				});
+
+			</script>
+        
 
 			</div>
-            
-
-		</div>
-
+			  </div>
+			  <!-- ./col -->
+			 
+			</div>
+			<!-- ./row -->	
+			</div>
+			
 	  </div>
       <!-- /.card -->	
 						</div>
 						</div>
-            
 
 
-                        
 						<script>
+		 
+
+		 const ctx9 = document.getElementById('myChart9');
+	   
+		 new Chart(ctx9, {
+		   type: 'doughnut',
+		   data: {
+			 labels: [ 'Psychiatric Ward', 'Psychiatric Unit', 'Integrated Bed'],
+			 datasets: [{
+			   label: 'จำนวน',
+			   backgroundColor: [
+				 '#056934',
+				 '#fbe036',
+				 '#cd0808'
+			   ],
+			   data: [<?php echo "22, 15, 5" ;?>],
+			   borderWidth: 1
+			 }]
+		   },
+		   options: {
+			 cutoutPercentage: 95,
+			 legend: {
+			   display: false
+			 },
+			 tooltip: {
+			   enabled: false
+			 }	
+		   }
+		 });
 		   
-		   (async () => {
+		
 		   
-			   const topology = await fetch(
-				   'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
-			   ).then(response => response.json());
+		
+	   </script>
+	   <script>
 		   
-			   // Prepare demo data. The data is joined to map using value of 'hc-key'
-			   // property by default. See API docs for 'joinBy' for more info on linking
-			   // data and map.
-			   const data = [
-					<?php echo $datamap; ?>
-			   ];
-		   
-			   // Create the chart
-			   Highcharts.mapChart('container', {
-				chart: {
+	   (async () => {
+	   
+		   const topology = await fetch(
+			   'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
+		   ).then(response => response.json());
+	   
+		   // Prepare demo data. The data is joined to map using value of 'hc-key'
+		   // property by default. See API docs for 'joinBy' for more info on linking
+		   // data and map.
+		   const data = [
+			<?php echo $datamap; ?> 
+		   ];
+	   
+		   // Create the chart
+		   Highcharts.mapChart('container', {
+			
+			chart: {
                 map: topology,
                 // Responsive options:
 				height: 900, // Adjust the height as desired (e.g., 600, 800)
@@ -927,34 +1142,45 @@ downloadButton.addEventListener('click', function() {
                     }]
                 }
             },
-		   
-				   
-				   title: {
-					   text: 'มีกลุ่มงานสุขภาพจิตและยาเสพติด'
-				   },
-
-           mapNavigation: {
+	   
+			   
+			   title: {
+				   text: ' '
+			   },
+         mapNavigation: {
             enabled: true,
             buttonOptions: {
                 verticalAlign: 'bottom'
             }
         },
-		   
-				   /*
-				   subtitle: {
-					   text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
-				   },
-				   /*
-				   mapNavigation: {
-					   enabled: true,
-					   buttonOptions: {
-						   verticalAlign: 'bottom'
-					   }
-				   },
-				   */ 
-          legend: {
+	   
+			   /*
+			   subtitle: {
+				   text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
+			   },
+			   /*
+			   mapNavigation: {
+				   enabled: true,
+				   buttonOptions: {
+					   verticalAlign: 'bottom'
+				   }
+			   },
+			   
+			   colorAxis: {
+				min: 1,
+            type: 'logarithmic',
+            minColor: '#cd0808',
+            maxColor: '#056934',
+            stops: [
+                [0, '#cd0808'],
+                [0.67, '#fbe036'],
+                [1, '#056934']
+            ]
+			   },*/
+
+         legend: {
                 title: {
-                    text: 'มีกลุ่มงานสุขภาพจิตและยาเสพติด',
+                    text: '',
                     style: {
                         color: ( // theme
                             Highcharts.defaultOptions &&
@@ -978,33 +1204,41 @@ downloadButton.addEventListener('click', function() {
                 symbolRadius: 20,
                 symbolHeight: 14
             },
+          
             colorAxis: {
-                dataClasses: [{           
-                    from: 100,
+                dataClasses: [{
+                    
+                    from: 1.7,
                     color: '#056934',
-                    name: '100%'
-                },{
-                    to: 100,
+                    name: '>1.7 : แสนประชากร '
+                }, {
+                    from: 1.7,
+                    to: 1,
                     color: '#fbe036',
-                    name: '< 100%'
+                    name: '1 - 1.7 : แสนประชากร '
+                }, {
+                    to: 1,
+                    color: '#cd0808',
+                    name: '< 1 : แสนประชากร ' 
                 }, {
                     to: 0,
                     color: '#e3e3e2',
-                    name: 'ไม่มี'
+                    name: 'ไม่มี '
                 }]
             },
-		   
-				   series: [{
-					   data: data,
-					   /*
-					   name: 'มีกลุ่มงานสุขภาพจิตและยาเสพติด',
-					   
-					   states: {
-						   hover: {
-							   color: '#BADA55'
-						   }
-					   },
-					   */ 
+			   
+	   
+			   series: [{
+				   data: data,
+				   
+				   name: 'Random data',
+				   /*
+				   states: {
+					   hover: {
+						   color: '#BADA55'
+					   }
+				   },
+				    */ 
             dataLabels: {
                     enabled: true,
                     color: '#000000',
@@ -1014,16 +1248,167 @@ downloadButton.addEventListener('click', function() {
                     //    '{point.properties.iso-a2}' +
                    //     '{/if}'
                 },
-					   
-				   }]
-			   });
-		   
-		   })();
-		   
-		   
-		   </script>
- 
+				  
+			   }]
+		   });
+	   
+	   })();
 
+     (async () => {
+	   
+     const topology = await fetch(
+       'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
+     ).then(response => response.json());
+   
+     // Prepare demo data. The data is joined to map using value of 'hc-key'
+     // property by default. See API docs for 'joinBy' for more info on linking
+     // data and map.
+     const data2 = [
+    <?php echo $datamap2; ?> 
+     ];
+   
+     // Create the chart
+     Highcharts.mapChart('container2', {
+    
+    chart: {
+              map: topology,
+              // Responsive options:
+      height: 900, // Adjust the height as desired (e.g., 600, 800)
+              responsive: {
+                  rules: [{
+                      condition: {
+                          maxWidth: 1000
+                      },
+                      chartOptions: {
+                          title: {
+                              style: {
+                                  display: 'none' // Hide title on small screens
+                              }
+                          },
+                          legend: {
+                              layout: 'horizontal',
+                              align: 'center',
+                              verticalAlign: 'bottom' // Move legend below chart on small screens
+                          }
+                      }
+                  }]
+              }
+          },
+   
+       
+       title: {
+         text: ' '
+       },
+
+       mapNavigation: {
+            enabled: true,
+            buttonOptions: {
+                verticalAlign: 'bottom'
+            }
+        },
+   
+       /*
+       subtitle: {
+         text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
+       },
+       /*
+       mapNavigation: {
+         enabled: true,
+         buttonOptions: {
+           verticalAlign: 'bottom'
+         }
+       },
+       
+       colorAxis: {
+      min: 1,
+          type: 'logarithmic',
+          minColor: '#cd0808',
+          maxColor: '#056934',
+          stops: [
+              [0, '#cd0808'],
+              [0.67, '#fbe036'],
+              [1, '#056934']
+          ]
+       },
+       */
+
+       legend: {
+                title: {
+                    text: '',
+                    style: {
+                        color: ( // theme
+                            Highcharts.defaultOptions &&
+                            Highcharts.defaultOptions.legend &&
+                            Highcharts.defaultOptions.legend.title &&
+                            Highcharts.defaultOptions.legend.title.style &&
+                            Highcharts.defaultOptions.legend.title.style.color
+                        ) || 'black'
+                    }
+                },
+                align: 'right',
+                verticalAlign: 'bottom',
+                floating: true,
+                layout: 'vertical',
+                valueDecimals: 1,
+                backgroundColor: ( // theme
+                    Highcharts.defaultOptions &&
+                    Highcharts.defaultOptions.legend &&
+                    Highcharts.defaultOptions.legend.backgroundColor
+                ) || 'rgba(255, 255, 255, 0.85)',
+                symbolRadius: 20,
+                symbolHeight: 14
+            },
+          colorAxis: {
+                dataClasses: [{
+                    
+                    from: 1.7,
+                    color: '#056934',
+                    name: '>1.7 : แสนประชากร '
+                }, {
+                    from: 1.7,
+                    to: 1,
+                    color: '#fbe036',
+                    name: '1 - 1.7 : แสนประชากร '
+                }, {
+                    to: 1,
+                    color: '#cd0808',
+                    name: '< 1 : แสนประชากร ' 
+                }, {
+                    to: 0,
+                    color: '#e3e3e2',
+                    name: 'ไม่มี '
+                }]
+            },
+   
+       series: [{
+         data: data2,
+         
+         name: 'Random data',
+         
+         /*
+         states: {
+           hover: {
+             color: '#BADA55'
+           }
+         },
+           */
+          dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                      format: '{point.name}'
+                    // Only show dataLabels for areas with high label rank
+                   // format: '{#if (lt point.properties.labelrank 5)}' +
+                    //    '{point.properties.iso-a2}' +
+                   //     '{/if}'
+                },
+       
+       }]
+     });
+   
+   })();
+	   
+	   
+	   </script>
  
 
  <?php include "footer.php" ?>
@@ -1043,7 +1428,6 @@ downloadButton.addEventListener('click', function() {
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
 
-
 <script src="plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
@@ -1058,6 +1442,7 @@ downloadButton.addEventListener('click', function() {
 <script src="plugins/datatables-buttons/js/buttons.colVis.min.js"></script>
 
 <script>
+
   $(function () {
     $("#example1").DataTable({
       "responsive": true, "lengthChange": false, "autoWidth": false,

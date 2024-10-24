@@ -42,12 +42,15 @@ LEFT JOIN (
   SELECT
     positiontypeID,
     Mcatt1,
+	MWac1_9,
 	HospitalID,
 	personnelDate
   FROM
     personnel
   WHERE
     Mcatt1 = 'ใช่'
+  AND
+  	MWac1_9 <> 'ไม่ผ่านการอบรม'
 ) pl ON pt.Ptype = pl.positiontypeID
 JOIN hospitalnew hn on hn.CODE5 = pl.HospitalID
 WHERE 1 
@@ -141,6 +144,8 @@ JOIN hospitalnew hn ON hn.CODE5 = p.HospitalID
 JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
 WHERE
   p.Mcatt1 = 'ใช่'
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -175,7 +180,7 @@ if (isset($_POST['Year'])) {
 	}
   } 
 
-  $msql1 = $msql1."
+$msql1 = $msql1."
 GROUP BY
   m.CODE_map02,  m.CODE_PROVINCETH;
 ";
@@ -261,6 +266,8 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
   ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -355,14 +362,16 @@ $vMhoo = $Hmoo01.",".$Hmoo02.",".$Hmoo03.",".$Hmoo04.",".$Hmoo05.",".$Hmoo06.","
 
 $sql3 = "SELECT
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
  ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -404,18 +413,20 @@ $MA01 = $row3['MA01'];
 $MA02 = $row3['MA02'];
 $MA03 = $row3['MA03'];
 $MA04 = $row3['MA04'];
-
+ 
 $MOOsql1 = "SELECT
   hn.CODE_HMOO,
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -593,14 +604,16 @@ $vMhoo1_4 = $Hmoo01_4.",".$Hmoo02_4.",".$Hmoo03_4.",".$Hmoo04_4.",".$Hmoo05_4.",
 $MOOsql1p = "SELECT
   hn.CODE_PROVINCE ,
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   	hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
  	 p.Mcatt1 = 'ใช่'
+AND
+  	p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 
 ";
 if (isset($_POST['Year'])) {
@@ -678,14 +691,16 @@ while($row1p = mysqli_fetch_array($obj1p))
 
 $sql3p = "SELECT
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
  ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -745,6 +760,8 @@ FROM
 JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -859,7 +876,7 @@ if (isset($_POST['Year'])) {
   } 
 
 
-  $sqlall2 = $sqlall2."
+$sqlall2 = $sqlall2."
 	GROUP BY
    	hn.CODE_PROVINCE,hn.CODE_HMOO;"
 	;

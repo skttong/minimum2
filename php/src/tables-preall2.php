@@ -123,16 +123,16 @@ $rowptype   = mysqli_fetch_array($objptype);*/
                     <option <?php if ($_POST['CODE_HMOO'] == '1'){?> selected="selected" <?php } ?> value="1">เขตสุขภาพ 1</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '2'){?> selected="selected" <?php } ?> value="2">เขตสุขภาพ 2</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '3'){?> selected="selected" <?php } ?> value="3">เขตสุขภาพ 3</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '4'){?> selected="selected" <?php } ?> value="4">เขตสุขภาพ 4</option>
+					<option <?php if ($_POST['CODE_HMOO'] == '4'){?> selected="selected" <?php } ?> value="4">เขตสุขภาพ 4</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '5'){?> selected="selected" <?php } ?> value="5">เขตสุขภาพ 5</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '6'){?> selected="selected" <?php } ?> value="6">เขตสุขภาพ 6</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '7'){?> selected="selected" <?php } ?> value="7">เขตสุขภาพ 7</option>
+					<option <?php if ($_POST['CODE_HMOO'] == '7'){?> selected="selected" <?php } ?> value="7">เขตสุขภาพ 7</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '8'){?> selected="selected" <?php } ?> value="8">เขตสุขภาพ 8</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '9'){?> selected="selected" <?php } ?> value="9">เขตสุขภาพ 9</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '10'){?> selected="selected" <?php } ?> value="10">เขตสุขภาพ 10</option>
+					<option <?php if ($_POST['CODE_HMOO'] == '10'){?> selected="selected" <?php } ?> value="10">เขตสุขภาพ 10</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '11'){?> selected="selected" <?php } ?> value="11">เขตสุขภาพ 11</option>
                     <option <?php if ($_POST['CODE_HMOO'] == '12'){?> selected="selected" <?php } ?> value="12">เขตสุขภาพ 12</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '13'){?> selected="selected" <?php } ?> value="13">เขตสุขภาพ 13</option>
+					<option <?php if ($_POST['CODE_HMOO'] == '13'){?> selected="selected" <?php } ?> value="13">เขตสุขภาพ 13</option>
                    </select>
                 </div>
                 <script>
@@ -410,7 +410,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
               </div>
               <!-- /.col -->
 			   <?php */ ?>
-			  <div class="col-md-4">
+			  <div class="col-md-2">
                <div class="form-group">
                   <label>จังหวัด</label>
                   <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction2()">
@@ -442,47 +442,87 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 </div>
 				<script>
                    function myFunction2() {
-                      const selectedValue = $('#CODE_PROVINCE').val();
+					const selectedValue = $('#CODE_PROVINCE').val();
                          // alert(selectedValue);
                           $.ajax({
-                            url: 'get_hos.php', // ไฟล์ PHP ที่จะประมวลผล
+                            url: 'get_affiliation.php', // ไฟล์ PHP ที่จะประมวลผล
                             data: { CODE_PROVINCE: selectedValue },
                             success: function(data) {
-                              $('#CODE_HOS').html(data);
+                              $('#Affiliation').html(data);
                             }
                           });
                     }
 			    	</script> 
               </div>
 			  <!-- /.form-group -->
+			  <div class="col-md-2">
 			  <div class="form-group" id="labelservice" >
+              <label>หน่วยงานใน/นอกสังกัด</label>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['Affiliation']; ?> "><?php echo $_POST['Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+             </div>
+             <!-- /.form-group -->  
+             <script>
+                   function myFunction5() {
+                      const selectedValue = $('#Affiliation').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_servicetype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { Affiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#TYPE_SERVICE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+            </div>
+            <!-- /.col -->
+            <div class="col-md-2">
+<div class="form-group" id="labelservice">
                   <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction3()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction10()">
+                     <option value="ทั้งหมด">ทั้งหมด</option>
+                     <?PHP 
+                       if(trim($_POST['TYPE_SERVICE']) <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo trim($_POST['TYPE_SERVICE']); ?> "><?php echo trim($_POST['TYPE_SERVICE']); ?> </option>
+                    <?php } ?>
+                   <!-- <option value="A">A</option>
                     <option value="S">S</option>
                     <option value="M1">M1</option>
                     <option value="M2">M2</option>
                     <option value="F1">F1</option>
-					<option value="F2">F2</option>
-					<option value="F3">F3</option>  
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  -->
                   </select>
                 </div>
                 <!-- /.form-group -->  
                 <script>
-                   function myFunction3() {
-                      const selectedValue = $('#service').val();
-					  const codeprovinceValue = $('#CODE_PROVINCE').val();
-                          //alert(codeprovinceValue);
+                   function myFunction10() {
+                      const selectedValue = $('#TYPE_SERVICE').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                          //alert(selectedValue);
                           $.ajax({
-                            url: 'get_service2.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue ,codeprovince: codeprovinceValue },
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue , codeprovince: codeprovince},
                             success: function(data) {
                               $('#CODE_HOS').html(data);
                             }
                           });
                     }
 			    	</script> 
+     
+           </div>
+           <!-- /.col -->
+			  
 
 			  <div class="col-md-6">
                <div class="form-group">
@@ -671,6 +711,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 							$sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
 						}
 					}
+					$sqlpersonnel2 = $sqlpersonnel; 
 
 					$sqlpersonnel = $sqlpersonnel." GROUP BY hospitalnew.CODE5 " ;
 
@@ -700,6 +741,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 						$sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
 					}
 				}
+				$sqlpersonnel2 = $sqlpersonnel; 
 
 				$sqlpersonnel = $sqlpersonnel." GROUP BY hospitalnew.CODE5 " ;
 
@@ -745,8 +787,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 
 					//echo $sqlpersonnel = "SELECT * FROM personnel JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID WHERE hospitalnew.CODE5 = '$HospitalID' ";
 
+					
+
 				
-				$sqlpersonnel2 = $sqlpersonnel; 
+				
 				$objpersonnel = mysqli_query($con, $sqlpersonnel);
 				$i = 1;
 

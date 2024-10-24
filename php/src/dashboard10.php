@@ -51,18 +51,19 @@ $msql1 = "SELECT
   m.CODE_map02,
     m.CODE_PROVINCETH,
     m2.CODE_TOTAL ,
-  SUM(ho.result1) AS total_result1,
-  SUM(ho.result2) AS total_result2,
-  SUM(ho.result1 + ho.result2) AS total_all
+  IFNULL(SUM(ho.result1), 0) AS total_result1,
+  IFNULL(SUM(ho.result2), 0) AS total_result2,
+  IFNULL(SUM(ho.result1 + ho.result2), 0)AS total_all
 FROM
   HDCTB21OLD ho
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
-JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
+RIGHT JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
 JOIN Midyear m2 ON m2.CODE_PROVINCE = m.CODE_PROVINCE 
 WHERE
     1  ";
     
 if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
     $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
   /*}else{
     $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;*/
@@ -104,10 +105,10 @@ $mobj1 = mysqli_query($con, $msql1);
 $datamap ='';
 while($mrow1 = mysqli_fetch_array($mobj1))
 {
-	if($mrow1['total_result2'] <> 0){
+	//if($mrow1['total_result2'] <> 0){
 		//$datamap = $datamap."['".$mrow1['CODE_map02']."',".$mrow1['total_result2']."],";
     $datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".number_format(($mrow1['total_result2']/$mrow1['CODE_TOTAL']*100000), 2, '.', ',').",name:'".$mrow1['CODE_PROVINCETH']."'},";
-	}
+	//}
 	//['th-ct', 10],
 }
 
@@ -208,6 +209,7 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
     $sqlhdc02 = $sqlhdc02."AND ho.b_year = '".$Year."'" ;
   }
   if (isset($_POST['CODE_HMOO'])) {
@@ -294,6 +296,7 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
     $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
@@ -350,6 +353,7 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
     $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
@@ -406,6 +410,7 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
     $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
@@ -516,6 +521,7 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
     $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
@@ -563,87 +569,86 @@ $total15_result4 = $rowHD15['total15_result4'];
 
 
 
-$sqlHD4 = "SELECT
-  smiv,
+$sqlHD23 = "SELECT
+  groupcode,
   SUM(CASE WHEN b_year = '2567' THEN total ELSE 0 END) AS total_2567,
   SUM(CASE WHEN b_year = '2566' THEN total ELSE 0 END) AS total_2566,
-  SUM(CASE WHEN b_year = '2565' THEN total ELSE 0 END) AS total_2565
+  SUM(CASE WHEN b_year = '2565' THEN total ELSE 0 END) AS total_2565,
+  SUM(CASE WHEN b_year = '2564' THEN total ELSE 0 END) AS total_2564,
+  SUM(CASE WHEN b_year = '2563' THEN total ELSE 0 END) AS total_2563
 FROM
-  HDCTB04 ho
-JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
+  HDCTB23 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
 WHERE
     1 ";
      
 if (isset($_POST['Year'])) {
-    $sqlHD4 = $sqlHD4."AND ho.b_year = '".$Year."'" ;
+  $Year = $_POST['Year'];
+    $sqlHD23 = $sqlHD23."AND h.b_year = '".$Year."'" ;
   }
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
-    $sqlHD4 = $sqlHD4."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    $sqlHD23 = $sqlHD23."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
     }
   }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
     $mySelect = trim($_POST['TYPE_SERVICE']);
-    $sqlHD4 = $sqlHD4."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    $sqlHD23 = $sqlHD23."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
     }
   }
   
   if (isset($_POST['CODE_PROVINCE'])) {
     if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
     $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-    $sqlHD4 = $sqlHD4."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    $sqlHD23 = $sqlHD23."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
     }
   }
   
   if (isset($_POST['CODE_HOS'])) {
     if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
     $CODE_HOS = $_POST['CODE_HOS'];
-    $sqlHD4 = $sqlHD4."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
+    $sqlHD23 = $sqlHD23."AND hn.CODE_HOS = '".$CODE_HOS."'" ;
     }
   }
-$sqlHD4 = $sqlHD4."  
+$sqlHD23 = $sqlHD23."  
 GROUP BY
-  smiv
-ORDER BY 
-  smiv ASC ";
+  groupcode;";
 	
-$objhdc04 = mysqli_query($con, $sqlHD4);
+$objhdc23 = mysqli_query($con, $sqlHD23);
 
-$hdc04_1 ='';
-$hdc04_2 ='';
-$hdc04_3 ='';
-$hdc04_41 ='';
-$hdc04_42 ='';
-$hdc04tatal1='';
-$hdc04tatal2='';
-$hdc04tatal3='';
-$hdc04tatal41='';
-$hdc04tatal42='';
+$hdc23_1 ='';
+$hdc23_2 ='';
+$hdc23_3 ='';
+$hdc23_41 ='';
+$hdc23_42 ='';
+$hdc23tatal1='';
+$hdc23tatal2='';
+$hdc23tatal3='';
+$hdc23tatal41='';
+$hdc23tatal42='';
 
-while($rowhdc04 = mysqli_fetch_array($objhdc04))
+while($rowhdc23 = mysqli_fetch_array($objhdc23))
 {
-	if($rowhdc04['smiv'] == '0'){
-		$hdc04_1 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
-        $hdc04tatal1 = $rowhdc04['total_2567'];
-	}else if($rowhdc04['smiv'] == '1'){
-		$hdc04_2 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
-        $hdc04tatal2 = $rowhdc04['total_2567'];
-	}else if($rowhdc04['smiv'] == '2'){
-		$hdc04_3 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
-        $hdc04tatal3 = $rowhdc04['total_2567'];
-	}else if($rowhdc04['smiv'] == '3'){
-		$hdc04_41 = "'".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
-        $hdc04tatal41 = $rowhdc04['total_2567'];
+	if($rowhdc23['groupcode'] == '8'){
+		$hdc23_1 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
+        $hdc23tatal1 = $rowhdc23['total_2567'];
+	}else if($rowhdc23['groupcode'] == '10.1'){
+		$hdc23_2 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
+        $hdc23tatal2 = $rowhdc23['total_2567'];
+	}else if($rowhdc23['groupcode'] == '9.2'){
+		$hdc23_3 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
+        $hdc23tatal3 = $rowhdc23['total_2567'];
+	}else if($rowhdc23['groupcode'] == '4.1'){
+		$hdc23_41 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
+        $hdc23tatal41 = $rowhdc23['total_2567'];
+	}else if($rowhdc23['groupcode'] == '4.2'){
+		$hdc23_42 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
+        $hdc23tatal42 = $rowhdc23['total_2567'];
 	}
-  /*
-  else if($rowhdc04['smiv'] == '4.2'){
-		$hdc04_42 = "'".$rowhdc04['total_2563']."','".$rowhdc04['total_2564']."','".$rowhdc04['total_2565']."','".$rowhdc04['total_2566']."','".$rowhdc04['total_2567']."'";
-        $hdc04tatal42 = $rowhdc04['total_2567'];
-	}*/
-	//['th-ct', 10],
+	
 }
 
 
@@ -660,6 +665,7 @@ WHERE
     1 ";
     
 if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
     $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
  /* }else{
     $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;*/
@@ -1253,7 +1259,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                     
                     </div>
                     <div class="card-body">
-                        <a href="#"><canvas id="myChart5" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+                       <canvas id="myChart5" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
                         <script>
                             const ctx5 = document.getElementById('myChart5');
 
@@ -1263,10 +1269,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                             const myChart5 = new Chart(ctx5, {
                                 type: 'line',
                                 data: {
-                                    labels: [ 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+                                    labels: [ 'ปี 2563','ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
                                     datasets: [{
                                         label: 'ภาวะบกพร่องทางสติปัญญา',
-                                        data: [<?php echo $hdc04_1;?>],
+                                        data: [<?php echo $hdc23_1;?>],
                                         backgroundColor: '#00cadc',
                                         borderColor: '#00cadc',
                                         borderWidth: 1,
@@ -1274,7 +1280,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                     },
                                     {
                                         label: 'โรคสมาธิสั้น',
-                                        data: [<?php echo $hdc04_2;?>],
+                                        data: [<?php echo $hdc23_2;?>],
                                         backgroundColor: '#49c3fb',
                                         borderColor: '#49c3fb',
                                         borderWidth: 1,
@@ -1282,7 +1288,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                     },
                                     {
                                         label: 'โรคออทิสติก',
-                                        data: [<?php echo $hdc04_3;?>],
+                                        data: [<?php echo $hdc23_3;?>],
                                         backgroundColor: '#65a6fa',
                                         borderColor: '#65a6fa',
                                         borderWidth: 1,
@@ -1290,7 +1296,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                     },
                                     {
                                         label: 'โรคซึมเศร้า',
-                                        data: [<?php echo $hdc04_41;?>],
+                                        data: [<?php echo $hdc23_42;?>],
                                         backgroundColor: '#7e80e7',
                                         borderColor: '#7e80e7',
                                         borderWidth: 1,

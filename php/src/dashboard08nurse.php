@@ -73,6 +73,7 @@ $sql2 = "WITH trained_personnel AS (
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
   AND b.Mcatt1 = 'ใช่'
+  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -176,6 +177,7 @@ $tsql2 = "WITH trained_personnel AS (
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
   AND b.Mcatt1 = 'ใช่'
+  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -268,14 +270,16 @@ FROM hospitalnew hosn;
 
 $sql3 = "SELECT
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป')AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 if (isset($_POST['Year'])) {
@@ -333,6 +337,7 @@ $sql4 = "WITH trained_personnel AS (
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
   AND b.Mcatt1 = 'ใช่'
+  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -376,10 +381,10 @@ HospitalCounts AS (
   SELECT 
     SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu01_1,
     SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu01_2,
-    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu02_1,
-    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu02_2,
-    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu03_1,
-    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu03_2,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu02_1,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu02_2,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu03_1,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu03_2,
     SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu04_1,
     SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu04_2
   FROM 
@@ -414,6 +419,7 @@ $MOOsql1 = "WITH trained_personnel AS (
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
   AND b.Mcatt1 = 'ใช่'
+  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -590,8 +596,8 @@ $sqlall = "WITH HospitalGroups AS (
       hn.CODE_PROVINCE, hn.CODE5,
       CASE 
           WHEN hn.HOS_TYPE IN ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 'MCATT ระดับกรมสุขภาพจิต'
-          WHEN hn.HOS_TYPE IN ('โรงพยาบาลศูนย์', 'โรงพยาบาลทั่วไป') THEN 'MCATT ระดับจังหวัด'
-          WHEN hn.HOS_TYPE IN ('โรงพยาบาลชุมชน') THEN 'MCATT ระดับอำเภอ'
+          WHEN hn.HOS_TYPE IN ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') THEN 'MCATT ระดับจังหวัด'
+          WHEN hn.HOS_TYPE IN ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') THEN 'MCATT ระดับอำเภอ'
           WHEN hn.HOS_TYPE IN ('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'ศูนย์บริการสาธารณสุข อปท.') THEN 'MCATT ระดับตำบล'
           ELSE 'Other'
       END AS HospitalGroup,
@@ -603,6 +609,8 @@ $sqlall = "WITH HospitalGroups AS (
     p.positiontypeID = '2'
    AND
       p.Mcatt1 = 'ใช่'
+   AND
+  		p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 if (isset($_POST['Year'])) {
@@ -663,14 +671,16 @@ if (isset($_POST['CODE_HMOO'])) {
 $sql3p = "SELECT
  hn.CODE_PROVINCE,
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป')AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positiontypeID = '2' THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 if (isset($_POST['Year'])) {
@@ -728,6 +738,7 @@ $MOOsql1p = "WITH trained_personnel AS (
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
   AND b.Mcatt1 = 'ใช่'
+  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -1263,8 +1274,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				  <div class="inner"><center>
                     
                 <p>ทั้งหมด</p>
-                <?php /* <h3><?php echo number_format(($nu02+$nu03+$nu04+$nu05+$nu06+$nu07), 0, '.', ',');?> คน</h3> */ ?>
-                <h3><?php echo number_format(($nu02+$nu04), 0, '.', ',');?> คน</h3>
+                 <h3><?php echo number_format(($nu02+$nu03+$nu04+$nu05+$nu06+$nu07), 0, '.', ',');?> คน</h3> 
+                <?php /*<h3><?php echo number_format(($nu02+$nu04), 0, '.', ',');?> คน</h3>*/ ?>
                           <!--<p>xx : 1แสน ประชากร</p>-->
               
                     </center>

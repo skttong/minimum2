@@ -70,6 +70,7 @@ WHERE
     personnel.positiontypeID = '4'
 AND personnel.setdel = '1'
 AND personnel.Mcatt1 = 'ใช่'
+AND personnel.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -129,14 +130,16 @@ if (isset($row1)) {
 
 $sql2 = "SELECT
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป')AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -184,18 +187,20 @@ $MA04 = $row2['MA04'];
 
 $sql3 = "SELECT
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_1',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป')AND p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA02_1',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA03_1',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA02_1',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA03_1',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA04_1',
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป')AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA02_2',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA03_2',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA02_2',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA03_2',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA04_2'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -254,6 +259,8 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 if (isset($_POST['Year'])) {
@@ -422,8 +429,8 @@ $dHMOO1 = "'เขตสุขภาพที่ 1', 'เขตสุขภา�
       hn.CODE_HMOO,
       CASE 
           WHEN hn.HOS_TYPE IN ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 'MCATT ระดับกรมสุขภาพจิต'
-          WHEN hn.HOS_TYPE IN ('โรงพยาบาลศูนย์', 'โรงพยาบาลทั่วไป') THEN 'MCATT ระดับจังหวัด'
-          WHEN hn.HOS_TYPE IN ('โรงพยาบาลชุมชน') THEN 'MCATT ระดับอำเภอ'
+          WHEN hn.HOS_TYPE IN ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') THEN 'MCATT ระดับจังหวัด'
+          WHEN hn.HOS_TYPE IN ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') THEN 'MCATT ระดับอำเภอ'
           WHEN hn.HOS_TYPE IN ('โรงพยาบาลส่งเสริมสุขภาพตำบล', 'ศูนย์บริการสาธารณสุข อปท.') THEN 'MCATT ระดับตำบล'
           ELSE 'Other'
       END AS HospitalGroup
@@ -442,7 +449,9 @@ FROM
 JOIN personnel pt ON hg.HospitalID = pt.HospitalID
 WHERE 
   pt.positiontypeID = '4'  -- แก้ไขให้ตรงกับเงื่อนไขใน SELECT
-  AND pt.Mcatt1 = 'ใช่'
+AND pt.Mcatt1 = 'ใช่'
+AND
+  	pt.MWac1_9 <> 'ไม่ผ่านการอบรม'
 AND
  hg.HospitalGroup <> 'Other'
 ";
@@ -496,14 +505,16 @@ if (isset($_POST['CODE_HMOO'])) {
 $sql2p = "SELECT
   hn.CODE_PROVINCE,
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA01',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป')AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA02',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA03',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA04'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 
@@ -557,6 +568,8 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
+AND
+  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 if (isset($_POST['Year'])) {

@@ -379,7 +379,7 @@ include('session_permission.php');
 				
 					</div>
 					<div class="custom-control custom-checkbox">
-						<input type="checkbox" class="custom-control-input" id="MWac1_6" name="MWac1_6" value="Psychotraumatology & Stabilization Techniques" onclick="uncheckCheckbox();">
+						<input type="checkbox" class="custom-control-input" id="MWac1_6" name="MWac1_6" value="หลักสูตร ICS100" onclick="uncheckCheckbox();">
 						<label class="custom-control-label" for="MWac1_6"></label>หลักสูตร ICS100
 						<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 							<span class="tooltiptext">หลักสูตรการจัดการภาวะฉุกเฉินทางสาธารณสุข (Public health emergency management, PHEM) ระบบบัญชาการเหตุการณ์ (Incident Command System, ICS) และศูนย์ปฏิบัติการภาวะฉุกเฉิน (Emergency Operations Center, EOC)</span>
@@ -521,7 +521,7 @@ include('session_permission.php');
   </div>
   <!-- /.content-wrapper -->
   <script>
- function subcheckCheckbox() {
+ 	function subcheckCheckbox() {
   //if (checkboxes.checked) {
 	var MWac1_1 = document.getElementById('MWac1_1');
 	var MWac1_2 = document.getElementById('MWac1_2');
@@ -530,19 +530,23 @@ include('session_permission.php');
 	var MWac1_5 = document.getElementById('MWac1_5');
 	var MWac1_6 = document.getElementById('MWac1_6');
 	var MWac1_7 = document.getElementById('MWac1_7');
+	var MWac1_8 = document.getElementById('MWac1_8');
 	var MWac1_10 = document.getElementById('MWac1_10');
   	// ถ้าวนลูปครบแล้วไม่พบ Checkbox ที่ถูกเลือก ให้แสดงข้อความแจ้ง
+	
+
 	  if (MWac1_10.checked ){
 
-		MWac1_1.required = false;
-		MWac1_2.required = false;
-		MWac1_3.required = false;
-		MWac1_4.required = false;
-		MWac1_5.required = false;
-		MWac1_6.required = false;
-		MWac1_7.required = false;
+			MWac1_1.required = false;
+			MWac1_2.required = false;
+			MWac1_3.required = false;
+			MWac1_4.required = false;
+			MWac1_5.required = false;
+			MWac1_6.required = false;
+			MWac1_7.required = false;
+			MWac1_8.required = false;
 
-		if (MWac1_1.checked || MWac1_2.checked || MWac1_3.checked || MWac1_4.checked || MWac1_5.checked || MWac1_6.checked || MWac1_7.checked) {
+		if (MWac1_1.checked || MWac1_2.checked || MWac1_3.checked || MWac1_4.checked || MWac1_5.checked || MWac1_6.checked || MWac1_7.checked || MWac1_8.checked) {
 				return true;
 		} else {
 			// Set required attributes if necessary
@@ -553,6 +557,7 @@ include('session_permission.php');
 			MWac1_5.required = true;
 			MWac1_6.required = true;
 			MWac1_7.required = true;
+			MWac1_8.required = true;
 			return false;
 		}
 	}

@@ -399,6 +399,13 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['position'])) {
+  if ($_POST['position']<> 'ทั้งหมด') {
+      $position = $_POST['position'];
+      $bsql1 = $bsql1."AND b.Wardall = '".$position."'" ;
+    } 
+  }
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
     $mySelect = trim($_POST['TYPE_SERVICE']);
@@ -420,7 +427,7 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	}
   }
 
- $bsql1 = $bsql1."
+$bsql1 = $bsql1."
 GROUP BY
   hn.CODE_HMOO;";
 
@@ -1208,7 +1215,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 labels: [<?php echo $hmoo2; ?>],
                 datasets: [{
                     label: 'จำนวนเตียง (ผู้หญิง)',
-                    data: [<?php echo $b202; ?>],
+                    data: [<?php echo $b204; ?>],
                     backgroundColor: '#9ce7fa',
                     borderColor: '#9ce7fa',
                     borderWidth: 1,
@@ -1216,7 +1223,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 },
                 {
                     label: 'จำนวนเตียง (ผู้ชาย)',
-                    data: [<?php echo $b201; ?>],
+                    data: [<?php echo $b203; ?>],
                     backgroundColor: '#ffb9c2',
                     borderColor: '#ffb9c2',
                     borderWidth: 1,
@@ -1313,7 +1320,7 @@ downloadButton4.addEventListener('click', function() {
 				<div class="small-box" style="background-color: #C9ECFF; color: black;">
                 <div class="inner">
                     
-				<p>จำนวน เตียง</p> 
+				<p>จำนวนเตียง</p> 
 					<h3><i class="fas fa-bed" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format($Ward_no, 0, '.', ',');?> เตียง</h3>
                     <p><?php echo number_format((($Ward_no / $Total)*100000), 2, '.', ',');?> : 1แสน ประชากร</p>
 					
