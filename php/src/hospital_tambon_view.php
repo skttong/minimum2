@@ -951,7 +951,7 @@ echo "<br>";
 		    <h5><i class='fas fa-edit'></i> จำนวนผู้ป่วย</h5>
 		    <div class="card card-outline card-dark">
 				<div class="card-header">
-					<h3 class="card-title">จำนวนผู้รับบริการ ปีงบประมาณ 2566
+					<h3 class="card-title">จำนวนผู้รับบริการ ปีงบประมาณ <?php echo date("Y")+543-1 ;?>
 					(ถ้าไม่มีข้อมูลให้ใส่ NA ถ้าไม่มีจำนวนผู้ป่วยให้ใส่ 0)</h3>
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool" data-card-widget="collapse">
@@ -1134,7 +1134,7 @@ echo "<br>";
 			  <div class="row">
 				  <div class="col-md-6">
 					  <!--<button type="submit" class="btn btn-primary"> บันทึกข้อมูล &nbsp;<i class="fa fas fa-plus"></i></button>-->
-					  <a href="hospital_tambon_view_print.php?FID=<?php echo $FID ;?>" class="btn btn-default"> PDF &nbsp;</a>
+					  <a href="hospital_tambon_view_print.php?FID=<?php echo $FID ;?>" class="btn btn-default" target="_blank" > PDF &nbsp;</a>
 					  <a href="tables-sys.php" class="btn btn-default"> ปิด &nbsp;<i class="fa fas fa-undo"></i></a>
 				  </div>
 				  <!--<div class="col-md-6" align="right">

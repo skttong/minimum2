@@ -31,3 +31,7 @@ True HDCTB16 Script run at: 2024-10-23 09:12:05
 True HDCTB15 Script run at: 2024-10-23 09:12:05
 True HDCTB16 Script run at: 2024-10-24 09:10:04
 True HDCTB15 Script run at: 2024-10-24 09:10:04
+True HDCTB15 Script run at: 2024-10-25 09:15:14
+True HDCTB16 Script run at: 2024-10-25 09:15:14
+True HDCTB15 Script run at: 2024-10-26 09:28:21
+True HDCTB16 Script run at: 2024-10-26 09:28:21

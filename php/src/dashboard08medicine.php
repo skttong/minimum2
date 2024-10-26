@@ -1443,10 +1443,10 @@ downloadButton.addEventListener('click', function() {
         const myChart8 = new Chart(ctx8, {
           type: 'bar',
           data: {
-              labels: [<?php echo $dHMOO1; ?>],
+              labels: [<?php echo $dHMOO1p; ?>],
                 datasets: [{
                     label: 'เภสัชกร',
-                    data: [<?php echo $vMhoo1_1; ?>],
+                    data: [<?php echo $vMhoo1_1p; ?>],
                     backgroundColor: '#00cadc',
                     borderColor: '#00cadc',
                     borderWidth: 1,

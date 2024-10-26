@@ -286,7 +286,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
        AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
        AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
        if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
-        $sqlprovince = $sqlprovince."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ' " ;
+        $sqlprovince = $sqlprovince."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขจังหวัด' 
+		AND hospitalnew.HOS_TYPE <>'ศูนย์วิชาการ' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลทั่วไป' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลศูนย์' " ;
        }
        $objprovince = mysqli_query($con, $sqlprovince);
        
@@ -450,7 +451,9 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 								  AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
 								  AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
 			if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
-				$sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_DISTRICT LIKE  '%$NO_DISTRICT'" ;
+				$sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_DISTRICT LIKE  '%$NO_DISTRICT' 
+				AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ'  AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขจังหวัด'
+				AND hospitalnew.HOS_TYPE <>'ศูนย์วิชาการ' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลทั่วไป' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลศูนย์' " ;
 			}
 
 			if(isset($_POST["CODE_PROVINCE"])){	

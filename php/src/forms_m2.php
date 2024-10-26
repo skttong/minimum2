@@ -442,6 +442,7 @@ include('session_permission.php');
 					  document.getElementById('other_statuscong').type = 'hidden';
 					  const cogratyear = document.getElementById('cogratyear');
 					  cogratyear.required = false;
+					  document.getElementById("cogratyear").disabled = true;
 					}
 				function disablestatuscong() {
 					  document.getElementById("other_statuscong").disabled = true;
@@ -449,6 +450,7 @@ include('session_permission.php');
 					  document.getElementById('other_statuscong').type = 'hidden';
 					  const cogratyear = document.getElementById('cogratyear');
 					  cogratyear.required = true;
+					  document.getElementById("cogratyear").disabled = false;
 					}
 				function enablestatuscong() {					 
 					  document.getElementById("other_statuscong").disabled = false;
@@ -470,7 +472,7 @@ include('session_permission.php');
 		  <div class="col-md-4">
 			  <div class="form-group">
 				 <label for="cogratyear">ปีที่คาดว่าจะจบ</label>
-				 <select name="cogratyear" id="cogratyear" class="form-control select2" style="width: 100%;" >
+				 <select name="cogratyear" id="cogratyear" class="form-control select2" style="width: 100%;" disabled >
 					  <option selected disabled value="">-- เลือกปี พ.ศ. --</option>
 					  <?PHP for($i=0; $i<=10; $i++) {?>
 						<option value="<?PHP echo date("Y")+$i+543?>"><?PHP echo date("Y")+$i+543?></option>

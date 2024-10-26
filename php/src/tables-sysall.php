@@ -637,7 +637,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 
           
           if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
-          $sqlhos = $sqlhos."AND hospitalnew.NO_DISTRICT LIKE  '%$NO_DISTRICT' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ' " ;
+          $sqlhos = $sqlhos."AND hospitalnew.NO_DISTRICT LIKE  '%$NO_DISTRICT' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ'  AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขจังหวัด'
+				AND hospitalnew.HOS_TYPE <>'ศูนย์วิชาการ' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลทั่วไป' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลศูนย์' " ;
           }
 				
 					$objhos = mysqli_query($con, $sqlhos);
@@ -729,6 +730,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 join hospitalnew ON hospitalnew.CODE5 = serviceform.HospitalID
                               WHERE hospitalnew.CODE_PROVINCE = '$codeprovince' 
                               AND hospitalnew.NO_DISTRICT ='$NO_DISTRICT' 
+                              AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ'  AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขจังหวัด'
+				                      AND hospitalnew.HOS_TYPE <>'ศูนย์วิชาการ' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลทั่วไป' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลศูนย์'
                               ";
       
 	

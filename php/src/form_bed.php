@@ -330,7 +330,7 @@ include('session_permission.php');
 			   <!-- <span style="color: darkblue"><b>(ตอบได้มากกว่า 1 ข้อ)</b></span>
 			  	<br>-->
 				  <div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1_1" name="training_1" value="Psychiatric Ward" onclick="toggleDiv2(false);">
+					<input type="radio" class="custom-control-input" id="training_1_1" name="training_1" value="Psychiatric Ward" onclick="toggleDiv2(false);" required>
 					<label class="custom-control-label" for="training_1_1"></label>Psychiatric Ward 
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">หอผู้ป่วยจิตเวชมีพื้นที่ สถานที่ชัดเจน รวมถึงมีระบบบริหารแยกจากหอผู้ป่วยอื่น</span>
@@ -339,7 +339,7 @@ include('session_permission.php');
 					<!--<div class="invalid-feedback">Example invalid feedback text</div>-->
 				</div>
 				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1_2" name="training_1" value="Psychiatric Unit/ Co-Ward" onclick="toggleDiv2(false);">
+					<input type="radio" class="custom-control-input" id="training_1_2" name="training_1" value="Psychiatric Unit/ Co-Ward" onclick="toggleDiv2(false);" required>
 					<label class="custom-control-label" for="training_1_2"></label>Psychiatric Unit/ Co-Ward
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">เป็น Conner หรือพื้นที่ให้บริการอยู่ในหอผู้ป่วยอื่น ๆ หรือใช้บุคลากรร่วมกัน</span>
@@ -348,7 +348,7 @@ include('session_permission.php');
 					<!--<div class="invalid-feedback">Example invalid feedback text</div>-->
 				</div>
 				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1_3" name="training_1" value="Integrated Bed" onclick="toggleDiv2(false);">
+					<input type="radio" class="custom-control-input" id="training_1_3" name="training_1" value="Integrated Bed" onclick="toggleDiv2(false);" required>
 					<label class="custom-control-label" for="training_1_3"></label>Integrated Bed 
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">การยืมเตียงชั่วคราวจากเตียงผู้ป่วยในแผนกอื่น หรือ ใช้เตียงร่วม โดยไม่ได้ระบุพื้นที่แยกสำหรับผู้ป่วยจิตเวช</span>
@@ -357,7 +357,7 @@ include('session_permission.php');
 					<!--<div class="invalid-feedback">Example invalid feedback text</div>-->
 				</div>
 				<div class="custom-control custom-radio ">
-					<input type="radio" class="custom-control-input" id="training_1_4" name="training_1" value="ไม่มี" onclick="toggleDiv2(true);">
+					<input type="radio" class="custom-control-input" id="training_1_4" name="training_1" value="ไม่มี" onclick="toggleDiv2(true);" required>
 					<label class="custom-control-label" for="training_1_4"></label>ไม่มี
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">เป็น Conner หรือพื้นที่ให้บริการอยู่ในหอผู้ป่วยอื่น ๆ หรือใช้บุคลากรร่วมกัน</span>
@@ -369,8 +369,20 @@ include('session_permission.php');
 						const div = document.getElementById('myMctt2');
 						if (disable) {
 							div.classList.add('disabled');
+							const number_patients_1 = document.getElementById('number_patients_1');
+							number_patients_1.required = false;
+							const number_patients_2 = document.getElementById('number_patients_2');
+							number_patients_2.required = false;
+							const number_patients_3 = document.getElementById('number_patients_3');
+							number_patients_3.required = false;
 						} else {
 							div.classList.remove('disabled');
+							const number_patients_1 = document.getElementById('number_patients_1');
+							number_patients_1.required = true;
+							const number_patients_2 = document.getElementById('number_patients_2');
+							number_patients_2.required = true;
+							const number_patients_3 = document.getElementById('number_patients_3');
+							number_patients_3.required = true;
 						}
 					}
 				</script>
@@ -542,8 +554,25 @@ OTHER, External Cause : X60-X84</span>
 						const div = document.getElementById('myMctt');
 						if (disable) {
 							div.classList.add('disabled');
+							const training_2_1 = document.getElementById('training_2_1');
+							training_2_1.required = false;
+							const training_2_2 = document.getElementById('training_2_2');
+							training_2_2.required = false;
+							const training_2_3 = document.getElementById('training_2_3');
+							training_2_3.required = false;
+							const training_2_4 = document.getElementById('training_2_4');
+							training_2_4.required = false;
+							
 						} else {
 							div.classList.remove('disabled');
+							const training_2_1 = document.getElementById('training_2_1');
+							training_2_1.required = true;
+							const training_2_2 = document.getElementById('training_2_2');
+							training_2_2.required = true;
+							const training_2_3 = document.getElementById('training_2_3');
+							training_2_3.required = true;
+							const training_2_4 = document.getElementById('training_2_4');
+							training_2_4.required = true;
 						}
 					}
 				</script>
@@ -596,8 +625,20 @@ OTHER, External Cause : X60-X84</span>
 						const div = document.getElementById('myMctt3');
 						if (disable) {
 							div.classList.add('disabled');
+							const number_p1tients_2_1 = document.getElementById('number_p1tients_2_1');
+							number_p1tients_2_1.required = false;
+							const number_p1tients_2_2 = document.getElementById('number_p1tients_2_2');
+							number_p1tients_2_2.required = false;
+							const number_p1tients_2_3 = document.getElementById('number_p1tients_2_3');
+							number_p1tients_2_3.required = false;
 						} else {
 							div.classList.remove('disabled');
+							const number_p1tients_2_1 = document.getElementById('number_p1tients_2_1');
+							number_p1tients_2_1.required = true;
+							const number_p1tients_2_2 = document.getElementById('number_p1tients_2_2');
+							number_p1tients_2_2.required = true;
+							const number_p1tients_2_3 = document.getElementById('number_p1tients_2_3');
+							number_p1tients_2_3.required = true;
 						}
 					}
 				</script>
@@ -872,7 +913,7 @@ OTHER, External Cause : X60-X84</span>
 			   <!-- <span style="color: darkblue"><b>(ตอบได้มากกว่า 1 ข้อ)</b></span>
 			  	<br>-->
 				  <div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1_1" name="training_1" value="Psychiatric Ward" onclick="toggleDiv3(false);">
+					<input type="radio" class="custom-control-input" id="training_1_1" name="training_1" value="Psychiatric Ward" onclick="toggleDiv3(false);" required>
 					<label class="custom-control-label" for="training_1_1"></label>Psychiatric Ward 
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">หอผู้ป่วยจิตเวชมีพื้นที่ สถานที่ชัดเจน รวมถึงมีระบบบริหารแยกจากหอผู้ป่วยอื่น</span>
@@ -881,7 +922,7 @@ OTHER, External Cause : X60-X84</span>
 					<!--<div class="invalid-feedback">Example invalid feedback text</div>-->
 				</div>
 				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1_2" name="training_1" value="Psychiatric Unit/ Co-Ward" onclick="toggleDiv3(false);">
+					<input type="radio" class="custom-control-input" id="training_1_2" name="training_1" value="Psychiatric Unit/ Co-Ward" onclick="toggleDiv3(false);" required>
 					<label class="custom-control-label" for="training_1_2"></label>Psychiatric Unit/ Co-Ward
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">เป็น Conner หรือพื้นที่ให้บริการอยู่ในหอผู้ป่วยอื่น ๆ หรือใช้บุคลากรร่วมกัน</span>
@@ -891,7 +932,7 @@ OTHER, External Cause : X60-X84</span>
 					<!--<div class="invalid-feedback">Example invalid feedback text</div>-->
 				</div>
 				<div class="custom-control custom-radio">
-					<input type="radio" class="custom-control-input" id="training_1_3" name="training_1" value="Integrated Bed " onclick="toggleDiv3(false);">
+					<input type="radio" class="custom-control-input" id="training_1_3" name="training_1" value="Integrated Bed " onclick="toggleDiv3(false);" required>
 					<label class="custom-control-label" for="training_1_3"></label>Integrated Bed 
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">การยืมเตียงชั่วคราวจากเตียงผู้ป่วยในแผนกอื่น หรือ ใช้เตียงร่วม โดยไม่ได้ระบุพื้นที่แยกสำหรับผู้ป่วยจิตเวช</span>
@@ -900,7 +941,7 @@ OTHER, External Cause : X60-X84</span>
 					<!--<div class="invalid-feedback">Example invalid feedback text</div>-->
 				</div>
 				<div class="custom-control custom-radio ">
-					<input type="radio" class="custom-control-input" id="training_1_4" name="training_1" value="ไม่มี" onclick="toggleDiv3(true);">
+					<input type="radio" class="custom-control-input" id="training_1_4" name="training_1" value="ไม่มี" onclick="toggleDiv3(true);" required>
 					<label class="custom-control-label" for="training_1_4"></label>ไม่มี
 					<!--<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
 						<span class="tooltiptext">เป็น Conner หรือพื้นที่ให้บริการอยู่ในหอผู้ป่วยอื่น ๆ หรือใช้บุคลากรร่วมกัน</span>
@@ -918,11 +959,23 @@ OTHER, External Cause : X60-X84</span>
 
 				<script>
 					function toggleDiv3(disable) {
-						const div = document.getElementById('myMctt3');
+						const div = document.getElementById('myMctt2');
 						if (disable) {
 							div.classList.add('disabled');
+							const number_patients_1 = document.getElementById('number_patients_1');
+							number_patients_1.required = false;
+							const number_patients_2 = document.getElementById('number_patients_2');
+							number_patients_2.required = false;
+							const number_patients_3 = document.getElementById('number_patients_3');
+							number_patients_3.required = false;
 						} else {
 							div.classList.remove('disabled');
+							const number_patients_1 = document.getElementById('number_patients_1');
+							number_patients_1.required = true;
+							const number_patients_2 = document.getElementById('number_patients_2');
+							number_patients_2.required = true;
+							const number_patients_3 = document.getElementById('number_patients_3');
+							number_patients_3.required = true;
 						}
 					}
 				</script>

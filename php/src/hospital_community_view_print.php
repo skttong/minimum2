@@ -724,7 +724,7 @@ $sqlfcenter = "SELECT mhpsID, qustype, HospitalID, qus1_1, qus1_2, qus1_3, qus1_
 		     <!-- <h5><i class='fas fa-edit'></i> จำนวนผู้ป่วย</h5>-->
 			 <div class="card card-outline card-dark">
 				<div class="card-header">
-					<h3 class="card-title">จำนวนผู้รับบริการ ปีงบประมาณ 2566 <br>
+					<h3 class="card-title">จำนวนผู้รับบริการ ปีงบประมาณ <?php echo date("Y")+543-1 ;?> <br>
 					(ถ้าไม่มีข้อมูลให้ใส่ NA ถ้าไม่มีจำนวนผู้ป่วยให้ใส่ 0)</h3>
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool" data-card-widget="collapse">

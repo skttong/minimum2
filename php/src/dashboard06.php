@@ -132,23 +132,42 @@ echo "<br>";
 */
 
 $msql1 = "SELECT
-  m.CODE_map02,
-  m.CODE_PROVINCETH,
-  hn.CODE5,
-  hn.CODE_PROVINCE,
-  sf.qustype,
-  sf.qus1_1,
-  sf.qus2_1, 
-  sf.qus3_1, 
-  sf.qus3_2, 
-  sf.qus3_3, 
-  sf.qus3_4
-FROM
-  hospitalnew hn
-left JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
-JOIN serviceform sf ON sf.HospitalID = hn.CODE5
-WHERE 1 
-";
+    m.CODE_map02,
+    m.CODE_PROVINCETH,
+    SUM(
+      CASE 
+        WHEN sf.qustype = '1' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 4), ',', -1)
+        WHEN sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 2), ',', -1)
+        WHEN sf.qustype = '3' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus2_1, ',', 2), ',', -1)
+        ELSE 0
+      END
+    ) AS q1,
+    SUM(
+      CASE 
+        WHEN sf.qustype = '1' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 6), ',', -1)
+        WHEN sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 5), ',', -1)
+        ELSE 0
+      END
+    ) AS q2,
+    SUM(
+      CASE 
+        WHEN sf.qustype = '1' OR sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus3_1, ',', 1), ',', -1)
+        ELSE 0
+      END
+    ) AS q3,
+    SUM(
+      CASE 
+        WHEN sf.qustype = '1' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus3_4, ',', 6), ',', -1)
+        WHEN sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus3_2, ',', 2), ',', -1)
+        ELSE 0
+      END
+    ) AS q4
+  FROM
+    hospitalnew hn
+  LEFT JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
+  JOIN serviceform sf ON sf.HospitalID = hn.CODE5
+  WHERE 1
+ ";
 
   
 if (isset($_POST['Year'])) {
@@ -184,7 +203,10 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	}
   } 
 
+  $msql1 = $msql1." GROUP BY m.CODE_PROVINCETH HAVING q1 > 0 OR q2 > 0 OR q3 > 0 OR q4 > 0 " ;
+  
 
+//echo $msql1;
 $mobj1 = mysqli_query($con, $msql1);
 
 $datamap1 ='';
@@ -192,53 +214,48 @@ $datamap2 ='';
 $datamap3 ='';
 $datamap4 ='';
 
-while($mrow1 = mysqli_fetch_array($mobj1))
-{
 
-	$qustype = $mrow1['qustype'];
-	$qus1_1 = preg_split ("/\,/", $mrow1['qus1_1']); 		
-  $qus2_1 = preg_split ("/\,/", $mrow1['qus2_1']); 		
-	$qus3_1 = preg_split ("/\,/", $mrow1['qus3_1']);
-  $qus3_2 = preg_split ("/\,/", $mrow1['qus3_2']);
-	$qus3_3 = preg_split ("/\,/", $mrow1['qus3_3']);
-  $qus3_4 = preg_split ("/\,/", $mrow1['qus3_4']);
-
-	if($qustype=='1'){
-		$q1total = $q1total+$qus1_1[3];
-		$q2total = $q2total+$qus1_1[5];
-		$q3total = $q3total+$qus3_1[0];
-		$q4total = $q4total+$qus3_4[5];
-	}elseif($qustype=='2'){
-		$q1total = $q1total+$qus1_1[1];
-		$q2total = $q2total+$qus1_1[4];
-		$q3total = $q3total+$qus3_1[0];
-		$q4total = $q4total+$qus3_2[1];
-	}elseif($qustype=='3'){
-		$q1total = $q1total+$qus2_1[1];
-		//$q2total = $q2total+$qus1_1[6];
-		//$q3total = $q3total+$qus3_1[1];
-		//$q4total = $q4total+$qus3_[1];
-	}
-	//$datamap1 = $datamap."['".$mrow1['CODE_map02']."',".$q1total."],";
-	//$datamap2 = $datamap."['".$mrow1['CODE_map02']."',".$q2total."],";
-	//$datamap3 = $datamap."['".$mrow1['CODE_map02']."',".$q3total."],";
-	//$datamap4 = $datamap."['".$mrow1['CODE_map02']."',".$q4total."],";
-
-  $datamap1 = $datamap1."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q1total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
-  $datamap2 = $datamap2."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q2total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
-  $datamap3 = $datamap3."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q3total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
-  $datamap4 = $datamap4."{'hc-key':'".$mrow1['CODE_map02']."',value:".$q4total.",name:'".$mrow1['CODE_PROVINCETH']."'},";
-	//['th-ct', 10],
+// วนลูปดึงข้อมูลจากฐานข้อมูล
+while ($mrow1 = mysqli_fetch_array($mobj1)) {
+  // สร้างข้อมูลสำหรับแผนที่ของแต่ละคำถาม
+  $datamap1 .= "{'hc-key':'" . $mrow1['CODE_map02'] . "', value:" . $mrow1['q1'] . ", name:'" . $mrow1['CODE_PROVINCETH'] . "'},";
+  $datamap2 .= "{'hc-key':'" . $mrow1['CODE_map02'] . "', value:" . $mrow1['q2'] . ", name:'" . $mrow1['CODE_PROVINCETH'] . "'},";
+  $datamap3 .= "{'hc-key':'" . $mrow1['CODE_map02'] . "', value:" . $mrow1['q3'] . ", name:'" . $mrow1['CODE_PROVINCETH'] . "'},";
+  $datamap4 .= "{'hc-key':'" . $mrow1['CODE_map02'] . "', value:" . $mrow1['q4'] . ", name:'" . $mrow1['CODE_PROVINCETH'] . "'},";
 }
+
+
+
 
 $sqlall = "SELECT
    hn.HOS_NAME,
    hn.TYPE_SERVICE,
-   hn.CODE_PROVINCE 
+   hn.CODE_PROVINCE,
+   CASE 
+      WHEN sf.qustype = '1' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 4), ',', -1)
+      WHEN sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 2), ',', -1)
+      WHEN sf.qustype = '3' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus2_1, ',', 2), ',', -1)
+      ELSE 0
+   END AS q1,
+   CASE 
+      WHEN sf.qustype = '1' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 6), ',', -1)
+      WHEN sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus1_1, ',', 5), ',', -1)
+      ELSE 0
+   END AS q2,
+   CASE 
+      WHEN sf.qustype = '1' OR sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus3_1, ',', 1), ',', -1)
+      ELSE 0
+   END AS q3,
+   CASE 
+      WHEN sf.qustype = '1' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus3_4, ',', 6), ',', -1)
+      WHEN sf.qustype = '2' THEN SUBSTRING_INDEX(SUBSTRING_INDEX(sf.qus3_2, ',', 2), ',', -1)
+      ELSE 0
+   END AS q4 
 FROM
   hospitalnew hn
 JOIN serviceform sf ON sf.HospitalID = hn.CODE5
-WHERE 1 
+WHERE 1
+
 ";
 
 if (isset($_POST['Year'])) {
@@ -273,6 +290,9 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	$sqlall = $sqlall."AND hn.CODE5 = '".$CODE_HOS."'" ;
 	}
   }  
+
+  $sqlall = $sqlall." HAVING q1 > 0 OR q2 > 0 OR q3 > 0 OR q4 > 0 " ;
+  
 
 $sqlall1 = $sqlall; 
 
@@ -380,7 +400,7 @@ $objall1 = mysqli_query($con, $sqlall1);
           <div class="card-body">
 			<form class="form-valide" action="dashboard06.php" method="post" id="myform1" name="foml">  
       <div class="row">
-              <div class="col-md-2">
+      <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
                   <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
@@ -390,7 +410,7 @@ $objall1 = mysqli_query($con, $sqlall1);
                     <option value="2564">2564</option>
                     <option value="2563">2563</option>-->
                     <?PHP for($i=0; $i<= (5); $i++) {?>
-                    <option value="<?PHP echo ((date("Y")+543))-$i?>"><?PHP echo ((date("Y")+543))-$i?></option>
+                    <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
                     <?PHP }?>
                   </select>
                 </div>
@@ -400,26 +420,26 @@ $objall1 = mysqli_query($con, $sqlall1);
               <div class="col-md-2">
                <div class="form-group" id="labelarea">
                   <label>เขตสุขภาพ</label>
-                  <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;" onChange="myFunction3()">
-                    <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="1">เขตสุขภาพ 1</option>
-                    <option value="2">เขตสุขภาพ 2</option>
-                    <option value="3">เขตสุขภาพ 3</option>
-					          <option value="4">เขตสุขภาพ 4</option>
-                    <option value="5">เขตสุขภาพ 5</option>
-                    <option value="6">เขตสุขภาพ 6</option>
-					          <option value="7">เขตสุขภาพ 7</option>
-                    <option value="8">เขตสุขภาพ 8</option>
-                    <option value="9">เขตสุขภาพ 9</option>
-					          <option value="10">เขตสุขภาพ 10</option>
-                    <option value="11">เขตสุขภาพ 11</option>
-                    <option value="12">เขตสุขภาพ 12</option>
-					          <option value="13">เขตสุขภาพ 13</option>
+                  <select name="CODE_HMOO" class="form-control select2" id="CODE_HMOO" style="width: 100%;" onChange="myFunction3()">
+                    <option <?php if ($_POST['CODE_HMOO'] == 'ทั้งหมด'){?> selected="selected" <?php } ?>  value="ทั้งหมด">ทั้งหมด</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '1'){?> selected="selected" <?php } ?> value="1">เขตสุขภาพ 1</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '2'){?> selected="selected" <?php } ?> value="2">เขตสุขภาพ 2</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '3'){?> selected="selected" <?php } ?> value="3">เขตสุขภาพ 3</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '4'){?> selected="selected" <?php } ?> value="4">เขตสุขภาพ 4</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '5'){?> selected="selected" <?php } ?> value="5">เขตสุขภาพ 5</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '6'){?> selected="selected" <?php } ?> value="6">เขตสุขภาพ 6</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '7'){?> selected="selected" <?php } ?> value="7">เขตสุขภาพ 7</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '8'){?> selected="selected" <?php } ?> value="8">เขตสุขภาพ 8</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '9'){?> selected="selected" <?php } ?> value="9">เขตสุขภาพ 9</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '10'){?> selected="selected" <?php } ?> value="10">เขตสุขภาพ 10</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '11'){?> selected="selected" <?php } ?> value="11">เขตสุขภาพ 11</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '12'){?> selected="selected" <?php } ?> value="12">เขตสุขภาพ 12</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '13'){?> selected="selected" <?php } ?> value="13">เขตสุขภาพ 13</option>
                    </select>
                 </div>
                 <script>
                    function myFunction3() {
-                      const selectedValue = $('#area').val();
+                      const selectedValue = $('#CODE_HMOO').val();
                          // alert(selectedValue);
                           $.ajax({
                             url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
@@ -444,9 +464,11 @@ $objall1 = mysqli_query($con, $sqlall1);
                <div class="form-group">
                   <label>จังหวัด</label>
                   <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP
+                     <option value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP /*
+          if($_POST['CODE_PROVINCE'] <> 'ทั้งหมด'){
 					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
+          WHERE  NO_PROVINCE = ".$_POST['CODE_PROVINCE']."
 GROUP BY CODE_PROVINCE 
 ORDER BY NO_PROVINCE ASC;";
 					$objprovince = mysqli_query($con, $sqlprovince);
@@ -456,12 +478,14 @@ ORDER BY NO_PROVINCE ASC;";
 					{
 	
 					?>
-					  <option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
+					  <option selected="selected" value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
 					  
 					<?PHP
-					}
+					} 
+        }else{
 					?>
-
+               <option value="ทั้งหมด" >ทั้งหมด</option>
+        <?php } */ ?>
                   </select>
                 </div>
 
@@ -470,10 +494,10 @@ ORDER BY NO_PROVINCE ASC;";
                       const selectedValue = $('#CODE_PROVINCE').val();
                          // alert(selectedValue);
                           $.ajax({
-                            url: 'get_hos.php', // ไฟล์ PHP ที่จะประมวลผล
+                            url: 'get_affiliation.php', // ไฟล์ PHP ที่จะประมวลผล
                             data: { CODE_PROVINCE: selectedValue },
                             success: function(data) {
-                              $('#CODE_HOS').html(data);
+                              $('#Affiliation').html(data);
                             }
                           });
                     }
@@ -484,53 +508,79 @@ ORDER BY NO_PROVINCE ASC;";
               <div class="col-md-2">
                <div class="form-group">
                   <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2"  style="width: 100%;">
-                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="ในสังกัด">ในสังกัด</option>
-                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['Affiliation']; ?> "><?php echo $_POST['Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
                   </select>
                 </div>
+
+                <script>
+                   function myFunction5() {
+                      const selectedValue = $('#Affiliation').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_servicetype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { Affiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#TYPE_SERVICE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
               </div>
               <!-- /.col -->
 
-
               <div class="form-group" id="labelservice">
                   <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" onChange="myFunction2()">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
+                     <option value="ทั้งหมด">ทั้งหมด</option>
+                     <?PHP 
+                       if(trim($_POST['TYPE_SERVICE']) <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo trim($_POST['TYPE_SERVICE']); ?> "><?php echo trim($_POST['TYPE_SERVICE']); ?> </option>
+                    <?php } ?>
+                   <!-- <option value="A">A</option>
                     <option value="S">S</option>
                     <option value="M1">M1</option>
                     <option value="M2">M2</option>
                     <option value="F1">F1</option>
 					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  
+					          <option value="F3">F3</option>  -->
                   </select>
                 </div>
                 <!-- /.form-group -->  
                 <script>
                    function myFunction2() {
-                      const selectedValue = $('#service').val();
-                         // alert(selectedValue);
+                      const selectedValue = $('#TYPE_SERVICE').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                          //alert(selectedValue);
                           $.ajax({
                             url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue },
+                            data: { service_id: selectedValue , codeprovince: codeprovince},
                             success: function(data) {
                               $('#CODE_HOS').html(data);
                             }
                           });
                     }
-			    	</script>
+			    	</script> 
 
 
               <div class="col-md-2">
                <div class="form-group">
                   <label>โรงพยาบาล</label>
                   <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP /*
+          if($_POST['CODE_HOS'] <> ''){
 					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
 WHERE HOS_TYPE <> 'คลินิกเอกชน'
+AND CODE5 = ".$_POST['CODE_HOS']."
 ORDER BY hospitalnew.CODE_HMOO DESC;";
 					$objprovince = mysqli_query($con, $sqlprovince);
 					
@@ -539,16 +589,17 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					{
 	
 					?>
-					  <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
+					  <option selected="selected"  value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
 					  
 					<?PHP
-					}
+					} 
+        } */
 					?>
 
                   </select>
                 </div>
               </div>
-              <!-- /.col -->		
+              <!-- /.col -->			
 
 
                
@@ -875,7 +926,11 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					  <th width="2%">#</th>
 					  <th width="12%">โรงพยาบาล/หน่วยงาน</th>
 					  <th width="12%">ระดับโรงพยาบาล</th>
-					  <th width="12%">จังหวัด</th>
+            <th width="12%">จังหวัด</th>
+					  <th width="12%">บริการบำบัดผู้ป่วยยาเสพติด</th>
+            <th width="12%">บริการTelepsychiatry</th>
+            <th width="12%">บริการจิตเวชเด็ก</th>
+            <th width="12%">ยาสมาธิสั้น</th>
 					  <!--<th width="12%">รายละเอียด</th>-->
 				   </tr>
                    </thead>
@@ -891,6 +946,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 						<td width="12%"><?php echo $rowall1['HOS_NAME'];?></td>
 						<td width="12%"><?php echo $rowall1['TYPE_SERVICE'];?></td>
             <td width="12%"><?php echo $rowall1['CODE_PROVINCE'];?></td>
+            <td width="12%"><?php echo $rowall1['q1'];?></td>
+            <td width="12%"><?php echo $rowall1['q2'];?></td>
+            <td width="12%"><?php echo $rowall1['q3'];?></td>
+            <td width="12%"><?php echo $rowall1['q4'];?></td>
            <!-- <td width="12%">รายละเอียด</td>-->
 				   </tr>
 				   <?php 

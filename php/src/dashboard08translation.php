@@ -461,7 +461,7 @@ $MA04p = $row2p['MA04'];
 
 
 $MOOsql1p = "SELECT
-  hn.CODE_HMOO,
+  hn.CODE_PROVINCE,
   SUM(CASE WHEN p.positiontypeID = '7' THEN 1 ELSE 0 END) AS 'PA01_1'
 FROM
   hospitalnew hn 
@@ -506,8 +506,8 @@ if (isset($_POST['Year'])) {
     }  
 
     
-  $MOOsql1p = $MOOsql1p."
-GROUP BY hn.CODE_HMOO 
+ $MOOsql1p = $MOOsql1p."
+GROUP BY hn.CODE_PROVINCE 
   ;
 		";
 $Mobj1p = mysqli_query($con, $MOOsql1p);

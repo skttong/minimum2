@@ -4,6 +4,9 @@ include('connect/conn.php');
 
 $curl = curl_init();
 
+
+$YEAR = date("Y") ;
+
 curl_setopt_array($curl, array(
   CURLOPT_URL => 'https://cms.srph.go.th/api/v2/report-patient-type',
   CURLOPT_RETURNTRANSFER => true,
@@ -31,6 +34,12 @@ if ($error) {
 $data = json_decode($response, true); 
 
 if (isset($data['data'])) {
+
+    
+  $sql = "DELETE FROM CMSreports ";
+
+	$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
+
   $stmt = mysqli_prepare($con, "INSERT INTO CMSreports (amphur_code, event_date, patient_id) VALUES (?, ?, ?)");
 
   foreach ($data['data'] as $row) {

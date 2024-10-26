@@ -34,10 +34,10 @@ $qunaire34 = $_POST['qunaire34'];
 $qunaire4 = $_POST['qunaire4'];
 $qunaire5 = $_POST['qunaire5_other'];
 
-echo $qunaire11.$qunaire12.$qunaire13.$qunaire14.$qunaire15.$qunaire16.$qunaire17.$qunaire18.'<br>'.
+/*echo $qunaire11.$qunaire12.$qunaire13.$qunaire14.$qunaire15.$qunaire16.$qunaire17.$qunaire18.'<br>'.
 	$qunaire21.$qunaire22.$qunaire23.$qunaire24.$qunaire25.$qunaire26.$qunaire27.$qunaire28.$qunaire29.$qunaire210.'<br>'.
 	$qunaire31.$qunaire32.$qunaire33.$qunaire34.'<br>'.
-	$qunaire4.$qunaire5;
+	$qunaire4.$qunaire5;*/
 
 $sql = "INSERT INTO surveyapp(
 							sur_design1, 

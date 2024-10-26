@@ -590,10 +590,10 @@ $MA04p = $row3p['MA04'];
 $MOOsql1p = "WITH PersonnelCounts AS (
   SELECT
      hn.CODE_PROVINCE,
-    SUM(CASE WHEN p.r1 = 'จิตแพทย์ทั่วไป' THEN 1 ELSE 0 END) AS 'MA01',
-    SUM(CASE WHEN p.r1 = 'จิตแพทย์เด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'MA02',
-    SUM(CASE WHEN p.r1 = 'แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)' THEN 1 ELSE 0 END) AS 'MA03',
-    SUM(CASE WHEN p.r1 = 'แพทย์สาขาอื่น' THEN 1 ELSE 0 END) AS 'MA04'
+     SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positiontypeID = '1' THEN 1 ELSE 0 END) AS 'MA01',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positiontypeID = '1' THEN 1 ELSE 0 END) AS 'MA02',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positiontypeID = '1' THEN 1 ELSE 0 END) AS 'MA03',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positiontypeID = '1' THEN 1 ELSE 0 END) AS 'MA04'
   FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID

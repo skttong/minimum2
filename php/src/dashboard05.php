@@ -211,7 +211,7 @@ if (isset($_POST['CODE_PROVINCE'])) {
   }
   
   
-  $sql1 = $sql1."        
+ $sql1 = $sql1."        
 			GROUP BY
   				hn.CODE_HMOO
 			;

@@ -272,33 +272,44 @@ include('session_permission.php');
 					function disableTxt2(disable) {
 
 					 const div = document.getElementById('myMctt3');
-
+					
 					  if(disable){
+						
 						div.classList.remove('disabled');
 						document.getElementById("other_r1").disabled = true;
 					  	document.getElementById("other_r1").value = "";
 						const element = document.getElementById('other_r1');
-						element.required = true;
+						element.required = false;
 						const training1 = document.getElementById('training1');
 						training1.required = true;
+						const training2 = document.getElementById('training2');
+						training2.required = true;
+						const training3 = document.getElementById('training3');
+						training3.required = true;
+						const training4 = document.getElementById('training4');
+						training4.required = true;
 						const cogratyear = document.getElementById('cogratyear');
 						cogratyear.required = true;
-						
-
+		
 					  }else{
-						 div.classList.add('disabled');
-						 document.getElementById("other_r1").disabled = true;
+						
+						div.classList.add('disabled');
+						document.getElementById("other_r1").disabled = true;
 					 	 document.getElementById("other_r1").value = "";
 						 const element = document.getElementById('other_r1');
-						 element.required = false;
+						 element.required = true;
 						 const training1 = document.getElementById('training1');
 						training1.required = false;
+						const training2 = document.getElementById('training2');
+						training2.required = false;
+						const training3 = document.getElementById('training3');
+						training3.required = false;
+						const training4 = document.getElementById('training4');
+						training4.required = false;
 						const cogratyear = document.getElementById('cogratyear');
 						cogratyear.required = false;
+						 
 					  }
-
-					
-			
 					  	
 					}
 
@@ -309,9 +320,15 @@ include('session_permission.php');
 					  const element = document.getElementById('other_r1');
 					  element.required = true;
 					  const training1 = document.getElementById('training1');
-					  training1.required = true;
+					  training1.required = false;
+					  const training2 = document.getElementById('training2');
+					  training2.required = false;
+					  const training3 = document.getElementById('training3');
+					  training3.required = false;
+					  const training4 = document.getElementById('training4');
+					  training4.required = false;
 					  const cogratyear = document.getElementById('cogratyear');
-					  cogratyear.required = true;
+					  cogratyear.required = false;
 					}
 
 					

@@ -475,7 +475,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                       <th width="5%">3.3</th>
                       <th width="5%">3.4</th>
                       <th width="5%">4</th>
-                      <th width="5%">5</th>
+                      <th width="50%">5</th>
                       <th width="5%">ลบ</th>
 
 					</tr>
@@ -531,7 +531,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                           }
           }
 
-                    $sqlservice2 =$sqlservice;
+                    echo $sqlservice2 =$sqlservice;
 	
 					$objservice = mysqli_query($con, $sqlservice);
 					$i = 1;
@@ -566,7 +566,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                         <td><?php echo $rowservice['sur_allaroud'];?></td>
                         <td><?php echo $rowservice['sur_other5'];?></td>
             <td>
-                <a href="admin_del_all.php?id=<?php echo $rowservice['serveyid'];?>" onclick="showAlert()" ><button type="button" class="btn btn-block btn-danger" >Delete</button></a>
+                <a href="surveyappdel.php?id=<?php echo $rowservice['serveyid'];?>" onclick="showAlert()" ><button type="button" class="btn btn-block btn-danger" >Delete</button></a>
             </td>
 					</tr>
 					

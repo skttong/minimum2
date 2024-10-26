@@ -499,7 +499,7 @@ $statuscong			= explode(",",$statuscong_radi);
 					
                     <input name="other_statuscong" type="hidden" class="form-control" id="other_statuscong" placeholder="โปรดระบุ" value="<?php echo $statuscong_radi[6]; ?>"  required>
 				  <?php }else{?>
-				    <input name="other_statuscong" type="hidden" class="form-control" id="other_statuscong" placeholder="โปรดระบุ" disabled required>
+				    <input name="other_statuscong" type="hidden" class="form-control" id="other_statuscong" placeholder="โปรดระบุ" disabled >
 				  <?php }?>	
                 </div>  
 				
@@ -510,6 +510,7 @@ $statuscong			= explode(",",$statuscong_radi);
 					  document.getElementById('other_statuscong').type = 'hidden';
 					  const cogratyear = document.getElementById('cogratyear');
 					  cogratyear.required = false;
+					  document.getElementById("cogratyear").disabled = true;
 					}
 				function disablestatuscong() {
 					  document.getElementById("other_statuscong").disabled = true;
@@ -517,6 +518,7 @@ $statuscong			= explode(",",$statuscong_radi);
 					  document.getElementById('other_statuscong').type = 'hidden';
 					  const cogratyear = document.getElementById('cogratyear');
 					  cogratyear.required = true;
+					  document.getElementById("cogratyear").disabled = false;
 					}
 				function enablestatuscong() {					 
 					  document.getElementById("other_statuscong").disabled = false;
@@ -538,7 +540,11 @@ $statuscong			= explode(",",$statuscong_radi);
 		  <div class="col-md-4">
 			  <div class="form-group">
 				 <label for="cogratyear">ปีที่คาดว่าจะจบ</label>
-				 <select name="cogratyear" class="form-control select2" style="width: 100%;">
+				 <?php if( $row1['cogratyear'] <> ''){?>
+				 <select name="cogratyear"  id="cogratyear" class="form-control select2" style="width: 100%;" >
+					<?php }else{ ?>
+						<select name="cogratyear"  id="cogratyear" class="form-control select2" style="width: 100%;" disabled >
+						<?php } ?>
 				 <option selected value="<?php echo $row1['cogratyear'];?>"><?php echo $row1['cogratyear'];?></option>
 					  <?PHP for($i=0; $i<=10; $i++) {?>
 						<option value="<?PHP echo date("Y")+$i+543?>"><?PHP echo date("Y")+$i+543?></option>
