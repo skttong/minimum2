@@ -1,6 +1,12 @@
 <?php 
 include('connect/conn.php');
 
+if($_POST['usertype']==''){
+	$usertype = 'User_h';
+}else{
+	$usertype = $_POST['usertype'];
+}
+
 		$sql = "
 		UPDATE userhospital 
 		SET 
@@ -14,11 +20,11 @@ include('connect/conn.php');
 			useremail ='".$_POST['useremail']."',
 			position ='".$_POST['position']."', 
 			HospitalID ='".$_POST['CODE_HOS']."',
-			TypeUser ='".$_POST['usertype']."',
+			TypeUser ='".$usertype."',
 			regupdate = NOW()
 			WHERE UserID ='".$_POST['UserID']."' ;
 		";
-
+ 
 		//$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
 		$result = mysqli_query($con, $sql);
 
@@ -35,7 +41,7 @@ include('connect/conn.php');
     echo "window.location = 'tables-memberalladmin.php'; ";
 	echo "</script>";
 	}
-	
+
 
 
 ?>

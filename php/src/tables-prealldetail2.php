@@ -187,7 +187,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnelID DESC; ";
 		}else{
 
-		    $sqlpersonnel = "SELECT *, count(*) AS 'tcount' 
+		    $sqlpersonnel = "SELECT *
 		FROM 
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
@@ -330,13 +330,9 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 								  </a>	  	  
 
 							<?php } ?>
-							
-								<!--
-								<a href="forms_m1_edit.php?personnelID=<?php//echo $rowpersonnel['personnelID'];?>&&type=<?php// echo $PersonnelType;?>">
-									<i class="fa fa-edit" style="color:darkgreen; font-size: 16pt"></i>	
-								</a>-->
+					
 							</center>
-							<?php }elseif($HosType != "กรมสุขภาพจิต"){?>
+							<?php }elseif($HosType <> "กรมสุขภาพจิต"){?>
 								<center>
 								<?php if($rowpersonnel['positiontypeID']== '1'){?>
 								<a class="btn btn-info btn-sm " href="forms_m1_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
@@ -367,22 +363,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							</center>
 							<?php }?>
 							</td>
-							<?php /*if($_SESSION["TypeUser"] == "Admin"){?>
-							<td><center>
-								<!--
-								<a href="personnel_form_edit.php?personnelID=<?//=$rowpersonnel['personnelID'];?>&&positionAllID=<?//=$rowpersonnel['positiontypeName'];?>">
-									<i class="fa fa-edit" style="color:darkgreen; font-size: 16pt"></i>
-								</a> -->
-								<a class="btn btn-danger btn-sm" href="personnel_del.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
-									<i class="fas fa-trash"></i> ลบ
-								</a>
-								<!--
-								<a href="personnel_del.php?personnelID=<?php// echo $rowpersonnel['personnelID'];?>&&t=<?php// echo $PersonnelType;?>">
-									<i class="far fa-trash-alt" style="color: darkred; font-size: 16pt"></i>
-								</a>-->
-							</center>
-							</td>
-							<?php } */?>
+							
 						</tr>
 						<?php } ?> 	
 					</tbody>

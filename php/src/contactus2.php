@@ -214,8 +214,8 @@ include('connect/conn.php');
                                 <div align="left" style="margin-left: 28px;">
                                 <label for="Tel" class="form-label" style="text-align: left;">เบอร์โทร </label>
                                 </div>
-                                <input  type="text" name="Tel" class="form-control" id="Tel" placeholder="เรื่อง" required>
-                                <div class="invalid-feedback" align="left" style="margin-left: 28px;"> เรื่อง (ภาษาไทยเท่านั้น) </div>
+                                <input  type="text" name="Tel" class="form-control" id="Tel" placeholder="เบอร์โทร" required>
+                                <div class="invalid-feedback" align="left" style="margin-left: 28px;"> เบอร์โทร  </div>
                             </div>
                         </div>
 

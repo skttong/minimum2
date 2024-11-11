@@ -1,6 +1,7 @@
 <?PHP
 session_start();
 
+
 include('connect/conn.php');
 /*
 $HosType	 	= $_SESSION["HosType"];
@@ -16,14 +17,14 @@ if($_POST['CODE_HMOO']<>'ทั้งหมด'){
 
 	}
 }
-if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
+if(trim($_POST['TYPE_SERVICE'])<>'ทั้งหมด'){
 	if (isset($_POST['TYPE_SERVICE']))
 	{
 		$SQL_H = $SQL_H." and hosn.TYPE_SERVICE = '".$_POST['CODE_HMOO']."'";
 
 	}
 }
-if($_POST['TYPE_SERVICE']<>'ทั้งหมด'){
+if(trim($_POST['TYPE_SERVICE'])<>'ทั้งหมด'){
 if (isset($_POST['CODE_PROVINCE']))
 	{
 		$SQL_H = $SQL_H." and hosn.CODE_PROVINCE = '".$_POST['CODE_HMOO']."'";
@@ -31,131 +32,431 @@ if (isset($_POST['CODE_PROVINCE']))
 }
 */
 
+$Year = '2567';
+
+$sql1 = "SELECT
+  SUM(CASE WHEN r1 = 'จิตแพทย์ทั่วไป' THEN 1 ELSE 0 END) AS 'dr01', 
+  SUM(CASE WHEN r1 = 'จิตแพทย์เด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'dr02', 
+  SUM(CASE WHEN r1 = 'แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. หรือ วว.)' THEN 1 ELSE 0 END) AS 'dr03', 
+  SUM(CASE WHEN r1 = 'แพทย์สาขาอื่น ที่ปฏิบัติงานด้านจิตเวชผู้ใหญ่และจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'dr04' 
+FROM
+  personnel p
+JOIN hospitalnew e ON e.CODE5 = p.HospitalID
+WHERE 1
+AND p.r2 = 'Full-Time'
+";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql1 = $sql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql1 = $sql1."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql1 = $sql1."AND e.TYPE_SERVICE LIKE ('".$mySelect."%')" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql1 = $sql1."AND e.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql1 = $sql1."AND p.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
 
 
-$sql1 = "SELECT DISTINCT 
-			(
-			 SELECT COUNT(pc.Countries)
-			from 
-				(SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, SUBSTRING_INDEX(b.r1, ',', 1) AS Countries from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(SUBSTRING_INDEX(b.r1, '.', 2),',','-1') AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(b.r1, ',', -1) AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1') pc
-			JOIN personnel a on a.personnelID = pc.personnelID
-			JOIN hospitalnew c on c.CODE5 = pc.HospitalID
-			WHERE
-				pc.Countries = 'จิตแพทย์ทั่วไป'
-			) AS 'dr01',
-			(
-			 SELECT COUNT(pc.Countries)
-			from 
-				(SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, SUBSTRING_INDEX(b.r1, ',', 1) AS Countries from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(SUBSTRING_INDEX(b.r1, '.', 2),',','-1') AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(b.r1, ',', -1) AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1') pc
-			JOIN personnel a on a.personnelID = pc.personnelID
-			JOIN hospitalnew c on c.CODE5 = pc.HospitalID
-			WHERE
-				pc.Countries = 'จิตแพทย์เด็กและวัยรุ่น'
-			) AS 'dr02',
-			(
-			 SELECT COUNT(pc.Countries)
-			from 
-				(SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, SUBSTRING_INDEX(b.r1, ',', 1) AS Countries from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(SUBSTRING_INDEX(b.r1, '.', 2),',','-1') AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(b.r1, ',', -1) AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1') pc
-			JOIN personnel a on a.personnelID = pc.personnelID
-			JOIN hospitalnew c on c.CODE5 = pc.HospitalID
-			WHERE
-				pc.Countries = 'แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)'
-			) AS 'dr03',
-			(
-			 SELECT COUNT(pc.Countries)
-			from 
-				(SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, SUBSTRING_INDEX(b.r1, ',', 1) AS Countries from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(SUBSTRING_INDEX(b.r1, '.', 2),',','-1') AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1'
-				UNION ALL
-				SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(b.r1, ',', -1) AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '1' AND b.setdel = '1') pc
-			JOIN personnel a on a.personnelID = pc.personnelID
-			JOIN hospitalnew c on c.CODE5 = pc.HospitalID
-			WHERE
-				pc.Countries = 'แพทย์สาขาอื่น'
-
-			) AS 'dr04'
-			FROM
-			  hospitalnew hosn;";
 $obj1 = mysqli_query($con, $sql1);
 $row1 = mysqli_fetch_array($obj1);
 
+$dr01 =  $row1['dr01'];
+$dr02 =  $row1['dr02'];
+$dr03 =  $row1['dr03'];
+$dr04 =  $row1['dr04'];
 
-$sql2 = "SELECT DISTINCT  
-		(
-		 SELECT COUNT(pc.Countries)
-		from 
+$tsql1 = "SELECT
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'จิตเวชศาสตร์/จิตแพทย์ทั่วไป' THEN 1 ELSE 0 END) AS 'tdr01',
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'จิตแพทย์เด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'tdr02',
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'แพทย์เวชศาสตร์ป้องกันแขนงสุขภาพจิตชุมชน (อว. หรือ วว.)' THEN 1 ELSE 0 END) AS 'tdr03',
+  SUM(CASE WHEN p.r1 = 'กำลังศึกษา' AND p.training = 'อื่น ๆ' THEN 1 ELSE 0 END) AS 'tdr04'
+FROM
+  personnel p
+JOIN hospitalnew e ON e.CODE5 = p.HospitalID
+WHERE 1
+";
 
-			(SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, SUBSTRING_INDEX(b.training, ',', 1) AS Countries from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1'
-			UNION ALL
-			SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, '.', 2),',','-1') AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1'
-			UNION ALL
-			SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(b.training, ',', -1) AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1') pc
-		JOIN personnel a on a.personnelID = pc.personnelID
-		JOIN hospitalnew c on c.CODE5 = pc.HospitalID
-		WHERE
-			pc.Countries = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' 
+$Year = '2567';
 
-		) AS 'nu01' ,
-		(
-		 SELECT COUNT(pc.Countries)
-		from 
-			(SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, SUBSTRING_INDEX(b.training, ',', 1) AS Countries from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1'
-			UNION ALL
-			SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, '.', 2),',','-1') AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1'
-			UNION ALL
-			SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(b.training, ',', -1) AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1') pc
-		JOIN personnel a on a.personnelID = pc.personnelID
-		JOIN hospitalnew c on c.CODE5 = pc.HospitalID
-		WHERE
-			pc.Countries = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' 
-		) AS 'nu02' ,
-		(
-		 SELECT COUNT(pc.Countries)
-		from 
-			(SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, SUBSTRING_INDEX(b.training, ',', 1) AS Countries from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1'
-			UNION ALL
-			SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, '.', 2),',','-1') AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1'
-			UNION ALL
-			SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE,b.personnelID, SUBSTRING_INDEX(b.training, ',', -1) AS Countries  from personnel b JOIN hospitalnew e on e.CODE5 = b.HospitalID WHERE b.positiontypeID = '2' AND b.setdel = '1') pc
-		JOIN personnel a on a.personnelID = pc.personnelID
-		JOIN hospitalnew c on c.CODE5 = pc.HospitalID
-		WHERE
-			pc.Countries = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' 
-		) AS 'nu03'
-		FROM
-		  hospitalnew hosn;
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $tsql1 = $tsql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $tsql1 = $tsql1."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $tsql1 = $tsql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $tsql1 = $tsql1."AND e.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $tsql1 = $tsql1."AND p.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+
+
+$tobj1 = mysqli_query($con, $tsql1);
+$trow1 = mysqli_fetch_array($tobj1);
+
+$tdr01 =  $trow1['tdr01'];
+$tdr02 =  $trow1['tdr02'];
+$tdr03 =  $trow1['tdr03'];
+$tdr04 =  $trow1['tdr04'];
+
+ $sql2 = "WITH trained_personnel AS (
+  SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID, b.personnelDate,
+         SUBSTRING_INDEX(b.training, ',', 1) AS Countries1,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, ',', 2), ',', -1) AS Countries2,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, ',', 3), ',', -1) AS Countries3,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, ',', 4), ',', -1) AS Countries4,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, ',', 5), ',', -1) AS Countries5,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, ',', 6), ',', -1) AS Countries6,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.training, ',', 7), ',', -1) AS Countries7
+  FROM personnel b
+  JOIN hospitalnew e ON e.CODE5 = b.HospitalID
+  WHERE b.positiontypeID = '2' AND b.setdel = '1'";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql2 = $sql2."AND YEAR(b.personnelDate) = '".$Year."'" ;
+}
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql2 = $sql2."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql2 = $sql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql2 = $sql2."AND e.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql2 = $sql2."AND b.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+$sql2=$sql2."
+)
+SELECT DISTINCT
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries1 = 'ยังไม่ผ่านการอบรมเฉพาะทาง'
+  ) AS 'nu01',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)'
+  ) AS 'nu02',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries3 = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ'
+  ) AS 'nu03',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น'
+  ) AS 'nu04',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด'
+  ) AS 'nu05',
+   (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน'
+  ) AS 'nu06',
+   (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries7 = 'อื่น ๆ'
+  ) AS 'nu07'
+FROM hospitalnew hosn
 		";
+
 $obj2 = mysqli_query($con, $sql2);
 $row2 = mysqli_fetch_array($obj2);
 
+$nu01 =  $row2['nu01'];
+$nu02 =  $row2['nu02'];
+$nu03 =  $row2['nu03'];
+$nu04 =  $row2['nu04'];
+$nu05 =  $row2['nu05'];
+$nu06 =  $row2['nu06'];
+$nu07 =  $row2['nu07'];
 
 
-$sql3 = "SELECT 
-			hospitalnew.CODE_HMOO,
-			hospitalnew.CODE_PROVINCE,
-			COUNT(*) AS 'total'
-		FROM 
-			personnel 
-		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID
-		WHERE 
-			positiontypeID	= '3'
-		AND 
-			setdel = '1' ;";
+$tsql2 = "WITH trained_personnel AS (
+  SELECT b.HospitalID, e.CODE_HMOO, e.CODE_PROVINCE, b.personnelID,
+         SUBSTRING_INDEX(b.statuscong, ',', 1) AS Countries1,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.statuscong, ',', 2), ',', -1) AS Countries2,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.statuscong, ',', 3), ',', -1) AS Countries3,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.statuscong, ',', 4), ',', -1) AS Countries4,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.statuscong, ',', 5), ',', -1) AS Countries5,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.statuscong, ',', 6), ',', -1) AS Countries6,
+         SUBSTRING_INDEX(SUBSTRING_INDEX(b.statuscong, ',', 7), ',', -1) AS Countries7
+  FROM personnel b
+  JOIN hospitalnew e ON e.CODE5 = b.HospitalID
+  WHERE b.positiontypeID = '2' AND b.setdel = '1'
+  ";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $tsql2 = $tsql2."AND YEAR(b.personnelDate) = '".$Year."'" ;
+}
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $tsql2 = $tsql2."AND e.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $tsql2 = $tsql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $tsql2 = $tsql2."AND e.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $tsql2 = $tsql2."AND b.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+$tsql2=$tsql2."
+)
+SELECT DISTINCT
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries1 = 'ไม่ได้กำลังศึกษา'
+  ) AS 'tnu01',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)'
+  ) AS 'tnu02',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries3 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้สูงอายุ)'
+  ) AS 'tnu03',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries4 = 'การพยาบาลเฉพาะทางสุขภาพจิตและจิตเวชเด็กและวัยรุ่น'
+  ) AS 'tnu04',
+  (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด'
+  ) AS 'tnu05',
+   (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน'
+  ) AS 'tnu06',
+   (
+    SELECT COUNT(*)
+    FROM trained_personnel tp
+    WHERE tp.Countries7 = 'อื่น ๆ'
+  ) AS 'tnu07'
+FROM hospitalnew hosn;
+
+		  ";
+  $tobj2 = mysqli_query($con, $tsql2);
+  $trow2 = mysqli_fetch_array($tobj2);
+  
+  $tnu01 =  $trow2['tnu01'];
+  $tnu02 =  $trow2['tnu02'];
+  $tnu03 =  $trow2['tnu03'];
+  $tnu04 =  $trow2['tnu04'];
+  $tnu05 =  $trow2['tnu05'];
+  $tnu06 =  $trow2['tnu06'];
+  $tnu07 =  $trow2['tnu07'];
+
+
+
+$sql3 = "SELECT COUNT(*) AS 'total' 
+FROM personnel p
+JOIN hospitalnew h ON h.CODE5 = p.HospitalID 
+WHERE p.positiontypeID = '3' AND p.setdel = '1' ";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql3 = $sql3."AND YEAR(p.personnelDate) = '".$Year."'" ;
+}  
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql3 = $sql3."AND h.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql3 = $sql3."AND h.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql3 = $sql3."AND h.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql3 = $sql3."AND p.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
 $obj3 = mysqli_query($con, $sql3);
-//$row3 = mysqli_fetch_array($obj3);
+$row3 = mysqli_fetch_array($obj3);
+
+$SC =  $row3['total'];
+
+$sql4 = "SELECT
+    SUM(CASE WHEN personnel.positionrole = 'นักจิตวิทยา' THEN 1 ELSE 0 END) AS TC01,
+    SUM(CASE WHEN personnel.positionrole = 'นักจิตวิทยาคลินิก' THEN 1 ELSE 0 END) AS TC02
+FROM
+    personnel
+JOIN hospitalnew ON hospitalnew.CODE5 = personnel.HospitalID
+WHERE
+    personnel.positiontypeID = '4'
+    AND setdel = '1'
+    ";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql4 = $sql4."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
+} 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql4 = $sql4."AND hospitalnew.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql4 = $sql4."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql4 = $sql4."AND hospitalnew.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql4 = $sql4."AND personnel.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+$obj4 = mysqli_query($con, $sql4);
+$row4 = mysqli_fetch_array($obj4);
+
+$TC01 =  0;
+$TC02 =  0;
+$TCtotal = 0;
+
+if (isset($row4)) {
+if($row4['TC01'] == ''){
+	$TC01 =  0;
+}else{
+	$TC01 =  $row4['TC01'];
+}
+if($row4['TC02'] == ''){
+	$TC02 =  0;
+}else{
+	$TC02 =  $row4['TC02'];
+}
+
+
+
+$TCtotal =  $TC01 + $TC02;
+}
 
 $sql4_1 = "SELECT 
 			hospitalnew.CODE_HMOO,
@@ -168,7 +469,8 @@ $sql4_1 = "SELECT
 			personnel.positiontypeID	= '4'
 		AND 
 			setdel = '1' 
-        AND personnel.positionrole = 'นักจิตวิทยา';";
+    AND personnel.positionrole = 'นักจิตวิทยา'
+    ";
 $obj4_1 = mysqli_query($con, $sql4_1);
 //$row4_1 = mysqli_fetch_array($obj4_1);
 
@@ -187,7 +489,7 @@ $sql4_2 = "SELECT
 $obj4_2 = mysqli_query($con, $sql4_2);
 //$row4_2 = mysqli_fetch_array($obj4_2);
 
-$sql5 = "SELECT 
+ $sql5 = "SELECT
 			hospitalnew.CODE_HMOO,
 			hospitalnew.CODE_PROVINCE,
 			COUNT(*) AS 'total'
@@ -195,11 +497,54 @@ $sql5 = "SELECT
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID
 		WHERE 
-			positiontypeID	= '5'
+			personnel.positiontypeID  = '5'
 		AND 
-			setdel = '1' ;";
+			personnel.setdel = '1' ";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql5 = $sql5."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
+} 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql5 = $sql5."AND hospitalnew.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql5 = $sql5."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql5 = $sql5."AND hospitalnew.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql5 = $sql5."AND personnel.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+
+
+//$sql5 = $sql5."GROUP BY hospitalnew.CODE_HMOO, hospitalnew.CODE_PROVINCE ;";
+
 $obj5 = mysqli_query($con, $sql5);
-//$row5 = mysqli_fetch_array($obj5);
+$row5 = mysqli_fetch_array($obj5);
+
+$TOC = 0 ;
+if (isset($row5)) {
+$TOC =  $row5['total'];
+}
 
 $sql6 = "SELECT 
 			hospitalnew.CODE_HMOO,
@@ -209,12 +554,52 @@ $sql6 = "SELECT
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID
 		WHERE 
-			positiontypeID	= '6'
+			personnel.positiontypeID	= '6'
 		AND 
-			setdel = '1' ;";
-$obj6 = mysqli_query($con, $sql6);
-//$row6 = mysqli_fetch_array($obj6);
+			personnel.setdel = '1' ";
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql6 = $sql6."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
+} 
 
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql6 = $sql6."AND hospitalnew.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql6 = $sql6."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql6 = $sql6."AND hospitalnew.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql6 = $sql6."AND personnel.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+//$sql6 = $sql6."GROUP BY hospitalnew.CODE_HMOO, hospitalnew.CODE_PROVINCE ;";
+
+$obj6 = mysqli_query($con, $sql6);
+$row6 = mysqli_fetch_array($obj6);
+
+$TOC2 = 0 ;
+
+if (isset($row6)) {
+$TOC2 =  $row6['total'];
+}
 $sql7 = "SELECT 
 			hospitalnew.CODE_HMOO,
 			hospitalnew.CODE_PROVINCE,
@@ -225,10 +610,50 @@ $sql7 = "SELECT
 		WHERE 
 			positiontypeID	= '7'
 		AND 
-			setdel = '1' ;";
-$obj7 = mysqli_query($con, $sql7);
-//$row7 = mysqli_fetch_array($obj7);
+			setdel = '1' ";
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql7 = $sql7."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
+} 
 
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql7 = $sql7."AND hospitalnew.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql7 = $sql7."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql7 = $sql7."AND hospitalnew.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql7 = $sql7."AND personnel.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+//$sql7 = $sql7."GROUP BY hospitalnew.CODE_HMOO, hospitalnew.CODE_PROVINCE ;";
+
+$obj7 = mysqli_query($con, $sql7);
+$row7 = mysqli_fetch_array($obj7);
+
+$TOC3 = 0;
+
+if (isset($row7)) {
+$TOC3 =  $row7['total'];
+}
 $sql8 = "SELECT 
 			hospitalnew.CODE_HMOO,
 			hospitalnew.CODE_PROVINCE,
@@ -239,9 +664,518 @@ $sql8 = "SELECT
 		WHERE 
 			positiontypeID	= '8'
 		AND 
-			setdel = '1' ;";
+			setdel = '1' ";
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql8 = $sql8."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
+} 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql8 = $sql8."AND hospitalnew.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql8 = $sql8."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql8 = $sql8."AND hospitalnew.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql8 = $sql8."AND personnel.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+//$sql8 = $sql8."GROUP BY hospitalnew.CODE_HMOO, hospitalnew.CODE_PROVINCE ;";
+
 $obj8 = mysqli_query($con, $sql8);
-//$row8 = mysqli_fetch_array($obj8);
+$row8 = mysqli_fetch_array($obj8);
+
+$TOC4 = 0;
+if (isset($row8)) {
+$TOC4 =  $row8['total'];
+}
+
+$sqlhl = "SELECT 
+			hospitalnew.CODE_HMOO,
+			hospitalnew.CODE_PROVINCE,
+			COUNT(*) AS 'total'
+		FROM 
+			personnel 
+		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID
+		WHERE 
+			positiontypeID	= '9'
+		AND 
+			setdel = '1' ";
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sqlhl = $sqlhl."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
+} 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sqlhl = $sqlhl."AND hospitalnew.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sqlhl = $sqlhl."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sqlhl = $sqlhl."AND hospitalnew.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sqlhl = $sqlhl."AND personnel.HospitalID = '".$CODE_HOS."'" ;
+  }
+}
+
+//$sqlhl = $sqlhl."GROUP BY hospitalnew.CODE_HMOO, hospitalnew.CODE_PROVINCE ;";
+
+$objhl = mysqli_query($con, $sqlhl);
+$rowhl = mysqli_fetch_array($objhl);
+
+//print_r($rowhl) ;
+
+$TOC5 = 0;
+if (isset($rowhl)) {
+ $TOC5 = $rowhl['total'];
+}
+
+
+$sql9 = "SELECT  
+			SUM(b.Ward_no) AS Ward_no  , 
+			SUM(b.Unit) AS Unit ,
+			SUM(b.Unit_no) AS Unit_no
+		FROM bed b  
+    JOIN hospitalnew hn on hn.CODE5 = b.hospitalCode5 
+    where 1 ";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql9 = $sql9."AND YEAR(b.bedDate) = '".$Year."'" ;
+} 
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sql9 = $sql9."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
+    $sql9 = $sql9."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql9 = $sql9."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql9 = $sql9."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+$obj9 = mysqli_query($con, $sql9);
+$row9 = mysqli_fetch_array($obj9);
+
+$Ward_no = $row9['Ward_no'];
+$Unit = $row9['Unit'];
+$Unit_no = $row9['Unit_no'];
+
+$sql11 = "SELECT SUM(ect_no) AS ect_no ,SUM(tms_no) AS tms_no
+		FROM ect e
+    JOIN hospitalnew hn on hn.CODE5 = e.hospitalCode5 
+    where 1 ";
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql11 = $sql11."AND YEAR(e.ectDate) = '".$Year."'" ;
+} 
+
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sql11 = $sql11."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
+    $sql11 = $sql11."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql11 = $sql11."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql11 = $sql11."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+
+$obj11 = mysqli_query($con, $sql11);
+$row11 = mysqli_fetch_array($obj11);
+
+$ect_no = $row11['ect_no'];
+$tms_no = $row11['tms_no'];
+
+
+$sqlmid = "SELECT
+    SUM(CODE_MALE) AS Total_Male,
+    SUM(CODE_FEMALE) AS Total_Female,
+    SUM(CODE_TOTAL) AS Total
+FROM Midyear ;
+";
+$objmid = mysqli_query($con, $sqlmid);
+$rowmid = mysqli_fetch_array($objmid);
+
+$Total_Male = $rowmid['Total_Male'];
+$Total_Female = $rowmid['Total_Female'];
+$Totalmidy = $rowmid['Total'];
+
+
+$msql1 = "SELECT
+  m.CODE_map02,m.CODE_PROVINCETH,
+  SUM(h.a_total) AS total_a,
+  SUM(h.b_total) AS total_b,
+  SUM(h.total_bed) AS total_bed
+FROM
+  HDCTBBED h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
+JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE "
+;
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
+  $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
+}else{
+  $Year = '2567';
+  $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
+}
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $msql1 = $msql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $msql1 = $msql1."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $msql1 = $msql1."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+$msql1 = $msql1 ."
+GROUP BY
+  m.CODE_map02,m.CODE_PROVINCETH;
+
+";
+
+$mobj1 = mysqli_query($con, $msql1);
+
+$datamap ='';
+while($mrow1 = mysqli_fetch_array($mobj1))
+{
+	if($mrow1['total_bed'] <> 0){
+		$datamap = $datamap."{'hc-key':'".$mrow1['CODE_map02']."',value:".number_format(($mrow1['total_bed']/$Totalmidy*100000), 2, '.', ',').",name:'".$mrow1['CODE_PROVINCETH']."'},";
+	}
+	//['th-ct', 10],
+}
+
+ /*     {
+            "hc-key": "th-un",
+            "value": 76,
+             "name": "จุด2",
+        "color": "#00FF00"
+        },
+        {
+            "hc-key": "th-nb",
+            "value": 77,
+            "name": "จุด1",
+            "color": "#FF00FF"
+        }*/
+
+$sql10 = "SELECT
+  SUM(h.a_total) AS total_a,
+  SUM(h.b_total) AS total_b,
+  SUM(h.total_bed) AS total_bed
+FROM
+  HDCTBBED h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
+JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE "
+;
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
+  $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
+}else{
+  $Year = '2567';
+  $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
+}
+
+
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sql10 = $sql10."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sql10 = $sql10."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sql10 = $sql10."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sql10 = $sql10."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+$obj10 = mysqli_query($con, $sql10);
+$row10 = mysqli_fetch_array($obj10);
+
+$total_b = $row10['total_b'];
+if($total_b == ''){
+  $total_b = 0;
+}
+$total_a = $row10['total_a'];
+if($total_a == ''){
+  $total_a = 0;
+}
+$total_bed = $row10['total_bed'];
+if($total_bed == ''){
+  $total_bed = 0;
+}
+
+
+
+
+
+
+$sqlhdc01 = "SELECT
+  h.groupcode,
+  SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
+  SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
+  SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
+  SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
+  SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
+FROM
+  HDCTB01 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
+WHERE 1  "
+;
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
+  $sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
+}   
+
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sqlhdc01 = $sqlhdc01."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sqlhdc01 = $sqlhdc01."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sqlhdc01 = $sqlhdc01."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sqlhdc01 = $sqlhdc01."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+$sqlhdc01 = $sqlhdc01."  
+GROUP BY
+  groupcode;";
+
+
+$objhdc01 = mysqli_query($con, $sqlhdc01);
+//$rowhdc01 = mysqli_fetch_array($objhdc01);
+
+$hdc01_1 ='';
+$hdc01_2 ='';
+$hdc01_3 ='';
+$hdc01_41 ='';
+$hdc01_42 ='';
+while($rowhdc01 = mysqli_fetch_array($objhdc01))
+{
+	if($rowhdc01['groupcode'] == '1.1'){
+		$hdc01_1 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+	}else if($rowhdc01['groupcode'] == '2.0'){
+		$hdc01_2 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+	}else if($rowhdc01['groupcode'] == '3.0'){
+		$hdc01_3 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+	}else if($rowhdc01['groupcode'] == '4.1'){
+		$hdc01_41 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+	}else if($rowhdc01['groupcode'] == '4.2'){
+		$hdc01_42 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+	}
+	//['th-ct', 10],
+}
+
+$sqlhdc02 = "SELECT
+  h.groupcode,
+  SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
+  SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
+  SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
+  SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
+  SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
+FROM
+  HDCTB02 h
+JOIN hospitalnew hn ON h.hospcode = hn.CODE5
+WHERE 1  "
+;
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year'];
+  $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
+}   
+
+
+if (isset($_POST['CODE_HMOO'])) {
+  if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+  $CODE_HMOO = $_POST['CODE_HMOO'];
+  $sqlhdc02 = $sqlhdc02."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+  }
+}
+
+if (isset($_POST['TYPE_SERVICE'])) {
+  if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+  $mySelect = trim($_POST['TYPE_SERVICE']);
+  $sqlhdc02 = $sqlhdc02."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  }
+}
+
+if (isset($_POST['CODE_PROVINCE'])) {
+  if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+  $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+  $sqlhdc02 = $sqlhdc02."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+  }
+}
+
+if (isset($_POST['CODE_HOS'])) {
+  if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+  $CODE_HOS = $_POST['CODE_HOS'];
+  $sqlhdc02 = $sqlhdc02."AND hn.CODE5 = '".$CODE_HOS."'" ;
+  }
+}
+
+$sqlhdc02 = $sqlhdc02."  
+GROUP BY
+  groupcode;";
+
+  //echo $sqlhdc01;
+
+$objhdc02 = mysqli_query($con, $sqlhdc02);
+//$rowhdc01 = mysqli_fetch_array($objhdc01);
+
+$hdc02_1 ='';
+$hdc02_2 ='';
+$hdc02_3 ='';
+$hdc02_41 ='';
+$hdc02_42 ='';
+while($rowhdc02 = mysqli_fetch_array($objhdc02))
+{
+	if($rowhdc02['groupcode'] == '1.1'){
+		$hdc02_1 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+	}else if($rowhdc02['groupcode'] == '2.0'){
+		$hdc02_2 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+	}else if($rowhdc02['groupcode'] == '3.0'){
+		$hdc02_3 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+	}else if($rowhdc02['groupcode'] == '4.1'){
+		$hdc02_41 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+	}else if($rowhdc02['groupcode'] == '4.2'){
+		$hdc02_42 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+	}
+	//['th-ct', 10],
+}
+
 
 ?>
 
@@ -287,7 +1221,40 @@ $obj8 = mysqli_query($con, $sql8);
 		  margin: 0 0 0 0 ;
 		  padding: 15px 30px 7px 15px;
 	  }
-  </style>	
+
+.tooltip2 {
+  position: relative;
+  display: inline-block;
+  /*border-bottom: 1px dotted black;*/
+}
+
+.tooltip2 .tooltiptext {
+  visibility: hidden;
+  width: 500px;
+  background-color: #5C7EAB;
+  color: #fff;
+  text-align: left;
+  border-radius: 6px;
+  padding: 5px 0;
+  
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: -5px;
+  left: 105%;
+}
+
+.tooltip2:hover .tooltiptext {
+  visibility: visible;
+}
+
+.tooltip2 {
+  position: relative;
+  display: inline-block;
+  /*border-bottom: 1px dotted black;*/
+}
+
+</style>
 </head>
 <body class="hold-transition sidebar-mini bodychange">
 <!-- Site wrapper -->
@@ -306,7 +1273,7 @@ $obj8 = mysqli_query($con, $sql8);
       <div class="container-fluid">
         <div class="row mb-2">
           <div class="col-sm-6">
-            <h3>Dashboard</h3>
+              <h3>ข้อมูลภาพรวม</h3>
           </div>
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
@@ -336,41 +1303,218 @@ $obj8 = mysqli_query($con, $sql8);
               </button>
             </div>
           </div>
-          <!-- /.card-header -->
+          <!-- /.card-header --> 
           <div class="card-body">
-			<form class="form-valide" action="tables_4.php" method="post" id="myform1" name="foml">  
+			<form class="form-valide" action="dashboard01.php" method="post" id="myForm1" name="myForm1">  
             <div class="row">
               <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
-                  <select class="form-control select2" name="personnelDate" style="width: 100%;">
-                    <option selected="selected" value="2566" >2566</option>
+                  <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
+                   <!-- <option selected="selected" value="2567" >2567</option>
+                    <option value="2566">2566</option>
                     <option value="2565">2565</option>
                     <option value="2564">2564</option>
-                    <option value="2563">2563</option>
-                    <option value="2562">2562</option>
-                    <option value="2561">2561</option>
-                    <option value="2560">2560</option>
+                    <option value="2563">2563</option>-->
+                    <?PHP for($i=0; $i<= (5); $i++) {?>
+                    <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
+                    <?PHP }?>
                   </select>
                 </div>
               </div>
               <!-- /.col -->
+
+              <div class="col-md-2">
+               <div class="form-group" id="labelarea">
+                  <label>เขตสุขภาพ</label>
+                  <select name="CODE_HMOO" class="form-control select2" id="CODE_HMOO" style="width: 100%;" onChange="myFunction3()">
+                    <option <?php if ($_POST['CODE_HMOO'] == 'ทั้งหมด'){?> selected="selected" <?php } ?>  value="ทั้งหมด">ทั้งหมด</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '1'){?> selected="selected" <?php } ?> value="1">เขตสุขภาพ 1</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '2'){?> selected="selected" <?php } ?> value="2">เขตสุขภาพ 2</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '3'){?> selected="selected" <?php } ?> value="3">เขตสุขภาพ 3</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '4'){?> selected="selected" <?php } ?> value="4">เขตสุขภาพ 4</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '5'){?> selected="selected" <?php } ?> value="5">เขตสุขภาพ 5</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '6'){?> selected="selected" <?php } ?> value="6">เขตสุขภาพ 6</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '7'){?> selected="selected" <?php } ?> value="7">เขตสุขภาพ 7</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '8'){?> selected="selected" <?php } ?> value="8">เขตสุขภาพ 8</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '9'){?> selected="selected" <?php } ?> value="9">เขตสุขภาพ 9</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '10'){?> selected="selected" <?php } ?> value="10">เขตสุขภาพ 10</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '11'){?> selected="selected" <?php } ?> value="11">เขตสุขภาพ 11</option>
+                    <option <?php if ($_POST['CODE_HMOO'] == '12'){?> selected="selected" <?php } ?> value="12">เขตสุขภาพ 12</option>
+					          <option <?php if ($_POST['CODE_HMOO'] == '13'){?> selected="selected" <?php } ?> value="13">เขตสุขภาพ 13</option>
+                   </select>
+                </div>
+                <script>
+                   function myFunction3() {
+                      const selectedValue = $('#CODE_HMOO').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { moo_id: selectedValue },
+                            success: function(data) {
+                              $('#CODE_PROVINCE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+            
+			   <!-- /.col -->
+             
+			 <!-- /.col -->
+              
+				<!-- /.form-group -->
+         
+        
+              </div>
+              <!-- /.col -->
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>จังหวัด</label>
+                  <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
+                     <option value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP /*
+          if($_POST['CODE_PROVINCE'] <> 'ทั้งหมด'){
+					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
+          WHERE  NO_PROVINCE = ".$_POST['CODE_PROVINCE']."
+GROUP BY CODE_PROVINCE 
+ORDER BY NO_PROVINCE ASC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option selected="selected" value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
+					  
+					<?PHP
+					} 
+        }else{
+					?>
+               <option value="ทั้งหมด" >ทั้งหมด</option>
+        <?php } */ ?>
+                  </select>
+                </div>
+
+                <script>
+                   function myFunction4() {
+                      const selectedValue = $('#CODE_PROVINCE').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_affiliation.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { CODE_PROVINCE: selectedValue },
+                            success: function(data) {
+                              $('#Affiliation').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->	
+              
               <div class="col-md-2">
                <div class="form-group">
                   <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2"  style="width: 100%;">
-                    <option selected="selected"  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="ในสังกัด">ในสังกัด</option>
-                    <option value="นอกสังกัด">นอกสังกัด</option>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['Affiliation']; ?> "><?php echo $_POST['Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+                </div>
+
+                <script>
+                   function myFunction5() {
+                      const selectedValue = $('#Affiliation').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_servicetype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { Affiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#TYPE_SERVICE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->
+              
+              <div class="form-group" id="labelservice">
+                  <label>Service Plan Level</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
+                     <option value="ทั้งหมด">ทั้งหมด</option>
+                     <?PHP 
+                       if(trim($_POST['TYPE_SERVICE']) <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo trim($_POST['TYPE_SERVICE']); ?> "><?php echo trim($_POST['TYPE_SERVICE']); ?> </option>
+                    <?php } ?>
+                   <!-- <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  -->
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction2() {
+                      const selectedValue = $('#TYPE_SERVICE').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                          //alert(selectedValue);
+                          $.ajax({
+                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue , codeprovince: codeprovince},
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+
+
+              <div class="col-md-2">
+               <div class="form-group">
+                  <label>โรงพยาบาล</label>
+                  <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+					<?PHP /*
+          if($_POST['CODE_HOS'] <> ''){
+					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
+WHERE HOS_TYPE <> 'คลินิกเอกชน'
+AND CODE5 = ".$_POST['CODE_HOS']."
+ORDER BY hospitalnew.CODE_HMOO DESC;";
+					$objprovince = mysqli_query($con, $sqlprovince);
+					
+					while($rowprovince = mysqli_fetch_array($objprovince))
+
+					{
+	
+					?>
+					  <option selected="selected"  value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
+					  
+					<?PHP
+					} 
+        } */
+					?>
+
                   </select>
                 </div>
               </div>
-              <!-- /.col -->
-			   <!-- /.col -->
-              <div class="col-md-2">
+              <!-- /.col -->		
+
+
+             
+<!--
+<div class="col-md-2">
                <div class="form-group">
                   <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" onChange="myFunction()">
+                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
                     <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
                     <option value="เขตพื้นที่">เขตพื้นที่</option>
                     <option value="ServicePlan">Service Plan</option>
@@ -407,83 +1551,28 @@ $obj8 = mysqli_query($con, $sql8);
 						
 					}
 				</script> 
+                  
 				   
                 </div>
-              </div>
+              </div>-->
               <!-- /.col -->	
-			 <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group" id="labelarea">
-                  <label>เขตสุขภาพ</label>
-                  <select name="CODE_HMOO" class="form-control select2" id="area" style="width: 100%;">
-                    <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="เขต 01">เขต1</option>
-                    <option value="เขต 02">เขต2</option>
-                    <option value="เขต 03">เขต3</option>
-					<option value="เขต 04">เขต4</option>
-                    <option value="เขต 05">เขต5</option>
-                    <option value="เขต 06">เขต6</option>
-					<option value="เขต 07">เขต7</option>
-                    <option value="เขต 08">เขต8</option>
-                    <option value="เขต 09">เขต9</option>
-					<option value="เขต 10">เขต10</option>
-                    <option value="เขต 11">เขต11</option>
-                    <option value="เขต 12">เขต12</option>
-					<option value="เขต 13">เขต13</option>
-                   </select>
-                </div>
-				<!-- /.form-group -->
-                <div class="form-group" id="labelservice" hidden="none">
-                  <label>Service Plan Level</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="service" style="width: 100%;" hidden="none">
-                     <option selected="selected" value="ทั้งหมด">ทั้งหมด</option>
-                    <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					<option value="F2">F2</option>
-					<option value="F3">F3</option>  
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-              </div>
-              <!-- /.col -->
-			  <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>จังหวัด</label>
-                  <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP
-					$sqlprovince = "SELECT PROVINCE_ID, PROVINCE_CODE, PROVINCE_NAME FROM province ;";
-					$objprovince = mysqli_query($con, $sqlprovince);
-					
-					while($rowprovince = mysqli_fetch_array($objprovince))
 
-					{
-	
-					?>
-					  <option value="<?PHP echo $rowprovince["PROVINCE_CODE"];?>" ><?PHP echo $rowprovince["PROVINCE_NAME"];?></option>
-					  
-					<?PHP
-					}
-					?>
 
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->		
+
             </div>
             <!-- /.row -->
 		
 			<div class="card-footer">
 				  <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
-				   <button type="reset" class="btn btn-default"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
+				   <button type="reset" class="btn btn-default" id="resetButton"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
 			  	  <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
 			</div>  
 		</form>
         </div>
+
+     
+
+
         <!-- /.card -->	  
         <div class="row">
           <div class="col-12">
@@ -513,8 +1602,8 @@ $obj8 = mysqli_query($con, $sql8);
 				  <div class="inner">
                     
                     <p>จิตแพทย์ผู้ใหญ่</p>
-					<h3><?php echo '5';?> คน</h3>
-                    <p>xx : 1แสน ประชากร</p>
+                    <h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($dr01), 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format(($dr01/$Totalmidy*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  
@@ -530,8 +1619,8 @@ $obj8 = mysqli_query($con, $sql8);
 				  <div class="inner">
                     
                     <p>จิตแพทย์เด็กและวัยรุ่น</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p>xx : 1แสน ประชากร</p>
+					          <h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($dr02), 0, '.', ',') ;?> คน</h3>
+                    <p><?php echo number_format((($dr02 / $Totalmidy)*100000), 4, '.', ','); ?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  
@@ -558,8 +1647,9 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>เตียงจิตเวช</p>
-					<h3><?php echo '9';?> เตียง</h3>
-                    <p>xx : 1แสน ประชากร</p>
+					<h3><i class="fas fa-bed" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($total_bed), 0, '.', ',') ;?> เตียง</h3>
+                    <p><?php echo number_format((($total_bed / $Totalmidy)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
+                    <p>ข้อมูลจาก HDC</p>
 					
 				  </div>
 				  <!--<div class="icon">
@@ -577,10 +1667,35 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>อัตราการครองเตียง</p>
-					<h3><?php echo '9';?> เตียง</h3>
+                    <?php 
+                    
+                          // วันที่เริ่มต้น
+                          $startDate = '2023-10-01';
+
+                          // แปลงวันที่เป็นวัตถุ DateTime
+                          $startDateTime = new DateTime($startDate);
+
+                          // หาวันที่ปัจจุบัน
+                          $now = new DateTime();
+
+                          // หาช่วงเวลาต่างกัน (ในหน่วยวัน)
+                          $interval = $now->diff($startDateTime);
+                          $days = $interval->days;
+
+                          //echo "จำนวนวันนับจากวันที่ $startDate ถึงวันนี้ คือ $days วัน";
+                    
+                    ?>
+					<h3><i class="fas fa-bed" style="color:#FFFFFF;">&nbsp;</i><?php 
+          if($total_b<>0){
+            echo number_format(($total_b*100/$total_bed/$days), 2, '.', ',') ;
+          }else{
+            echo '0';
+          }
+          
+          ?> %</h3>
                     <p> <small>&nbsp;</small></p>
                     <!--<p>xx : 1แสน ประชากร</p>-->
-					
+                    <p>ข้อมูลจาก HDC</p>
 				  </div>
 				 <!-- <div class="icon">
 					<i class="fas fa-file-medical-alt"></i>
@@ -644,106 +1759,64 @@ $obj8 = mysqli_query($con, $sql8);
 		<div class="col-md-6">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">ข้อมูลแพทย์</h3>
+					<h3 class="card-title">แพทย์</h3>
+					<div align="right">
+						<button class="btn btn-navbar" id="download-button" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
+                  
 				</div>
+				
 				<div class="card-body">
-					<a href="tables-1.php?t=1"><canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
-					<script>
-						 const ctx3 = document.getElementById('myChart3');
+					<a href="#"><canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 
-						  new Chart(ctx3, {
-							  type: 'bar',
-						  data: {
-							labels: [""],  //ชื่อแกน X
-							datasets: [{
-							  label: "จิตแพทย์ทั่วไป",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#FF7D63',
-							  borderColor: 	'#FF7D63',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row1['dr01'];?>],
-							},{
-							  label: "กำลังศึกษาจิตแพทย์ทั่วไป",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#bd6f58',
-							  borderColor: 	'#bd6f58',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "20";?>],
-							},{
-							  label: "จิตแพทย์เด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#5C7EAB',
-							  borderColor: 	'#5C7EAB',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row1['dr02'];?>],
-							},
-							{
-							  label: "กำลังศึกษาจิตแพทย์เด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#b158bd',
-							  borderColor: 	'#b158bd',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "16";?>],
-							},{
-							  label: "แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#AAE3A7',
-							  borderColor: 	'#AAE3A7',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo $row1['dr03'];?>],
-							},{
-							  label: "กำลังศึกษาแพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#58bd8d',
-							  borderColor: 	'#58bd8d',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo "7";?>],
-							}]
-						  },
-						  options: {
-						    plugins: {
-							  legend: {
-								position: 'top',
-								labels: {
-									 usePointStyle: true  //<-- set this
-								  }  
-							  },
-							  tooltip: {
-								callbacks: {
-								  title: () => undefined
-								}
-							  }
-							},   
-							scales: {
-							  xAxes: [{
-								//stacked: true,
-								stacked: true,
-								ticks: {
-								  beginAtZero: true,
-								  maxRotation: 0,
-								  minRotation: 0
-								}
-							  }],
-							  yAxes: [{
-								//stacked: true,
-							  }]
-							},
-						  }
-						  });
-					
-					</script>
+                    <script>
+        const ctx = document.getElementById('myChart3');
+        
+        
+        const downloadButton = document.getElementById('download-button');
+
+        const myChart3 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['จิตแพทย์ผู้ใหญ่', 'จิตแพทย์เด็กและวัยรุ่น', 'เวชศาสตร์ป้องกัน สาขาจิตเวชชุมชน', 'อื่นๆ'],
+                datasets: [{
+                    label: 'ปฏิบัติงาน',
+                    data: [<?php echo $dr01.','.$dr02.','.$dr03.','.$dr04;?>],
+                    backgroundColor: '#6CE5E8',
+                    borderColor: '#6CE5E8',
+                    borderWidth: 1,
+                    stack: 'combined' // Enable stacking for this dataset
+                },
+                {
+                    label: 'กำลังศึกษาต่อเฉพาะทาง',
+                    data: [<?php echo $tdr01.','.$tdr02.','.$tdr03.','.$tdr04;?>],
+                    backgroundColor: '#41B8D5',
+                    borderColor: '#41B8D5',
+                    borderWidth: 1,
+                    stack: 'combined' // Enable stacking for this dataset
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        stacked: true, // Enable stacking for the y-axis
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                }
+            }
+        });
+
+downloadButton.addEventListener('click', function() {
+    const chartData = myChart3.toBase64Image(); // Get chart image data
+    const link = document.createElement('a');
+    link.href = chartData;
+    link.download = 'stacked-barchart.png'; // Set download filename
+    link.click();
+});
+    </script>
+   
 					
 				</div>
                 
@@ -762,8 +1835,8 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>พยาบาล PGสุขภาพจิต</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p>xx : 1แสน ประชากร</p>
+					          <h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($nu02), 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format((($nu02 / $Totalmidy)*100000), 4, '.', ',') ;?>  : 1แสน ประชากร</p>
 					
 				  </div>
 				  <!--<div class="icon">
@@ -781,8 +1854,8 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>พยาบาล PGจิตเวชเด็ก</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p>xx : 1แสน ประชากร</p>
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($nu04), 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format((($nu04 / $Totalmidy)*100000), 4, '.', ',');?>  : 1แสน ประชากร</p>
 					
 				  </div>
 				 <!-- <div class="icon">
@@ -797,350 +1870,127 @@ $obj8 = mysqli_query($con, $sql8);
 			 
 			</div>
 			<!-- ./row -->	
-
-
-                
-		
-		</div>
-
-        <div class="col-md-6">
-			<div class="card">
-				<!--<div class="card-header">
-					<h3 class="card-title">ผู้ป่วยในจิตเวช</h3>
-				</div>-->
-				<div class="card-body">
-					<div id="container"></div>
-					
-				</div>
-
-			</div>
-            
-
-		</div>
-		<?php /* <div class="col-md-6">
+			<div class="row">
+       <div class="col-md-12">
 			<div class="card">
 				<div class="card-header">
-					<h3 class="card-title">ข้อมูลพยาบาล</h3>
+					<h3 class="card-title">พยาบาล</h3>
+					<div align="right">
+						<button class="btn btn-navbar" id="download-button2"><img width="10%" src="images/downloand.png"></button>
+					</div>
+                  
 				</div>
 
 				<div class="card-body">
 					<!--<canvas id="myChart4"></canvas>-->
-					<a href="tables-1.php?t=2"><canvas id="myChart4" style="min-height: 100%; height: 380px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<a href="#"><canvas id="myChart4" style="min-height: 100%; height: 380px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
 						 const ctx4 = document.getElementById('myChart4');
 
-						  new Chart(ctx4, {
-							  type: 'bar',
-						  data: {
-							labels: [""], //ชื่อแกน X
-							datasets: [{
-							  label: "การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#FC8585',
-							  borderColor: 	'#FC8585',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row2['nu01'];?>],
-							},{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#bd6f58',
-							  borderColor: 	'#bd6f58',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "20";?>],
-								
-							}, {
-							  label: "การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#FFC86D',
-							  borderColor: 	'#FFC86D',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row2['nu02'];?>],
-							},
-							{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#b158bd',
-							  borderColor: 	'#b158bd',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "16";?>],
-							
-							}, {
-							  label: "การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#85CBD9',
-							  borderColor: 	'#85CBD9',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							   data: [<?php echo $row2['nu03'];?>],
-							},{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#58bd8d',
-							  borderColor: 	'#58bd8d',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo "7";?>],
-							}]
-						  },
-						  options: {
-							 plugins: {
-							  legend: {
-								position: 'top',
-								labels: {
-									 usePointStyle: true  //<-- set this
-								  }  
-							  },
-							  tooltip: {
-								callbacks: {
-								  title: () => undefined
-								}
-							  }
-							},     
-							scales: {
-							  xAxes: [{
-								//stacked: true,
-								stacked: true,
-								ticks: {
-								  beginAtZero: true,
-								  maxRotation: 0,
-								  minRotation: 0
-								}
-							  }],
-							  yAxes: [{
-								stacked: true,
-							  }]
-							},
-						  }
-						  });
-									
-					</script>
-				</div>
+                         const downloadButton2 = document.getElementById('download-button2');
 
-			</div>
-		</div> */ ?>
-	  </div>
-      <!-- /.card -->	
-		
-	  <div class="row">
-       <div class="col-md-6">
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">ข้อมูลพยาบาล</h3>
-				</div>
+const myChart4 = new Chart(ctx4, {
+    type: 'bar',
+    data: {
+        labels: ['พยาบาลเฉพาะทางสุขภาพจิตและจิตเวช', 'พยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น', 'พยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด', 'พยาบาลเฉพาะทางผู้สูงอายุ'],
+        datasets: [{
+            label: 'ปฏิบัติงาน',
+            data: [<?php echo $nu02.','.$nu04.','.$nu05.','.$nu03.','.$nu06.','.$nu07;?>],
+            backgroundColor: '#6CE5E8',
+            borderColor: '#6CE5E8',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+        },
+        {
+            label: 'กำลังศึกษาต่อเฉพาะทาง',
+            data: [<?php echo $tnu02.','.$tnu04.','.$tnu05.','.$tnu03.','.$tnu06.','.$tnu07;?>],
+            backgroundColor: '#41B8D5',
+            borderColor: '#41B8D5',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                stacked: true, // Enable stacking for the y-axis
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
 
-				<div class="card-body">
-					<!--<canvas id="myChart4"></canvas>-->
-					<a href="tables-1.php?t=2"><canvas id="myChart4" style="min-height: 100%; height: 380px; max-height: 380px; max-width: 100%;"></canvas></a>
-					<script>
-						 const ctx4 = document.getElementById('myChart4');
+downloadButton2.addEventListener('click', function() {
+const chartData2 = myChart4.toBase64Image(); // Get chart image data
+const link = document.createElement('a');
+link.href = chartData2;
+link.download = 'stacked-barchart.png'; // Set download filename
+link.click();
+});
 
-						  new Chart(ctx4, {
-							  type: 'bar',
-						  data: {
-							labels: [""], //ชื่อแกน X
-							datasets: [{
-							  label: "การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#FC8585',
-							  borderColor: 	'#FC8585',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row2['nu01'];?>],
-							},{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#bd6f58',
-							  borderColor: 	'#bd6f58',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "20";?>],
-								
-							}, {
-							  label: "การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#FFC86D',
-							  borderColor: 	'#FFC86D',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row2['nu02'];?>],
-							},
-							{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#b158bd',
-							  borderColor: 	'#b158bd',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "16";?>],
-							
-							}, {
-							  label: "การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#85CBD9',
-							  borderColor: 	'#85CBD9',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							   data: [<?php echo $row2['nu03'];?>],
-							},{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#58bd8d',
-							  borderColor: 	'#58bd8d',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo "7";?>],
-							}]
-						  },
-						  options: {
-							 plugins: {
-							  legend: {
-								position: 'top',
-								labels: {
-									 usePointStyle: true  //<-- set this
-								  }  
-							  },
-							  tooltip: {
-								callbacks: {
-								  title: () => undefined
-								}
-							  }
-							},     
-							scales: {
-							  xAxes: [{
-								//stacked: true,
-								stacked: true,
-								ticks: {
-								  beginAtZero: true,
-								  maxRotation: 0,
-								  minRotation: 0
-								}
-							  }],
-							  yAxes: [{
-								stacked: true,
-							  }]
-							},
-						  }
-						  });
 									
 					</script>
 				</div>
 
 			</div>
 		</div> 
-        <?php /*
-		<div class="col-md-6">
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">ข้อมูลนักจิตวิทยา</h3>
-				</div>
-
-				<div class="card-body">
-					<a href="tables-1.php?t=4"><canvas id="myChart5" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
-					<script>
-						 const ctx5 = document.getElementById('myChart5');
-
-						  new Chart(ctx5, {
-							  type: 'bar',
-						  data: {
-							labels: [""],  //ชื่อแกน X
-							datasets: [{
-							  label: "นักจิตวิทยาคลินิก",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#FF7D63',
-							  borderColor: 	'#FF7D63',
-							  borderWidth: 1,	
-							  barPercentage: 0.2,
-							  //categorySpacing: 1,
-							  barThickness: 30,	
-							  data: [<?php echo '41';?>],
-							},{
-							  label: "นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#5C7EAB',
-							  borderColor: 	'#5C7EAB',		
-							  borderWidth: 1,
-							  barPercentage: 0.2,
-							  //categorySpacing: 1,
-							  barThickness: 30,	
-							  data: [<?php echo $row1['dr02'];?>],
-							},{
-							  label: "นักจิตวิทยา",
-							  type: "bar",
-							  stack: "Base3",		
-							  backgroundColor: '#85CBD9',
-							  borderColor: 	'#85CBD9',
-							  borderWidth: 1,
-							  barPercentage: 0.2,
-							  //categorySpacing: 1,
-							  barThickness: 30,	
-							  data: [<?php echo '41';?>],
-							},{
-							  label: "นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)",
-							  type: "bar",
-							  stack: "Base4",			
-							  backgroundColor: '#b158bd',
-							  borderColor: 	'#b158bd',
-							  borderWidth: 1,
-							  barPercentage: 0.2,
-							  //categorySpacing: 1,
-							  barThickness: 30,	
-							  data: [<?php echo $row1['dr02'];?>],
-							}]
-						  },
-						  options: {
-						    plugins: {
-							  legend: {
-								position: 'top',
-								 labels: {
-									 usePointStyle: true  //<-- set this
-								  },
-								  
-								 
-								 
-							  },
-							  tooltip: {
-								callbacks: {
-								  title: () => undefined
-								}
-							  }
-							},   
-							scales: {
-							  xAxes: [{
-								//stacked: true,
-								stacked: true
-							  }],
-							  yAxes: [{
-								stacked: true
-								
-							  }]
-							},
-						  }
-						  });
-					
-					</script>
-					
-				</div>
-
-			</div> */ ?>
+        
 		</div>
+
+
+                
+		
+		</div>
+
+        <div class="col-lg-6">
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="card">
+						<!--<div class="card-header">
+							<h3 class="card-title">ผู้ป่วยในจิตเวช</h3>
+						</div>-->
+						<div class="card-body">
+							<div id="container"></div>
+							
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<!-- small card -->
+					<div class="small-box" style="background-color: #b3e8a2; color: black;">
+					<div class="inner">
+						
+						<p>เภสัชกร</p>
+						<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($SC), 0, '.', ',');?> คน</h3>
+						<p><?php echo number_format((($SC / $Totalmidy)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
+						
+					</div>
+					<!--<div class="icon">
+						<i class="fas fa-file-medical-alt"></i>
+					</div>-->
+					<!-- <a href="#" class="small-box-footer">
+						More info <i class="fas fa-arrow-circle-right"></i>
+					</a>-->
+					</div>
+				</div>
+				<!-- ./col -->
+				
+				
+			</div>
+				<!-- ./row -->	
+            
+
+		</div>
+		
+	  </div>
+      <!-- /.card -->	
+		
+	  
 
          <!-- Default box -->
     <div class="row">
@@ -1152,8 +2002,8 @@ $obj8 = mysqli_query($con, $sql8);
 				  <div class="inner">
                     
                     <p>นักจิตวิทยา</p>
-					<h3><?php echo '5';?> คน</h3>
-                    <p>xx : 1แสน ประชากร</p>
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($TCtotal), 0, '.', ',') ;?> คน</h3>
+                    <p><?php echo number_format((($TCtotal / $Totalmidy)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  
@@ -1169,8 +2019,8 @@ $obj8 = mysqli_query($con, $sql8);
 				  <div class="inner">
                     
                     <p>นักสังคมสงเคราะห์</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p>xx : 1แสน ประชากร</p>
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format($TOC, 0, '.', ',');?> คน</h3>
+                    <p><?php echo number_format((($TOC / $Totalmidy)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  
@@ -1197,8 +2047,8 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>นักกิจกรรมบำบัด</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p>xx : 1แสน ประชากร</p>
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format($TOC2 , 0, '.', ',') ;?> คน</h3>
+                    <p><?php echo number_format((($TOC2 / $Totalmidy)*100000), 4, '.', ',');?> : 1แสน ประชากร</p>
 					
 				  </div>
 				  <!--<div class="icon">
@@ -1216,9 +2066,9 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>นักฝึกพูด</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p> <small>&nbsp;</small></p>
-                    <!--<p>xx : 1แสน ประชากร</p>-->
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($TOC3), 0, '.', ',')  ;?> คน</h3>
+                    <!--<p> <small>&nbsp;</small></p>-->
+                    <p><?php echo number_format((($TOC3 / $Totalmidy)*100000), 4, '.', ',') ;?> : 1แสน ประชากร</p>
 					
 				  </div>
 				 <!-- <div class="icon">
@@ -1242,6 +2092,10 @@ $obj8 = mysqli_query($con, $sql8);
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">นักจิตวิทยา</h3>
+					<div align="right">
+						<button class="btn btn-navbar" id="download-button3"><img width="10%" src="images/downloand.png"></button>
+					</div>
+                   
 				</div>
 
 				<div class="card-body" align="center">
@@ -1250,6 +2104,7 @@ $obj8 = mysqli_query($con, $sql8);
 						
 					
 				</div>
+				
 
 			</div>
 		</div>
@@ -1261,9 +2116,9 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>ครูการศึกษาพิเศษ</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p> <small>&nbsp;</small></p>
-                    <!--<p>xx : 1แสน ประชากร</p>-->
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($TOC4), 0, '.', ',')   ;?> คน</h3>
+                    <!--<p> <small>&nbsp;</small></p>-->
+                    <p><?php echo number_format((($TOC4 / $Totalmidy)*100000), 4, '.', ',')  ;?>: 1แสน ประชากร</p>
 					
 				  </div>
 				 <!-- <div class="icon">
@@ -1281,9 +2136,10 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>นักวิชาการสาธารณสุข</p>
-					<h3><?php echo '9';?> คน</h3>
-                    <p> <small>&nbsp;</small></p>
-                    <!--<p>xx : 1แสน ประชากร</p>-->
+					<h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo number_format(($TOC5), 0, '.', ',');?> คน</h3>
+                    <!--<p> <small>&nbsp;</small></p>-->
+                    <p><?php echo number_format((($TOC5 / $Totalmidy)*100000), 4, '.', ',') ;?> : 1แสน ประชากร</p>
+                    
 					
 				  </div>
 				 <!-- <div class="icon">
@@ -1306,7 +2162,7 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>จำนวน ECT</p>
-					<h3><?php echo '9';?> คน</h3>
+					<h3><i class="fas" style="color:#FFFFFF;">&nbsp;</i><?php echo $ect_no;?> เครื่อง</h3>
                     <p> <small>&nbsp;</small></p>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
@@ -1326,7 +2182,7 @@ $obj8 = mysqli_query($con, $sql8);
                 <div class="inner">
                     
                     <p>จำนวน TMS</p>
-					<h3><?php echo '9';?> คน</h3>
+					<h3><?php echo $tms_no;?> เครื่อง</h3>
                     <p> <small>&nbsp;</small></p>
                     <!--<p>xx : 1แสน ประชากร</p>-->
 					
@@ -1354,105 +2210,100 @@ $obj8 = mysqli_query($con, $sql8);
       <div class="row">
 		<div class="col-md-6">
 			<div class="card">
+      <div class="card-header">
+					<h3 class="card-title">ข้อมูลบริการ 5 โรคสำคัญ&nbsp;&nbsp; </h3>
+					<div class="tooltip2"><i class='far fa-question-circle' style='font-size:14px;color:royalblue;'></i>
+							<span class="tooltiptext"> 
+								<ul>
+									<li>ความผิดปกติทางจิตและพฤติกรรมที่เกิดจากการใช้สารออกฤทธิ์ต่อจิตประสาท(F10-F19))</li>
+									<li>โรคจิตเภท พฤติกรรมแบบโรคจิตเภท และโรคหลงผิด (F20-F29)</li>
+									<li>โรคซึมเศร้า(F32,F33,F34.1,F38,F39)</li>
+									<li>ไบโพล่า(F31)</li>
+									<li>โรคสมองเสื่อม(F00-F03)</li>
+								</ul>
+							</span>
+						</div>
+                   
+				</div>
 				<div class="card-header">
 					<h3 class="card-title">ผู้ป่วยนอกจิตเวช</h3>
+					<div align="right">
+						<button class="btn btn-navbar" id="download-button5"><img width="10%" src="images/downloand.png"></button>
+					</div>
+                   
 				</div>
 				<div class="card-body">
-					<a href="tables-1.php?t=1"><canvas id="myChart5" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<a href="#"><canvas id="myChart5" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
 						 const ctx5 = document.getElementById('myChart5');
 
-						  new Chart(ctx5, {
-							  type: 'line',
-						  data: {
-							labels: [""],  //ชื่อแกน X
-							datasets: [{
-							  label: "จิตแพทย์ทั่วไป",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#FF7D63',
-							  borderColor: 	'#FF7D63',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row1['dr01'];?>],
-							},{
-							  label: "กำลังศึกษาจิตแพทย์ทั่วไป",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#bd6f58',
-							  borderColor: 	'#bd6f58',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "20";?>],
-							},{
-							  label: "จิตแพทย์เด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#5C7EAB',
-							  borderColor: 	'#5C7EAB',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row1['dr02'];?>],
-							},
-							{
-							  label: "กำลังศึกษาจิตแพทย์เด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#b158bd',
-							  borderColor: 	'#b158bd',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "16";?>],
-							},{
-							  label: "แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#AAE3A7',
-							  borderColor: 	'#AAE3A7',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo $row1['dr03'];?>],
-							},{
-							  label: "กำลังศึกษาแพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#58bd8d',
-							  borderColor: 	'#58bd8d',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo "7";?>],
-							}]
-						  },
-						  options: {
-						    plugins: {
-							  legend: {
-								position: 'top',
-								labels: {
-									 usePointStyle: true  //<-- set this
-								  }  
-							  },
-							  tooltip: {
-								callbacks: {
-								  title: () => undefined
-								}
-							  }
-							},   
-							scales: {
-							  xAxes: [{
-								//stacked: true,
-								stacked: true,
-								ticks: {
-								  beginAtZero: true,
-								  maxRotation: 0,
-								  minRotation: 0
-								}
-							  }],
-							  yAxes: [{
-								//stacked: true,
-							  }]
-							},
-						  }
-						  });
+						 
+                         const downloadButton5 = document.getElementById('download-button5');
+
+const myChart5 = new Chart(ctx5, {
+    type: 'line',
+    data: {
+        labels: ['ปี 2563', 'ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+        datasets: [{
+            label: 'ความผิดปกติทางจิตและพฤติกรรมที่เกิดจากการใช้สารออกฤทธิ์ต่อจิตประสาท(F10-F19)',
+            data: [<?php echo $hdc01_2;?>],
+            backgroundColor: '#00cadc',
+            borderColor: '#00cadc',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+        },
+        {
+            label: 'โรคจิตเภท พฤติกรรมแบบโรคจิตเภท และโรคหลงผิด (F20-F29)',
+            data: [<?php echo $hdc01_3;?>],
+            backgroundColor: '#49c3fb',
+            borderColor: '#49c3fb',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+		},
+        {
+            label: 'โรคซึมเศร้า(F32,F33,F34.1,F38,F39)',
+            data: [<?php echo $hdc01_42;?>],
+            backgroundColor: '#65a6fa',
+            borderColor: '#65a6fa',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+		},
+        {
+            label: 'ไบโพล่า(F31)',
+            data: [<?php echo $hdc01_41;?>],
+            backgroundColor: '#7e80e7',
+            borderColor: '#7e80e7',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset	
+		},
+        {
+            label: 'โรคสมองเสื่อม(F00-F03)',
+            data: [<?php echo $hdc01_1;?>],
+            backgroundColor: '#9b57cc',
+            borderColor: '#9b57cc',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset	
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                stacked: true, // Enable stacking for the y-axis
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+downloadButton5.addEventListener('click', function() {
+const chartData5 = myChart5.toBase64Image(); // Get chart image data
+const link = document.createElement('a');
+link.href = chartData5;
+link.download = 'stacked-barchart.png'; // Set download filename
+link.click();
+});
 					
 					</script>
 					
@@ -1466,103 +2317,82 @@ $obj8 = mysqli_query($con, $sql8);
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">ผู้ป่วยในจิตเวช</h3>
+                    
+					<div align="right">
+						<button class="btn btn-navbar" id="download-button6"><img width="10%" src="images/downloand.png"></button>
+					</div>
 				</div>
 				<div class="card-body">
-					<a href="tables-1.php?t=1"><canvas id="myChart6" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<a href="#"><canvas id="myChart6" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
 						 const ctx6 = document.getElementById('myChart6');
 
-						  new Chart(ctx6, {
-							  type: 'line',
-						  data: {
-							labels: [""],  //ชื่อแกน X
-							datasets: [{
-							  label: "จิตแพทย์ทั่วไป",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#FF7D63',
-							  borderColor: 	'#FF7D63',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row1['dr01'];?>],
-							},{
-							  label: "กำลังศึกษาจิตแพทย์ทั่วไป",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#bd6f58',
-							  borderColor: 	'#bd6f58',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "20";?>],
-							},{
-							  label: "จิตแพทย์เด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#5C7EAB',
-							  borderColor: 	'#5C7EAB',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row1['dr02'];?>],
-							},
-							{
-							  label: "กำลังศึกษาจิตแพทย์เด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#b158bd',
-							  borderColor: 	'#b158bd',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "16";?>],
-							},{
-							  label: "แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#AAE3A7',
-							  borderColor: 	'#AAE3A7',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo $row1['dr03'];?>],
-							},{
-							  label: "กำลังศึกษาแพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#58bd8d',
-							  borderColor: 	'#58bd8d',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo "7";?>],
-							}]
-						  },
-						  options: {
-						    plugins: {
-							  legend: {
-								position: 'top',
-								labels: {
-									 usePointStyle: true  //<-- set this
-								  }  
-							  },
-							  tooltip: {
-								callbacks: {
-								  title: () => undefined
-								}
-							  }
-							},   
-							scales: {
-							  xAxes: [{
-								//stacked: true,
-								stacked: true,
-								ticks: {
-								  beginAtZero: true,
-								  maxRotation: 0,
-								  minRotation: 0
-								}
-							  }],
-							  yAxes: [{
-								//stacked: true,
-							  }]
-							},
-						  }
-						  });
+                         const downloadButton6 = document.getElementById('download-button6');
+
+const myChart6 = new Chart(ctx6, {
+    type: 'line',
+    data: {
+        labels: ['ปี 2563', 'ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+        datasets: [{
+            label: 'ความผิดปกติทางจิตและพฤติกรรมที่เกิดจากการใช้สารออกฤทธิ์ต่อจิตประสาท(F10-F19)',
+            data: [<?php echo $hdc02_2;?>],
+            backgroundColor: '#00cadc',
+            borderColor: '#00cadc',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+        },
+        {
+            label: 'โรคจิตเภท พฤติกรรมแบบโรคจิตเภท และโรคหลงผิด (F20-F29)',
+            data: [<?php echo $hdc02_3;?>],
+            backgroundColor: '#49c3fb',
+            borderColor: '#49c3fb',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+		},
+        {
+            label: 'โรคซึมเศร้า(F32,F33,F34.1,F38,F39)',
+            data: [<?php echo $hdc02_42;?>],
+            backgroundColor: '#65a6fa',
+            borderColor: '#65a6fa',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset
+		},
+        {
+            label: 'ไบโพล่า(F31)',
+            data: [<?php echo $hdc02_41;?>],
+            backgroundColor: '#7e80e7',
+            borderColor: '#7e80e7',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset	
+		},
+        {
+            label: 'โรคสมองเสื่อม(F00-F03)',
+            data: [<?php echo $hdc02_1;?>],
+            backgroundColor: '#9b57cc',
+            borderColor: '#9b57cc',
+            borderWidth: 1,
+            stack: 'combined' // Enable stacking for this dataset	
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                stacked: true, // Enable stacking for the y-axis
+                ticks: {
+                    beginAtZero: true
+                }
+            }]
+        }
+    }
+});
+
+downloadButton6.addEventListener('click', function() {
+const chartData6 = myChart6.toBase64Image(); // Get chart image data
+const link = document.createElement('a');
+link.href = chartData6;
+link.download = 'stacked-barchart.png'; // Set download filename
+link.click();
+});
 					
 					</script>
 					
@@ -1573,627 +2403,135 @@ $obj8 = mysqli_query($con, $sql8);
 
 		</div>
         </div>
-		<?php /* <div class="col-md-6">
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">ข้อมูลพยาบาล</h3>
-				</div>
-
-				<div class="card-body">
-					<!--<canvas id="myChart4"></canvas>-->
-					<a href="tables-1.php?t=2"><canvas id="myChart4" style="min-height: 100%; height: 380px; max-height: 380px; max-width: 100%;"></canvas></a>
-					<script>
-						 const ctx4 = document.getElementById('myChart4');
-
-						  new Chart(ctx4, {
-							  type: 'bar',
-						  data: {
-							labels: [""], //ชื่อแกน X
-							datasets: [{
-							  label: "การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#FC8585',
-							  borderColor: 	'#FC8585',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row2['nu01'];?>],
-							},{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)",
-							  type: "bar",
-							  stack: "Base",
-							  backgroundColor: '#bd6f58',
-							  borderColor: 	'#bd6f58',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "20";?>],
-								
-							}, {
-							  label: "การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#FFC86D',
-							  borderColor: 	'#FFC86D',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo $row2['nu02'];?>],
-							},
-							{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น",
-							  type: "bar",
-							  stack: "Base2",
-							  backgroundColor: '#b158bd',
-							  borderColor: 	'#b158bd',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							  data: [<?php echo "16";?>],
-							
-							}, {
-							  label: "การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#85CBD9',
-							  borderColor: 	'#85CBD9',
-							  borderWidth: 1,
-							  barThickness: 30,		
-							   data: [<?php echo $row2['nu03'];?>],
-							},{
-							  label: "กำลังศึกษาการพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด",
-							  type: "bar",
-							  stack: "Sensitivity",
-							  backgroundColor: '#58bd8d',
-							  borderColor: 	'#58bd8d',
-							  borderWidth: 1,	
-							  barThickness: 30,	
-							  data: [<?php echo "7";?>],
-							}]
-						  },
-						  options: {
-							 plugins: {
-							  legend: {
-								position: 'top',
-								labels: {
-									 usePointStyle: true  //<-- set this
-								  }  
-							  },
-							  tooltip: {
-								callbacks: {
-								  title: () => undefined
-								}
-							  }
-							},     
-							scales: {
-							  xAxes: [{
-								//stacked: true,
-								stacked: true,
-								ticks: {
-								  beginAtZero: true,
-								  maxRotation: 0,
-								  minRotation: 0
-								}
-							  }],
-							  yAxes: [{
-								stacked: true,
-							  }]
-							},
-						  }
-						  });
-									
-					</script>
-				</div>
-
-			</div>
-		</div> */ ?>
+		
 	  </div>
       <!-- /.card -->	
 		
        
 		
       
-	<?php /* 	
-
-
-		<div class="col-md-6">
-			<div class="row">
-			  <div class="col-lg-6">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #ABDEE6; color: black;">
-				  <div class="inner">
-					<h3><?php echo $row3['total'] ;?></h3>
-
-					<p>เภสัชกร
-						<small><font color="d62828">(ผ่านการอบรมเฉพาะทาง)</font></small>
-					 </p>
-				  </div>
-				  <div class="icon">
-					<i class="fas fa-pills"></i>
-				  </div>
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-
-			  <div class="col-lg-6">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #CBAACB; color: black;">
-				  <div class="inner">
-					<h3><?php echo $row5['total'] ;?></h3>
-
-					<p>นักสังคมสงเคราะห์
-					  <small>&nbsp;</small>
-					</p>
-				  </div>
-				  <div class="icon">
-					<i class="fas fa-user-md"></i>
-				  </div>
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-		  </div>
-		  <!-- /.row -->	
-		  <div class="row">
-			  <div class="col-lg-6">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #FF968A; color: black;">
-				  <div class="inner">
-					<h3><?php echo $row6['total'] ;?></h3>
-
-					<p>นักกิจกรรมบำบัด 
-						<small>&nbsp;</small>
-					</p>
-				  </div>
-				  <div class="icon">
-					<i class="fas fa-user-plus"></i>
-				  </div>
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-
-
-			  <div class="col-lg-6">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #FDDF9E; color: black;">
-				  <div class="inner">
-					<h3><?php echo $row7['total'];?></h3>
-
-					<p>นักสื่อความหมาย
-						 <small>&nbsp;</small>
-					</p>
-				  </div>
-				  <div class="icon">
-					<i class="fas fa-diagnoses"></i>
-				  </div>
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-		  </div>
-		  <!-- /.row -->
-		  <div class="row">
-		 	 <div class="col-lg-6">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #FFB8DE; color: black;">
-				  <div class="inner">
-					<h3><?php echo '0' ;?></h3>
-
-					<p>อื่นๆ
-						 <small>&nbsp;</small>
-					</p>
-				  </div>
-				  <div class="icon">
-					<i class="fas fa-user-md"></i>
-				  </div>
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-		  </div>
-		  <!-- /.row -->
-	   </div>
-		  
-	</div>
-	<!-- /.row -->
-
-		  
-
-        <!-- Small Box (Stat card) -->
-        <!--<h5 class="mb-2 mt-4">Small Box</h5>--><?php /*
-        <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box" style="background-color: #ABDEE6; color: black;">
-              <div class="inner">
-                <h3><?php echo $row3['total'] ;?></h3>
-
-                <p>ข้อมูลเภสัชกร</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-pills"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div>
-          <!-- ./col -->
-			  
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box" style="background-color: #CBAACB; color: black;">
-              <div class="inner">
-                <h3><?php echo $row5['total'] ;?></h3>
-
-                <p>ข้อมูลนักสังคมสงเคราะห์</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-user-md"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div>
-          <!-- ./col -->
-					
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box" style="background-color: #FF968A; color: black;">
-              <div class="inner">
-                <h3><?php echo $row6['total'] ;?></h3>
-
-                <p>ข้อมูลนักกิจกรรมบำบัด</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-user-plus"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div>
-          <!-- ./col -->
-			
-	
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box" style="background-color: #8FCACA; color: black;">
-              <div class="inner">
-                <h3><?php echo $row7['total'];?></h3>
-
-                <p>ข้อมูลนักสื่อความหมาย</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-diagnoses"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->
-		  
-		  
-		  
-		<!-- =========================================================== -->
-		  
-        <!-- Small Box (Stat card) -->
-        <!--<h5 class="mb-2 mt-4">Small Box</h5>-->
-        <div class="row"><?php/*
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box" style="background-color: #A7D9C9; color: black;">
-              <div class="inner">
-                <h3><?php echo $row4_1['total'] ;?></h3>
-
-                <p>ข้อมูลนักจิตวิทยาคลินิก</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-comments"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div>
-          <!-- ./col -->
-			  
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-           <div class="small-box" style="background-color: #9EDDEF; color: black;">
-              <div class="inner">
-                <h3><?php echo $row4_2['total'] ;?></h3>
-
-                <p>นักจิตวิทยา</p>
-              </div>
-              <div class="icon">
-                <i class="far fa-bookmark"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div>
-          <!-- ./col -->
-								
-          <div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box" style="background-color: #CAB3c1; color: black;">
-              <div class="inner">
-                <h3><?php echo $row8['total'] ;?></h3>
-
-                <p>ข้อมูลนักวิชาการศึกษาพิเศษ</p>
-              </div>
-              <div class="icon">
-                <i class="far fa-calendar-alt"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div>
-          <!-- ./col -->
-			
-	
-          <?php /*?><div class="col-lg-3 col-6">
-            <!-- small card -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3><?php echo $row7['total'];?></h3>
-
-                <p>ข้อมูลนักสื่อความหมาย</p>
-              </div>
-              <div class="icon">
-                <i class="fas fa-diagnoses"></i>
-              </div>
-             <!-- <a href="#" class="small-box-footer">
-                More info <i class="fas fa-arrow-circle-right"></i>
-              </a>-->
-            </div>
-          </div><?php *?>
-          <!-- ./col -->
-        </div>
-        <!-- /.row -->	  */?>
-	  
-		
-	<?php /*
-	
-	  <!-- Default box -->
-      <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
-			<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">ข้อมูลจำนวนเตียง</h3>
-				</div>
-
-				<div class="card-body" align="center">
-	
-					<a href="tables-2.php"><canvas id="myChart9" style="min-height: 400px; height: 400px; max-height: 400px; max-width: 100%;"></canvas></a>
-						
-					
-				</div>
-
-			</div>
-		</div>
-		<div class="col-md-6">
-		  <div class="row">
-			<div class="col-lg-6">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #6DBFD1; color: black;">
-				  <div class="inner">
-					<h3><?php echo '5';?></h3>
-
-					<p>การรักษาด้วยไฟฟ้า (ECT)
-						<small>&nbsp;</small>
-					</p>
-				  </div>
-				  <div class="icon">
-					<i class="fas fa-file-medical-alt"></i>
-				  </div>
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-			  <div class="col-lg-6">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #FF7D63; color: black;">
-				  <div class="inner">
-					<h3><?php echo '4';?></h3>
-
-					<p>การรักษาด้วยTranscranial Magnetic Stimulation (TMS)
-						<small>&nbsp;</small>
-					</p>
-				  </div>
-				  <div class="icon">
-					<i class="fas fa-file-medical-alt"></i>
-				  </div>
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-			 
-			</div>
-			<!-- ./row -->	
-			</div>
-		</div>
-	  </div>
-      <!-- /.card -->
-		
-	  <!-- Default box -->
-      <div class="row">
-		
-		<div class="col-md-8">
-			<!--<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">ข้อมูล Ward จิตแพทย์และยาเสพติด</h3>
-				</div>
-
-				<div class="card-body">
-					<div id="container"></div>
-					
-				</div>
-
-			</div>-->
-		</div>
-		<div class="col-md-6">
-			<!--<div class="card">
-				<div class="card-header">
-					<h3 class="card-title">ข้อมูลจำนวนเตียงและเครื่องมือแพทย์</h3>
-				</div>
-
-				<div class="card-body" align="center">
-					
-					<div style="width: 400px;">
-					<canvas id="myChart9"></canvas>
-					</div>
-				</div>
-
-			</div>-->
-		
-	  </div>
-      <!-- /.card -->
-		  
-		  
-	  
-	</div>
-		  	
-    </section>
-    <!-- /.content -->
-  </div> */ ?>
-  <!-- /.content-wrapper -->
 	 <script>
 		 
 
   const ctx9 = document.getElementById('myChart9');
 
-  new Chart(ctx9, {
-    type: 'doughnut',
-    data: {
-      labels: [ 'Psychiatric Ward', 'Psychiatric Unit', 'Integrated Bed'],
-      datasets: [{
-        label: 'จำนวน',
-		backgroundColor: [
-		  '#3EB567',
-		  '#EB5F28',
-		  '#425BD6'
-		],
-        data: [<?php echo "22, 15, 5" ;?>],
-        borderWidth: 1
-      }]
-    },
-    options: {
-	  cutoutPercentage: 95,
-	  legend: {
-		display: false
-	  },
-	  tooltip: {
-		enabled: false
-	  }	
-    }
-  });
-	
- 
-	
+  const downloadButton3 = document.getElementById('download-button3');
+
+        const data = {
+            labels: ['นักจิตวิทยา', 'นักจิตวิทยาคลินิค'],
+            datasets: [{
+                data: [<?php echo $TC01.','.$TC02;?>],
+                backgroundColor: ['#00CADC', '#49C3FB', '#65A6FA', '#7E80E7'],
+                borderColor: ['#00CADC', '#49C3FB', '#65A6FA', '#7E80E7'],
+                borderWidth: 1
+            }]
+        };
+
+        const config = {
+            type: 'doughnut',
+            data: data,
+            options: {} // Add any desired chart options here
+        };
+
+        const myChart9 = new Chart(ctx9, config);
+
+        downloadButton3.addEventListener('click', function() {
+            const chartData3 = myChart9.toBase64Image();
+            const link = document.createElement('a');
+            link.href = chartData3;
+            link.download = 'doughnut-chart.png';
+            link.click();
+        });
  
 </script>
 <script>
 	
-(async () => {
+	(async () => {
+        const topology = await fetch(
+            'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
+        ).then(response => response.json());
 
-    const topology = await fetch(
-        'https://code.highcharts.com/mapdata/countries/th/th-all.topo.json'
-    ).then(response => response.json());
+        const data = [
+          <?php echo $datamap; ?> 
+            // ... (remaining data)
+        ];
 
-    // Prepare demo data. The data is joined to map using value of 'hc-key'
-    // property by default. See API docs for 'joinBy' for more info on linking
-    // data and map.
-    const data = [
-        ['th-ct', 10], ['th-4255', 11], ['th-pg', 12], ['th-st', 13],
-        ['th-kr', 14], ['th-sa', 15], ['th-tg', 16], ['th-tt', 17],
-        ['th-pl', 18], ['th-ps', 19], ['th-kp', 20], ['th-pc', 21],
-        ['th-sh', 22], ['th-at', 23], ['th-lb', 24], ['th-pa', 25],
-        ['th-np', 26], ['th-sb', 27], ['th-cn', 28], ['th-bm', 29],
-        ['th-pt', 30], ['th-no', 31], ['th-sp', 32], ['th-ss', 33],
-        ['th-sm', 34], ['th-pe', 35], ['th-cc', 36], ['th-nn', 37],
-        ['th-cb', 38], ['th-br', 39], ['th-kk', 40], ['th-ph', 41],
-        ['th-kl', 42], ['th-sr', 43], ['th-nr', 44], ['th-si', 45],
-        ['th-re', 46], ['th-le', 47], ['th-nk', 48], ['th-ac', 49],
-        ['th-md', 50], ['th-sn', 51], ['th-nw', 52], ['th-pi', 53],
-        ['th-rn', 54], ['th-nt', 55], ['th-sg', 56], ['th-pr', 57],
-        ['th-py', 58], ['th-so', 59], ['th-ud', 60], ['th-kn', 61],
-        ['th-tk', 62], ['th-ut', 63], ['th-ns', 64], ['th-pk', 65],
-        ['th-ur', 66], ['th-sk', 67], ['th-ry', 68], ['th-cy', 69],
-        ['th-su', 70], ['th-nf', 71], ['th-bk', 72], ['th-mh', 73],
-        ['th-pu', 74], ['th-cp', 75], ['th-yl', 76], ['th-cr', 77],
-        ['th-cm', 78], ['th-ln', 79], ['th-na', 80], ['th-lg', 81],
-        ['th-pb', 82], ['th-rt', 83], ['th-ys', 84], ['th-ms', 85],
-        ['th-un', 86], ['th-nb', 87]
-    ];
+        // Create the responsive Highcharts map
+        Highcharts.mapChart('container', {
+            chart: {
+                map: topology,
+                // Responsive options:
+				height: 900, // Adjust the height as desired (e.g., 600, 800)
+                responsive: {
+                    rules: [{
+                        condition: {
+                            maxWidth: 1000
+                        },
+                        chartOptions: {
+                            title: {
+                                style: {
+                                    display: 'none' // Hide title on small screens
+                                }
+                            },
+                            legend: {
+                                layout: 'horizontal',
+                                align: 'center',
+                                verticalAlign: 'bottom' // Move legend below chart on small screens
+                            }
+                        }
+                    }]
+                }
+            },
 
-    // Create the chart
-    Highcharts.mapChart('container', {
-        chart: {
-            map: topology
-        },
-
-		
-        title: {
-            text: ' '
-        },
-
-        /*
-		subtitle: {
-            text: 'Source map: <a href="http://code.highcharts.com/mapdata/countries/th/th-all.topo.json">Thailand</a>'
-        },
-		/*
-        mapNavigation: {
+            title: {
+                text: 'เตียงจิตเวช' // Optional title
+            },
+ 
+            mapNavigation: {
             enabled: true,
             buttonOptions: {
                 verticalAlign: 'bottom'
             }
         },
-		*/ 
-        colorAxis: {
-            min: 0
-        },
 
-        series: [{
-            data: data,
-			/*
-            name: 'Random data',
-			
-            states: {
-                hover: {
-                    color: '#BADA55'
-                }
+            colorAxis: {
+				min: 0,
+            //type: 'logarithmic',
+           // minColor: '#cd0808',
+            //maxColor: '#056934',
+            //stops: [
+            //    [0, '#cd0808'],
+            //    [0.67, '#fbe036'],
+            //    [1, '#056934']
+            //]
             },
-			
-            dataLabels: {
-                enabled: true,
-                format: '{point.name}'
-            }
-			*/ 
-        }]
-    });
+            
 
-})();
+            series: [{
+                data: data,
+                // Optional series options (uncomment if desired):
+                 name: 'จำนวนต่อแสนประชากร',
+                // states: {
+                //     hover: {
+                //         color: '#BADA55'
+                //     }
+                // },
+                // dataLabels: {
+                //     enabled: true,
+                //     format: '{point.name}'
+                // }
+                dataLabels: {
+                    enabled: true,
+                    color: '#000000',
+                      format: '{point.name}'
+                    // Only show dataLabels for areas with high label rank
+                   // format: '{#if (lt point.properties.labelrank 5)}' +
+                    //    '{point.properties.iso-a2}' +
+                   //     '{/if}'
+                },
+            }]
+        });
+    })();
 
 
 </script>
@@ -2208,12 +2546,25 @@ $obj8 = mysqli_query($con, $sql8);
   <!-- /.control-sidebar -->
 </div>
 <!-- ./wrapper -->
-
 <!-- jQuery -->
 <script src="plugins/jquery/jquery.min.js"></script>
 <!-- Bootstrap 4 -->
 <script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 <!-- AdminLTE App -->
 <script src="dist/js/adminlte.min.js"></script>
+
+<script>
+        // JavaScript สำหรับปุ่มรีเซ็ต
+        document.getElementById('resetButton').addEventListener('click', function() {
+            // รีเซ็ตฟิลด์ในฟอร์ม
+            //document.getElementById('myForm').reset();
+
+           // window.location.reload();
+           window.location.href = 'dashboard01.php'; 
+        });
+
+      
+</script>
+
 </body>
 </html>

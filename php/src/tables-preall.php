@@ -107,7 +107,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 			<form class="form-valide" action="tables-preall.php" method="post" id="myform1" name="foml">  
             <div class="row">
 			<?php if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){?>
-              <div class="col-md-2">   <?php /* ?>
+              <div class="col-md-3">   <?php /* ?>
                <div class="form-group">
                   <label>หน่วยงานใน/นอกสังกัด</label>
                   <select class="form-control select2"  style="width: 100%;">
@@ -188,17 +188,16 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 				<?php */ ?>
 
 <?php   if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){ ?>
-              <div class="form-group" id="labelservice" >
-              <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
-                    <option value="ทั้งหมด" >ทั้งหมด</option>
 
-                    <?php $sql10 = "SELECT HOS_TYPE 
+               <div class="form-group">
+                  <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
+                  <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction15()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?php $sql10 = "SELECT type_Affiliation 
                                   FROM hospitalnew
                                   WHERE CODE_PROVINCE = '".$codeprovince."'
-                                  AND HOS_TYPE <> 'คลินิกเอกชน'
-                                  AND HOS_TYPE <> ''
-                                  Group by HOS_TYPE;"; 
+                                  GROUP BY hospitalnew.type_Affiliation 
+                                  ORDER BY hospitalnew.type_Affiliation DESC;"; 
 
                                   $obj10 = mysqli_query($con, $sql10);
        
@@ -210,17 +209,67 @@ $rowptype   = mysqli_fetch_array($objptype);*/
                     <?PHP 
                       
                      ?>
-                    <option value="<?php echo $row10['HOS_TYPE']; ?> "><?php echo $row10['HOS_TYPE']; ?> </option>
+                    <option value="<?php echo $row10['type_Affiliation']; ?> "><?php echo $row10['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+					<?PHP 
+                       if($_POST['type_Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['type_Affiliation']; ?> "><?php echo $_POST['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                  </select>
+
+                </div>
+        <?php }else{ ?>
+          <div class="col-md-3">
+          <div class="form-group">
+                  <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
+                  <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction15()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['type_Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['type_Affiliation']; ?> "><?php echo $_POST['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+                </div>
+             <!-- /.form-group -->  
+       <?php } ?>
+       <script>
+                   function myFunction15() {
+                      const selectedValue = $('#type_Affiliation').val();
+                      const codeprovince 		= <?php echo $NO_PROVINCE;?>;
+                          //alert(selectedValue);
+                          $.ajax({
+                            url: 'get_affiliation2.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { typeAffiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#Affiliation').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+            </div>
+            <!-- /.col -->
+            <div class="col-md-2">
+			  <div class="form-group" id="labelservice" >
+              <label>สังกัด</label>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['Affiliation']; ?> "><?php echo $_POST['Affiliation']; ?> </option>
                     <?php } ?>
                     <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
                   </select>
              </div>
              <!-- /.form-group -->  
-       <?php } ?>
              <script>
                    function myFunction5() {
                       const selectedValue = $('#Affiliation').val();
-                      const codeprovince 		= <?PHP echo $NO_PROVINCE;?>;
+                      const codeprovince 		= <?php echo $NO_PROVINCE;?>;
                           //alert(selectedValue);
                           $.ajax({
                             url: 'get_servicetype.php', // ไฟล์ PHP ที่จะประมวลผล
@@ -233,9 +282,9 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 			    	</script> 
             </div>
             <!-- /.col -->
-            <div class="col-md-2">
+            <div class="col-md-3">
 <div class="form-group" id="labelservice">
-                  <label>Service Plan Level</label>
+                  <label>ระดับหน่วยงาน/ประเภทหน่วยบริการ</label>
                   <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction10()">
                      <option value="ทั้งหมด">ทั้งหมด</option>
                      <?PHP 
@@ -255,12 +304,14 @@ $rowptype   = mysqli_fetch_array($objptype);*/
                 <!-- /.form-group -->  
                 <script>
                    function myFunction10() {
-                      const selectedValue = $('#TYPE_SERVICE').val();
-                      const codeprovince 		= <?PHP echo $NO_PROVINCE;?>;
-                          //alert(selectedValue);
+					const selectedValue = $('#TYPE_SERVICE').val();
+                      const Affiliation 		= document.getElementById("Affiliation").value;
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                      const HosMOHP 		    = <?PHP echo $HosMOHP;?>;
+                          //alert(HosMOHP);
                           $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue , codeprovince: codeprovince},
+                            url: 'get_service3.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue , codeprovince: codeprovince, Affiliation: Affiliation, HosMOHP: HosMOHP},
                             success: function(data) {
                               $('#CODE_HOS').html(data);
                             }
@@ -275,7 +326,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 			  <?php if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){?>  
            <div class="col-md-6">
             <div class="form-group">
-               <label>โรงพยาบาล</label>
+			<label>หน่วยบริการ/หน่วยงาน</label>
                <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
                  <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
        <?PHP 
@@ -311,7 +362,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 
         <div class="col-md-6">
             <div class="form-group">
-               <label>โรงพยาบาล</label>
+			<label>หน่วยบริการ/หน่วยงาน</label>
                <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
                  <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
       
@@ -328,7 +379,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 		
 			<div class="card-footer">
 				  <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
-				   <button type="reset" class="btn btn-default"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
+				   <button type="reset" class="btn btn-default" id="resetButton"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
 			  	  <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
 			</div>  
 		</form>
@@ -442,7 +493,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnelID DESC; ";
 		}else{
 
-            $sqlpersonnel = "SELECT *, count(*) AS 'tcount' 
+            $sqlpersonnel = "SELECT *
 								  FROM userhospital 
 								  INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
 								  INNER JOIN personnel ON personnel.HospitalID = hospitalnew.CODE5
@@ -459,6 +510,30 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 			if(isset($_POST["CODE_PROVINCE"])){	
 				if($_POST["CODE_PROVINCE"]<>'ทั้งหมด'){					  
 					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE5 = '".$_POST['CODE_PROVINCE']."'" ;
+				}
+			}
+
+			if(isset($_POST["CODE_HOS"])){	
+				if($_POST["CODE_HOS"]<>'ทั้งหมด'){					  
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;
+				}
+			}
+
+			if(isset($_POST["type_Affiliation"])){	
+				if(trim($_POST["type_Affiliation"]) <>'ทั้งหมด'){					  
+				$sqlpersonnel = $sqlpersonnel."AND hospitalnew.type_Affiliation LIKE ('".trim($_POST['type_Affiliation'])."%')" ;
+				}
+			}
+  
+			if(isset($_POST["TYPE_SERVICE"])){	
+				if(trim($_POST["TYPE_SERVICE"]) <>'ทั้งหมด'){					  
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.HOS_TYPE LIKE ('".$_POST['TYPE_SERVICE']."%')" ;
+				}
+			}
+
+			if(isset($_POST["CODE_PROVINCE"])){	
+				if($_POST["CODE_PROVINCE"]<>'ทั้งหมด'){					  
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
 				}
 			}
 
@@ -1414,5 +1489,19 @@ $rowptype   = mysqli_fetch_array($objptype);*/
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
 </script>
+
+<script>
+        // JavaScript สำหรับปุ่มรีเซ็ต
+        document.getElementById('resetButton').addEventListener('click', function() {
+            // รีเซ็ตฟิลด์ในฟอร์ม
+            //document.getElementById('myForm').reset();
+
+           // window.location.reload();
+           window.location.href = 'tables-preall.php'; 
+        });
+
+      
+</script>
+
 </body>
 </html>

@@ -49,8 +49,6 @@ LEFT JOIN (
     personnel
   WHERE
     Mcatt1 = 'ใช่'
-  AND
-  	MWac1_9 <> 'ไม่ผ่านการอบรม'
 ) pl ON pt.Ptype = pl.positiontypeID
 JOIN hospitalnew hn on hn.CODE5 = pl.HospitalID
 WHERE 1 
@@ -68,11 +66,18 @@ if (isset($_POST['Year'])) {
 	$sql1 = $sql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$sql1 = $sql1."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$sql1 = $sql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$sql1 = $sql1."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -158,11 +163,18 @@ if (isset($_POST['Year'])) {
 	$msql1 = $msql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$msql1 = $msql1."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$msql1 = $msql1."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -197,17 +209,34 @@ while($mrow1 = mysqli_fetch_array($mobj1))
 	//['th-ct', 10],
 }
 
-$msql2 = "SELECT m.CODE_map02, m.CODE_PROVINCETH ,count(*) as total
-FROM  CMSreports c 
-JOIN hospitalnew h ON c.amphur_code = h.NO_DISTRICT 
-JOIN mapdetail m  ON h.CODE_PROVINCE = m.CODE_PROVINCE 
-
+$msql2 = "SELECT h.NO_PROVINCE, 
+     m.CODE_map02, 
+     m.CODE_PROVINCETH,
+    COALESCE(report_counts.total_reports, 0) AS total
+From hospitalnew h 
+JOIN (
+    SELECT 
+        COUNT(*) AS total_reports,
+        LEFT(c.amphur_code, 2) AS amphur_prefix, 
+		c.amphur_code  
+    FROM 
+        CMSreports c
+	WHERE 1 
+	";
+	 if (isset($_POST['Year'])) {
+		$Year = $_POST['Year']-543;
+		$msql2 = $msql2."AND YEAR(c.event_date) = '".$Year."'" ;
+	  }else{
+		$msql2 = $msql2."AND YEAR(c.event_date) = '".(date("Y"))."'" ;
+	  }
+	$msql2 = $msql2."
+    GROUP BY amphur_prefix
+	HAVING  amphur_prefix <> ''
+) report_counts ON h.NO_PROVINCE = report_counts.amphur_prefix
+JOIN mapdetail m ON h.CODE_PROVINCE = m.CODE_PROVINCE
+WHERE 1 
 ";
-/*if (isset($_POST['Year'])) {
-	$Year = $_POST['Year']-543;
-	$msql2 = $msql2."AND YEAR(p.personnelDate) = '".$Year."'" ;
-  }
-	*/
+
 
   if (isset($_POST['CODE_HMOO'])) {
 	if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -215,11 +244,18 @@ JOIN mapdetail m  ON h.CODE_PROVINCE = m.CODE_PROVINCE
 	$msql2 = $msql2."AND h.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$msql2 = $msql2."AND h.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$msql2 = $msql2."AND h.TYPE_SERVICE = '".$mySelect."'" ;
+	$msql2 = $msql2."AND h.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -237,7 +273,7 @@ JOIN mapdetail m  ON h.CODE_PROVINCE = m.CODE_PROVINCE
 	}
   } 
 	
-  $msql2 = $msql2."
+$msql2 = $msql2."
 GROUP BY
  h.NO_PROVINCE ;
 ";
@@ -253,7 +289,7 @@ while($mrow2 = mysqli_fetch_array($mobj2))
 		//$datamap2 = $datamap2."['".$mrow2['CODE_map02']."',".$mrow2['total']."],";
 		$datamap2 = $datamap2."{'hc-key':'".$mrow2['CODE_map02']."',value:".$mrow2['total'].",name:'".$mrow2['CODE_PROVINCETH']."'},";
 	}
-	//['th-ct', 10],
+
 }
 
 //echo $datamap2 ;
@@ -266,8 +302,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
   ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -280,12 +314,19 @@ if (isset($_POST['Year'])) {
 	$MOOsql2 = $MOOsql2."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$MOOsql2 = $MOOsql2."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$MOOsql2 = $MOOsql2."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$MOOsql2 = $MOOsql2."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -370,8 +411,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
  ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -384,11 +423,18 @@ if (isset($_POST['Year'])) {
 	$sql3 = $sql3."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$sql3 = $sql3."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$sql3 = $sql3."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$sql3 = $sql3."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -425,8 +471,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -439,11 +483,18 @@ if (isset($_POST['Year'])) {
 	$MOOsql1 = $MOOsql1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$MOOsql1 = $MOOsql1."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$MOOsql1 = $MOOsql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$MOOsql1 = $MOOsql1."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -612,9 +663,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
  	 p.Mcatt1 = 'ใช่'
-AND
-  	p.MWac1_9 <> 'ไม่ผ่านการอบรม'
-
 ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -627,11 +675,18 @@ if (isset($_POST['Year'])) {
 	$MOOsql1p = $MOOsql1p."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$MOOsql1p = $MOOsql1p."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$MOOsql1p = $MOOsql1p."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$MOOsql1p = $MOOsql1p."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -699,8 +754,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
  ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -713,11 +766,18 @@ if (isset($_POST['Year'])) {
 	$sql3p = $sql3p."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$sql3p = $sql3p."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$sql3p = $sql3p."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$sql3p = $sql3p."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -760,8 +820,6 @@ FROM
 JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่'
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
@@ -774,11 +832,18 @@ if (isset($_POST['Year'])) {
 	$sqlall = $sqlall."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$sqlall = $sqlall."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$sqlall = $sqlall."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$sqlall = $sqlall."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -815,15 +880,24 @@ FROM
     hospitalnew hn
 LEFT JOIN (
     SELECT 
-        hn.CODE_PROVINCE,
-        COUNT(c.amphur_code) AS total_reports
+        COUNT(c.amphur_code) AS total_reports,
+        LEFT(c.amphur_code, 2) AS amphur_prefix, 
+		c.amphur_code  
     FROM 
         CMSreports c
-    JOIN 
-        hospitalnew hn ON c.amphur_code = hn.NO_DISTRICT
-    GROUP BY 
-        hn.CODE_PROVINCE
-) report_counts ON hn.CODE_PROVINCE = report_counts.CODE_PROVINCE
+	WHERE 1 
+		"
+		;
+	 if (isset($_POST['Year'])) {
+		$Year = $_POST['Year']-543;
+		$sqlall2 = $sqlall2."AND YEAR(c.event_date) = '".$Year."'" ;
+	  }else{
+		$sqlall2 = $sqlall2."AND YEAR(c.event_date) = '".(date("Y"))."'" ;
+	  }
+	$sqlall2 = $sqlall2."
+    GROUP BY amphur_prefix
+	HAVING  amphur_prefix <> ''
+) report_counts ON hn.NO_PROVINCE = report_counts.amphur_prefix
 LEFT JOIN (
     SELECT 
         hn.CODE_PROVINCE,
@@ -853,11 +927,18 @@ if (isset($_POST['Year'])) {
 	$sqlall2 = $sqlall2."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
 	}
   }
+
+  if (isset($_POST['type_Affiliation'])) {
+	if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+	$type_Affiliation = trim($_POST['type_Affiliation']);
+	$sqlall2 = $sqlall2."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+	}
+  }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
 	$mySelect = trim($_POST['TYPE_SERVICE']);
-	$sqlall2 = $sqlall2."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+	$sqlall2 = $sqlall2."AND hn.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
   
@@ -1029,7 +1110,7 @@ $objall2_1 = mysqli_query($con, $sqlall2_1);
                     <option value="2565">2565</option>
                     <option value="2564">2564</option>
                     <option value="2563">2563</option>-->
-                    <?PHP for($i=0; $i<= (5); $i++) {?>
+                    <?PHP for($i=0; $i < (5); $i++) {?>
                     <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
                     <?PHP }?>
                   </select>
@@ -1077,7 +1158,7 @@ $objall2_1 = mysqli_query($con, $sqlall2_1);
               
 				<!-- /.form-group -->
          
-               
+        
               </div>
               <!-- /.col -->
               <div class="col-md-2">
@@ -1112,12 +1193,12 @@ ORDER BY NO_PROVINCE ASC;";
                 <script>
                    function myFunction4() {
                       const selectedValue = $('#CODE_PROVINCE').val();
-                         // alert(selectedValue);
+                          //alert(selectedValue);
                           $.ajax({
-                            url: 'get_affiliation.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { CODE_PROVINCE: selectedValue },
+                            url: 'get_affiliationtype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { codeprovince: selectedValue },
                             success: function(data) {
-                              $('#Affiliation').html(data);
+                              $('#type_Affiliation').html(data);
                             }
                           });
                     }
@@ -1125,10 +1206,41 @@ ORDER BY NO_PROVINCE ASC;";
               </div>
               <!-- /.col -->	
 
+              <div class="col-md-3">
+               <div class="form-group">
+                  <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
+                  <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['type_Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['type_Affiliation']; ?> "><?php echo $_POST['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+                </div>
+
+                <script>
+                   function myFunction5() {
+                      const selectedValue = $('#type_Affiliation').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_affiliation2.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { typeAffiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#Affiliation').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->
+              
               <div class="col-md-2">
                <div class="form-group">
-                  <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                  <label>สังกัด</label>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction15()" >
                     <option value="ทั้งหมด" >ทั้งหมด</option>
                     <?PHP 
                        if($_POST['Affiliation'] <> ''){
@@ -1140,7 +1252,7 @@ ORDER BY NO_PROVINCE ASC;";
                 </div>
 
                 <script>
-                   function myFunction5() {
+                   function myFunction15() {
                       const selectedValue = $('#Affiliation').val();
                       const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
                          // alert(selectedValue);
@@ -1155,9 +1267,9 @@ ORDER BY NO_PROVINCE ASC;";
 			    	</script> 
               </div>
               <!-- /.col -->
-
+              <div class="col-md-3">
               <div class="form-group" id="labelservice">
-                  <label>Service Plan Level</label>
+                  <label>ระดับหน่วยงาน/ประเภทหน่วยบริการ</label>
                   <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
                      <option value="ทั้งหมด">ทั้งหมด</option>
                      <?PHP 
@@ -1177,23 +1289,25 @@ ORDER BY NO_PROVINCE ASC;";
                 <!-- /.form-group -->  
                 <script>
                    function myFunction2() {
-                      const selectedValue = $('#TYPE_SERVICE').val();
+					const selectedValue = $('#TYPE_SERVICE').val();
+                      const Affiliation 		= document.getElementById("Affiliation").value;
                       const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                      const HostHMOO 		    = document.getElementById("CODE_HMOO").value;
                           //alert(selectedValue);
                           $.ajax({
                             url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue , codeprovince: codeprovince},
+                            data: { service_id: selectedValue , codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },
                             success: function(data) {
                               $('#CODE_HOS').html(data);
                             }
                           });
                     }
 			    	</script> 
+</div>
 
-
-              <div class="col-md-2">
+              <div class="col-md-4">
                <div class="form-group">
-                  <label>โรงพยาบาล</label>
+                  <label>หน่วยบริการ/หน่วยงาน</label>
                   <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
                     <option value="ทั้งหมด" >ทั้งหมด</option>
 					<?PHP /*
@@ -1219,62 +1333,14 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                   </select>
                 </div>
               </div>
-              <!-- /.col -->			
-
-
-              
-
-<!--<div class="col-md-2">
-               <div class="form-group">
-                  <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
-                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
-                    <option value="เขตพื้นที่">เขตพื้นที่</option>
-                    <option value="ServicePlan">Service Plan</option>
-                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
-                  </select>
-				   
-				<script>
-					function myFunction() {
-						let elementarea 		= document.getElementById("area");
-						let elementlabelarea 	= document.getElementById("labelarea");
-						let elementservice 		= document.getElementById("service");
-						let elementlabelservice = document.getElementById("labelservice");
-						
-						selectElement = document.querySelector('#mySelect');	
-        				output = selectElement.value;
-						
-						if(output === "ServicePlan"){
-							//alert(output);
-							elementservice.removeAttribute("hidden");
-							elementlabelservice.removeAttribute("hidden");
-							
-							elementarea.setAttribute("hidden", "hidden");
-							elementlabelarea.setAttribute("hidden", "hidden");
-							
-						}else{
-							elementarea.removeAttribute("hidden");
-							elementlabelarea.removeAttribute("hidden");
-							
-							elementservice.setAttribute("hidden", "hidden");
-							elementlabelservice.setAttribute("hidden", "hidden");
-						
-							//alert("tong");
-						}
-						
-					}
-				</script> 
-				   
-                </div>
-              </div>-->
-              <!-- /.col -->	
+              <!-- /.col -->		
 			   		
             </div>
             <!-- /.row -->
 		
 			<div class="card-footer">
 				  <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
-				   <button type="reset" class="btn btn-default"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
+				   <button type="reset" class="btn btn-default" id="resetButton"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
 			  	  <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
 			</div>  
 		</form>
@@ -2568,16 +2634,16 @@ downloadButton.addEventListener('click', function() {
                 dataClasses: [{           
                     from: 10,
                     color: '#318fb5',
-                    name: '< 10 คน'
+                    name: '> 10 คน'
 				},{
 					from: 10,
                     to: 5,
                     color: '#98d6fc',
-                    name: '10-5 คน'
+                    name: '5 - 10 คน'
                 },{
                     to: 5,
                     color: '#d4edf4',
-                    name: '> 5 คน'
+                    name: '< 5 คน'
                 }, {
                     to: 0,
                     color: '#f8f8f8',
@@ -2710,16 +2776,16 @@ downloadButton.addEventListener('click', function() {
                 dataClasses: [{           
                     from: 700,
                     color: '#318fb5',
-                    name: '< 700 คน'
+                    name: '> 699 คน'
 				},{
 					from: 699,
                     to: 200,
                     color: '#98d6fc',
-                    name: '200-699 คน'
+                    name: '299 - 699 คน'
                 },{
                     to: 299,
                     color: '#d4edf4',
-                    name: '> 299 คน'
+                    name: '< 299 คน'
                 }, {
                     to: 0,
                     color: '#f8f8f8',
@@ -2823,6 +2889,19 @@ downloadButton.addEventListener('click', function() {
 	]
     }).buttons().container().appendTo('#example2_wrapper .col-md-6:eq(0)');
   });
+</script>
+
+<script>
+        // JavaScript สำหรับปุ่มรีเซ็ต
+        document.getElementById('resetButton').addEventListener('click', function() {
+            // รีเซ็ตฟิลด์ในฟอร์ม
+            //document.getElementById('myForm').reset();
+
+           // window.location.reload();
+           window.location.href = 'dashboard07.php'; 
+        });
+
+      
 </script>
 
 </body>

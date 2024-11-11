@@ -110,6 +110,7 @@ $sql = "INSERT INTO surveyapp(
 	else{
 		echo "<script type='text/javascript'>";
 		echo "alert('ไม่สามารถทำแบบประเมินไ้ด้ กรุณาติดต่อเจ้าหน้าที่');";
+		echo "window.location = 'detail-all.php'; ";
 		echo "</script>";
 	}
 	

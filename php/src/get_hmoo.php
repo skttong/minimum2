@@ -16,7 +16,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 
 // Query เพื่อดึงข้อมูลอำเภอที่เกี่ยวข้อง
 $sql = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
-where HOS_TYPE <> 'คลินิกเอกชน'
+where 1
+AND CODE_PROVINCE <> ''
 GROUP BY CODE_PROVINCE 
 ORDER BY NO_PROVINCE ASC;";
 
@@ -36,7 +37,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 // Query เพื่อดึงข้อมูลอำเภอที่เกี่ยวข้อง
 $sql = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
 WHERE CODE_HMOO like '".$moo_id."'
-AND HOS_TYPE <> 'คลินิกเอกชน'
+AND CODE_PROVINCE <> ''
 GROUP BY CODE_PROVINCE 
 ORDER BY NO_PROVINCE ASC;";
 

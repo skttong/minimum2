@@ -5,8 +5,7 @@ include('connect/conn.php');
 $service_id = $_GET['service_id'];
 $codeprovince = $_GET['codeprovince'];
 $Affiliation = $_GET['Affiliation'];
-$CODE_HMOO = $_GET['CODE_HMOO'];
-
+$HosMOHP = $_GET['HosMOHP'];
 
 // Query เพื่อดึงข้อมูลอำเภอที่เกี่ยวข้อง
 
@@ -26,46 +25,24 @@ ORDER BY hospitalnew.TYPE_SERVICE DESC";
 $result = mysqli_query($con, $sql);
 */
 if($codeprovince == 'ทั้งหมด'){
-  if($CODE_HMOO == 'ทั้งหมด'){
   $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
-  WHERE hospitalnew.Affiliation  LIKE '%$Affiliation%'
+  WHERE hospitalnew.HOS_TYPE LIKE '%$service_id%'
+  AND hospitalnew.Affiliation  LIKE '%$Affiliation%'
+  AND hospitalnew.CODE_HMOO = '$HosMOHP'
   ORDER BY hospitalnew.CODE5 ASC ;";
   $result = mysqli_query($con, $sql);
-  }elseif($CODE_HMOO <> ''){
-    if($service_id <> 'ทั้งหมด'){
-    $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
-    WHERE hospitalnew.Affiliation  LIKE '%$Affiliation%'
-    AND hospitalnew.HOS_TYPE LIKE '%$service_id%'
-    AND hospitalnew.CODE_HMOO LIKE '%$CODE_HMOO%'
-    ORDER BY hospitalnew.CODE5 ASC ;";
-    $result = mysqli_query($con, $sql);
-  }else{
-    $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
-  WHERE hospitalnew.Affiliation  LIKE '%$Affiliation%'
-  AND hospitalnew.CODE_HMOO LIKE '%$CODE_HMOO%'
-  ORDER BY hospitalnew.CODE5 ASC ;";
-  $result = mysqli_query($con, $sql);
-  }
-}
-
-}elseif($CODE_HMOO <> ''){
-    $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
-    WHERE hospitalnew.Affiliation  LIKE '%$Affiliation%'
-    AND hospitalnew.CODE_HMOO LIKE '%$CODE_HMOO%'
-    ORDER BY hospitalnew.CODE5 ASC ;";
-    $result = mysqli_query($con, $sql);
 
 }else{  
   $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
   WHERE hospitalnew.NO_PROVINCE =  '".$codeprovince."'
   AND hospitalnew.HOS_TYPE LIKE '%$service_id%'
   AND hospitalnew.Affiliation  LIKE '%$Affiliation%'
+  AND hospitalnew.CODE_HMOO = '$HosMOHP'
   ORDER BY hospitalnew.CODE5 ASC ;";
   $result = mysqli_query($con, $sql);
 }
 
 $html = '<option value="ทั้งหมด">ทั้งหมด</option>';
-//$html = '<option value="ทั้งหมด">'. $sql.'</option>';
 while ($row = mysqli_fetch_assoc($result)) {
   $html .= '<option value="' . $row['CODE5'] . '">' . $row['HOS_NAME'] . '</option>';
 }

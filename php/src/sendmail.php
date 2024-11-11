@@ -22,7 +22,7 @@ try {
 
     // ผู้ส่งและผู้รับ
     $mail->setFrom($_POST['email'], $_POST['names']); // ตั้งค่าผู้ส่ง
-    $mail->addAddress('sommanuttong@hotmail.com', 'Recipient Name'); // ตั้งค่าผู้รับ
+    $mail->addAddress('Psychi.minimum@outlook.co.th', 'Recipient Name'); // ตั้งค่าผู้รับ
 
      // ตั้งค่าการเข้ารหัสเป็น UTF-8 เพื่อรองรับภาษาไทย
      $mail->CharSet = 'UTF-8';
@@ -30,8 +30,8 @@ try {
     // ตั้งหัวข้อและเนื้อหาอีเมล
     $mail->isHTML(true);                                 // กำหนดว่าอีเมลเป็นแบบ HTML
     $mail->Subject = $_POST['title'];
-    $mail->Body    = $_POST['remark'];
-
+    $mail->Body    = $_POST['remark']."\n ชื่อ :".$_POST['names']."\n เบอร์โทร :".$_POST['Tel'];
+ 
     // ส่งอีเมล
 $mail->send();
     echo "<script type='text/javascript'>";

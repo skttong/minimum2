@@ -446,13 +446,23 @@ ORDER BY NO_PROVINCE ASC;";
                                
                 <select name="usertype" id="usertype" class="form-control select2" style="width: 100%;" required>
                   <?php if($row['TypeUser'] <> 'Admin'){ ?>
-                    <option value="User_h"> ผู้ใช้งาน </option>
+                    <option selected="selected" value="User_h"> ผู้ใช้งาน </option>
+                 
                   <?php }else{ ?>  
                     <option value="Admin"> ผู้ดูแลระบบ </option>
+                 
                   <?php } ?>  
                   <option value="User_h"> ผู้ใช้งาน </option>
                   <option value="Admin"> ผู้ดูแลระบบ </option>
                 </select>
+
+                <?php if($row['TypeUser'] <> 'Admin'){ ?>
+      
+                    <input type="hidden" name="usertype" value="User_h"> 
+                  <?php }else{ ?>  
+
+                    <input type="hidden" name="usertype" value="Admin"> 
+                  <?php } ?>  
 				<div class="invalid-feedback" style="font-size: 100%">
 					โปรดเลือกคำนำหน้าชื่อ
 			    </div>

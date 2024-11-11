@@ -36,9 +36,13 @@ $data = json_decode($response, true);
 if (isset($data['data'])) {
 
     
-  $sql = "DELETE FROM CMSreports ";
+  $sql = "DELETE FROM CMSreports ;";
+ 
 
 	$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
+
+  $sql2 = "ALTER TABLE CMSreports AUTO_INCREMENT = 1;";
+  $result2 = mysqli_query($con, $sql2) or die ("Error in query: $sql2 " . mysqli_error());
 
   $stmt = mysqli_prepare($con, "INSERT INTO CMSreports (amphur_code, event_date, patient_id) VALUES (?, ?, ?)");
 

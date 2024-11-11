@@ -20,7 +20,7 @@ try {
 
     // ผู้ส่งและผู้รับ
     $mail->setFrom('sommanuttong@gmail.com', 'Your Name'); // ตั้งค่าผู้ส่ง
-    $mail->addAddress('sommanuttong@hotmail.com', 'Recipient Name'); // ตั้งค่าผู้รับ
+    $mail->addAddress('Psychi.minimum@outlook.co.th', 'Recipient Name'); // ตั้งค่าผู้รับ
 
      // ตั้งค่าการเข้ารหัสเป็น UTF-8 เพื่อรองรับภาษาไทย
      $mail->CharSet = 'UTF-8';
