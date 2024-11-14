@@ -156,7 +156,9 @@ $rowptype   = mysqli_fetch_array($objptype);*/
               <div class="card-body">
 				<?php   
 		if (isset($_POST["positiontypeID"])) {
-				           $sqlpersonnel = "SELECT 
+			if($_SESSION["TypeUser"] == "Admin"){
+
+				 $sqlpersonnel = "SELECT 
 											personnel.personnelID, 
 											personnel.positiontypeID,
 											personnel.prename, 
@@ -185,9 +187,42 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 										AND personnel.positiontypeID = '$positiontypeID'
 										ORDER BY 
 											personnelID DESC; ";
+
+			}else{
+
+				     $sqlpersonnel = "SELECT 
+											personnel.personnelID, 
+											personnel.positiontypeID,
+											personnel.prename, 
+											personnel.firstname, 
+											personnel.lastname,  
+											personnel.age,
+											personnel.r1 as 'positionAllName', 
+											personnel.r2 as 'fixpositionAllName', 
+											hospitalnew.HOS_NAME,
+											personnel.positionrole, 
+											personnel.congrat, 
+											personnel.training, 
+											personnel.cogratyear, 
+											personnel.statuscong,
+											personnel.regislaw,
+                                            personneltype.Ptypename,
+											personnel.positiontypeID,
+											personnel.Mcatt1
+										FROM 
+											personnel 
+                                        JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
+                                        JOIN personneltype ON personneltype.PtypeID = personnel.positiontypeID
+										WHERE 
+											hospitalnew.CODE5 = '$HospitalID' 
+										AND setdel = '1'
+										AND personnel.positiontypeID = '$positiontypeID'
+										ORDER BY 
+											personnelID DESC; ";
+			}
 		}else{
 
-		    $sqlpersonnel = "SELECT *
+		   echo $sqlpersonnel = "SELECT *
 		FROM 
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 

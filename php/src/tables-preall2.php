@@ -290,7 +290,7 @@ ORDER BY NO_PROVINCE ASC;";
                       const Affiliation 		= document.getElementById("Affiliation").value;
                       const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
                       const HostHMOO 		    = document.getElementById("CODE_HMOO").value;
-                          //alert(selectedValue);
+                         // alert(selectedValue);
                           $.ajax({
                             url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
                             data: { service_id: selectedValue , codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },

@@ -311,14 +311,20 @@ while($mrow1 = mysqli_fetch_array($mobj1))
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
                   <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
-                   <!-- <option selected="selected" value="2567" >2567</option>
-                    <option value="2566">2566</option>
-                    <option value="2565">2565</option>
-                    <option value="2564">2564</option>
-                    <option value="2563">2563</option>-->
-                    <?PHP for($i=0; $i < (5); $i++) {?>
+                   <?PHP for($i=0; $i < (5); $i++) {
+                      
+                      if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+
+                      ?>
+                      
+                       <option <?php if ($_POST['Year'] == ((date("Y")+543+1))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543+1))-$i; ?>"><?PHP echo ((date("Y")+543+1))-$i ;?></option>
+                      <?php  
+                      }else{
+                        
+                      ?>
+
                     <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
-                    <?PHP }?>
+                    <?PHP } }?>
                   </select>
                 </div>
               </div>

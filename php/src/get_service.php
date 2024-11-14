@@ -29,6 +29,7 @@ if($codeprovince == 'ทั้งหมด'){
   if($CODE_HMOO == 'ทั้งหมด'){
   $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
   WHERE hospitalnew.Affiliation  LIKE '%$Affiliation%'
+  AND hospitalnew.HOS_TYPE LIKE '%$service_id%'
   ORDER BY hospitalnew.CODE5 ASC ;";
   $result = mysqli_query($con, $sql);
   }elseif($CODE_HMOO <> ''){
@@ -42,6 +43,7 @@ if($codeprovince == 'ทั้งหมด'){
   }else{
     $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
   WHERE hospitalnew.Affiliation  LIKE '%$Affiliation%'
+  AND hospitalnew.HOS_TYPE LIKE '%$service_id%'
   AND hospitalnew.CODE_HMOO LIKE '%$CODE_HMOO%'
   ORDER BY hospitalnew.CODE5 ASC ;";
   $result = mysqli_query($con, $sql);
@@ -52,6 +54,7 @@ if($codeprovince == 'ทั้งหมด'){
     $sql = "SELECT CODE5, HOS_NAME  FROM hospitalnew 
     WHERE hospitalnew.Affiliation  LIKE '%$Affiliation%'
     AND hospitalnew.CODE_HMOO LIKE '%$CODE_HMOO%'
+    AND hospitalnew.HOS_TYPE LIKE '%$service_id%'
     ORDER BY hospitalnew.CODE5 ASC ;";
     $result = mysqli_query($con, $sql);
 

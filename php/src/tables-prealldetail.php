@@ -99,7 +99,11 @@ $rowptype   = mysqli_fetch_array($objptype);*/
             <div class="card">
              <div class="card-header">
                 <!--<h3 class="card-title">ข้อมูลจำนวนบุคลากรสุขภาพจิตและจิตเวช</h3>-->
-				<form id="myForm" method="post" action="tables-prealldetail2.php">
+				<?php if($_SESSION["TypeUser"] == "Admin"){ ?>
+					<form id="myForm" method="post" action="tables-prealldetail.php?code=<?php echo $codehos5;?>">
+				<?php }else{ ?>
+					<form id="myForm" method="post" action="tables-prealldetail.php">
+				<?php } ?>	
 				<?php /*if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){ ?>
 					<a href="detail-1.php" class="btn btn-default" onclick="showAlert()" > เพิ่มข้อมูลในกรณีที่มีบุคลากรด้าน MCATT ที่สสจ. เพิ่มเติม &nbsp;<i class="fa fas fa-del"></i></a>
 				<?php }else if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){ ?>
@@ -155,7 +159,39 @@ $rowptype   = mysqli_fetch_array($objptype);*/
               <div class="card-body">
 				<?php   
 		if (isset($_POST["positiontypeID"])) {
-				           $sqlpersonnel = "SELECT 
+			if($_SESSION["TypeUser"] == "Admin"){
+				    $sqlpersonnel = "SELECT 
+											personnel.personnelID, 
+											personnel.positiontypeID,
+											personnel.prename, 
+											personnel.firstname, 
+											personnel.lastname,  
+											personnel.age,
+											personnel.r1 as 'positionAllName', 
+											personnel.r2 as 'fixpositionAllName', 
+											hospitalnew.HOS_NAME,
+											personnel.positionrole, 
+											personnel.congrat, 
+											personnel.training, 
+											personnel.cogratyear, 
+											personnel.statuscong,
+											personnel.regislaw,
+                                            personneltype.Ptypename,
+											personnel.positiontypeID,
+											personnel.Mcatt1
+										FROM 
+											personnel 
+                                        JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
+                                        JOIN personneltype ON personneltype.PtypeID = personnel.positiontypeID
+										WHERE 
+											personnel.HospitalID  = '$codehos5' 
+										AND setdel = '1'
+										AND personnel.positiontypeID = '$positiontypeID'
+										ORDER BY 
+											personnelID DESC; ";
+
+			}else{
+				            $sqlpersonnel = "SELECT 
 											personnel.personnelID, 
 											personnel.positiontypeID,
 											personnel.prename, 
@@ -184,9 +220,10 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 										AND personnel.positiontypeID = '$positiontypeID'
 										ORDER BY 
 											personnelID DESC; ";
+			}
 		}else{
 
-		    $sqlpersonnel = "SELECT *, count(*) AS 'tcount' 
+		    $sqlpersonnel = "SELECT * 
 		FROM 
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 

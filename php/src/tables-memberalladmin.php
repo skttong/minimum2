@@ -567,7 +567,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                   	<tbody>
 				 	<?php
 					if($_SESSION["TypeUser"] == "Admin"){
-					$sqlservice	= "SELECT *
+					 $sqlservice	= "SELECT *
                             FROM userhospital 
                             INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
                             left JOIN prefix ON userhospital.prefixID = prefix.prefixID
@@ -599,7 +599,7 @@ if(isset($_POST["CODE_PROVINCE"])){
 }
 
 if($_POST["CODE_HMOO"]==''){	  
-    $sqlservice = $sqlservice."AND hospitalnew.NO_PROVINCE = '99' " ;
+    $sqlservice = $sqlservice."AND userhospital.stausloginfirst = '1' " ;
 }else{
   if(isset($_POST["CODE_HMOO"])){	
     if($_POST["CODE_HMOO"]<>'ทั้งหมด'){					  

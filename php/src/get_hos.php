@@ -13,7 +13,7 @@ if($moo_id == 'ทั้งหมด'){
 // Query เพื่อดึงข้อมูลอำเภอที่เกี่ยวข้อง
 $sql = "SELECT DISTINCT CODE5,HOS_NAME FROM hospitalnew 
 WHERE HOS_TYPE <> 'คลินิกเอกชน'
-ORDER BY hospitalnew.CODE_HMOO DESC;";
+ORDER BY hospitalnew.CODE_HMOO DESC ,hospitalnew.CODE5 ASC;";
 
 
 
@@ -23,7 +23,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 $sql = "SELECT DISTINCT CODE5, HOS_NAME  FROM hospitalnew 
 WHERE NO_PROVINCE = '$CODE_PROVINCE'
 AND HOS_TYPE <> 'คลินิกเอกชน'
-ORDER BY hospitalnew.CODE_HMOO DESC;";
+ORDER BY hospitalnew.CODE_HMOO DESC ,hospitalnew.CODE5 ASC;";
 $result = mysqli_query($con, $sql);
 
 }
