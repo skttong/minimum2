@@ -1706,7 +1706,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
     
     <!-- Default box -->
     <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
         <div class="row">
 			<div class="col-lg-6">
 				<!-- small card -->
@@ -2106,7 +2106,7 @@ link.click();
 
          <!-- Default box -->
     <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
         <div class="row">
 			<div class="col-lg-6">
 				<!-- small card -->
@@ -2200,7 +2200,7 @@ link.click();
 	
 
       <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">นักจิตวิทยา</h3>

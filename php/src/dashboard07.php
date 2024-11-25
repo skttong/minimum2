@@ -1372,7 +1372,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
     
     <!-- Default box -->
     <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
 		<div class="row">
 		<div class="col-lg-12">
 				<!-- small card -->
@@ -1772,7 +1772,7 @@ downloadButton.addEventListener('click', function() {
 
 		</div>
 	  <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
 			
         <div class="row">
 			
@@ -2060,7 +2060,7 @@ downloadButton.addEventListener('click', function() {
 		</div>
 
 		<div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
 			
         <div class="row">
 			
