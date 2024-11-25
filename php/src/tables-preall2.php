@@ -700,6 +700,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 											personnel.r2 as 'fixpositionAllName', 
 											hospitalnew.HOS_NAME,
 											personnel.positionrole, 
+											personneltype.Ptypename,
 											personnel.congrat, 
 											personnel.training, 
 											personnel.cogratyear, 
@@ -753,6 +754,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 								  FROM userhospital 
 								  INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
 								  INNER JOIN personnel ON personnel.HospitalID = hospitalnew.CODE5
+								  INNER JOIN personneltype ON personneltype.PtypeID = personnel.positiontypeID
 								  WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 								  AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
                                 ";
@@ -789,6 +791,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				FROM userhospital 
 				INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
 				INNER JOIN personnel ON personnel.HospitalID = hospitalnew.CODE5
+				INNER JOIN personneltype ON personneltype.PtypeID = personnel.positiontypeID
 				WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 				AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
 				AND hospitalnew.CODE_HMOO = '$HosMOHP'";
@@ -974,7 +977,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 							<td><?php echo $rowpersonnel2['positionAllName']; ?></td>
 							<td><?php echo $rowpersonnel2['fixpositionAllName']; ?></td>
 							<td><?php echo $rowpersonnel2['HOS_NAME']; ?></td>
-							<td><?php echo $rowpersonnel2['positionrole']; ?></td>
+							<td><?php echo $rowpersonnel2['Ptypename']; ?></td>
 							<td><?php echo $rowpersonnel2['congrat']; ?></td>
 							<td><?php echo $rowpersonnel2['training']; ?></td>
 							<td><?php echo $rowpersonnel2['cogratyear']; ?></td>

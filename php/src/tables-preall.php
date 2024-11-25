@@ -693,7 +693,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							<td><?php echo $rowpersonnel2['r1']; ?></td>
 							<td><?php echo $rowpersonnel2['r2']; ?></td>
 							<td><?php echo $rowpersonnel2['HOS_NAME']; ?></td>
-							<td><?php echo $rowpersonnel2['positionrole']; ?></td>
+							<td><?php echo $rowpersonnel2['Ptypename']; ?></td>
 							<td><?php echo $rowpersonnel2['congrat']; ?></td>
 							<td><?php echo $rowpersonnel2['training']; ?></td>
 							<td><?php echo $rowpersonnel2['cogratyear']; ?></td>
