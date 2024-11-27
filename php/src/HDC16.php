@@ -6,9 +6,13 @@ $curl = curl_init();
 
 //date("Y")+543;
 
-$YEAR = date("Y")+543-4 ;
+if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
 
- //$YEAR = '2566' ;
+  $YEAR = date("Y")+543+1 ;
+ }else{
+ 
+   $YEAR = date("Y")+543 ;
+ }
 
 curl_setopt_array($curl, array(
   CURLOPT_URL => 'https://opendata.moph.go.th/api/report_data/s_mental_x681/'.$YEAR,
