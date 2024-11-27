@@ -46,11 +46,26 @@ $sql9 = "SELECT
     } 
   }
 
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql9 = $sql9."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql9 = $sql9."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql9 = $sql9."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -114,10 +129,26 @@ if (isset($_POST['position'])) {
     } 
   }
 
+  /*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlbed = $sqlbed."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlbed = $sqlbed."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlbed = $sqlbed."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -331,10 +362,26 @@ if (isset($_POST['position'])) {
     } 
   }
 
+  /*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $msql1 = $msql1."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$msql1 = $msql1."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$msql1 = $msql1."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -408,10 +455,26 @@ if (isset($_POST['position'])) {
     } 
   }
 
+  /*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $bsql1 = $bsql1."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$bsql1 = $bsql1."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$bsql1 = $bsql1."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -644,10 +707,26 @@ if (isset($_POST['position'])) {
     } 
   }
 
+  /*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $bsqlall1 = $bsqlall1."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$bsqlall1 = $bsqlall1."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$bsqlall1 = $bsqlall1."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -707,11 +786,26 @@ if (isset($_POST['position'])) {
     } 
   }
 
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $bsqlall2 = $bsqlall2."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$bsqlall2 = $bsqlall2."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$bsqlall2 = $bsqlall2."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {

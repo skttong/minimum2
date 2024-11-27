@@ -40,10 +40,26 @@ $sql9 = "SELECT
     JOIN hospitalnew hn on hn.CODE5 = b.hospitalCode5 
     where 1 ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql9 = $sql9."AND YEAR(b.ectDate) = '".$Year."'" ;
-} 
+}
+  */ 
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql9 = $sql9."AND b.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql9 = $sql9."AND b.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -97,10 +113,26 @@ RIGHT JOIN hospitalnew hn ON hn.CODE5 = e.hospitalCode5
 WHERE 1 
 ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlect = $sqlect."AND YEAR(e.ectDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlect = $sqlect."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlect = $sqlect."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -298,10 +330,26 @@ left JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
 WHERE 1 
 ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $msql1 = $msql1."AND YEAR(e.ectDate) = '".$Year."'" ;
 } 
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$msql1 = $msql1."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$msql1 = $msql1."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -374,11 +422,26 @@ right JOIN hospitalnew hn ON hn.CODE5 = b.hospitalCode5
 WHERE 1 
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $bsql1 = $bsql1."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$bsql1 = $bsql1."AND b.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$bsql1 = $bsql1."AND b.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -447,10 +510,26 @@ JOIN hospitalnew hn ON hn.CODE5 = e.hospitalCode5
 WHERE 1 
 ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlall = $sqlall."AND YEAR(e.ectDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlall = $sqlall."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlall = $sqlall."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {

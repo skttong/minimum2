@@ -38,11 +38,26 @@ FROM
 JOIN serviceform sf ON sf.HospitalID = hn.CODE5
 WHERE 1  "; 
 
-  
+/*  
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlfcenter = $sqlfcenter."AND YEAR(sf.mhpsDate) = '".$Year."'" ;
 } 
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlfcenter = $sqlfcenter."AND sf.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND sf.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlfcenter = $sqlfcenter."AND sf.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND sf.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -176,11 +191,26 @@ $msql1 = "SELECT
   WHERE 1
  ";
 
-  
+ /* 
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $msql1 = $msql1."AND YEAR(sf.mhpsDate) = '".$Year."'" ;
-} 
+}
+  */ 
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$msql1 = $msql1."AND sf.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND sf.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$msql1 = $msql1."AND sf.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND sf.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -272,10 +302,26 @@ WHERE 1
 
 ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlall = $sqlall."AND YEAR(sf.mhpsDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlall = $sqlall."AND sf.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND sf.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlall = $sqlall."AND sf.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND sf.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {

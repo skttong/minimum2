@@ -46,11 +46,27 @@ $MOOsql1 = "SELECT
     	WHERE
   				s.statusfinal = '1'
       ";*/
-  
+ 
+/*      
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $MOOsql1 = $MOOsql1."AND YEAR(s.mhpsDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$MOOsql1 = $MOOsql1."AND s.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND s.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$MOOsql1 = $MOOsql1."AND s.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND s.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -183,11 +199,27 @@ $sql1 = "SELECT
 			s.statusfinal = '1'
     AND hn.HOS_TYPE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์')
       ";
-  
+
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql1 = $sql1."AND YEAR(s.mhpsDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql1 = $sql1."AND s.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND s.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql1 = $sql1."AND s.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND s.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -259,11 +291,26 @@ SELECT
 FROM HospitalCounts hc
 JOIN mapdetail m ON hc.CODE_PROVINCE = m.CODE_PROVINCE
       ";
-  
+/*  
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $msql1 = $msql1."AND YEAR(hc.mhpsDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$msql1 = $msql1."AND hc.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND hc.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$msql1 = $msql1."AND hc.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND hc.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -346,10 +393,26 @@ AND hn.HOS_TYPE IN ('โรงพยาบาลชุมชน','โรงพ�
 AND  SUBSTRING_INDEX(s.qus1_1, ',', 1)  <> 0
  ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlall = $sqlall."AND YEAR(s.mhpsDate) = '".$Year."'" ;
 } 
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlall = $sqlall."AND s.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND s.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlall = $sqlall."AND s.mhpsDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND s.mhpsDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {

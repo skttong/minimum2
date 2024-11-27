@@ -75,11 +75,27 @@ AND p.r2 = 'Full-Time'
 
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql1 = $sql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql1 = $sql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql1 = $sql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
+
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -140,11 +156,26 @@ AND p.r2 = 'Full-Time'
 
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $tsql1 = $tsql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$tsql1 = $tsql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$tsql1 = $tsql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -206,11 +237,26 @@ JOIN Midyear m2 ON h.CODE_PROVINCE = m2.CODE_PROVINCE
 WHERE 
     p.r1 = '$maptitle'
 " ;
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $msql1 = $msql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$msql1 = $msql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$msql1 = $msql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -288,10 +334,26 @@ WHERE
 AND p.r2 = 'Full-Time'
 " ;
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $msql2 = $msql2."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$msql2 = $msql2."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$msql2 = $msql2."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -378,10 +440,26 @@ JOIN personnel p ON h.CODE5 = p.HospitalID
 WHERE 1 
 AND p.r2 = 'Full-Time'
 ";
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlall = $sqlall."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlall = $sqlall."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlall = $sqlall."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
