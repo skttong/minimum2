@@ -308,8 +308,10 @@ GROUP BY
 ";
 */
 
+echo $msql1;
+
 $mobj1 = mysqli_query($con, $msql1);
-//echo $msql1;
+
 $datamap ='';
 while($mrow1 = mysqli_fetch_array($mobj1))
 {

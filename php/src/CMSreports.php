@@ -44,14 +44,15 @@ if (isset($data['data'])) {
   $sql2 = "ALTER TABLE CMSreports AUTO_INCREMENT = 1;";
   $result2 = mysqli_query($con, $sql2) or die ("Error in query: $sql2 " . mysqli_error());
 
-  $stmt = mysqli_prepare($con, "INSERT INTO CMSreports (amphur_code, event_date, patient_id) VALUES (?, ?, ?)");
+  $stmt = mysqli_prepare($con, "INSERT INTO CMSreports (province_code, amphur_code, event_date, patient_id) VALUES (?, ?, ?, ?)");
 
   foreach ($data['data'] as $row) {
     $amphur_code = $row['amphur_code']; // Replace with actual data key
+    $pro_code = substr($row['amphur_code'],0,2); // Replace with actual data key
     $event_date = $row['event_date'];  // Replace with actual data key
     $patient_id = $row['patient_id'];  // Replace with actual data key
 
-    mysqli_stmt_bind_param($stmt, "sss", $amphur_code, $event_date, $patient_id);
+    mysqli_stmt_bind_param($stmt, "ssss", $pro_code, $amphur_code, $event_date, $patient_id);
     $result = mysqli_stmt_execute($stmt);
 
     if (!$result) {

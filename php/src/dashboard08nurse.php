@@ -1324,7 +1324,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				  <div class="inner"><center>
                     
                 <p>ทั้งหมด</p>
-                 <h3><?php echo number_format(($nu02+$nu03+$nu04+$nu05+$nu06+$nu07), 0, '.', ',');?> คน</h3> 
+                 <h3><?php echo number_format(($nu01+$nu02+$nu03+$nu04+$nu05+$nu06+$nu07), 0, '.', ',');?> คน</h3> 
                 <?php /*<h3><?php echo number_format(($nu02+$nu04), 0, '.', ',');?> คน</h3>*/ ?>
                           <!--<p>xx : 1แสน ประชากร</p>-->
               

@@ -209,35 +209,27 @@ while($mrow1 = mysqli_fetch_array($mobj1))
 	//['th-ct', 10],
 }
 
-$msql2 = "SELECT h.NO_PROVINCE, 
+$msql2 = "
+SELECT p.PROVINCE_CODE , 
      m.CODE_map02, 
      m.CODE_PROVINCETH,
-    COALESCE(report_counts.total_reports, 0) AS total
-From hospitalnew h 
-JOIN (
-    SELECT 
-        COUNT(*) AS total_reports,
-        LEFT(c.amphur_code, 2) AS amphur_prefix, 
-		c.amphur_code  
-    FROM 
-        CMSreports c
-	WHERE 1 
-	";
+     count(c.province_code) AS total,
+     c.event_date
+FROM CMSreports c 
+JOIN province p ON p.PROVINCE_CODE = c.province_code 
+JOIN mapdetail m ON m.CODE_PROVINCE = TRIM(p.PROVINCE_NAME) 
+WHERE 1 
+";
+
+
 	 if (isset($_POST['Year'])) {
 		$Year = $_POST['Year']-543;
 		$msql2 = $msql2."AND YEAR(c.event_date) = '".$Year."'" ;
 	  }else{
 		$msql2 = $msql2."AND YEAR(c.event_date) = '".(date("Y"))."'" ;
 	  }
-	$msql2 = $msql2."
-    GROUP BY amphur_prefix
-	HAVING  amphur_prefix <> ''
-) report_counts ON h.NO_PROVINCE = report_counts.amphur_prefix
-JOIN mapdetail m ON h.CODE_PROVINCE = m.CODE_PROVINCE
-WHERE 1 
-";
 
-
+/*
   if (isset($_POST['CODE_HMOO'])) {
 	if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
 	$CODE_HMOO = $_POST['CODE_HMOO'];
@@ -258,24 +250,24 @@ WHERE 1
 	$msql2 = $msql2."AND h.HOS_TYPE = '".$mySelect."'" ;
 	}
   }
-  
+  */
   if (isset($_POST['CODE_PROVINCE'])) {
 	if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
 	$CODE_PROVINCE = $_POST['CODE_PROVINCE'];
-	$msql2 = $msql2."AND h.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+	$msql2 = $msql2."AND p.PROVINCE_CODE = '".$CODE_PROVINCE."'" ;
 	}
   }
-  
+  /*
   if (isset($_POST['CODE_HOS'])) {
 	if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
 	$CODE_HOS = $_POST['CODE_HOS'];
 	$msql2 = $msql2."AND h.CODE5 = '".$CODE_HOS."'" ;
 	}
   } 
-	
+	*/
 $msql2 = $msql2."
 GROUP BY
- h.NO_PROVINCE ;
+ p.PROVINCE_CODE ;
 ";
 
 //echo $msql2;

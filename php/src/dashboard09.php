@@ -584,8 +584,8 @@ while($rowHD18OLD = mysqli_fetch_array($objHD18OLD))
 $sqlHD18_1OLD = "SELECT
 	ho.b_year,
 	SUM(ho.r_new) AS sum_r_new,
-    (ho.f10_m+ho.f11_m+ho.f12_m+ho.f13_m+ho.f14_m+ho.f15_m+ho.f16_m+ho.f17_m+ho.f18_m+ho.f19_m) AS sum_r_new_m ,
-    (ho.f10_f+ho.f11_f+ho.f12_f+ho.f13_f+ho.f14_f+ho.f15_f+ho.f16_f+ho.f17_f+ho.f18_f+ho.f19_f) AS sum_r_new_f
+  SUM(ho.f10_m+ho.f11_m+ho.f12_m+ho.f13_m+ho.f14_m+ho.f15_m+ho.f16_m+ho.f17_m+ho.f18_m+ho.f19_m) AS sum_r_new_m ,
+  SUM(ho.f10_f+ho.f11_f+ho.f12_f+ho.f13_f+ho.f14_f+ho.f15_f+ho.f16_f+ho.f17_f+ho.f18_f+ho.f19_f) AS sum_r_new_f
 FROM
     HDCTB18OLD ho
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5

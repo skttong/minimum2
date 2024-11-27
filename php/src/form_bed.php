@@ -959,7 +959,8 @@ OTHER, External Cause : X60-X84</span>
 
 				<script>
 					function toggleDiv3(disable) {
-						const div = document.getElementById('myMctt2');
+						//alert("tong");
+						const div = document.getElementById('myMctt3');
 						if (disable) {
 							div.classList.add('disabled');
 							const number_patients_1 = document.getElementById('number_patients_1');
