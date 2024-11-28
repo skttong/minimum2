@@ -61,13 +61,29 @@ RIGHT JOIN mapdetail m ON hn.CODE_PROVINCE = m.CODE_PROVINCE
 JOIN Midyear m2 ON m2.CODE_PROVINCE = m.CODE_PROVINCE 
 WHERE
     1  ";
-    
+
+/*
 if (isset($_POST['Year'])) {
     $Year = $_POST['Year'];
     $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
-  /*}else{
-    $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;*/
+  }else{
+    $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
   }
+*/
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
+  }
+
+
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -132,10 +148,26 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+/*    
 if (isset($_POST['Year'])) {
     $sqlhdc01 = $sqlhdc01."AND ho.b_year = '".$Year."'" ;
   }
+*/
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlhdc01 = $sqlhdc01."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlhdc01 = $sqlhdc01."AND ho.b_year = '".$Year."'" ;
+  }
+
+
+
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -221,11 +253,26 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+ 
+ /*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
     $sqlhdc02 = $sqlhdc02."AND ho.b_year = '".$Year."'" ;
   }
+*/
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlhdc02 = $sqlhdc02."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlhdc02 = $sqlhdc02."AND ho.b_year = '".$Year."'" ;
+  }
+
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -315,11 +362,25 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+ 
+/* 
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
     $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
   }else{
+    $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
+  }
+*/
+
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
     $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
   }
   
@@ -380,13 +441,29 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+ 
+/* 
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
     $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
   }
+*/
+
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
+  }
+  
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -444,13 +521,28 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+ 
+ /*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
     $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
   }
+*/
+
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
+  }
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -507,12 +599,27 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+ 
+ /*
 if (isset($_POST['Year'])) {
     $sqlHD14 = $sqlHD14."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD13 = $sqlHD14."AND ho.b_year = '".$Year."'" ;
   }
+*/
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlHD14 = $sqlHD14."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlHD14 = $sqlHD14."AND ho.b_year = '".$Year."'" ;
+  }
+
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -569,13 +676,28 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
     $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
   }else{
     $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
   }
+*/
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
+  }
+
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -638,11 +760,26 @@ FROM
 JOIN hospitalnew hn ON h.hospcode = hn.CODE5
 WHERE
     1 ";
-     
+
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
     $sqlHD23 = $sqlHD23."AND h.b_year = '".$Year."'" ;
   }
+*/
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlHD23 = $sqlHD23."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlHD23 = $sqlHD23."AND ho.b_year = '".$Year."'" ;
+  }
+
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
@@ -727,13 +864,28 @@ FROM
 JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
 WHERE
     1 ";
-    
+
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
     $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
- /* }else{
-    $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;*/
+  }else{
+    $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
   }
+*/
+  if (isset($_POST['Year'])) {
+    $Year = $_POST['Year'];
+    $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
+  }else{
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      $Year = (date("Y"))+1;
+    }else{
+      $Year = (date("Y"));
+    }
+    $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
+  }
+
+
   if (isset($_POST['CODE_HMOO'])) {
     if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
     $CODE_HMOO = $_POST['CODE_HMOO'];
