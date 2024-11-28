@@ -334,13 +334,42 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							<td><?php echo $rowpersonnel['HOS_NAME'];?></td> */ ?>
                            <?php  if($_SESSION["TypeUser"] == "Admin"){ ?>
 					        <td>
-							
+							<?php /*
 							<center>
 							
 								<a class="btn btn-info btn-sm " href="forms_m1_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
 									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
 								  </a>
 								 
+							</center>
+							*/ ?>
+							<center>
+								<?php if($rowpersonnel['positiontypeID']== '1'){?>
+								<a class="btn btn-info btn-sm " href="forms_m1_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
+									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
+								  </a>
+							<?php }elseif($rowpersonnel['positiontypeID']== '2'){ ?>
+								<a class="btn btn-info btn-sm " href="forms_m2_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
+									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
+								  </a>
+							<?php }elseif($rowpersonnel['positiontypeID']== '3'){ ?>
+								<a class="btn btn-info btn-sm " href="forms_m3_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
+									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
+								  </a>  
+							<?php }elseif($rowpersonnel['positiontypeID']== '4'){ ?>
+								<a class="btn btn-info btn-sm " href="forms_m4_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
+									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
+								  </a>  
+							<?php }elseif($rowpersonnel['positiontypeID']== '5'){ ?>
+								<a class="btn btn-info btn-sm " href="forms_m5_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
+									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
+								  </a>
+							<?php }else{ ?>
+								<a class="btn btn-info btn-sm " href="forms_m6_edit.php?personnelID=<?php echo $rowpersonnel['personnelID'];?>&type=<?php echo $rowpersonnel['positiontypeID'];?>">
+									<i class="fas fa-pencil-alt"></i> แก้ไขข้อมูล/ลบ
+								  </a>	  	  
+
+							<?php } ?>
 							</center>
 							</td>
 							<?php } ?> 	
