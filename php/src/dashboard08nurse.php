@@ -76,11 +76,26 @@ $sql2 = "WITH trained_personnel AS (
   AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $sql2 = $sql2."AND YEAR(b.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql2 = $sql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $sql2 = $sql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -187,11 +202,26 @@ $tsql2 = "WITH trained_personnel AS (
   AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $tsql2 = $tsql2."AND YEAR(b.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $tsql2 = $tsql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $tsql2 = $tsql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -296,10 +326,26 @@ AND
   p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $sql3 = $sql3."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql3 = $sql3."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $sql3 = $sql3."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -361,11 +407,26 @@ $sql4 = "WITH trained_personnel AS (
   AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $sql4 = $sql4."AND YEAR(b.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql4 = $sql4."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $sql4 = $sql4."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -450,11 +511,26 @@ $MOOsql1 = "WITH trained_personnel AS (
   AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $MOOsql1 = $MOOsql1."AND YEAR(b.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $MOOsql1 = $MOOsql1."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $MOOsql1 = $MOOsql1."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -648,10 +724,26 @@ $sqlall = "WITH HospitalGroups AS (
   		p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $sqlall = $sqlall."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sqlall = $sqlall."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $sqlall = $sqlall."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -725,10 +817,26 @@ AND
   p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $sql3p = $sql3p."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $sql3p = $sql3p."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $sql3p = $sql3p."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -790,11 +898,26 @@ $MOOsql1p = "WITH trained_personnel AS (
   AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
-
+/*
 if (isset($_POST['Year'])) {
 $Year = $_POST['Year']-543;
 $MOOsql1p = $MOOsql1p."AND YEAR(b.personnelDate) = '".$Year."'" ;
 }
+*/
+
+if (isset($_POST['Year'])) {
+  $Year = $_POST['Year']-543;
+  $MOOsql1p = $MOOsql1p."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+    $Year = (date("Y"))+1;
+  }else{
+    $Year = (date("Y"));
+  }
+  $MOOsql1p = $MOOsql1p."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+  AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
 if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
