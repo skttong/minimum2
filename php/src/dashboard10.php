@@ -769,14 +769,14 @@ if (isset($_POST['Year'])) {
 */
   if (isset($_POST['Year'])) {
     $Year = $_POST['Year'];
-    $sqlHD23 = $sqlHD23."AND ho.b_year = '".$Year."'" ;
+    $sqlHD23 = $sqlHD23."AND h.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
       $Year = (date("Y"))+1;
     }else{
       $Year = (date("Y"));
     }
-    $sqlHD23 = $sqlHD23."AND ho.b_year = '".$Year."'" ;
+    $sqlHD23 = $sqlHD23."AND h.b_year = '".$Year."'" ;
   }
 
 
