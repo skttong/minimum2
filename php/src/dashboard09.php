@@ -2196,6 +2196,102 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 			</div>
 			<!-- ./row -->	
             <div class="row">
+              <div class="col-lg-6">
+                <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">ผู้ฆ่าตัวตายสำเร็จ</h3>
+                            
+                            <div align="right">
+                                <button class="btn btn-navbar" id="download-button13"><img width="10%" src="images/downloand.png"></button>
+                            </div>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="myChart13" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
+                            <script>
+                                const ctx13 = document.getElementById('myChart13');
+                                
+                                
+                                const downloadButton13 = document.getElementById('download-button13');
+
+                                const myChart13 = new Chart(ctx13, {
+                                    type: 'bar',
+                                    data: {
+                                        labels: [''],
+                                        datasets: [{
+                                            label: '',
+                                            data: [<?php echo $total_result1; ?>], // ข้อมูลจำนวนประชากรชายแต่ละกลุ่มอายุ
+                                            backgroundColor: 'pink',
+                                            borderColor: 'pink',
+                                            borderWidth: 1
+                                        }/*,{
+                                            label: 'Female',
+                                            data: [-10000, -11000, -12000], // ข้อมูลจำนวนประชากรหญิงแต่ละกลุ่มอายุ
+                                            backgroundColor: 'pink',
+                                            borderColor: 'pink',
+                                            borderWidth: 1
+                                        }*/]
+                                    },
+                                    options: {
+                                        plugins: {
+                            tooltip: {
+                            intersect: true,
+                            callbacks: {
+                                label: function(context) {
+                                var label = context.dataset.label || '';
+                                var value = context.formattedValue;
+                                var positiveOnly = value < 0 ? -value : value;
+                                if (label) {
+                                    label += ': ';
+                                }
+                                if (context.parsed.y !== null) {
+                                    label += positiveOnly
+                                }
+                                return label;
+                                },
+                            },
+                            },
+                            legend: {
+                            position: "bottom",
+                            },
+                        },
+                        responsive: true,
+                                        indexAxis: 'y', // แสดงกราฟแบบแนวนอน
+                                        scales: {
+                                        x: {
+                                        stacked: false,
+                                        ticks: {
+                                            beginAtZero: true,
+                                            callback: (v) => {
+                                            return v < 0 ? -v : v;
+                                            },
+                                        },
+                                        },
+                                        y: {
+                                        stacked: true,
+                                        ticks: {
+                                            beginAtZero: true,
+                                        },
+                                        position: "left",
+                                        },
+                                    },
+                                    }
+                                });
+
+                        downloadButton.addEventListener('click', function() {
+                            const chartData13 = myChart13.toBase64Image(); // Get chart image data
+                            const link = document.createElement('a');
+                            link.href = chartData13;
+                            link.download = 'stacked-barchart.png'; // Set download filename
+                            link.click();
+                        });
+                            </script>
+                            
+                        </div>
+
+                    </div>
+				
+			    </div>
+			    <!-- ./col -->
 			    <div class="col-lg-6">
                     <div class="card">
                         <div class="card-header">
@@ -2292,102 +2388,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 				
 			    </div>
 			    <!-- ./col -->
-			    <div class="col-lg-6">
-                <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">ผู้ฆ่าตัวตายสำเร็จ</h3>
-                            
-                            <div align="right">
-                                <button class="btn btn-navbar" id="download-button13"><img width="10%" src="images/downloand.png"></button>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <canvas id="myChart13" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
-                            <script>
-                                const ctx13 = document.getElementById('myChart13');
-                                
-                                
-                                const downloadButton13 = document.getElementById('download-button13');
-
-                                const myChart13 = new Chart(ctx13, {
-                                    type: 'bar',
-                                    data: {
-                                        labels: [''],
-                                        datasets: [{
-                                            label: '',
-                                            data: [<?php echo $total_result1; ?>], // ข้อมูลจำนวนประชากรชายแต่ละกลุ่มอายุ
-                                            backgroundColor: 'pink',
-                                            borderColor: 'pink',
-                                            borderWidth: 1
-                                        }/*,{
-                                            label: 'Female',
-                                            data: [-10000, -11000, -12000], // ข้อมูลจำนวนประชากรหญิงแต่ละกลุ่มอายุ
-                                            backgroundColor: 'pink',
-                                            borderColor: 'pink',
-                                            borderWidth: 1
-                                        }*/]
-                                    },
-                                    options: {
-                                        plugins: {
-                            tooltip: {
-                            intersect: true,
-                            callbacks: {
-                                label: function(context) {
-                                var label = context.dataset.label || '';
-                                var value = context.formattedValue;
-                                var positiveOnly = value < 0 ? -value : value;
-                                if (label) {
-                                    label += ': ';
-                                }
-                                if (context.parsed.y !== null) {
-                                    label += positiveOnly
-                                }
-                                return label;
-                                },
-                            },
-                            },
-                            legend: {
-                            position: "bottom",
-                            },
-                        },
-                        responsive: true,
-                                        indexAxis: 'y', // แสดงกราฟแบบแนวนอน
-                                        scales: {
-                                        x: {
-                                        stacked: false,
-                                        ticks: {
-                                            beginAtZero: true,
-                                            callback: (v) => {
-                                            return v < 0 ? -v : v;
-                                            },
-                                        },
-                                        },
-                                        y: {
-                                        stacked: true,
-                                        ticks: {
-                                            beginAtZero: true,
-                                        },
-                                        position: "left",
-                                        },
-                                    },
-                                    }
-                                });
-
-                        downloadButton.addEventListener('click', function() {
-                            const chartData13 = myChart13.toBase64Image(); // Get chart image data
-                            const link = document.createElement('a');
-                            link.href = chartData13;
-                            link.download = 'stacked-barchart.png'; // Set download filename
-                            link.click();
-                        });
-                            </script>
-                            
-                        </div>
-
-                    </div>
-				
-			    </div>
-			    <!-- ./col -->
+			    
 			 
 			</div>
 			<!-- ./row -->	 

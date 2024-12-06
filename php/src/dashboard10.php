@@ -940,6 +940,174 @@ while($rowHD16 = mysqli_fetch_array($objHD16_2))
     $total_all_2 = $total_all_2."'".$rowHD16['total_all']."',";
  
 }
+
+$sqlHD22OLD_1 = "SELECT
+ 	ho.b_year,
+    SUM(ho.result) AS total_result,
+    SUM(ho.sex1) AS total_sex1,
+    SUM(ho.sex2) AS total_sex2
+FROM
+    HDCTB22OLD ho
+JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+    /*
+    if (isset($_POST['Year'])) {
+        $sqlHD22OLD_1 = $sqlHD22OLD_1."AND ho.b_year = '".$Year."'" ;
+      }else{
+        $sqlHD22OLD_1 = $sqlHD22OLD_1."AND ho.b_year = '".$Year."'" ;
+      }
+*/
+      if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
+        $sqlHD22OLD_1 = $sqlHD22OLD_1."AND ho.b_year = '".$Year."'" ;
+      }else{
+        if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+          $Year = (date("Y"))+1;
+        }else{
+          $Year = (date("Y"));
+        }
+        $sqlHD22OLD_1 = $sqlHD22OLD_1."AND ho.b_year = '".$Year."'" ;
+      }
+      
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlHD22OLD_1 = $sqlHD22OLD_1."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+
+  if (isset($_POST['type_Affiliation'])) {
+    if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+    $type_Affiliation = trim($_POST['type_Affiliation']);
+    $sqlHD22OLD_1 = $sqlHD22OLD_1."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+    }
+  }
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
+    $sqlHD22OLD_1 = $sqlHD22OLD_1."AND hn.HOS_TYPE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlHD22OLD_1 = $sqlHD22OLD_1."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlHD22OLD_1 = $sqlHD22OLD_1."AND hn.CODE5 = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlHD22OLD_1 = $sqlHD22OLD_1."
+GROUP BY
+    ho.b_year
+ORDER BY
+    ho.b_year ASC ";
+
+$sqlHD22OLD_1 = mysqli_query($con, $sqlHD22OLD_1);
+$rowHD22OLD_1 = mysqli_fetch_array($sqlHD22OLD_1);
+
+
+$labels_22_1 = $rowHD22OLD_1['b_year'];
+$total_result_22_1 = $rowHD22OLD_1['total_result'];
+$total_sex1_22_1 = $rowHD22OLD_1['total_sex1'];
+$total_sex2_22_1 = $rowHD22OLD_1['total_sex2'];
+
+$sqlHD22OLD = "SELECT
+ 	ho.b_year,
+    SUM(ho.result) AS total_result,
+    SUM(ho.sex1) AS total_sex1,
+    SUM(ho.sex2) AS total_sex2
+FROM
+    HDCTB22OLD ho
+JOIN hospitalnew hn ON ho.hospcode = hn.CODE5
+WHERE
+    1 ";
+    
+    /*
+    if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
+        $sqlHD22OLD = $sqlHD22OLD."AND ho.b_year = '".$Year."'" ;
+      }
+*/
+      if (isset($_POST['Year'])) {
+        $Year = $_POST['Year'];
+        $sqlHD22OLD = $sqlHD22OLD."AND ho.b_year = '".$Year."'" ;
+      }else{
+        if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+          $Year = (date("Y"))+1;
+        }else{
+          $Year = (date("Y"));
+        }
+        $sqlHD22OLD = $sqlHD22OLD."AND ho.b_year = '".$Year."'" ;
+      }
+      
+  
+  if (isset($_POST['CODE_HMOO'])) {
+    if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
+    $CODE_HMOO = $_POST['CODE_HMOO'];
+    $sqlHD22OLD = $sqlHD22OLD."AND hn.CODE_HMOO = '".$CODE_HMOO."'" ;
+    }
+  }
+
+  if (isset($_POST['type_Affiliation'])) {
+    if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+    $type_Affiliation = trim($_POST['type_Affiliation']);
+    $sqlHD22OLD = $sqlHD22OLD."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+    }
+  }
+  
+  
+  if (isset($_POST['TYPE_SERVICE'])) {
+    if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
+    $mySelect = trim($_POST['TYPE_SERVICE']);
+    $sqlHD22OLD = $sqlHD22OLD."AND hn.HOS_TYPE = '".$mySelect."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_PROVINCE'])) {
+    if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
+    $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
+    $sqlHD22OLD = $sqlHD22OLD."AND hn.NO_PROVINCE = '".$CODE_PROVINCE."'" ;
+    }
+  }
+  
+  if (isset($_POST['CODE_HOS'])) {
+    if ($_POST['CODE_HOS']<> 'ทั้งหมด') {
+    $CODE_HOS = $_POST['CODE_HOS'];
+    $sqlHD22OLD = $sqlHD22OLD."AND hn.CODE5 = '".$CODE_HOS."'" ;
+    }
+  }
+$sqlHD22OLD = $sqlHD22OLD."
+GROUP BY
+    ho.b_year
+ORDER BY
+    ho.b_year ASC ";
+
+$sqlHD22OLD = mysqli_query($con, $sqlHD22OLD);
+
+$labels_22 = '';
+$total_result_22 = '';
+$total_sex1_22 = '';
+$total_sex2_22 = '';
+
+while($rowHD22OLD = mysqli_fetch_array($sqlHD22OLD))
+{
+    $labels_22 = $labels_22."'".$rowHD22OLD['b_year']."',";
+    $total_result_22 = $total_result_22."'".$rowHD22OLD['total_result']."',";
+    $total_sex1_22 = $total_sex1_22."'".$rowHD22OLD['total_sex1']."',";
+    $total_sex2_22 = $total_sex2_22."'".$rowHD22OLD['total_sex2']."',";
+ 
+}
+
 /*
 $sqlHD13_2 = "SELECT
 	ho.b_year,
@@ -1994,6 +2162,27 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 
                             const myChart14 = new Chart(ctx14, {
                                 type: 'line',
+                                /*data: {
+                                    labels: [<?php //echo $labels_2;?>],
+                                    datasets: [{
+                                        label: 'อัตราการฆ่าตัวตายสำเร็จ',
+                                        data: [<?php //echo $total_result1_2;?>],
+                                        backgroundColor: '#00cadc',
+                                        borderColor: '#00cadc',
+                                        borderWidth: 1,
+                                        stack: 'combined1' // Enable stacking for this dataset
+                                    },
+                                    {
+                                        label: 'อัตราการพยายามฆ่าตัวตาย',
+                                        data: [<?php //echo $total_result2_2;?>],
+                                        backgroundColor: '#49c3fb',
+                                        borderColor: '#49c3fb',
+                                        borderWidth: 1,
+                                        stack: 'combined2' // Enable stacking for this dataset
+                                   
+                                    }]
+                                },
+                                */
                                 data: {
                                     labels: [<?php echo $labels_2;?>],
                                     datasets: [{
@@ -2006,7 +2195,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                     },
                                     {
                                         label: 'อัตราการพยายามฆ่าตัวตาย',
-                                        data: [<?php echo $total_result2_2;?>],
+                                        data: [<?php echo $total_result_22;?>],
                                         backgroundColor: '#49c3fb',
                                         borderColor: '#49c3fb',
                                         borderWidth: 1,

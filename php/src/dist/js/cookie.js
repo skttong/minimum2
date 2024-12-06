@@ -166,7 +166,7 @@
 			htmlBar += '<div class="pjAcceptCookieBarShell">';
 			htmlBar += '<form action="#" method="post">';
 			htmlBar += '<p>เราใช้คุกกี้เพื่อเพิ่มประสบการณ์และความพึงพอใจในการใช้งานเว็บไซต์ หากคุณกด “ยอมรับ” หรือใช้งานเว็บไซต์ของเราต่อ ถือว่าคุณยินยอมให้มีการใช้งานคุกกี้ ';
-			htmlBar += '<a href="#" target="_blank">อ่านเพิ่มเติม</a> &nbsp;&nbsp;&nbsp;';
+			htmlBar += '<a href="https://pdpa.dmh.go.th/policy/cookies-policy.asp" target="_blank">อ่านเพิ่มเติม</a> &nbsp;&nbsp;&nbsp;';
 			//htmlBar += '<div class="pjAcceptCookieBarActions">';
 			htmlBar += '<button type="button" class="pjAcceptCookieBarBtn">ยอมรับ</button></p>';
 			//htmlBar += '</div>';

@@ -140,7 +140,7 @@ $resultupdate = mysqli_fetch_array($queryupdate);
 					<select name="txtHospitalID" class="form-control select2" style="width: 100%;" required>
 						<option selected disabled value="">กรุณากรอกรหัสหน่วยบริการ 5 หลักหรือชื่อหน่วยบริการ</option>
 						<?php
-							$query = $con->query("SELECT * FROM hospitalnew WHERE hospitalnew.HOS_TYPE = 'โรงพยาบาลชุมชน'") or die(mysqli_error());
+							$query = $con->query("SELECT * FROM hospitalnew WHERE hospitalnew.HOS_TYPE = 'โรงพยาบาลชุมชน' order by hospitalnew.CODE5 ") or die(mysqli_error());
 							while($fetch = $query->fetch_assoc()){
 
 							echo '<option value = "'.$fetch['CODE5'].'">'.$fetch['CODE5'].'-'.$fetch['HOS_NAME'].'</option>';
@@ -500,11 +500,22 @@ $resultupdate = mysqli_fetch_array($queryupdate);
 				<!-- / card-body-->
 			</div>
 			<!-- / card card-outline card-primary-->
+
+			<?php
+				if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+
+					$YEAR = date("Y")+543+1 ;
+				   }else{
+				   
+					 $YEAR = date("Y")+543 ;
+				   }
+
+			?>
 			 
 		      <!-- <h5><i class='fas fa-edit'></i> จำนวนผู้ป่วย</h5>-->
 			  <div class="card card-outline card-dark">
 				<div class="card-header">
-					<h3 class="card-title">จำนวนผู้รับบริการ ปีงบประมาณ <?php echo date("Y")+543-1 ;?> <br>
+					<h3 class="card-title">จำนวนผู้รับบริการ ปีงบประมาณ <?php echo $YEAR-1 ;?> <br>
 					(ถ้าไม่มีข้อมูลให้ใส่ NA ถ้าไม่มีจำนวนผู้ป่วยให้ใส่ 0)</h3>
 					<div class="card-tools">
 						<button type="button" class="btn btn-tool" data-card-widget="collapse">
