@@ -29,6 +29,8 @@ if($_POST['usertype']==''){
 		$result = mysqli_query($con, $sql);
 
 	mysqli_close($con);
+
+	if($_SESSION["TypeUser"] == "Admin"){ 
 	if($result){
 	echo "<script type='text/javascript'>";
 	echo "alert('บันทึกเรียบร้อยแล้ว');";
@@ -40,6 +42,21 @@ if($_POST['usertype']==''){
 	echo "alert('Error!!');";
     echo "window.location = 'tables-memberalladmin.php'; ";
 	echo "</script>";
+	}
+	}else{
+		if($result){
+			echo "<script type='text/javascript'>";
+			echo "alert('บันทึกเรียบร้อยแล้ว');";
+			echo "window.location = 'tables-memberall.php'; ";
+			echo "</script>";
+			}
+			else{
+			echo "<script type='text/javascript'>";
+			echo "alert('Error!!');";
+			echo "window.location = 'tables-memberall.php'; ";
+			echo "</script>";
+			}
+
 	}
 
 
