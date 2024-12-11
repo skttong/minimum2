@@ -478,7 +478,7 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	}
   }
 
-echo $bsql1 = $bsql1."
+$bsql1 = $bsql1."
 GROUP BY
   hn.CODE_HMOO;";
 
