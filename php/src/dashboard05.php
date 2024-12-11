@@ -355,7 +355,7 @@ GROUP BY
 ";
 */
 
-echo $msql1;
+$msql1;
 
 $mobj1 = mysqli_query($con, $msql1);
 
