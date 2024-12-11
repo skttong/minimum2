@@ -477,7 +477,11 @@ ORDER BY NO_PROVINCE ASC;";
 				<!-- /.card-body -->
 				<div class="card-footer">
 				  <button type="submit" class="btn btn-primary"> บันทึกข้อมูล &nbsp;<i class="fa fas fa-plus"></i></button>
-			  	  <a href="tables-memberalladmin.php" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>
+          <?PHP if($_SESSION["TypeUser"] == "Admin"){ ?>
+			  	    <a href="tables-memberalladmin.php" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>
+            <?PHP }else{ ?> 
+              <a href="tables-memberall.php" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>
+            <?php }?>
 				</div>
 				<!-- /.card-footer-->
 			  </div>
