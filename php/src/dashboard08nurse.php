@@ -470,12 +470,32 @@ HospitalCounts AS (
   SELECT 
     SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu01_1,
     SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu01_2,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries1 = 'ยังไม่ผ่านการอบรมเฉพาะทาง' THEN 1 ELSE 0 END) AS nu01_3,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries3 = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ' THEN 1 ELSE 0 END) AS nu01_4,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' THEN 1 ELSE 0 END) AS nu01_5,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน' THEN 1 ELSE 0 END) AS nu01_6,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ') AND tp.Countries7 = 'อื่น ๆ' THEN 1 ELSE 0 END) AS nu01_7,
     SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu02_1,
     SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu02_2,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries1 = 'ยังไม่ผ่านการอบรมเฉพาะทาง' THEN 1 ELSE 0 END) AS nu02_3,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries3 = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ' THEN 1 ELSE 0 END) AS nu02_4,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' THEN 1 ELSE 0 END) AS nu02_5,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน' THEN 1 ELSE 0 END) AS nu02_6,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด')  AND tp.Countries7 = 'อื่น ๆ' THEN 1 ELSE 0 END) AS nu02_7,
     SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu03_1,
     SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu03_2,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries1 = 'ยังไม่ผ่านการอบรมเฉพาะทาง' THEN 1 ELSE 0 END) AS nu03_3,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries3 = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ' THEN 1 ELSE 0 END) AS nu03_4,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' THEN 1 ELSE 0 END) AS nu03_5,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน' THEN 1 ELSE 0 END) AS nu03_6,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND tp.Countries7 = 'อื่น ๆ' THEN 1 ELSE 0 END) AS nu03_7,
     SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu04_1,
-    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu04_2
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu04_2,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries1 = 'ยังไม่ผ่านการอบรมเฉพาะทาง' THEN 1 ELSE 0 END) AS nu04_3,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries3 = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ' THEN 1 ELSE 0 END) AS nu04_4,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' THEN 1 ELSE 0 END) AS nu04_5,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน' THEN 1 ELSE 0 END) AS nu04_6,
+    SUM(CASE WHEN hosn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND tp.Countries7 = 'อื่น ๆ' THEN 1 ELSE 0 END) AS nu04_7
   FROM 
     hospitalnew hosn
   LEFT JOIN trained_personnel tp ON hosn.CODE5 = tp.HospitalID
@@ -1501,6 +1521,127 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 			 
 			</div>
 			<!-- ./row -->	
+      <div class="row">
+			<div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #F8D5F8; color: black;">
+				  <div class="inner">
+                    
+          <p>ยังไม่ผ่านการอบรมเฉพาะทาง</p>
+          <h3><?php echo number_format($nu01, 0, '.', ',');?> คน</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			  <div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #E6BEAE; color: black;">
+				  <div class="inner">
+                    
+          <p>การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ</p>
+          <h3><?php echo number_format($nu03, 0, '.', ',');?> คน</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			 
+			   
+			 
+			</div>
+			<!-- ./row -->	
+      <div class="row">
+			<div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #EED6D3; color: black;">
+				  <div class="inner">
+                    
+          <p>พยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด</p>
+          <h3><?php echo number_format($nu05, 0, '.', ',');?> คน</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			  <div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #FCEE9E; color: black;">
+				  <div class="inner">
+                    
+          <p>พยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติดระยะสั้น 10วัน</p>
+          <h3><?php echo number_format($nu06, 0, '.', ',');?> คน</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			 
+			   
+			 
+			</div>
+			<!-- ./row -->	
+      <div class="row">
+			<div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #D4D2F2; color: black;">
+				  <div class="inner">
+                    
+          <p>อื่น ๆ</p>
+          <h3><?php echo number_format($nu07, 0, '.', ',');?> คน</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+         <?php /*
+			  <div class="col-lg-6">
+				<!-- small card -->
+				<div class="small-box" style="background-color: #B5F7F8; color: black;">
+				  <div class="inner">
+                    
+          <p>พยาบาล PG จิตเวชเด็ก</p>
+          <h3><?php echo number_format($nu06, 0, '.', ',');?> คน</h3>
+                    <!--<p>xx : 1แสน ประชากร</p>-->
+					
+				  </div>
+				  
+				 <!-- <a href="#" class="small-box-footer">
+					More info <i class="fas fa-arrow-circle-right"></i>
+				  </a>-->
+				</div>
+			  </div>
+			  <!-- ./col -->
+			 
+			   */?>
+			 
+			</div>
+			<!-- ./row -->	
 	
 	
 
@@ -1522,10 +1663,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
         const myChart3 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['พยาบาลเฉพาะทางสุขภาพจิตและจิตเวช', 'พยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น', 'พยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด', 'พยาบาลเฉพาะทางผู้สูงอายุ'],
+                labels: ['ยังไม่ผ่านการอบรมเฉพาะทาง','พยาบาลเฉพาะทางสุขภาพจิตและจิตเวช', 'พยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น', 'พยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด', 'พยาบาลเฉพาะทางผู้สูงอายุ','การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน','อื่น ๆ'],
                 datasets: [{
                     label: 'ปฏิบัติงาน',
-                    data: [<?php echo $nu02.",".$nu04.",".$nu05.",".$nu03 ;?>],
+                    data: [<?php echo $nu01.",".$nu02.",".$nu04.",".$nu05.",".$nu03.",".$nu06.",".$nu07 ;?>],
                     backgroundColor: '#6ce5e8',
                     borderColor: '#6ce5e8',
                     borderWidth: 1,
@@ -1533,7 +1674,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                },
                 {
                     label: 'กำลังศึกษาต่อเฉพาะทาง',
-                    data: [<?php echo $tnu02.",".$tnu04.",".$tnu05.",".$tnu03 ;?>],
+                    data: [<?php echo $tnu01.",".$tnu02.",".$tnu04.",".$tnu05.",".$tnu03.",".$tnu06.",".$tnu07 ;?>],
                     backgroundColor: '#41b8d5',
                     borderColor: '#41b8d5',
                     borderWidth: 1,
