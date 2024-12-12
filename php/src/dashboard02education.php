@@ -68,7 +68,7 @@ JOIN hospitalnew h ON h.CODE5 = p.HospitalID
 WHERE
     p.positiontypeID = '8'
 AND p.setdel = '1'
-;";
+";
 
 /*
 if (isset($_POST['Year'])) {
@@ -125,6 +125,7 @@ if (isset($_POST['CODE_HOS'])) {
   $sql1 = $sql1."AND p.HospitalID = '".$CODE_HOS."'" ;
   }
 }
+
 
 $obj1 = mysqli_query($con, $sql1);
 $row1 = mysqli_fetch_array($obj1);
