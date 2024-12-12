@@ -431,7 +431,7 @@ if (isset($_POST['Year'])) {
 
 if (isset($_POST['Year'])) {
 	$Year = $_POST['Year']-543;
-	$bsql1 = $bsql1."AND b.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	$bsql1 = $bsql1."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
 	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
   }else{
 	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
@@ -478,7 +478,7 @@ if (isset($_POST['CODE_PROVINCE'])) {
 	}
   }
 
-$bsql1 = $bsql1."
+echo $bsql1 = $bsql1."
 GROUP BY
   hn.CODE_HMOO;";
 
