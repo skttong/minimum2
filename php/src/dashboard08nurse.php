@@ -878,7 +878,7 @@ $mySelect = trim($_POST['TYPE_SERVICE']);
 $sql3p = $sql3p."AND hn.HOS_TYPE = '".$mySelect."'" ;
 }
 }
-
+   
 if (isset($_POST['CODE_PROVINCE'])) {
   if ($_POST['CODE_PROVINCE']<> 'ทั้งหมด') {
   $CODE_PROVINCE = $_POST['CODE_PROVINCE'];
