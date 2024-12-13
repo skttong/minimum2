@@ -11,6 +11,7 @@ services:
       - ./php/src:/var/www/html/
     ports:
       - 80:80
+    restart: always
 
   db:
     container_name: dbmm
@@ -53,6 +54,7 @@ services:
       MYSQL_DATABASE: db_minimum
       MYSQL_USER: user123
       MYSQL_PASSWORD: password123
+    restart: always
 
 volumes:
   db_data:
