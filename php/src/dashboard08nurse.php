@@ -72,8 +72,7 @@ $sql2 = "WITH trained_personnel AS (
   FROM personnel b
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
-  AND b.Mcatt1 = 'ใช่'
-  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
+  AND b.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -198,8 +197,7 @@ $tsql2 = "WITH trained_personnel AS (
   FROM personnel b
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
-  AND b.Mcatt1 = 'ใช่'
-  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
+  AND b.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -322,8 +320,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 /*
@@ -403,8 +399,7 @@ $sql4 = "WITH trained_personnel AS (
   FROM personnel b
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
-  AND b.Mcatt1 = 'ใช่'
-  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
+  AND b.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -507,10 +502,10 @@ SELECT * FROM HospitalCounts;
 $obj4 = mysqli_query($con, $sql4);
 $row4 = mysqli_fetch_array($obj4);
 
-$nu01total = $row4['nu01_1'].",".$row4['nu01_2'];
-$nu02total = $row4['nu02_1'].",".$row4['nu02_2'];
-$nu03total = $row4['nu03_1'].",".$row4['nu03_2'];
-$nu04total = $row4['nu04_1'].",".$row4['nu04_2'];
+$nu01total = $row4['nu01_3'].",".$row4['nu01_1'].",".$row4['nu01_2'].",".$row4['nu01_4'].",".$row4['nu01_5'].",".$row4['nu01_6'].",".$row4['nu01_7'];
+$nu02total = $row4['nu02_3'].",".$row4['nu02_1'].",".$row4['nu02_2'].",".$row4['nu02_4'].",".$row4['nu02_5'].",".$row4['nu02_6'].",".$row4['nu02_7'];
+$nu03total = $row4['nu03_3'].",".$row4['nu03_1'].",".$row4['nu03_2'].",".$row4['nu03_4'].",".$row4['nu03_5'].",".$row4['nu03_6'].",".$row4['nu03_7'];
+$nu04total = $row4['nu04_3'].",".$row4['nu04_1'].",".$row4['nu04_2'].",".$row4['nu04_4'].",".$row4['nu04_5'].",".$row4['nu04_6'].",".$row4['nu04_7'];
 
 
 
@@ -527,8 +522,7 @@ $MOOsql1 = "WITH trained_personnel AS (
   FROM personnel b
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
-  AND b.Mcatt1 = 'ใช่'
-  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
+  AND b.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -594,8 +588,12 @@ HospitalCounts AS (
   SELECT 
     hosn.CODE_HMOO,
     SUM(CASE WHEN tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu01_1,
-    SUM(CASE WHEN tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu01_2
-   
+    SUM(CASE WHEN tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu01_2,
+    SUM(CASE WHEN tp.Countries1 = 'ยังไม่ผ่านการอบรมเฉพาะทาง' THEN 1 ELSE 0 END) AS nu01_3,
+    SUM(CASE WHEN tp.Countries3 = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ' THEN 1 ELSE 0 END) AS nu01_4,
+    SUM(CASE WHEN tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' THEN 1 ELSE 0 END) AS nu01_5,
+    SUM(CASE WHEN tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน' THEN 1 ELSE 0 END) AS nu01_6,
+    SUM(CASE WHEN tp.Countries7 = 'อื่น ๆ' THEN 1 ELSE 0 END) AS nu01_7
   FROM 
     hospitalnew hosn
   LEFT JOIN trained_personnel tp ON hosn.CODE5 = tp.HospitalID
@@ -664,52 +662,116 @@ while($Mrow1 = mysqli_fetch_array($Mobj1))
 	if($Mrow1['CODE_HMOO'] == 1){
 		$Hmoo01_1 = $Mrow1['nu01_1'];
 		$Hmoo01_2 = $Mrow1['nu01_2'];
+    $Hmoo01_3 = $Mrow1['nu01_3'];
+    $Hmoo01_4 = $Mrow1['nu01_4'];
+    $Hmoo01_5 = $Mrow1['nu01_5'];
+    $Hmoo01_6 = $Mrow1['nu01_6'];
+    $Hmoo01_7 = $Mrow1['nu01_7'];
 	}elseif($Mrow1['CODE_HMOO'] == 2){
 		$Hmoo02_1 = $Mrow1['nu01_1'];
 		$Hmoo02_2 = $Mrow1['nu01_2'];
+    $Hmoo02_3 = $Mrow1['nu01_3'];
+    $Hmoo02_4 = $Mrow1['nu01_4'];
+    $Hmoo02_5 = $Mrow1['nu01_5'];
+    $Hmoo02_6 = $Mrow1['nu01_6'];
+    $Hmoo02_7 = $Mrow1['nu01_7'];
 	}elseif($Mrow1['CODE_HMOO'] == 3){
 		$Hmoo03_1 = $Mrow1['nu01_1'];
 		$Hmoo03_2 = $Mrow1['nu01_2'];
-
+    $Hmoo03_3 = $Mrow1['nu01_3'];
+    $Hmoo03_4 = $Mrow1['nu01_4'];
+    $Hmoo03_5 = $Mrow1['nu01_5'];
+    $Hmoo03_6 = $Mrow1['nu01_6'];
+    $Hmoo03_7 = $Mrow1['nu01_7'];
 	}elseif($Mrow1['CODE_HMOO'] == 4){
 		$Hmoo04_1 = $Mrow1['nu01_1'];
 		$Hmoo04_2 = $Mrow1['nu01_2'];
+    $Hmoo04_3 = $Mrow1['nu01_3'];
+    $Hmoo04_4 = $Mrow1['nu01_4'];
+    $Hmoo04_5 = $Mrow1['nu01_5'];
+    $Hmoo04_6 = $Mrow1['nu01_6'];
+    $Hmoo04_7 = $Mrow1['nu01_7'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 5){
 		$Hmoo05_1 = $Mrow1['nu01_1'];
 		$Hmoo05_2 = $Mrow1['nu01_2'];
+    $Hmoo05_3 = $Mrow1['nu01_3'];
+    $Hmoo05_4 = $Mrow1['nu01_4'];
+    $Hmoo05_5 = $Mrow1['nu01_5'];
+    $Hmoo05_6 = $Mrow1['nu01_6'];
+    $Hmoo05_7 = $Mrow1['nu01_7'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 6){
 		$Hmoo06_1 = $Mrow1['nu01_1'];
 		$Hmoo06_2 = $Mrow1['nu01_2'];
+    $Hmoo06_3 = $Mrow1['nu01_3'];
+    $Hmoo06_4 = $Mrow1['nu01_4'];
+    $Hmoo06_5 = $Mrow1['nu01_5'];
+    $Hmoo06_6 = $Mrow1['nu01_6'];
+    $Hmoo06_7 = $Mrow1['nu01_7'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 7){
 		$Hmoo07_1 = $Mrow1['nu01_1'];
 		$Hmoo07_2 = $Mrow1['nu01_2'];
+    $Hmoo07_3 = $Mrow1['nu01_3'];
+    $Hmoo07_4 = $Mrow1['nu01_4'];
+    $Hmoo07_5 = $Mrow1['nu01_5'];
+    $Hmoo07_6 = $Mrow1['nu01_6'];
+    $Hmoo07_7 = $Mrow1['nu01_7'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 8){
 		$Hmoo08_1 = $Mrow1['nu01_1'];
 		$Hmoo08_2 = $Mrow1['nu01_2'];
+    $Hmoo08_3 = $Mrow1['nu01_3'];
+    $Hmoo08_4 = $Mrow1['nu01_4'];
+    $Hmoo08_5 = $Mrow1['nu01_5'];
+    $Hmoo08_6 = $Mrow1['nu01_6'];
+    $Hmoo08_7 = $Mrow1['nu01_7'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 9){
 		$Hmoo09_1 = $Mrow1['nu01_1'];
 		$Hmoo09_2 = $Mrow1['nu01_2'];
+    $Hmoo09_3 = $Mrow1['nu01_3'];
+    $Hmoo09_4 = $Mrow1['nu01_4'];
+    $Hmoo09_5 = $Mrow1['nu01_5'];
+    $Hmoo09_6 = $Mrow1['nu01_6'];
+    $Hmoo09_7 = $Mrow1['nu01_7'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 10){
 		$Hmoo10_1 = $Mrow1['nu01_1'];
 		$Hmoo10_2 = $Mrow1['nu01_2'];
+    $Hmoo10_3 = $Mrow1['nu01_3'];
+    $Hmoo10_4 = $Mrow1['nu01_4'];
+    $Hmoo10_5 = $Mrow1['nu01_5'];
+    $Hmoo10_6 = $Mrow1['nu01_6'];
+    $Hmoo10_7 = $Mrow1['nu01_7'];
 		
 	}elseif($Mrow1['CODE_HMOO'] == 11){
 		$Hmoo11_1 = $Mrow1['nu01_1'];
 		$Hmoo11_2 = $Mrow1['nu01_2'];
+    $Hmoo11_3 = $Mrow1['nu01_3'];
+    $Hmoo11_4 = $Mrow1['nu01_4'];
+    $Hmoo11_5 = $Mrow1['nu01_5'];
+    $Hmoo11_6 = $Mrow1['nu01_6'];
+    $Hmoo11_7 = $Mrow1['nu01_7'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 12){
 		$Hmoo12_1 = $Mrow1['nu01_1'];
 		$Hmoo12_2 = $Mrow1['nu01_2'];
+    $Hmoo12_3 = $Mrow1['nu01_3'];
+    $Hmoo12_4 = $Mrow1['nu01_4'];
+    $Hmoo12_5 = $Mrow1['nu01_5'];
+    $Hmoo12_6 = $Mrow1['nu01_6'];
+    $Hmoo12_7 = $Mrow1['nu01_7'];
 	
 	}elseif($Mrow1['CODE_HMOO'] == 13){
 		$Hmoo13_1 = $Mrow1['nu01_1'];
 		$Hmoo13_2 = $Mrow1['nu01_2'];
+    $Hmoo13_3 = $Mrow1['nu01_3'];
+    $Hmoo13_4 = $Mrow1['nu01_4'];
+    $Hmoo13_5 = $Mrow1['nu01_5'];
+    $Hmoo13_6 = $Mrow1['nu01_6'];
+    $Hmoo13_7 = $Mrow1['nu01_7'];
 
 	}
 	//['th-ct', 10],
@@ -719,8 +781,11 @@ $dHMOO1 = "'เขตสุขภาพที่ 1', 'เขตสุขภา�
 
  $vMhoo1_1 = $Hmoo01_1.",".$Hmoo02_1.",".$Hmoo03_1.",".$Hmoo04_1.",".$Hmoo05_1.",".$Hmoo06_1.",".$Hmoo07_1.",".$Hmoo08_1.",".$Hmoo09_1.",".$Hmoo10_1.",".$Hmoo11_1.",".$Hmoo12_1.",".$Hmoo13_1 ;
  $vMhoo1_2 = $Hmoo01_2.",".$Hmoo02_2.",".$Hmoo03_2.",".$Hmoo04_2.",".$Hmoo05_2.",".$Hmoo06_2.",".$Hmoo07_2.",".$Hmoo08_2.",".$Hmoo09_2.",".$Hmoo10_2.",".$Hmoo11_2.",".$Hmoo12_2.",".$Hmoo13_2 ;
- //$vMhoo1_3 = $Hmoo01_3.",".$Hmoo02_3.",".$Hmoo03_3.",".$Hmoo04_3.",".$Hmoo05_3.",".$Hmoo06_3.",".$Hmoo07_3.",".$Hmoo08_3.",".$Hmoo09_3.",".$Hmoo10_3.",".$Hmoo11_3.",".$Hmoo12_3.",".$Hmoo13_3 ;
- //$vMhoo1_4 = $Hmoo01_4.",".$Hmoo02_4.",".$Hmoo03_4.",".$Hmoo04_4.",".$Hmoo05_4.",".$Hmoo06_4.",".$Hmoo07_4.",".$Hmoo08_4.",".$Hmoo09_4.",".$Hmoo10_4.",".$Hmoo11_4.",".$Hmoo12_4.",".$Hmoo13_4 ;
+ $vMhoo1_3 = $Hmoo01_3.",".$Hmoo02_3.",".$Hmoo03_3.",".$Hmoo04_3.",".$Hmoo05_3.",".$Hmoo06_3.",".$Hmoo07_3.",".$Hmoo08_3.",".$Hmoo09_3.",".$Hmoo10_3.",".$Hmoo11_3.",".$Hmoo12_3.",".$Hmoo13_3 ;
+ $vMhoo1_4 = $Hmoo01_4.",".$Hmoo02_4.",".$Hmoo03_4.",".$Hmoo04_4.",".$Hmoo05_4.",".$Hmoo06_4.",".$Hmoo07_4.",".$Hmoo08_4.",".$Hmoo09_4.",".$Hmoo10_4.",".$Hmoo11_4.",".$Hmoo12_4.",".$Hmoo13_4 ;
+ $vMhoo1_5 = $Hmoo01_5.",".$Hmoo02_5.",".$Hmoo03_5.",".$Hmoo04_5.",".$Hmoo05_5.",".$Hmoo06_5.",".$Hmoo07_5.",".$Hmoo08_5.",".$Hmoo09_5.",".$Hmoo10_5.",".$Hmoo11_5.",".$Hmoo12_5.",".$Hmoo13_5 ;
+ $vMhoo1_6 = $Hmoo01_6.",".$Hmoo02_6.",".$Hmoo03_6.",".$Hmoo04_6.",".$Hmoo05_6.",".$Hmoo06_6.",".$Hmoo07_6.",".$Hmoo08_6.",".$Hmoo09_6.",".$Hmoo10_6.",".$Hmoo11_6.",".$Hmoo12_6.",".$Hmoo13_6 ;
+ $vMhoo1_7 = $Hmoo01_7.",".$Hmoo02_7.",".$Hmoo03_7.",".$Hmoo04_7.",".$Hmoo05_7.",".$Hmoo06_7.",".$Hmoo07_7.",".$Hmoo08_7.",".$Hmoo09_7.",".$Hmoo10_7.",".$Hmoo11_7.",".$Hmoo12_7.",".$Hmoo13_7 ;
 
 $sqlall = "WITH HospitalGroups AS (
   SELECT
@@ -739,9 +804,7 @@ $sqlall = "WITH HospitalGroups AS (
    WHERE 
     p.positiontypeID = '2'
    AND
-      p.Mcatt1 = 'ใช่'
-   AND
-  		p.MWac1_9 <> 'ไม่ผ่านการอบรม'
+      p.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -806,7 +869,12 @@ SELECT
   hg.CODE_PROVINCE,
   hg.HospitalGroup,
   SUM(CASE WHEN  SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 2), ',', -1) = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu01,
-  SUM(CASE WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 4), ',', -1) = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu02
+  SUM(CASE WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 4), ',', -1) = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu02,
+  SUM(CASE WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 1), ',', -1) = 'ยังไม่ผ่านการอบรมเฉพาะทาง' THEN 1 ELSE 0 END) AS nu03,
+  SUM(CASE WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 3), ',', -1) = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ' THEN 1 ELSE 0 END) AS nu04,
+  SUM(CASE WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 5), ',', -1) = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' THEN 1 ELSE 0 END) AS nu05,
+  SUM(CASE WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 6), ',', -1) = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน' THEN 1 ELSE 0 END) AS nu06,
+  SUM(CASE WHEN SUBSTRING_INDEX(SUBSTRING_INDEX(hg.training, ',', 7), ',', -1) = 'อื่น ๆ' THEN 1 ELSE 0 END) AS nu07
 FROM
   HospitalGroups hg
 WHERE HospitalGroup <> 'Other'
@@ -833,8 +901,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 /*
@@ -914,8 +980,7 @@ $MOOsql1p = "WITH trained_personnel AS (
   FROM personnel b
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
-  AND b.Mcatt1 = 'ใช่'
-  AND b.MWac1_9 <> 'ไม่ผ่านการอบรม'
+  AND b.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -981,7 +1046,12 @@ HospitalCounts AS (
   SELECT 
     hosn.CODE_PROVINCE,
     SUM(CASE WHEN tp.Countries2 = 'การพยาบาลเฉพาะทางจิตเวชสุขภาพจิตและจิตเวช (จิตเวชผู้ใหญ่)' THEN 1 ELSE 0 END) AS nu01_1,
-    SUM(CASE WHEN tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu01_2
+    SUM(CASE WHEN tp.Countries4 = 'การพยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS nu01_2,
+    SUM(CASE WHEN tp.Countries1 = 'ยังไม่ผ่านการอบรมเฉพาะทาง' THEN 1 ELSE 0 END) AS nu01_3,
+    SUM(CASE WHEN tp.Countries3 = 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ' THEN 1 ELSE 0 END) AS nu01_4,
+    SUM(CASE WHEN tp.Countries5 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด' THEN 1 ELSE 0 END) AS nu01_5,
+    SUM(CASE WHEN tp.Countries6 = 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน' THEN 1 ELSE 0 END) AS nu01_6,
+    SUM(CASE WHEN tp.Countries7 = 'อื่น ๆ' THEN 1 ELSE 0 END) AS nu01_7
    
   FROM 
     hospitalnew hosn
@@ -1003,6 +1073,11 @@ $dHMOO1p = '' ;
 
 $vMhoo1_1p = '' ;
 $vMhoo1_2p = '' ;
+$vMhoo1_3p = '' ;
+$vMhoo1_4p = '' ;
+$vMhoo1_5p = '' ;
+$vMhoo1_6p = '' ;
+$vMhoo1_7p = '' ;
 
 
 $i = 1 ;
@@ -1015,13 +1090,22 @@ while($row1p = mysqli_fetch_array($Mobj1p))
 
 		$vMhoo1_1p = $row1p['nu01_1'];
     $vMhoo1_2p = $row1p['nu01_2'];
+    $vMhoo1_3p = $row1p['nu01_3'];
+    $vMhoo1_4p = $row1p['nu01_4'];
+    $vMhoo1_5p = $row1p['nu01_5'];
+    $vMhoo1_6p = $row1p['nu01_6'];
+    $vMhoo1_7p = $row1p['nu01_7'];
 
 	}else{
 	$dHMOO1p =  $dHMOO1p.",'".$row1p['CODE_PROVINCE']."'";
 
 	$vMhoo1_1p = $vMhoo1_1p.",".$row1p['nu01_1'];
   $vMhoo1_2p = $vMhoo1_2p.",".$row1p['nu01_2'];
-
+  $vMhoo1_3p = $vMhoo1_3p.",".$row1p['nu01_3'];
+  $vMhoo1_4p = $vMhoo1_4p.",".$row1p['nu01_4'];
+  $vMhoo1_5p = $vMhoo1_5p.",".$row1p['nu01_5'];
+  $vMhoo1_6p = $vMhoo1_6p.",".$row1p['nu01_6'];
+  $vMhoo1_7p = $vMhoo1_7p.",".$row1p['nu01_7'];
 
 	}
 	$i++;
@@ -1168,6 +1252,26 @@ while($row1p = mysqli_fetch_array($Mobj1p))
           <div class="card-body">
 			<form class="form-valide" action="dashboard08nurse.php" method="post" id="myform1" name="foml">  
       <div class="row">
+      <div class="col-md-2">
+               <div class="form-group">
+                  <label> ประเภทบุคลากร</label>
+                  <select name="position" class="form-control select2" id="position" style="width: 100%;">
+                    <option  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="แพทย์" >แพทย์</option>
+                    <option selected="selected" value="พยาบาล" >พยาบาล</option>
+                    <option value="เภสัชกร" >เภสัชกร</option>
+                    <option value="นักจิตวิทยา" >นักจิตวิทยา</option>
+                    <option value="นักสังคมสงเคราะห์" >นักสังคมสงเคราะห์</option>
+                    <option value="นักกิจกรรมบำบัด" >นักกิจกรรมบำบัด</option>
+                    <option value="เวชศาสตร์สื่อความหมาย" >เวชศาสตร์สื่อความหมาย</option>
+                    <option value="นักวิชาการศึกษาพิเศษ" >นักวิชาการศึกษาพิเศษ</option>
+                    <option value="นักวิชาการสาธารณสุข" >นักวิชาการสาธารณสุข</option>
+                    <option value="วิชาชีพอื่นๆ" >วิชาชีพอื่นๆ</option>
+
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->	
               <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
@@ -1408,26 +1512,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
               </div>
               <!-- /.col -->		
                		
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label> ประเภทบุคลากร</label>
-                  <select name="position" class="form-control select2" id="position" style="width: 100%;">
-                    <option  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="แพทย์" >แพทย์</option>
-                    <option selected="selected" value="พยาบาล" >พยาบาล</option>
-                    <option value="เภสัชกร" >เภสัชกร</option>
-                    <option value="นักจิตวิทยา" >นักจิตวิทยา</option>
-                    <option value="นักสังคมสงเคราะห์" >นักสังคมสงเคราะห์</option>
-                    <option value="นักกิจกรรมบำบัด" >นักกิจกรรมบำบัด</option>
-                    <option value="เวชศาสตร์สื่อความหมาย" >เวชศาสตร์สื่อความหมาย</option>
-                    <option value="นักวิชาการศึกษาพิเศษ" >นักวิชาการศึกษาพิเศษ</option>
-                    <option value="นักวิชาการสาธารณสุข" >นักวิชาการสาธารณสุข</option>
-                    <option value="วิชาชีพอื่นๆ" >วิชาชีพอื่นๆ</option>
-
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->	
+             
             </div>
             <!-- /.row -->
 		
@@ -1653,7 +1738,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					<h3 class="card-title">พยาบาล</h3>
 				</div>
 				<div class="card-body">
-					<a href="#"><canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
 					<script>
         const ctx = document.getElementById('myChart3');
         
@@ -1930,7 +2015,7 @@ downloadButton.addEventListener('click', function() {
 					<h3 class="card-title">ข้อมูลแพทย์</h3>
 				</div>-->
 				<div class="card-body">
-					<a href="#"><canvas id="myChart6" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<canvas id="myChart6" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
 					<script>
         const ctx6 = document.getElementById('myChart6');
         
@@ -1940,7 +2025,7 @@ downloadButton.addEventListener('click', function() {
         const myChart6 = new Chart(ctx6, {
             type: 'bar',
             data: {
-                labels: ['พยาบาล PG สุขภาพจิต', 'พยาบาล PG จิตเวชเด็ก'],
+                labels: ['ยังไม่ผ่านการอบรมเฉพาะทาง', 'พยาบาล PG สุขภาพจิต', 'พยาบาล PG จิตเวชเด็ก', 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ', 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด', 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน', 'อื่น ๆ'],
                 datasets: [{
                     label: 'ระดับกรมสุขภาพจิต',
                     data: [<?php echo $nu01total;?>],
@@ -2015,7 +2100,7 @@ downloadButton.addEventListener('click', function() {
 					<h3 class="card-title">พยาบาลปฏิบัติงานวิกฤตสุขภาพจิต (MCATT) รายเขตสุขภาพ﻿</h3>
 				</div>
 				<div class="card-body">
-					<a href="#"><canvas id="myChart7" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<canvas id="myChart7" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
 					<script>
         const ctx7 = document.getElementById('myChart7');
         
@@ -2027,6 +2112,14 @@ downloadButton.addEventListener('click', function() {
             data: {
                 labels: [<?php echo $dHMOO1; ?>],
                 datasets: [{
+                    label: 'ยังไม่ผ่านการอบรมเฉพาะทาง',
+                    data: [<?php echo $vMhoo1_3; ?>],
+                    backgroundColor: '#E0BBE4',
+                    borderColor: '#E0BBE4',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
                     label: 'พยาบาล PG สุขภาพจิต',
                     data: [<?php echo $vMhoo1_1; ?>],
                     backgroundColor: '#00cadc',
@@ -2039,6 +2132,38 @@ downloadButton.addEventListener('click', function() {
                     data: [<?php echo $vMhoo1_2; ?>],
                     backgroundColor: '#49c3fb',
                     borderColor: '#49c3fb',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ',
+                    data: [<?php echo $vMhoo1_4; ?>],
+                    backgroundColor: '#C8EFB3',
+                    borderColor: '#C8EFB3',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด',
+                    data: [<?php echo $vMhoo1_5; ?>],
+                    backgroundColor: '#F9D39D',
+                    borderColor: '#F9D39D',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน',
+                    data: [<?php echo $vMhoo1_6; ?>],
+                    backgroundColor: '#F7ABDC',
+                    borderColor: '#F7ABDC',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'อื่น ๆ',
+                    data: [<?php echo $vMhoo1_7; ?>],
+                    backgroundColor: '#C03778',
+                    borderColor: '#C03778',
                     borderWidth: 1,
                     stack: 'combined2' // Enable stacking for this dataset
                 }]
@@ -2240,7 +2365,7 @@ downloadButton.addEventListener('click', function() {
 					<h3 class="card-title">ข้อมูลแพทย์</h3>
 				</div>-->
 				<div class="card-body">
-					<a href="#"><canvas id="myChart8" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<canvas id="myChart8" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
 					<script>
         const ctx8 = document.getElementById('myChart8');
         
@@ -2252,6 +2377,14 @@ downloadButton.addEventListener('click', function() {
           data: {
                 labels: [<?php echo $dHMOO1p; ?>],
                 datasets: [{
+                    label: 'ยังไม่ผ่านการอบรมเฉพาะทาง',
+                    data: [<?php echo $vMhoo1_3p; ?>],
+                    backgroundColor: '#E0BBE4',
+                    borderColor: '#E0BBE4',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
                     label: 'พยาบาล PG สุขภาพจิต',
                     data: [<?php echo $vMhoo1_1p; ?>],
                     backgroundColor: '#00cadc',
@@ -2264,6 +2397,38 @@ downloadButton.addEventListener('click', function() {
                     data: [<?php echo $vMhoo1_2p; ?>],
                     backgroundColor: '#49c3fb',
                     borderColor: '#49c3fb',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ',
+                    data: [<?php echo $vMhoo1_4p; ?>],
+                    backgroundColor: '#C8EFB3',
+                    borderColor: '#C8EFB3',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด',
+                    data: [<?php echo $vMhoo1_5p; ?>],
+                    backgroundColor: '#F9D39D',
+                    borderColor: '#F9D39D',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน',
+                    data: [<?php echo $vMhoo1_6p; ?>],
+                    backgroundColor: '#F7ABDC',
+                    borderColor: '#F7ABDC',
+                    borderWidth: 1,
+                    stack: 'combined2' // Enable stacking for this dataset
+                },
+                {
+                    label: 'อื่น ๆ',
+                    data: [<?php echo $vMhoo1_7p; ?>],
+                    backgroundColor: '#C03778',
+                    borderColor: '#C03778',
                     borderWidth: 1,
                     stack: 'combined2' // Enable stacking for this dataset
                 }]
@@ -2353,8 +2518,13 @@ downloadButton.addEventListener('click', function() {
 						</div>
                    
 				</div></th>
+                    <th width="12%">ยังไม่ผ่านการอบรมเฉพาะทาง</th>
                     <th width="12%">พยาบาล PG สุขภาพจิต (คน)</th>
                     <th width="12%">พยาบาล PG จิตเวชเด็ก (คน)</th>
+                    <th width="12%">การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ</th>
+                    <th width="12%">การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด</th>
+                    <th width="12%">การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน</th>
+                    <th width="12%">อื่น ๆ</th>
                   </tr>
                    </thead>
                   <tbody>
@@ -2367,8 +2537,13 @@ downloadButton.addEventListener('click', function() {
           <tr align="center">
 						<td width="5%"><?php echo $rowall['CODE_PROVINCE'];?></td>
 						<td width="12%"><?php echo $rowall['HospitalGroup'];?></td>
+						<td width="12%"><?php echo $rowall['nu03'];?></td>
 						<td width="12%"><?php echo $rowall['nu01'];?></td>
 						<td width="12%"><?php echo $rowall['nu02'];?></td>
+            <td width="12%"><?php echo $rowall['nu04'];?></td>
+						<td width="12%"><?php echo $rowall['nu05'];?></td>
+            <td width="12%"><?php echo $rowall['nu06'];?></td>
+						<td width="12%"><?php echo $rowall['nu07'];?></td>
 				   </tr>
 				   <?php 
 						}
@@ -2406,8 +2581,13 @@ downloadButton.addEventListener('click', function() {
 						</div>
                    
 				</div></th>
+                    <th width="12%">ยังไม่ผ่านการอบรมเฉพาะทาง</th>
                     <th width="12%">พยาบาล PG สุขภาพจิต (คน)</th>
                     <th width="12%">พยาบาล PG จิตเวชเด็ก (คน)</th>
+                    <th width="12%">การพยาบาลเฉพาะสุขภาพจิตและจิตเวชผู้สูงอายุ</th>
+                    <th width="12%">การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด</th>
+                    <th width="12%">การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน</th>
+                    <th width="12%">อื่น ๆ</th>
                   </tr>
                    </thead>
                   <tbody>
@@ -2420,8 +2600,13 @@ downloadButton.addEventListener('click', function() {
           <tr align="center">
 						<td width="5%"><?php echo $rowall1['CODE_PROVINCE'];?></td>
 						<td width="12%"><?php echo $rowall1['HospitalGroup'];?></td>
+            <td width="12%"><?php echo $rowall1['nu03'];?></td>
 						<td width="12%"><?php echo $rowall1['nu01'];?></td>
 						<td width="12%"><?php echo $rowall1['nu02'];?></td>
+						<td width="12%"><?php echo $rowall1['nu04'];?></td>
+            <td width="12%"><?php echo $rowall1['nu05'];?></td>
+						<td width="12%"><?php echo $rowall1['nu06'];?></td>
+            <td width="12%"><?php echo $rowall1['nu07'];?></td>
 				   </tr>
 				   <?php 
 						}

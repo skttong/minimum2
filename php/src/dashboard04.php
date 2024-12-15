@@ -946,7 +946,38 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
       </div>
       <!-- /.container-fluid -->
 
+      <?php
+// ฟังก์ชันสำหรับจัดการข้อมูล (แยก string, ลบช่องว่าง, ตัด index ใหม่)
+function cleanData($data) {
+  // แปลง string เป็น array
+  $data = explode(',', $data);
 
+  // ลบค่าว่างและ trim ช่องว่างหรือเครื่องหมายที่ไม่ต้องการ
+  $data = array_filter($data, function($value) {
+      return trim($value) !== '';
+  });
+
+  // ตัดช่องว่างและลบ ' ออกจากแต่ละค่า
+  $data = array_map(function($value) {
+      return trim($value, "' ");
+  }, $data);
+
+  // รีเซ็ต index ใหม่
+  return array_values($data);
+}
+
+// จัดการกับตัวแปรทั้งหมด
+$hmoo = cleanData($hmoo);
+$b01 = cleanData($b01);
+$b02 = cleanData($b02);
+
+
+// ตรวจสอบผลลัพธ์
+//var_dump($hmoo);
+//var_dump($b01);
+//var_dump($b02);
+
+?>
 	  <!-- Default box -->
       <div class="row">
 		<div class="col-md-6">
@@ -969,10 +1000,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
         const myChart3 = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: [<?php echo $hmoo?>],
+                labels: <?php echo json_encode($hmoo); ?>,
                 datasets: [{
                     label: 'Electroconvulsive therapy (ECT)',
-                    data: [<?php echo $b01?>],
+                    data: <?php echo json_encode($b01); ?>,
                     backgroundColor: '#6ce5e8',
                     borderColor: '#6ce5e8',
                     borderWidth: 1,
@@ -980,7 +1011,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 },
                 {
                     label: 'Transcranial Magnetic Stimulation (TMS)',
-                    data: [<?php echo $b02?>],
+                    data: <?php echo json_encode($b02); ?>,
                     backgroundColor: '#41b8d5',
                     borderColor: '#41b8d5',
                     borderWidth: 1,
@@ -988,15 +1019,24 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        stacked: true, // Enable stacking for the y-axis
-                        ticks: {
-                            beginAtZero: true
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkip: true,
+                        callback: function(value) {
+                            return this.getLabelForValue(value).trim(); // ลบช่องว่างเกินออก
                         }
-                    }]
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true
                 }
             }
+        }
         });
 
 downloadButton.addEventListener('click', function() {

@@ -581,6 +581,25 @@ $objall2 = mysqli_query($con, $sqlall2);
           <div class="card-body">
 			<form class="form-valide" action="dashboard02social.php" method="post" id="myform1" name="foml">  
       <div class="row">
+      <div class="col-md-2">
+               <div class="form-group">
+                  <label> ประเภทบุคลากร</label>
+                  <select name="position" class="form-control select2" id="position" style="width: 100%;">
+					<option value="แพทย์" >แพทย์</option>
+					<option value="พยาบาล" >พยาบาล</option>
+					<option value="เภสัชกร" >เภสัชกร</option>
+					<option value="นักจิตวิทยา" >นักจิตวิทยา</option>
+					<option selected="selected" value="นักสังคมสงเคราะห์" >นักสังคมสงเคราะห์</option>
+					<option value="นักกิจกรรมบำบัด" >นักกิจกรรมบำบัด</option>
+					<option value="เวชศาสตร์สื่อความหมาย" >เวชศาสตร์สื่อความหมาย</option>
+					<option value="นักวิชาการศึกษาพิเศษ" >นักวิชาการศึกษาพิเศษ</option>
+					<option value="นักวิชาการสาธารณสุข" >นักวิชาการสาธารณสุข</option>
+					<option value="วิชาชีพอื่นๆ" >วิชาชีพอื่นๆ</option>
+
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->	
               <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
@@ -822,25 +841,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
               <!-- /.col -->		
                
               
-			  <div class="col-md-2">
-               <div class="form-group">
-                  <label> ประเภทบุคลากร</label>
-                  <select name="position" class="form-control select2" id="position" style="width: 100%;">
-					<option value="แพทย์" >แพทย์</option>
-					<option value="พยาบาล" >พยาบาล</option>
-					<option value="เภสัชกร" >เภสัชกร</option>
-					<option value="นักจิตวิทยา" >นักจิตวิทยา</option>
-					<option selected="selected" value="นักสังคมสงเคราะห์" >นักสังคมสงเคราะห์</option>
-					<option value="นักกิจกรรมบำบัด" >นักกิจกรรมบำบัด</option>
-					<option value="เวชศาสตร์สื่อความหมาย" >เวชศาสตร์สื่อความหมาย</option>
-					<option value="นักวิชาการศึกษาพิเศษ" >นักวิชาการศึกษาพิเศษ</option>
-					<option value="นักวิชาการสาธารณสุข" >นักวิชาการสาธารณสุข</option>
-					<option value="วิชาชีพอื่นๆ" >วิชาชีพอื่นๆ</option>
-
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->		
+			  	
             </div>
             <!-- /.row -->
 		

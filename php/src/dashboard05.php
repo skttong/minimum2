@@ -275,11 +275,11 @@ $msql1 = "WITH HospitalCounts AS (
         h.CODE5,
         h.TYPE_SERVICE,
         s.mhpsDate,
-        COUNT(*) AS total_hospitals,
-        COUNT(CASE WHEN SUBSTRING_INDEX(s.qus1_1, ',', 1) = '1' THEN 1 END) AS Countries1
+        (SELECT count(*) FROM  hospitalnew hp WHERE h.CODE_PROVINCE = hp.CODE_PROVINCE AND hp.TYPE_SERVICE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์') ) AS total_hospitals,
+        COUNT(CASE WHEN SUBSTRING_INDEX(s.qus1_1, ',', 1) <> 0 THEN 1 END) AS Countries1
     FROM hospitalnew h
-    LEFT JOIN serviceform s ON h.CODE5 = s.HospitalID
-    WHERE h.HOS_TYPE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์')
+    JOIN serviceform s ON h.CODE5 = s.HospitalID
+    WHERE h.TYPE_SERVICE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์')
     GROUP BY h.CODE_PROVINCE
 )
 SELECT
@@ -290,6 +290,7 @@ SELECT
     hc.Countries1
 FROM HospitalCounts hc
 JOIN mapdetail m ON hc.CODE_PROVINCE = m.CODE_PROVINCE
+WHERE 1 
       ";
 /*  
 if (isset($_POST['Year'])) {
@@ -355,7 +356,7 @@ GROUP BY
 ";
 */
 
-$msql1;
+//echo $msql1;
 
 $mobj1 = mysqli_query($con, $msql1);
 
@@ -368,6 +369,8 @@ while($mrow1 = mysqli_fetch_array($mobj1))
 	}
 	//['th-ct', 10],
 }
+
+//echo $datamap ;
 
 /*
 $sqlall = "SELECT

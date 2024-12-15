@@ -696,8 +696,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 											personnel.firstname, 
 											personnel.lastname,  
 											personnel.age,
-											personnel.r1 as 'positionAllName', 
-											personnel.r2 as 'fixpositionAllName', 
+											personnel.r1 , 
+											personnel.r2 , 
 											hospitalnew.HOS_NAME,
 											personnel.positionrole, 
 											personneltype.Ptypename,
@@ -974,8 +974,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 						 	<td><?php echo $rowpersonnel2['Ptypename']; ?></td>
 							<td><?php echo $rowpersonnel2['Mcatt1']; ?></td>
 							<td><?php echo $rowpersonnel2['age']; ?></td>
-							<td><?php echo $rowpersonnel2['positionAllName']; ?></td>
-							<td><?php echo $rowpersonnel2['fixpositionAllName']; ?></td>
+							<td><?php echo $rowpersonnel2['r1']; ?></td>
+							<td><?php echo $rowpersonnel2['r2']; ?></td>
 							<td><?php echo $rowpersonnel2['HOS_NAME']; ?></td>
 							<td><?php echo $rowpersonnel2['Ptypename']; ?></td>
 							<td><?php echo $rowpersonnel2['congrat']; ?></td>

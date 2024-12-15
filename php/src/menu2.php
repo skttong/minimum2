@@ -55,6 +55,68 @@
                 <!--<i class="right fas fa-angle-left"></i>-->
              </p>
             </a>
+			<ul class="nav nav-treeview">
+					<li class="nav-item">
+					<a href="dashboard02doctor.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>แพทย์</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02nurse.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>พยาบาล</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02medicine.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>เภสัชกร</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02heart.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>นักจิตวิทยา</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02social.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>นักสังคมสงเคราะห์</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02physical-therapy.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>นักกิจกรรมบำบัด</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02translation.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>เวชศาสตร์สื่อความหมาย</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02education.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>นักวิชาการศึกษาพิเศษ</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02health.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>นักวิชาการสาธารณสุข</p>
+					</a>
+					</li>
+					<li class="nav-item">
+					<a href="dashboard02other.php" class="nav-link">
+						<i class="fas fa-minus nav-icon" style="font-size:12px;"></i>
+						<p>วิชาชีพอื่นๆ</p>
+					</a>
+					</li>
+				</ul>
          </li>
 		 <li class="nav-item">
             <!--<a href="report-1.php" class="nav-link">-->

@@ -75,9 +75,9 @@ if (isset($_POST['Year'])) {
     $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $msql1 = $msql1."AND ho.b_year = '".$Year."'" ;
   }
@@ -158,9 +158,9 @@ if (isset($_POST['Year'])) {
     $sqlhdc01 = $sqlhdc01."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $sqlhdc01 = $sqlhdc01."AND ho.b_year = '".$Year."'" ;
   }
@@ -265,9 +265,9 @@ if (isset($_POST['Year'])) {
     $sqlhdc02 = $sqlhdc02."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $sqlhdc02 = $sqlhdc02."AND ho.b_year = '".$Year."'" ;
   }
@@ -377,9 +377,9 @@ if (isset($_POST['Year'])) {
     $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $sqlHD16 = $sqlHD16."AND ho.b_year = '".$Year."'" ;
   }
@@ -456,9 +456,9 @@ if (isset($_POST['Year'])) {
     $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $sqlHD12 = $sqlHD12."AND ho.b_year = '".$Year."'" ;
   }
@@ -536,9 +536,9 @@ if (isset($_POST['Year'])) {
     $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $sqlHD13 = $sqlHD13."AND ho.b_year = '".$Year."'" ;
   }
@@ -612,9 +612,9 @@ if (isset($_POST['Year'])) {
     $sqlHD14 = $sqlHD14."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $sqlHD14 = $sqlHD14."AND ho.b_year = '".$Year."'" ;
   }
@@ -690,9 +690,9 @@ if (isset($_POST['Year'])) {
     $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
     $sqlHD15 = $sqlHD15."AND ho.b_year = '".$Year."'" ;
   }
@@ -749,12 +749,32 @@ $total15_result4 = $rowHD15['total15_result4'];
 
 
 $sqlHD23 = "SELECT
-  groupcode,
+  groupcode, ";
+  /*
   SUM(CASE WHEN b_year = '2567' THEN total ELSE 0 END) AS total_2567,
   SUM(CASE WHEN b_year = '2566' THEN total ELSE 0 END) AS total_2566,
   SUM(CASE WHEN b_year = '2565' THEN total ELSE 0 END) AS total_2565,
   SUM(CASE WHEN b_year = '2564' THEN total ELSE 0 END) AS total_2564,
   SUM(CASE WHEN b_year = '2563' THEN total ELSE 0 END) AS total_2563
+  */
+
+  for($i=0; $i < (5); $i++) {
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      if($i == 4){
+        $sqlHD23 = $sqlHD23."SUM(CASE WHEN b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlHD23 = $sqlHD23."SUM(CASE WHEN b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+    }else{
+      
+      if($i == 4){
+        $sqlHD23 = $sqlHD23."SUM(CASE WHEN b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlHD23 = $sqlHD23."SUM(CASE WHEN b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+      }
+  }
+$sqlHD23 = $sqlHD23."
 FROM
   HDCTB23 h
 JOIN hospitalnew hn ON h.hospcode = hn.CODE5
@@ -772,11 +792,11 @@ if (isset($_POST['Year'])) {
     $sqlHD23 = $sqlHD23."AND h.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
-    $sqlHD23 = $sqlHD23."AND h.b_year = '".$Year."'" ;
+    //$sqlHD23 = $sqlHD23."AND h.b_year = '".$Year."'" ;
   }
 
 
@@ -831,23 +851,64 @@ $hdc23tatal3='';
 $hdc23tatal41='';
 $hdc23tatal42='';
 
+$labelhdc23 = ''; // ทำให้ค่าว่างก่อนเริ่ม
+$years = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years[] = (date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years[] = (date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+// เปลี่ยนลำดับให้เป็นจากปีเก่าที่สุด (2564) ไปถึงปีใหม่ (2568)
+$years = array_reverse($years); // สลับลำดับปี
+
+// สร้าง label สำหรับการแสดงผล
+foreach ($years as $index => $year) {
+    if ($index == count($years) - 1) {
+        $labelhdc23 .= "'ปี $year' "; // ปีสุดท้าย (2568)
+    } else {
+        $labelhdc23 .= "'ปี $year',"; // ปีอื่นๆ
+    }
+}
+
+$years2 = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years2[] = 'total_'.(date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years2[] = 'total_'.(date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+//print_r($years2);
+
 while($rowhdc23 = mysqli_fetch_array($objhdc23))
 {
 	if($rowhdc23['groupcode'] == '8'){
-		$hdc23_1 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
-        $hdc23tatal1 = $rowhdc23['total_2567'];
+		$hdc23_1 = "'".$rowhdc23[$years2[4]]."','".$rowhdc23[$years2[3]]."','".$rowhdc23[$years2[2]]."','".$rowhdc23[$years2[1]]."','".$rowhdc23[$years2[0]]."'";
+        $hdc23tatal1 = $rowhdc23[$years2[0]];
 	}else if($rowhdc23['groupcode'] == '10.1'){
-		$hdc23_2 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
-        $hdc23tatal2 = $rowhdc23['total_2567'];
+		$hdc23_2 = "'".$rowhdc23[$years2[4]]."','".$rowhdc23[$years2[3]]."','".$rowhdc23[$years2[2]]."','".$rowhdc23[$years2[1]]."','".$rowhdc23[$years2[0]]."'";
+        $hdc23tatal2 = $rowhdc23[$years2[0]];
 	}else if($rowhdc23['groupcode'] == '9.2'){
-		$hdc23_3 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
-        $hdc23tatal3 = $rowhdc23['total_2567'];
+		$hdc23_3 = "'".$rowhdc23[$years2[4]]."','".$rowhdc23[$years2[3]]."','".$rowhdc23[$years2[2]]."','".$rowhdc23[$years2[1]]."','".$rowhdc23[$years2[0]]."'";
+        $hdc23tatal3 = $rowhdc23[$years2[0]];
 	}else if($rowhdc23['groupcode'] == '4.1'){
-		$hdc23_41 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
-        $hdc23tatal41 = $rowhdc23['total_2567'];
+		$hdc23_41 = "'".$rowhdc23[$years2[4]]."','".$rowhdc23[$years2[3]]."','".$rowhdc23[$years2[2]]."','".$rowhdc23[$years2[1]]."','".$rowhdc23[$years2[0]]."'";
+        $hdc23tatal41 = $rowhdc23[$years2[0]];
 	}else if($rowhdc23['groupcode'] == '4.2'){
-		$hdc23_42 = "'".$rowhdc23['total_2563']."','".$rowhdc23['total_2564']."','".$rowhdc23['total_2565']."','".$rowhdc23['total_2566']."','".$rowhdc23['total_2567']."'";
-        $hdc23tatal42 = $rowhdc23['total_2567'];
+		$hdc23_42 = "'".$rowhdc23[$years2[4]]."','".$rowhdc23[$years2[3]]."','".$rowhdc23[$years2[2]]."','".$rowhdc23[$years2[1]]."','".$rowhdc23[$years2[0]]."'";
+        $hdc23tatal42 = $rowhdc23[$years2[0]];
 	}
 	
 }
@@ -878,11 +939,11 @@ if (isset($_POST['Year'])) {
     $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
   }else{
     if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-      $Year = (date("Y"))+1;
+      $Year = (date("Y"))+1+543;
     }else{
-      $Year = (date("Y"));
+      $Year = (date("Y"))+543;
     }
-    $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
+   // $sqlHD16_2 = $sqlHD16_2."AND ho.b_year = '".$Year."'" ;
   }
 
 
@@ -964,11 +1025,11 @@ WHERE
         $sqlHD22OLD_1 = $sqlHD22OLD_1."AND ho.b_year = '".$Year."'" ;
       }else{
         if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-          $Year = (date("Y"))+1;
+          $Year = (date("Y"))+1+543;
         }else{
-          $Year = (date("Y"));
+          $Year = (date("Y"))+543;
         }
-        $sqlHD22OLD_1 = $sqlHD22OLD_1."AND ho.b_year = '".$Year."'" ;
+        //$sqlHD22OLD_1 = $sqlHD22OLD_1."AND ho.b_year = '".$Year."'" ;
       }
       
   
@@ -1043,11 +1104,11 @@ WHERE
         $sqlHD22OLD = $sqlHD22OLD."AND ho.b_year = '".$Year."'" ;
       }else{
         if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
-          $Year = (date("Y"))+1;
+          $Year = (date("Y"))+1+543;
         }else{
-          $Year = (date("Y"));
+          $Year = (date("Y"))+543;
         }
-        $sqlHD22OLD = $sqlHD22OLD."AND ho.b_year = '".$Year."'" ;
+        //$sqlHD22OLD = $sqlHD22OLD."AND ho.b_year = '".$Year."'" ;
       }
       
   
@@ -1652,7 +1713,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                             const myChart5 = new Chart(ctx5, {
                                 type: 'line',
                                 data: {
-                                    labels: [ 'ปี 2563','ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+                                    labels: [ <?php echo $labelhdc23; ?>],
                                     datasets: [{
                                         label: 'ภาวะบกพร่องทางสติปัญญา',
                                         data: [<?php echo $hdc23_1;?>],
@@ -2184,7 +2245,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                 },
                                 */
                                 data: {
-                                    labels: [<?php echo $labels_2;?>],
+                                    labels: [<?php echo $labels_22;?>],
                                     datasets: [{
                                         label: 'อัตราการฆ่าตัวตายสำเร็จ',
                                         data: [<?php echo $total_result1_2;?>],

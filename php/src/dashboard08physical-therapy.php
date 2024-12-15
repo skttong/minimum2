@@ -70,8 +70,7 @@ JOIN hospitalnew ON hospitalnew.CODE5 = personnel.HospitalID
 WHERE
     personnel.positiontypeID = '6'
 AND personnel.setdel = '1'
-AND personnel.Mcatt1 = 'ใช่'
-AND personnel.MWac1_9 <> 'ไม่ผ่านการอบรม'
+AND personnel.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -154,8 +153,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 /*
@@ -231,9 +228,7 @@ FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
-  p.Mcatt1 = 'ใช่'
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม' 
+  p.Mcatt1 = 'ใช่' 
 ";
 
 /*
@@ -420,9 +415,7 @@ JOIN personnel pt ON hg.HospitalID = pt.HospitalID
 WHERE 
   pt.positiontypeID = '6'
 AND 
-  pt.Mcatt1 = 'ใช่'
-AND
-  pt.MWac1_9 <> 'ไม่ผ่านการอบรม'
+  pt.Mcatt1 = 'ใช่' 
 AND 
   hg.HospitalGroup <> 'Other'
 ";
@@ -507,8 +500,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 /*
@@ -584,8 +575,6 @@ FROM
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
 WHERE
   p.Mcatt1 = 'ใช่' 
-AND
-  p.MWac1_9 <> 'ไม่ผ่านการอบรม'
 ";
 
 /*
@@ -819,6 +808,26 @@ while($row1p = mysqli_fetch_array($Mobj1p))
           <div class="card-body">
 			<form class="form-valide" action="dashboard08physical-therapy.php" method="post" id="myform1" name="foml">  
       <div class="row">
+      <div class="col-md-2">
+               <div class="form-group">
+                  <label> ประเภทบุคลากร</label>
+                  <select name="position" class="form-control select2" id="position" style="width: 100%;">
+                    <option  value="ทั้งหมด" >ทั้งหมด</option>
+                    <option value="แพทย์" >แพทย์</option>
+                    <option value="พยาบาล" >พยาบาล</option>
+                    <option value="เภสัชกร" >เภสัชกร</option>
+                    <option value="นักจิตวิทยา" >นักจิตวิทยา</option>
+                    <option value="นักสังคมสงเคราะห์" >นักสังคมสงเคราะห์</option>
+                    <option selected="selected" value="นักกิจกรรมบำบัด" >นักกิจกรรมบำบัด</option>
+                    <option value="เวชศาสตร์สื่อความหมาย" >เวชศาสตร์สื่อความหมาย</option>
+                    <option value="นักวิชาการศึกษาพิเศษ" >นักวิชาการศึกษาพิเศษ</option>
+                    <option value="นักวิชาการสาธารณสุข" >นักวิชาการสาธารณสุข</option>
+                    <option value="วิชาชีพอื่นๆ" >วิชาชีพอื่นๆ</option>
+
+                  </select>
+                </div>
+              </div>
+              <!-- /.col -->		
               <div class="col-md-2">
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
@@ -1059,26 +1068,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
               </div>
               <!-- /.col -->		
                	
-			  <div class="col-md-2">
-               <div class="form-group">
-                  <label> ประเภทบุคลากร</label>
-                  <select name="position" class="form-control select2" id="position" style="width: 100%;">
-                    <option  value="ทั้งหมด" >ทั้งหมด</option>
-                    <option value="แพทย์" >แพทย์</option>
-                    <option value="พยาบาล" >พยาบาล</option>
-                    <option value="เภสัชกร" >เภสัชกร</option>
-                    <option value="นักจิตวิทยา" >นักจิตวิทยา</option>
-                    <option value="นักสังคมสงเคราะห์" >นักสังคมสงเคราะห์</option>
-                    <option selected="selected" value="นักกิจกรรมบำบัด" >นักกิจกรรมบำบัด</option>
-                    <option value="เวชศาสตร์สื่อความหมาย" >เวชศาสตร์สื่อความหมาย</option>
-                    <option value="นักวิชาการศึกษาพิเศษ" >นักวิชาการศึกษาพิเศษ</option>
-                    <option value="นักวิชาการสาธารณสุข" >นักวิชาการสาธารณสุข</option>
-                    <option value="วิชาชีพอื่นๆ" >วิชาชีพอื่นๆ</option>
-
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->		
+			  
             </div>
             <!-- /.row -->
 		

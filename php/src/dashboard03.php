@@ -1247,6 +1247,41 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
         </div>
         <!-- /.row -->
       </div>
+      <?php
+// ฟังก์ชันสำหรับจัดการข้อมูล (แยก string, ลบช่องว่าง, ตัด index ใหม่)
+function cleanData($data) {
+  // แปลง string เป็น array
+  $data = explode(',', $data);
+
+  // ลบค่าว่างและ trim ช่องว่างหรือเครื่องหมายที่ไม่ต้องการ
+  $data = array_filter($data, function($value) {
+      return trim($value) !== '';
+  });
+
+  // ตัดช่องว่างและลบ ' ออกจากแต่ละค่า
+  $data = array_map(function($value) {
+      return trim($value, "' ");
+  }, $data);
+
+  // รีเซ็ต index ใหม่
+  return array_values($data);
+}
+
+// จัดการกับตัวแปรทั้งหมด
+$hmoo = cleanData($hmoo);
+$b01 = cleanData($b01);
+$b02 = cleanData($b02);
+$b03 = cleanData($b03);
+$hmoo2 = cleanData($hmoo2);
+$b204 = cleanData($b204);
+$b203 = cleanData($b203);
+
+// ตรวจสอบผลลัพธ์
+//var_dump($hmoo);
+//var_dump($b01);
+//var_dump($b02);
+//var_dump($b03);
+?>
 
     
 	
@@ -1262,54 +1297,59 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					</div>
 				</div>
 				<div class="card-body">
-					<a href="#"><canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
 					<script>
 						const ctx = document.getElementById('myChart3');
 						
 						
 						const downloadButton = document.getElementById('download-button');
 
-						const myChart3 = new Chart(ctx, {
-							type: 'bar',
-							data: {
-								labels: [<?php echo $hmoo;?>],
-								datasets: [{
-									label: 'Psychiatric Ward',
-									data: [<?php echo $b01;?>],
-									backgroundColor: '#6ce5e8',
-									borderColor: '#6ce5e8',
-									borderWidth: 1,
-									stack: 'combined' // Enable stacking for this dataset
-								},
-								{
-									label: 'Psychiatric Unit',
-									data: [<?php echo $b02;?>],
-									backgroundColor: '#41b8d5',
-									borderColor: '#41b8d5',
-									borderWidth: 1,
-									stack: 'combined1' // Enable stacking for this dataset
-								},
-								{
-									label: 'Integrated Bed',
-									data: [<?php echo $b03;?>],
-									backgroundColor: '#2d8bba',
-									borderColor: '#2d8bba',
-									borderWidth: 1,
-									stack: 'combined2' // Enable stacking for this dataset
-								}]
-							},
-							options: {
-								scales: {
-									yAxes: [{
-										stacked: true, // Enable stacking for the y-axis
-										ticks: {
-											beginAtZero: true
-										}
-									}]
-								}
-							}
-						});
-
+            const myChart3 = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode($hmoo); ?>, // จัดการ JSON ให้ถูกต้อง
+            datasets: [
+                {
+                    label: 'Psychiatric Ward',
+                    data: <?php echo json_encode($b01); ?>,
+                    backgroundColor: '#6ce5e8',
+                    stack: 'combined'
+                },
+                {
+                    label: 'Psychiatric Unit',
+                    data: <?php echo json_encode($b02); ?>,
+                    backgroundColor: '#41b8d5',
+                    stack: 'combined1'
+                },
+                {
+                    label: 'Integrated Bed',
+                    data: <?php echo json_encode($b03); ?>,
+                    backgroundColor: '#2d8bba',
+                    stack: 'combined2'
+                }
+            ]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkip: true,
+                        callback: function(value) {
+                            return this.getLabelForValue(value).trim(); // ลบช่องว่างเกินออก
+                        }
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+ 
 				downloadButton.addEventListener('click', function() {
 					const chartData = myChart3.toBase64Image(); // Get chart image data
 					const link = document.createElement('a');
@@ -1329,7 +1369,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 					</div>
 				</div>
 				<div class="card-body">
-					<a href="#"><canvas id="myChart5" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
+					<canvas id="myChart5" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas>
 					<script>
         const ctx5 = document.getElementById('myChart5');
         
@@ -1339,10 +1379,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
         const myChart5 = new Chart(ctx5, {
             type: 'bar',
             data: {
-                labels: [<?php echo $hmoo2; ?>],
+                labels: <?php echo json_encode($hmoo2); ?>,
                 datasets: [{
                     label: 'จำนวนเตียง (ผู้หญิง)',
-                    data: [<?php echo $b204; ?>],
+                    data: <?php echo json_encode($b204); ?>,
                     backgroundColor: '#9ce7fa',
                     borderColor: '#9ce7fa',
                     borderWidth: 1,
@@ -1350,7 +1390,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 },
                 {
                     label: 'จำนวนเตียง (ผู้ชาย)',
-                    data: [<?php echo $b203; ?>],
+                    data: <?php echo json_encode($b203); ?>,
                     backgroundColor: '#ffb9c2',
                     borderColor: '#ffb9c2',
                     borderWidth: 1,
@@ -1358,15 +1398,24 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 }]
             },
             options: {
-                scales: {
-                    yAxes: [{
-                        stacked: true, // Enable stacking for the y-axis
-                        ticks: {
-                            beginAtZero: true
+            responsive: true,
+            scales: {
+                x: {
+                    stacked: true,
+                    ticks: {
+                        maxRotation: 0,
+                        autoSkip: true,
+                        callback: function(value) {
+                            return this.getLabelForValue(value).trim(); // ลบช่องว่างเกินออก
                         }
-                    }]
+                    }
+                },
+                y: {
+                    stacked: true,
+                    beginAtZero: true
                 }
             }
+        }
         });
 
 downloadButton2.addEventListener('click', function() {

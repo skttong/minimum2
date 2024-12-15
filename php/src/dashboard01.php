@@ -1324,12 +1324,31 @@ if($total_bed == ''){
 
 
 $sqlhdc01 = "SELECT
-  h.groupcode,
+  h.groupcode, ";
+  /*
   SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
   SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
   SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
   SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
   SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
+  */
+  for($i=0; $i < (5); $i++) {
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      if($i == 4){
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+    }else{
+      
+      if($i == 4){
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+      }
+  }
+$sqlhdc01 = $sqlhdc01."
 FROM
   HDCTB01 h
 JOIN hospitalnew hn ON h.hospcode = hn.CODE5
@@ -1345,7 +1364,7 @@ if (isset($_POST['Year'])) {
 	}else{
 		$Year = (date("Y"));
   }
-  $sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
+  //$sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
 }
 
 
@@ -1397,29 +1416,93 @@ $hdc01_2 ='';
 $hdc01_3 ='';
 $hdc01_41 ='';
 $hdc01_42 ='';
+
+$labelhdc01 = ''; // ทำให้ค่าว่างก่อนเริ่ม
+$years = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years[] = (date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years[] = (date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+// เปลี่ยนลำดับให้เป็นจากปีเก่าที่สุด (2564) ไปถึงปีใหม่ (2568)
+$years = array_reverse($years); // สลับลำดับปี
+
+// สร้าง label สำหรับการแสดงผล
+foreach ($years as $index => $year) {
+    if ($index == count($years) - 1) {
+        $labelhdc01 .= "'ปี $year' "; // ปีสุดท้าย (2568)
+    } else {
+        $labelhdc01 .= "'ปี $year',"; // ปีอื่นๆ
+    }
+}
+
+$years2 = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years2[] = 'total_'.(date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years2[] = 'total_'.(date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+//print_r($years2);
+
+
+
 while($rowhdc01 = mysqli_fetch_array($objhdc01))
 {
 	if($rowhdc01['groupcode'] == '1.1'){
-		$hdc01_1 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_1 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '2.0'){
-		$hdc01_2 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_2 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '3.0'){
-		$hdc01_3 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_3 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '4.1'){
-		$hdc01_41 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_41 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '4.2'){
-		$hdc01_42 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_42 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}
 	//['th-ct', 10],
 }
 
 $sqlhdc02 = "SELECT
-  h.groupcode,
+  h.groupcode, ";
+  /*
   SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
   SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
   SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
   SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
   SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
+  */
+  for($i=0; $i < (5); $i++) {
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      if($i == 4){
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+    }else{
+      
+      if($i == 4){
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+      }
+  }
+
+$sqlhdc02 = $sqlhdc02."
 FROM
   HDCTB02 h
 JOIN hospitalnew hn ON h.hospcode = hn.CODE5
@@ -1435,7 +1518,7 @@ if (isset($_POST['Year'])) {
 	}else{
 		$Year = (date("Y"));
   }
-  $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
+ // $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
 }
 
 
@@ -1488,23 +1571,64 @@ $hdc02_2 ='';
 $hdc02_3 ='';
 $hdc02_41 ='';
 $hdc02_42 ='';
+
+$labelhdc02 = ''; // ทำให้ค่าว่างก่อนเริ่ม
+$years3 = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years3[] = (date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years3[] = (date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+// เปลี่ยนลำดับให้เป็นจากปีเก่าที่สุด (2564) ไปถึงปีใหม่ (2568)
+$years3 = array_reverse($years3); // สลับลำดับปี
+
+// สร้าง label สำหรับการแสดงผล
+foreach ($years3 as $index => $year) {
+    if ($index == count($years3) - 1) {
+        $labelhdc02 .= "'ปี $year' "; // ปีสุดท้าย (2568)
+    } else {
+        $labelhdc02 .= "'ปี $year',"; // ปีอื่นๆ
+    }
+}
+
+$years4 = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years4[] = 'total_'.(date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years4[] = 'total_'.(date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+//print_r($years2);
+
 while($rowhdc02 = mysqli_fetch_array($objhdc02))
 {
 	if($rowhdc02['groupcode'] == '1.1'){
-		$hdc02_1 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_1 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '2.0'){
-		$hdc02_2 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_2 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '3.0'){
-		$hdc02_3 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_3 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '4.1'){
-		$hdc02_41 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_41 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '4.2'){
-		$hdc02_42 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_42 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}
-	//['th-ct', 10],
 }
 
-
+//echo $hdc02_1 ;
 ?>
 
 <!DOCTYPE html>
@@ -2563,7 +2687,7 @@ link.click();
 const myChart5 = new Chart(ctx5, {
     type: 'line',
     data: {
-        labels: ['ปี 2563', 'ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+        labels: [<?php echo $labelhdc01; ?>],
         datasets: [{
             label: 'ความผิดปกติทางจิตและพฤติกรรมที่เกิดจากการใช้สารออกฤทธิ์ต่อจิตประสาท(F10-F19)',
             data: [<?php echo $hdc01_2;?>],
@@ -2652,7 +2776,7 @@ link.click();
 const myChart6 = new Chart(ctx6, {
     type: 'line',
     data: {
-        labels: ['ปี 2563', 'ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+        labels: [<?php echo $labelhdc02 ; ?>],
         datasets: [{
             label: 'ความผิดปกติทางจิตและพฤติกรรมที่เกิดจากการใช้สารออกฤทธิ์ต่อจิตประสาท(F10-F19)',
             data: [<?php echo $hdc02_2;?>],
