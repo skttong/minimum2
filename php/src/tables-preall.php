@@ -640,6 +640,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 				  <table id="example3" class="table table-bordered table-striped" hidden >
                   <thead>
                   <tr align="center">
+					<!--
 					  <th width="2%">#</th>
 					  <th width="12%">ชื่อ-นามสกุล</th>
 					  <th width="10%">วิชาชีพ</th>
@@ -670,7 +671,37 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					  <th width="15%">MWac1_7</th>
 					  <th width="15%">MWac1_8</th>
 					  <th width="15%">MWac1_9</th>
-					  <th width="15%">other2_mcatt</th>
+					  <th width="15%">other2_mcatt</th>-->
+					  <th width="2%">#</th>
+					  <th width="12%">ชื่อ-นามสกุล</th>
+					  <th width="10%">วิชาชีพ</th>
+					  <th width="10%">ปฏิบัติงานวิกฤตสุขภาพจิต (MCATT)</th>
+					  <th width="10%">อายุ</th>
+					  <th width="15%">แพททย์จิตเวช</th>
+					  <th width="15%">การปฏิบัติงาน</th>
+					  <th width="10%">ชื่อโรงพยาบาล</th>
+					  <th width="15%">วิชาชีพ</th>
+					  <th width="15%">ปริญญา</th>
+					  <th width="10%">จบหลักสูตร</th>
+					  <th width="15%">ปีที่จบ</th>
+					  <th width="15%">ศึกษา</th>
+					  <th width="15%">อื่นๆ</th>
+					  <th width="15%">รหัสวิชาชีพ</th>
+					  <th width="15%">รหัสสถานพยาบาล</th>
+					  <th width="15%">ตำแหน่งอื่น</th>
+					  <th width="15%">วันเกิด</th>
+					  <th width="15%">อื่นๆ</th>
+					  <th width="15%">ระบุ</th>
+					  <th width="15%">หลักสูตรการช่วยเหลือเยียวยาจิตใจผู้ประสบภาวะวิกฤต (ทีม MCATT)</th>
+					  <th width="15%">Psychotraumatology & Stabilization Techniques</th>
+					  <th width="15%">การปฐมพยาบาลทางใจ (Psychological First Aid, PFA)</th>
+					  <th width="15%">การเจรจาต่อรองในภาวะวิกฤต</th>
+					  <th width="15%">ระบบฐานข้อมูลเฝ้าระวังปัญหาสุขภาพจิตสำหรับผู้ประสบภัยในภาวะวิกฤต/ภัยพิบัติ (Crisis Mental Health Surveillance System: CMS)</th>
+					  <th width="15%">หลักสูตร ICS100</th>
+					  <th width="15%">หลักสูตร ทีมปฏิบัติการฉุกเฉินทางการแพทย์ประเทศไทย EMT Thailand</th>
+					  <th width="15%">อื่น ๆ</th>
+					  <th width="15%">การอบรมMcatt</th>
+					  <th width="15%">ระบุ</th>
 				   </tr>
                    </thead>
                   <tbody>
@@ -697,7 +728,6 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							<td><?php echo $rowpersonnel2['congrat']; ?></td>
 							<td><?php echo $rowpersonnel2['training']; ?></td>
 							<td><?php echo $rowpersonnel2['cogratyear']; ?></td>
-							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
 							<td><?php echo $rowpersonnel2['statuscong']; ?></td>
 							<td><?php echo $rowpersonnel2['regislaw']; ?></td>
 							<td><?php echo $rowpersonnel2['positiontypeID']; ?></td>

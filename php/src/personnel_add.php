@@ -6,7 +6,7 @@ include('connect/conn.php');
 $datadate = $_POST['txtBookdate'];
 $timestamp = strtotime($datadate);
 $ymd = date("Y-m-d", $timestamp);
-
+ 
 $datadate2 = $_POST['date'];
 $timestamp2 = strtotime($datadate2);
 $ymd2 = date("Y-m-d", $timestamp2);
@@ -44,6 +44,20 @@ $ymd2 = date("Y-m-d", $timestamp2);
 		$MWac1_9 		= $_POST['MWac1_10'];
 	}
 	$other2_mcatt 		= $_POST['other2_mcatt'];
+
+
+$sqltotalple = "SELECT count(*) AS total FROM personnel WHERE firstname = '".$firstname."' AND lastname = '".$lastname."' AND HospitalID  = '".$HospitalID."' AND positiontypeID = '".$positiontypeid."' ;";
+$querytotalple = mysqli_query($con, $sqltotalple);
+$resulttotalple = mysqli_fetch_array($querytotalple);
+
+if($resulttotalple['total'] > 0 ){
+	echo "<script type='text/javascript'>";
+	echo "alert('Error: ข้อมูลนี้มีการบันทึกไปแล้ว!!');";
+	echo "window.location = 'detail-all.php'; ";
+	echo "</script>";
+
+}
+
 
 if($positiontypeid == '1'){
 

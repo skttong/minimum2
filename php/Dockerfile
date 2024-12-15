@@ -13,28 +13,29 @@ RUN mkdir -p /backup && touch /var/log/cron.log && touch /backup/cron_error.log
 RUN echo "0 0 * * * root echo 'Cron is working' >> /var/log/cron_test.log" >> /etc/crontab && \
     echo "0 0 * * * root mysqldump --no-tablespaces -h db -uuser123 -ppassword123 db_minimum > /backup/db_backup_\$(date +\%F_\%T).sql 2>> /backup/cron_error.log" >> /etc/crontab && \
     echo "0 2 * * * root php /var/www/html/HDC1.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC2.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC3.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC4.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC5.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC6.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC7.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC8.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC9.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC10.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC11.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC12.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC13.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC14.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC15.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC16.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC17.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC18.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC19.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC20.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC21.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/HDC22.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
-    echo "0 2 * * * root php /var/www/html/CMSreports.php >> /var/log/cron.log 2>&1" >> /etc/crontab
+    echo "10 2 * * * root php /var/www/html/HDC2.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "20 2 * * * root php /var/www/html/HDC3.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "30 2 * * * root php /var/www/html/HDC4.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "40 2 * * * root php /var/www/html/HDC5.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "50 2 * * * root php /var/www/html/HDC6.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "0 3 * * * root php /var/www/html/HDC7.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "10 3 * * * root php /var/www/html/HDC8.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "20 3 * * * root php /var/www/html/HDC9.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "30 3 * * * root php /var/www/html/HDC10.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "40 3 * * * root php /var/www/html/HDC11.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "50 3 * * * root php /var/www/html/HDC12.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "0 4 * * * root php /var/www/html/HDC13.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "10 4 * * * root php /var/www/html/HDC14.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "20 4 * * * root php /var/www/html/HDC15.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "30 4 * * * root php /var/www/html/HDC16.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "40 4 * * * root php /var/www/html/HDC17.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "50 4 * * * root php /var/www/html/HDC18.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "0 5 * * * root php /var/www/html/HDC19.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "10 5 * * * root php /var/www/html/HDC20.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "20 5 * * * root php /var/www/html/HDC21.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "30 5 * * * root php /var/www/html/HDC22.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "40 5 * * * root php /var/www/html/HDC23.php >> /var/log/cron.log 2>&1" >> /etc/crontab && \
+    echo "50 5 * * * root php /var/www/html/CMSreports.php >> /var/log/cron.log 2>&1" >> /etc/crontab
 
 
 # เพิ่ม entrypoint script เพื่อให้แน่ใจว่า MySQL พร้อมใช้งานก่อนที่จะรัน cron

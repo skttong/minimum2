@@ -2117,7 +2117,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#E0BBE4',
                     borderColor: '#E0BBE4',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined' // Enable stacking for this dataset
                 },
                 {
                     label: 'พยาบาล PG สุขภาพจิต',
@@ -2125,7 +2125,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#00cadc',
                     borderColor: '#00cadc',
                     borderWidth: 1,
-                    stack: 'combined' // Enable stacking for this dataset
+                    stack: 'combined1' // Enable stacking for this dataset
                },
                 {
                     label: 'พยาบาล PG จิตเวชเด็ก',
@@ -2141,7 +2141,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#C8EFB3',
                     borderColor: '#C8EFB3',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined3' // Enable stacking for this dataset
                 },
                 {
                     label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด',
@@ -2149,7 +2149,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#F9D39D',
                     borderColor: '#F9D39D',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined4' // Enable stacking for this dataset
                 },
                 {
                     label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน',
@@ -2157,7 +2157,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#F7ABDC',
                     borderColor: '#F7ABDC',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined5' // Enable stacking for this dataset
                 },
                 {
                     label: 'อื่น ๆ',
@@ -2165,7 +2165,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#C03778',
                     borderColor: '#C03778',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined6' // Enable stacking for this dataset
                 }]
             },
             options: {
@@ -2382,7 +2382,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#E0BBE4',
                     borderColor: '#E0BBE4',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined' // Enable stacking for this dataset
                 },
                 {
                     label: 'พยาบาล PG สุขภาพจิต',
@@ -2390,7 +2390,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#00cadc',
                     borderColor: '#00cadc',
                     borderWidth: 1,
-                    stack: 'combined' // Enable stacking for this dataset
+                    stack: 'combined1' // Enable stacking for this dataset
                },
                 {
                     label: 'พยาบาล PG จิตเวชเด็ก',
@@ -2406,7 +2406,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#C8EFB3',
                     borderColor: '#C8EFB3',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined3' // Enable stacking for this dataset
                 },
                 {
                     label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด',
@@ -2414,7 +2414,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#F9D39D',
                     borderColor: '#F9D39D',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined4' // Enable stacking for this dataset
                 },
                 {
                     label: 'การพยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด ระยะสั้น 10 วัน',
@@ -2422,7 +2422,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#F7ABDC',
                     borderColor: '#F7ABDC',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined5' // Enable stacking for this dataset
                 },
                 {
                     label: 'อื่น ๆ',
@@ -2430,7 +2430,7 @@ downloadButton.addEventListener('click', function() {
                     backgroundColor: '#C03778',
                     borderColor: '#C03778',
                     borderWidth: 1,
-                    stack: 'combined2' // Enable stacking for this dataset
+                    stack: 'combined6' // Enable stacking for this dataset
                 }]
             },
             options: {

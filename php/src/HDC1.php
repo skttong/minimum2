@@ -8,7 +8,7 @@ $curl = curl_init();
 
 if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
 
- $YEAR = date("Y")+543 ;
+ $YEAR = date("Y")+543+1 ;
 }else{
 
   $YEAR = date("Y")+543 ;
