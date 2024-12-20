@@ -2204,7 +2204,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
        
     <!-- Default box -->
     <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
         <div class="card">
                     <div class="card-header">
                         <h3 class="card-title">ผู้ป่วยจิตเวชเด็กและวัยรุ่นพยายามฆ่าตัวตาย และฆ่าตัวตายสำเร็จ </h3>

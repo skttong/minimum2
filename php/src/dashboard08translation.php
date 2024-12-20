@@ -1149,7 +1149,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 
 		</div>
 	  <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
 			
         <div class="row">
 			

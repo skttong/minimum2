@@ -532,7 +532,7 @@ $obj8 = mysqli_query($con, $sql8);
     
     <!-- Default box -->
     <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
         <div class="row">
 			<div class="col-lg-6">
 				<!-- small card -->
