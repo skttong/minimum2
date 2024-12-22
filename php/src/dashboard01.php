@@ -1178,7 +1178,7 @@ if (isset($_POST['Year'])) {
   $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
 }else{
   $Year = (date("Y"));
-  $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
+  //$msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
 }
 
 
@@ -1264,7 +1264,7 @@ if (isset($_POST['Year'])) {
   $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
 }else{
   $Year = (date("Y"));
-  $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
+ // $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
 }
 
 
