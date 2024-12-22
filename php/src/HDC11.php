@@ -43,7 +43,7 @@ $data = json_decode($response, true);
 if (isset($data)) {
 
   
-  $sql = "DELETE FROM HDCTBBED WHERE b_year = ".$YEAR;
+  $sql = "DELETE FROM HDCTBBED WHERE b_year = ".$YEAR ;
 
 	$result = mysqli_query($con, $sql) or die ("Error in query: $sql " . mysqli_error());
 	//$result = mysqli_query($con, $sql);

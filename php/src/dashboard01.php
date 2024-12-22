@@ -1177,8 +1177,12 @@ if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
   $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
 }else{
-  $Year = (date("Y"));
-  //$msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1+543;
+	}else{
+		$Year = (date("Y"))+543;
+	}
+  $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
 }
 
 
@@ -1249,7 +1253,7 @@ while($mrow1 = mysqli_fetch_array($mobj1))
             "color": "#FF00FF"
         }*/
 
-$sql10 = "SELECT
+ $sql10 = "SELECT
   SUM(h.a_total) AS total_a,
   SUM(h.b_total) AS total_b,
   SUM(h.total_bed) AS total_bed
@@ -1263,8 +1267,12 @@ if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
   $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
 }else{
-  $Year = (date("Y"));
- // $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1+543;
+	}else{
+		$Year = (date("Y"))+543;
+	}
+  $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
 }
 
 
@@ -1305,6 +1313,7 @@ if (isset($_POST['CODE_HOS'])) {
   $sql10 = $sql10."AND hn.CODE5 = '".$CODE_HOS."'" ;
   }
 }
+
 
 $obj10 = mysqli_query($con, $sql10);
 $row10 = mysqli_fetch_array($obj10);
