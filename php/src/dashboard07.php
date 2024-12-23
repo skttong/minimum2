@@ -1239,10 +1239,11 @@ $objall2_1 = mysqli_query($con, $sqlall2_1);
           <div class="card-body">
 			<form class="form-valide" action="dashboard07.php" method="post" id="myform1" name="foml">  
 			<div class="row">
-              <div class="col-md-2">
-                <div class="form-group">
-                  <label>ปีงบประมาณ</label>
-                  <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
+              <!-- ปีงบประมาณ -->
+     <div class="col-md-2">
+            <div class="form-group">
+                <label>ปีงบประมาณ</label>
+                <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
                    <?PHP for($i=0; $i < (5); $i++) {
                       
                       if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
@@ -1258,236 +1259,166 @@ $objall2_1 = mysqli_query($con, $sqlall2_1);
                     <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
                     <?PHP } }?>
                   </select>
-                </div>
-              </div>
-              <!-- /.col -->
-
-              <div class="col-md-2">
-               <div class="form-group" id="labelarea">
-                  <label>เขตสุขภาพ</label>
-                  <select name="CODE_HMOO" class="form-control select2" id="CODE_HMOO" style="width: 100%;" onChange="myFunction3()">
-                    <option <?php if ($_POST['CODE_HMOO'] == 'ทั้งหมด'){?> selected="selected" <?php } ?>  value="ทั้งหมด">ทั้งหมด</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '1'){?> selected="selected" <?php } ?> value="1">เขตสุขภาพ 1</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '2'){?> selected="selected" <?php } ?> value="2">เขตสุขภาพ 2</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '3'){?> selected="selected" <?php } ?> value="3">เขตสุขภาพ 3</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '4'){?> selected="selected" <?php } ?> value="4">เขตสุขภาพ 4</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '5'){?> selected="selected" <?php } ?> value="5">เขตสุขภาพ 5</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '6'){?> selected="selected" <?php } ?> value="6">เขตสุขภาพ 6</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '7'){?> selected="selected" <?php } ?> value="7">เขตสุขภาพ 7</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '8'){?> selected="selected" <?php } ?> value="8">เขตสุขภาพ 8</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '9'){?> selected="selected" <?php } ?> value="9">เขตสุขภาพ 9</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '10'){?> selected="selected" <?php } ?> value="10">เขตสุขภาพ 10</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '11'){?> selected="selected" <?php } ?> value="11">เขตสุขภาพ 11</option>
-                    <option <?php if ($_POST['CODE_HMOO'] == '12'){?> selected="selected" <?php } ?> value="12">เขตสุขภาพ 12</option>
-					          <option <?php if ($_POST['CODE_HMOO'] == '13'){?> selected="selected" <?php } ?> value="13">เขตสุขภาพ 13</option>
-                   </select>
-                </div>
-                <script>
-                   function myFunction3() {
-                      const selectedValue = $('#CODE_HMOO').val();
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_hmoo.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { moo_id: selectedValue },
-                            success: function(data) {
-                              $('#CODE_PROVINCE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-            
-			   <!-- /.col -->
-             
-			 <!-- /.col -->
-              
-				<!-- /.form-group -->
-         
-        
-              </div>
-              <!-- /.col -->
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>จังหวัด</label>
-                  <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
-                     <option value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP /*
-          if($_POST['CODE_PROVINCE'] <> 'ทั้งหมด'){
-					$sqlprovince = "SELECT CODE_PROVINCE, NO_PROVINCE FROM hospitalnew 
-          WHERE  NO_PROVINCE = ".$_POST['CODE_PROVINCE']."
-GROUP BY CODE_PROVINCE 
-ORDER BY NO_PROVINCE ASC;";
-					$objprovince = mysqli_query($con, $sqlprovince);
-					
-					while($rowprovince = mysqli_fetch_array($objprovince))
-
-					{
-	
-					?>
-					  <option selected="selected" value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
-					  
-					<?PHP
-					} 
-        }else{
-					?>
-               <option value="ทั้งหมด" >ทั้งหมด</option>
-        <?php } */ ?>
-                  </select>
-                </div>
-
-                <script>
-                   function myFunction4() {
-                      const selectedValue = $('#CODE_PROVINCE').val();
-                          //alert(selectedValue);
-                          $.ajax({
-                            url: 'get_affiliationtype.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { codeprovince: selectedValue },
-                            success: function(data) {
-                              $('#type_Affiliation').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-              </div>
-              <!-- /.col -->	
-
-              <div class="col-md-3">
-               <div class="form-group">
-                  <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
-                  <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction5()" >
-                    <option value="ทั้งหมด" >ทั้งหมด</option>
-                    <?PHP 
-                       if($_POST['type_Affiliation'] <> ''){
-                     ?>
-                    <option selected="selected"  value="<?php echo $_POST['type_Affiliation']; ?> "><?php echo $_POST['type_Affiliation']; ?> </option>
-                    <?php } ?>
-                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
-                  </select>
-                </div>
-
-                <script>
-                   function myFunction5() {
-                      const selectedValue = $('#type_Affiliation').val();
-                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_affiliation2.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { typeAffiliation: selectedValue , codeprovince: codeprovince  },
-                            success: function(data) {
-                              $('#Affiliation').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-              </div>
-              <!-- /.col -->
-              
-              <div class="col-md-2">
-               <div class="form-group">
-                  <label>สังกัด</label>
-                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction15()" >
-                    <option value="ทั้งหมด" >ทั้งหมด</option>
-                    <?PHP 
-                       if($_POST['Affiliation'] <> ''){
-                     ?>
-                    <option selected="selected"  value="<?php echo $_POST['Affiliation']; ?> "><?php echo $_POST['Affiliation']; ?> </option>
-                    <?php } ?>
-                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
-                  </select>
-                </div>
-
-                <script>
-                   function myFunction15() {
-                      const selectedValue = $('#Affiliation').val();
-                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
-                         // alert(selectedValue);
-                          $.ajax({
-                            url: 'get_servicetype.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { Affiliation: selectedValue , codeprovince: codeprovince  },
-                            success: function(data) {
-                              $('#TYPE_SERVICE').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-              </div>
-              <!-- /.col -->
-              <div class="col-md-3">
-              <div class="form-group" id="labelservice">
-                  <label>ระดับหน่วยงาน/ประเภทหน่วยบริการ</label>
-                  <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
-                     <option value="ทั้งหมด">ทั้งหมด</option>
-                     <?PHP 
-                       if(trim($_POST['TYPE_SERVICE']) <> ''){
-                     ?>
-                    <option selected="selected"  value="<?php echo trim($_POST['TYPE_SERVICE']); ?> "><?php echo trim($_POST['TYPE_SERVICE']); ?> </option>
-                    <?php } ?>
-                   <!-- <option value="A">A</option>
-                    <option value="S">S</option>
-                    <option value="M1">M1</option>
-                    <option value="M2">M2</option>
-                    <option value="F1">F1</option>
-					          <option value="F2">F2</option>
-					          <option value="F3">F3</option>  -->
-                  </select>
-                </div>
-                <!-- /.form-group -->  
-                <script>
-                   function myFunction2() {
-					const selectedValue = $('#TYPE_SERVICE').val();
-                      const Affiliation 		= document.getElementById("Affiliation").value;
-                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
-                      const HostHMOO 		    = document.getElementById("CODE_HMOO").value;
-                          //alert(selectedValue);
-                          $.ajax({
-                            url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue , codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },
-                            success: function(data) {
-                              $('#CODE_HOS').html(data);
-                            }
-                          });
-                    }
-			    	</script> 
-</div>
-
-              <div class="col-md-4">
-               <div class="form-group">
-                  <label>หน่วยบริการ/หน่วยงาน</label>
-                  <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
-                    <option value="ทั้งหมด" >ทั้งหมด</option>
-					<?PHP /*
-          if($_POST['CODE_HOS'] <> ''){
-					$sqlprovince = "SELECT CODE5,HOS_NAME FROM hospitalnew 
-WHERE HOS_TYPE <> 'คลินิกเอกชน'
-AND CODE5 = ".$_POST['CODE_HOS']."
-ORDER BY hospitalnew.CODE_HMOO DESC;";
-					$objprovince = mysqli_query($con, $sqlprovince);
-					
-					while($rowprovince = mysqli_fetch_array($objprovince))
-
-					{
-	
-					?>
-					  <option selected="selected"  value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
-					  
-					<?PHP
-					} 
-        } */
-					?>
-
-                  </select>
-                </div>
-              </div>
-              <!-- /.col -->		
-			   		
             </div>
-            <!-- /.row -->
-		
-			<div class="card-footer">
-				  <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
-				   <button type="reset" class="btn btn-default" id="resetButton"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
-			  	  <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
-			</div>  
-		</form>
+        </div>
+        
+        <!-- เขตสุขภาพ -->
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>เขตสุขภาพ</label>
+                <select class="form-control select2" name="CODE_HMOO" id="CODE_HMOO" style="width: 100%;" onChange="myFunction3()">
+                    <option <?php if (isset($_POST['CODE_HMOO']) && $_POST['CODE_HMOO'] == 'ทั้งหมด' || !isset($_POST['CODE_HMOO'])){?> selected="selected" <?php } ?> value="ทั้งหมด">ทั้งหมด</option>
+                    <?php for ($i = 1; $i <= 13; $i++) { ?>
+                    <option <?php if (isset($_POST['CODE_HMOO']) && $_POST['CODE_HMOO'] == $i){?> selected="selected" <?php } ?> 
+                        value="<?php echo $i; ?>">เขตสุขภาพ <?php echo $i; ?></option>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+
+        <!-- จังหวัด -->
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>จังหวัด</label>
+                <select class="form-control select2" name="CODE_PROVINCE" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
+                    <option value="ทั้งหมด" <?php if (isset($_POST['CODE_PROVINCE']) && $_POST['CODE_PROVINCE'] == 'ทั้งหมด' || !isset($_POST['CODE_PROVINCE'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- หน่วยงานใน/นอกสังกัด -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>หน่วยงานใน/นอกสังกัดกระทรวงสาธารณสุข</label>
+                <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction5()">
+                    <option value="ทั้งหมด" <?php if (isset($_POST['type_Affiliation']) && $_POST['type_Affiliation'] == 'ทั้งหมด' || !isset($_POST['type_Affiliation'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- สังกัด -->
+        <div class="col-md-2">
+            <div class="form-group">
+                <label>สังกัด</label>
+                <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction15()">
+                    <option value="ทั้งหมด" <?php if (isset($_POST['Affiliation']) && $_POST['Affiliation'] == 'ทั้งหมด' || !isset($_POST['Affiliation'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- ประเภทหน่วยบริการ -->
+        <div class="col-md-3">
+            <div class="form-group">
+                <label>ระดับหน่วยงาน/ประเภทหน่วยบริการ</label>
+                <select class="form-control select2" name="TYPE_SERVICE" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
+                    <option value="ทั้งหมด" <?php if (isset($_POST['TYPE_SERVICE']) && $_POST['TYPE_SERVICE'] == 'ทั้งหมด' || !isset($_POST['TYPE_SERVICE'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- หน่วยบริการ -->
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>หน่วยบริการ/หน่วยงาน</label>
+                <select class="form-control select2" name="CODE_HOS" id="CODE_HOS" style="width: 100%;">
+                    <option value="ทั้งหมด" <?php if (isset($_POST['CODE_HOS']) && $_POST['CODE_HOS'] == 'ทั้งหมด' || !isset($_POST['CODE_HOS'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
+                </select>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card-footer">
+        <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
+        <button type="reset" class="btn btn-default" id="resetButton"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>
+    </div>  
+</form>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    myFunction3();
+    myFunction4();
+    myFunction5();
+    myFunction15();
+    myFunction2();
+});
+
+// Function for เขตสุขภาพ -> จังหวัด
+function myFunction3() {
+    const selectedValue = $('#CODE_HMOO').val();
+    if (selectedValue) {
+        $.ajax({
+            url: 'get_hmoo.php',
+            data: { moo_id: selectedValue },
+            success: function(data) {
+                $('#CODE_PROVINCE').html(data);
+            }
+        });
+    }
+}
+
+// Function for จังหวัด -> หน่วยงานใน/นอกสังกัด
+function myFunction4() {
+    const selectedValue = $('#CODE_PROVINCE').val();
+    if (selectedValue) {
+        $.ajax({
+            url: 'get_affiliationtype.php',
+            data: { codeprovince: selectedValue },
+            success: function(data) {
+                $('#type_Affiliation').html(data);
+            }
+        });
+    }
+}
+
+// Function for หน่วยงานใน/นอกสังกัด -> สังกัด
+function myFunction5() {
+    const selectedValue = $('#type_Affiliation').val();
+    const codeprovince = $('#CODE_PROVINCE').val();
+    if (selectedValue) {
+        $.ajax({
+            url: 'get_affiliation2.php',
+            data: { typeAffiliation: selectedValue, codeprovince: codeprovince },
+            success: function(data) {
+                $('#Affiliation').html(data);
+            }
+        });
+    }
+}
+
+// Function for สังกัด -> ประเภทหน่วยบริการ
+function myFunction15() {
+    const selectedValue = $('#Affiliation').val();
+    const codeprovince = $('#CODE_PROVINCE').val();
+    if (selectedValue) {
+        $.ajax({
+            url: 'get_servicetype.php',
+            data: { Affiliation: selectedValue, codeprovince: codeprovince },
+            success: function(data) {
+                $('#TYPE_SERVICE').html(data);
+            }
+        });
+    }
+}
+
+// Function for ประเภทหน่วยบริการ -> หน่วยบริการ
+function myFunction2() {
+    const selectedValue = $('#TYPE_SERVICE').val();
+    const Affiliation = $('#Affiliation').val();
+    const codeprovince = $('#CODE_PROVINCE').val();
+    const HostHMOO = $('#CODE_HMOO').val();
+    if (selectedValue) {
+        $.ajax({
+            url: 'get_service.php',
+            data: { service_id: selectedValue, codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },
+            success: function(data) {
+                $('#CODE_HOS').html(data);
+            }
+        });
+    }
+}
+
+
+</script>
         </div>
         <!-- /.card -->	  
         <div class="row">

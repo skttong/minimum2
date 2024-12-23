@@ -2,7 +2,9 @@
 session_start();
 
 
+
 include('connect/conn.php');
+
 /*
 $HosType	 	= $_SESSION["HosType"];
 $codeprovince   = $_SESSION["codeprovince"];
@@ -45,11 +47,25 @@ JOIN hospitalnew e ON e.CODE5 = p.HospitalID
 WHERE 1
 AND p.r2 = 'Full-Time'
 ";
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql1 = $sql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql1 = $sql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql1 = $sql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -58,10 +74,18 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql1 = $sql1."AND e.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql1 = $sql1."AND e.TYPE_SERVICE LIKE ('".$mySelect."%')" ;
+  $sql1 = $sql1."AND e.HOS_TYPE LIKE ('".$mySelect."%')" ;
   }
 }
 
@@ -101,11 +125,25 @@ WHERE 1
 
 $Year = '2567';
 
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $tsql1 = $tsql1."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$tsql1 = $tsql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$tsql1 = $tsql1."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -114,10 +152,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $tsql1 = $tsql1."AND e.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $tsql1 = $tsql1."AND e.TYPE_SERVICE = '".$mySelect."'" ;
+  $tsql1 = $tsql1."AND e.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -159,10 +204,24 @@ $tdr04 =  $trow1['tdr04'];
   JOIN hospitalnew e ON e.CODE5 = b.HospitalID
   WHERE b.positiontypeID = '2' AND b.setdel = '1'";
 
-if (isset($_POST['Year'])) {
+/*if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql2 = $sql2."AND YEAR(b.personnelDate) = '".$Year."'" ;
-}
+}*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql2 = $sql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql2 = $sql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -171,10 +230,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql2 = $sql2."AND e.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql2 = $sql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql2 = $sql2."AND e.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -259,10 +325,24 @@ $tsql2 = "WITH trained_personnel AS (
   WHERE b.positiontypeID = '2' AND b.setdel = '1'
   ";
 
-if (isset($_POST['Year'])) {
+/*if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $tsql2 = $tsql2."AND YEAR(b.personnelDate) = '".$Year."'" ;
 }
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$tsql2 = $tsql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$tsql2 = $tsql2."AND b.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -271,10 +351,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $tsql2 = $tsql2."AND e.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $tsql2 = $tsql2."AND e.TYPE_SERVICE = '".$mySelect."'" ;
+  $tsql2 = $tsql2."AND e.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -351,10 +438,25 @@ FROM personnel p
 JOIN hospitalnew h ON h.CODE5 = p.HospitalID 
 WHERE p.positiontypeID = '3' AND p.setdel = '1' ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql3 = $sql3."AND YEAR(p.personnelDate) = '".$Year."'" ;
 }  
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql3 = $sql3."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql3 = $sql3."AND p.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND p.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -363,10 +465,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql3 = $sql3."AND h.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql3 = $sql3."AND h.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql3 = $sql3."AND h.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -399,11 +508,25 @@ WHERE
     personnel.positiontypeID = '4'
     AND setdel = '1'
     ";
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql4 = $sql4."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
 } 
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql4 = $sql4."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql4 = $sql4."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -412,10 +535,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql4 = $sql4."AND hospitalnew.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql4 = $sql4."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql4 = $sql4."AND hospitalnew.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -500,11 +630,25 @@ $obj4_2 = mysqli_query($con, $sql4_2);
 			personnel.positiontypeID  = '5'
 		AND 
 			personnel.setdel = '1' ";
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql5 = $sql5."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
 } 
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql5 = $sql5."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql5 = $sql5."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -513,10 +657,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql5 = $sql5."AND hospitalnew.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql5 = $sql5."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql5 = $sql5."AND hospitalnew.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -557,10 +708,26 @@ $sql6 = "SELECT
 			personnel.positiontypeID	= '6'
 		AND 
 			personnel.setdel = '1' ";
+/*      
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql6 = $sql6."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
 } 
+  */
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql6 = $sql6."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql6 = $sql6."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -569,10 +736,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql6 = $sql6."AND hospitalnew.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql6 = $sql6."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql6 = $sql6."AND hospitalnew.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -611,10 +785,25 @@ $sql7 = "SELECT
 			positiontypeID	= '7'
 		AND 
 			setdel = '1' ";
+/*      
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql7 = $sql7."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
 } 
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql7 = $sql7."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql7 = $sql7."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -623,10 +812,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql7 = $sql7."AND hospitalnew.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql7 = $sql7."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql7 = $sql7."AND hospitalnew.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -665,10 +861,25 @@ $sql8 = "SELECT
 			positiontypeID	= '8'
 		AND 
 			setdel = '1' ";
+/*      
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql8 = $sql8."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
 } 
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql8 = $sql8."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql8 = $sql8."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -677,10 +888,18 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql8 = $sql8."AND hospitalnew.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql8 = $sql8."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql8 = $sql8."AND hospitalnew.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -720,10 +939,26 @@ $sqlhl = "SELECT
 			positiontypeID	= '9'
 		AND 
 			setdel = '1' ";
+/*      
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sqlhl = $sqlhl."AND YEAR(personnel.personnelDate) = '".$Year."'" ;
 } 
+*/  
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sqlhl = $sqlhl."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sqlhl = $sqlhl."AND personnel.personnelDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND personnel.personnelDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -732,10 +967,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sqlhl = $sqlhl."AND hospitalnew.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sqlhl = $sqlhl."AND hospitalnew.TYPE_SERVICE = '".$mySelect."'" ;
+  $sqlhl = $sqlhl."AND hospitalnew.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -775,10 +1017,26 @@ $sql9 = "SELECT
     JOIN hospitalnew hn on hn.CODE5 = b.hospitalCode5 
     where 1 ";
 
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql9 = $sql9."AND YEAR(b.bedDate) = '".$Year."'" ;
 } 
+*/
+
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql9 = $sql9."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql9 = $sql9."AND b.bedDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND b.bedDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -787,10 +1045,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql9 = $sql9."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
     $mySelect = trim($_POST['TYPE_SERVICE']);
-    $sql9 = $sql9."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    $sql9 = $sql9."AND hn.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -819,11 +1084,25 @@ $sql11 = "SELECT SUM(ect_no) AS ect_no ,SUM(tms_no) AS tms_no
 		FROM ect e
     JOIN hospitalnew hn on hn.CODE5 = e.hospitalCode5 
     where 1 ";
-
+/*
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year']-543;
   $sql11 = $sql11."AND YEAR(e.ectDate) = '".$Year."'" ;
 } 
+*/
+if (isset($_POST['Year'])) {
+	$Year = $_POST['Year']-543;
+	$sql11 = $sql11."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }else{
+	if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+	}
+	$sql11 = $sql11."AND e.ectDate >= CONCAT(".$Year-1 .",'-10-01') 
+	AND e.ectDate <= CONCAT(".$Year.", '-09-30')";
+  }
 
 
 if (isset($_POST['CODE_HMOO'])) {
@@ -833,10 +1112,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql11 = $sql11."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
     $mySelect = trim($_POST['TYPE_SERVICE']);
-    $sql11 = $sql11."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+    $sql11 = $sql11."AND hn.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -891,9 +1177,15 @@ if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
   $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
 }else{
-  $Year = '2567';
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1+543;
+	}else{
+		$Year = (date("Y"))+543;
+	}
   $msql1 = $msql1."WHERE h.b_year = '".$Year."'" ;
 }
+
+
 
 if (isset($_POST['CODE_HMOO'])) {
   if ($_POST['CODE_HMOO']<> 'ทั้งหมด') {
@@ -902,10 +1194,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $msql1 = $msql1."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $msql1 = $msql1."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  $msql1 = $msql1."AND hn.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -954,7 +1253,7 @@ while($mrow1 = mysqli_fetch_array($mobj1))
             "color": "#FF00FF"
         }*/
 
-$sql10 = "SELECT
+ $sql10 = "SELECT
   SUM(h.a_total) AS total_a,
   SUM(h.b_total) AS total_b,
   SUM(h.total_bed) AS total_bed
@@ -968,9 +1267,15 @@ if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
   $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
 }else{
-  $Year = '2567';
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1+543;
+	}else{
+		$Year = (date("Y"))+543;
+	}
   $sql10 = $sql10."WHERE h.b_year = '".$Year."'" ;
 }
+
+
 
 
 
@@ -981,10 +1286,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sql10 = $sql10."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sql10 = $sql10."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  $sql10 = $sql10."AND hn.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -1001,6 +1313,7 @@ if (isset($_POST['CODE_HOS'])) {
   $sql10 = $sql10."AND hn.CODE5 = '".$CODE_HOS."'" ;
   }
 }
+
 
 $obj10 = mysqli_query($con, $sql10);
 $row10 = mysqli_fetch_array($obj10);
@@ -1019,17 +1332,32 @@ if($total_bed == ''){
 }
 
 
-
-
-
-
 $sqlhdc01 = "SELECT
-  h.groupcode,
+  h.groupcode, ";
+  /*
   SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
   SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
   SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
   SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
   SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
+  */
+  for($i=0; $i < (5); $i++) {
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      if($i == 4){
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+    }else{
+      
+      if($i == 4){
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc01 = $sqlhdc01."SUM(CASE WHEN b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+      }
+  }
+$sqlhdc01 = $sqlhdc01."
 FROM
   HDCTB01 h
 JOIN hospitalnew hn ON h.hospcode = hn.CODE5
@@ -1039,7 +1367,14 @@ WHERE 1  "
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
   $sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
-}   
+}else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+  }
+  //$sqlhdc01 = $sqlhdc01."AND h.b_year = '".$Year."'" ;
+}
 
 
 if (isset($_POST['CODE_HMOO'])) {
@@ -1049,10 +1384,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sqlhdc01 = $sqlhdc01."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sqlhdc01 = $sqlhdc01."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  $sqlhdc01 = $sqlhdc01."AND hn.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -1083,29 +1425,93 @@ $hdc01_2 ='';
 $hdc01_3 ='';
 $hdc01_41 ='';
 $hdc01_42 ='';
+
+$labelhdc01 = ''; // ทำให้ค่าว่างก่อนเริ่ม
+$years = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years[] = (date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years[] = (date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+// เปลี่ยนลำดับให้เป็นจากปีเก่าที่สุด (2564) ไปถึงปีใหม่ (2568)
+$years = array_reverse($years); // สลับลำดับปี
+
+// สร้าง label สำหรับการแสดงผล
+foreach ($years as $index => $year) {
+    if ($index == count($years) - 1) {
+        $labelhdc01 .= "'ปี $year' "; // ปีสุดท้าย (2568)
+    } else {
+        $labelhdc01 .= "'ปี $year',"; // ปีอื่นๆ
+    }
+}
+
+$years2 = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years2[] = 'total_'.(date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years2[] = 'total_'.(date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+//print_r($years2);
+
+
+
 while($rowhdc01 = mysqli_fetch_array($objhdc01))
 {
 	if($rowhdc01['groupcode'] == '1.1'){
-		$hdc01_1 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_1 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '2.0'){
-		$hdc01_2 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_2 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '3.0'){
-		$hdc01_3 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_3 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '4.1'){
-		$hdc01_41 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_41 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}else if($rowhdc01['groupcode'] == '4.2'){
-		$hdc01_42 = "'".$rowhdc01['total_2563']."','".$rowhdc01['total_2564']."','".$rowhdc01['total_2565']."','".$rowhdc01['total_2566']."','".$rowhdc01['total_2567']."'";
+		$hdc01_42 = "'".$rowhdc01[$years2[4]]."','".$rowhdc01[$years2[3]]."','".$rowhdc01[$years2[2]]."','".$rowhdc01[$years2[1]]."','".$rowhdc01[$years2[0]]."'";
 	}
 	//['th-ct', 10],
 }
 
 $sqlhdc02 = "SELECT
-  h.groupcode,
+  h.groupcode, ";
+  /*
   SUM(CASE WHEN h.b_year = '2567' THEN total ELSE 0 END) AS total_2567,
   SUM(CASE WHEN h.b_year = '2566' THEN total ELSE 0 END) AS total_2566,
   SUM(CASE WHEN h.b_year = '2565' THEN total ELSE 0 END) AS total_2565,
   SUM(CASE WHEN h.b_year = '2564' THEN total ELSE 0 END) AS total_2564,
   SUM(CASE WHEN h.b_year = '2563' THEN total ELSE 0 END) AS total_2563
+  */
+  for($i=0; $i < (5); $i++) {
+    if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      if($i == 4){
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543+1))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+    }else{
+      
+      if($i == 4){
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i." ";
+      }else{
+        $sqlhdc02 = $sqlhdc02."SUM(CASE WHEN h.b_year = '".((date("Y")+543))-$i."' THEN total ELSE 0 END) AS total_".((date("Y")+543+1))-$i.",";
+      }
+      }
+  }
+
+$sqlhdc02 = $sqlhdc02."
 FROM
   HDCTB02 h
 JOIN hospitalnew hn ON h.hospcode = hn.CODE5
@@ -1115,7 +1521,14 @@ WHERE 1  "
 if (isset($_POST['Year'])) {
   $Year = $_POST['Year'];
   $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
-}   
+}else{
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+		$Year = (date("Y"))+1;
+	}else{
+		$Year = (date("Y"));
+  }
+ // $sqlhdc02 = $sqlhdc02."AND h.b_year = '".$Year."'" ;
+}
 
 
 if (isset($_POST['CODE_HMOO'])) {
@@ -1125,10 +1538,17 @@ if (isset($_POST['CODE_HMOO'])) {
   }
 }
 
+if (isset($_POST['type_Affiliation'])) {
+  if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
+  $type_Affiliation = trim($_POST['type_Affiliation']);
+  $sqlhdc02 = $sqlhdc02."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
-  $sqlhdc02 = $sqlhdc02."AND hn.TYPE_SERVICE = '".$mySelect."'" ;
+  $sqlhdc02 = $sqlhdc02."AND hn.HOS_TYPE = '".$mySelect."'" ;
   }
 }
 
@@ -1160,23 +1580,64 @@ $hdc02_2 ='';
 $hdc02_3 ='';
 $hdc02_41 ='';
 $hdc02_42 ='';
+
+$labelhdc02 = ''; // ทำให้ค่าว่างก่อนเริ่ม
+$years3 = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years3[] = (date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years3[] = (date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+// เปลี่ยนลำดับให้เป็นจากปีเก่าที่สุด (2564) ไปถึงปีใหม่ (2568)
+$years3 = array_reverse($years3); // สลับลำดับปี
+
+// สร้าง label สำหรับการแสดงผล
+foreach ($years3 as $index => $year) {
+    if ($index == count($years3) - 1) {
+        $labelhdc02 .= "'ปี $year' "; // ปีสุดท้าย (2568)
+    } else {
+        $labelhdc02 .= "'ปี $year',"; // ปีอื่นๆ
+    }
+}
+
+$years4 = []; // สร้าง array เพื่อเก็บปี
+
+// คำนวณปีงบประมาณ
+for($i = 0; $i < 5; $i++) {
+  if (date("m") == '10' || date("m") == '11' || date("m") == '12') {
+    // ถ้าเดือนเป็น ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีถัดไป
+    $years4[] = 'total_'.(date("Y") + 543 + 1) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  } else {
+    // ถ้าไม่ใช่ ต.ค. - ธ.ค. ปีงบประมาณจะเป็นปีปัจจุบัน
+    $years4[] = 'total_'.(date("Y") + 543) - $i; // เก็บปีปัจจุบันและย้อนหลัง
+  }
+}
+
+//print_r($years2);
+
 while($rowhdc02 = mysqli_fetch_array($objhdc02))
 {
 	if($rowhdc02['groupcode'] == '1.1'){
-		$hdc02_1 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_1 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '2.0'){
-		$hdc02_2 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_2 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '3.0'){
-		$hdc02_3 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_3 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '4.1'){
-		$hdc02_41 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_41 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}else if($rowhdc02['groupcode'] == '4.2'){
-		$hdc02_42 = "'".$rowhdc02['total_2563']."','".$rowhdc02['total_2564']."','".$rowhdc02['total_2565']."','".$rowhdc02['total_2566']."','".$rowhdc02['total_2567']."'";
+		$hdc02_42 = "'".$rowhdc02[$years4[4]]."','".$rowhdc02[$years4[3]]."','".$rowhdc02[$years4[2]]."','".$rowhdc02[$years4[1]]."','".$rowhdc02[$years4[0]]."'";
 	}
-	//['th-ct', 10],
 }
 
-
+//echo $hdc02_1 ;
 ?>
 
 <!DOCTYPE html>
@@ -1288,7 +1749,7 @@ while($rowhdc02 = mysqli_fetch_array($objhdc02))
 	   <!-- Main content -->
     <section class="content">
       <div class="container-fluid">
-		  
+		   
 		<!-- SELECT2 EXAMPLE -->
         <div class="card card-default">
           <div class="card-header">
@@ -1311,14 +1772,20 @@ while($rowhdc02 = mysqli_fetch_array($objhdc02))
                 <div class="form-group">
                   <label>ปีงบประมาณ</label>
                   <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
-                   <!-- <option selected="selected" value="2567" >2567</option>
-                    <option value="2566">2566</option>
-                    <option value="2565">2565</option>
-                    <option value="2564">2564</option>
-                    <option value="2563">2563</option>-->
-                    <?PHP for($i=0; $i<= (5); $i++) {?>
+                    <?PHP for($i=0; $i < (5); $i++) {
+                      
+                      if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+
+                      ?>
+                      
+                       <option <?php if ($_POST['Year'] == ((date("Y")+543+1))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543+1))-$i; ?>"><?PHP echo ((date("Y")+543+1))-$i ;?></option>
+                      <?php  
+                      }else{
+                        
+                      ?>
+
                     <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
-                    <?PHP }?>
+                    <?PHP } }?>
                   </select>
                 </div>
               </div>
@@ -1399,10 +1866,41 @@ ORDER BY NO_PROVINCE ASC;";
                 <script>
                    function myFunction4() {
                       const selectedValue = $('#CODE_PROVINCE').val();
+                          //alert(selectedValue);
+                          $.ajax({
+                            url: 'get_affiliationtype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { codeprovince: selectedValue },
+                            success: function(data) {
+                              $('#type_Affiliation').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+              </div>
+              <!-- /.col -->	
+
+              <div class="col-md-3">
+               <div class="form-group">
+                  <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
+                  <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['type_Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['type_Affiliation']; ?> "><?php echo $_POST['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+                </div>
+
+                <script>
+                   function myFunction5() {
+                      const selectedValue = $('#type_Affiliation').val();
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
                          // alert(selectedValue);
                           $.ajax({
-                            url: 'get_affiliation.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { CODE_PROVINCE: selectedValue },
+                            url: 'get_affiliation2.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { typeAffiliation: selectedValue , codeprovince: codeprovince  },
                             success: function(data) {
                               $('#Affiliation').html(data);
                             }
@@ -1410,12 +1908,12 @@ ORDER BY NO_PROVINCE ASC;";
                     }
 			    	</script> 
               </div>
-              <!-- /.col -->	
+              <!-- /.col -->
               
               <div class="col-md-2">
                <div class="form-group">
-                  <label>หน่วยงานใน/นอกสังกัด</label>
-                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                  <label>สังกัด</label>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction15()" >
                     <option value="ทั้งหมด" >ทั้งหมด</option>
                     <?PHP 
                        if($_POST['Affiliation'] <> ''){
@@ -1427,7 +1925,7 @@ ORDER BY NO_PROVINCE ASC;";
                 </div>
 
                 <script>
-                   function myFunction5() {
+                   function myFunction15() {
                       const selectedValue = $('#Affiliation').val();
                       const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
                          // alert(selectedValue);
@@ -1442,9 +1940,9 @@ ORDER BY NO_PROVINCE ASC;";
 			    	</script> 
               </div>
               <!-- /.col -->
-              
+              <div class="col-md-3">
               <div class="form-group" id="labelservice">
-                  <label>Service Plan Level</label>
+                  <label>ระดับหน่วยงาน/ประเภทหน่วยบริการ</label>
                   <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
                      <option value="ทั้งหมด">ทั้งหมด</option>
                      <?PHP 
@@ -1465,22 +1963,27 @@ ORDER BY NO_PROVINCE ASC;";
                 <script>
                    function myFunction2() {
                       const selectedValue = $('#TYPE_SERVICE').val();
+                      const Affiliation 		= document.getElementById("Affiliation").value;
                       const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
-                          //alert(selectedValue);
+                      const HostHMOO 		    = document.getElementById("CODE_HMOO").value;
+                         // alert(selectedValue);
+                         // alert(Affiliation);
+                         // alert(codeprovince);
+                         // alert(HostHMOO);
                           $.ajax({
                             url: 'get_service.php', // ไฟล์ PHP ที่จะประมวลผล
-                            data: { service_id: selectedValue , codeprovince: codeprovince},
+                            data: { service_id: selectedValue , codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },
                             success: function(data) {
                               $('#CODE_HOS').html(data);
                             }
                           });
                     }
 			    	</script> 
+</div>
 
-
-              <div class="col-md-2">
+              <div class="col-md-4">
                <div class="form-group">
-                  <label>โรงพยาบาล</label>
+                  <label>หน่วยบริการ/หน่วยงาน</label>
                   <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
                     <option value="ทั้งหมด" >ทั้งหมด</option>
 					<?PHP /*
@@ -1507,56 +2010,6 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 </div>
               </div>
               <!-- /.col -->		
-
-
-             
-<!--
-<div class="col-md-2">
-               <div class="form-group">
-                  <label>เขตพื้นที่/Service Plan</label>
-                  <select class="form-control select2" style="width: 100%;" id="mySelect" >
-                    <option selected="selected" value="ทั้งหมด"> ทั้งหมด</option>
-                    <option value="เขตพื้นที่">เขตพื้นที่</option>
-                    <option value="ServicePlan">Service Plan</option>
-                    <option value="รายโรงพยาบาล">รายโรงพยาบาล</option>
-                  </select>
-				   
-				<script>
-					function myFunction() {
-						let elementarea 		= document.getElementById("area");
-						let elementlabelarea 	= document.getElementById("labelarea");
-						let elementservice 		= document.getElementById("service");
-						let elementlabelservice = document.getElementById("labelservice");
-						
-						selectElement = document.querySelector('#mySelect');	
-        				output = selectElement.value;
-						
-						if(output === "ServicePlan"){
-							//alert(output);
-							elementservice.removeAttribute("hidden");
-							elementlabelservice.removeAttribute("hidden");
-							
-							elementarea.setAttribute("hidden", "hidden");
-							elementlabelarea.setAttribute("hidden", "hidden");
-							
-						}else{
-							elementarea.removeAttribute("hidden");
-							elementlabelarea.removeAttribute("hidden");
-							
-							elementservice.setAttribute("hidden", "hidden");
-							elementlabelservice.setAttribute("hidden", "hidden");
-						
-							//alert("tong");
-						}
-						
-					}
-				</script> 
-                  
-				   
-                </div>
-              </div>-->
-              <!-- /.col -->	
-
 
 
             </div>
@@ -1594,7 +2047,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
     
     <!-- Default box -->
     <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
         <div class="row">
 			<div class="col-lg-6">
 				<!-- small card -->
@@ -1994,7 +2447,7 @@ link.click();
 
          <!-- Default box -->
     <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
         <div class="row">
 			<div class="col-lg-6">
 				<!-- small card -->
@@ -2088,7 +2541,7 @@ link.click();
 	
 
       <div class="row">
-		<div class="col-md-6 col-sm-6 col-6">
+		<div class="col-md-6">
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">นักจิตวิทยา</h3>
@@ -2243,7 +2696,7 @@ link.click();
 const myChart5 = new Chart(ctx5, {
     type: 'line',
     data: {
-        labels: ['ปี 2563', 'ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+        labels: [<?php echo $labelhdc01; ?>],
         datasets: [{
             label: 'ความผิดปกติทางจิตและพฤติกรรมที่เกิดจากการใช้สารออกฤทธิ์ต่อจิตประสาท(F10-F19)',
             data: [<?php echo $hdc01_2;?>],
@@ -2332,7 +2785,7 @@ link.click();
 const myChart6 = new Chart(ctx6, {
     type: 'line',
     data: {
-        labels: ['ปี 2563', 'ปี 2564', 'ปี 2565', 'ปี 2566', 'ปี 2567'],
+        labels: [<?php echo $labelhdc02 ; ?>],
         datasets: [{
             label: 'ความผิดปกติทางจิตและพฤติกรรมที่เกิดจากการใช้สารออกฤทธิ์ต่อจิตประสาท(F10-F19)',
             data: [<?php echo $hdc02_2;?>],
