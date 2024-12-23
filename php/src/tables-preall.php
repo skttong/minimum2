@@ -306,9 +306,10 @@ $rowptype   = mysqli_fetch_array($objptype);*/
                    function myFunction10() {
 					const selectedValue = $('#TYPE_SERVICE').val();
                       const Affiliation 		= document.getElementById("Affiliation").value;
-                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                      //const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+					  const codeprovince 		= <?php echo $NO_PROVINCE;?>;
                       const HosMOHP 		    = <?PHP echo $HosMOHP;?>;
-                          //alert(HosMOHP);
+                         // alert(HosMOHP);
                           $.ajax({
                             url: 'get_service3.php', // ไฟล์ PHP ที่จะประมวลผล
                             data: { service_id: selectedValue , codeprovince: codeprovince, Affiliation: Affiliation, HosMOHP: HosMOHP},

@@ -1328,6 +1328,9 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">เภสัชกรปฏิบัติงานวิกฤตสุขภาพจิต (MCATT) รายเขตสุขภาพ﻿</h3>
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button7" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
 				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart7" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
@@ -1363,7 +1366,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton7.addEventListener('click', function() {
     const chartData = myChart7.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;
@@ -1546,9 +1549,12 @@ downloadButton.addEventListener('click', function() {
 		 <div class="row">
 		<div class="col-md-12">
 			<div class="card">
-				<!--<div class="card-header">
-					<h3 class="card-title">ข้อมูลแพทย์</h3>
-				</div>-->
+      <div class="card-header">
+					<!--<h3 class="card-title">เภสัชกรปฏิบัติงานวิกฤตสุขภาพจิต (MCATT) รายเขตสุขภาพ﻿</h3>-->
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button8" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
+				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart8" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
@@ -1583,7 +1589,7 @@ downloadButton.addEventListener('click', function() {
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton8.addEventListener('click', function() {
     const chartData = myChart8.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;

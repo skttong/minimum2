@@ -62,7 +62,9 @@ if (isset($_POST['position'])) {
 
 $sql1 = "SELECT
     SUM(CASE WHEN personnel.positionrole = 'นักจิตวิทยา' THEN 1 ELSE 0 END) AS TC01,
-    SUM(CASE WHEN personnel.positionrole = 'นักจิตวิทยาคลินิก' THEN 1 ELSE 0 END) AS TC02
+    SUM(CASE WHEN personnel.positionrole = 'นักจิตวิทยาคลินิก' THEN 1 ELSE 0 END) AS TC02,
+    SUM(CASE WHEN personnel.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)' THEN 1 ELSE 0 END) AS TC03,
+    SUM(CASE WHEN personnel.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)' THEN 1 ELSE 0 END) AS TC04
 FROM
     personnel
 JOIN hospitalnew ON hospitalnew.CODE5 = personnel.HospitalID
@@ -141,7 +143,7 @@ if (isset($row1)) {
   if($row1['TC01'] == ''){
     $TC01 =  0;
   }else{*/
-    $TC01 =  $row1['TC01'];
+    $TC01 =  $row1['TC01']+$row1['TC03']+$row1['TC04'];
  /* }
   if($row1['TC02'] == ''){
     $TC02 =  0;
@@ -239,7 +241,15 @@ $sql3 = "SELECT
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA02_2',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA03_2',
-  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA04_2'
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA04_2',
+  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_3',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA02_3',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA03_3',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA04_3',
+  SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_4',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA02_4',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลชุมชน','สำนักงานสาธารณสุขอำเภอ') AND p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA03_4',
+  SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลส่งเสริมสุขภาพตำบล','ศูนย์บริการสาธารณสุข อปท.') AND p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA04_4'
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
@@ -314,12 +324,23 @@ $PA01_2 = $row3['PA01_2'];
 $PA02_2 = $row3['PA02_2'];
 $PA03_2 = $row3['PA03_2'];
 $PA04_2 = $row3['PA04_2'];
+$PA01_3 = $row3['PA01_3'];
+$PA02_3 = $row3['PA02_3'];
+$PA03_3 = $row3['PA03_3'];
+$PA04_3 = $row3['PA04_3'];
+$PA01_4 = $row3['PA01_4'];
+$PA02_4 = $row3['PA02_4'];
+$PA03_4 = $row3['PA03_4'];
+$PA04_4 = $row3['PA04_4'];
 
 
 $MOOsql1 = "SELECT
   hn.CODE_HMOO,
   SUM(CASE WHEN p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_1',
-  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2'
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2',
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_3',
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_4'
+  
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
@@ -446,53 +467,53 @@ $Hmoo13_4 = 0 ;
 while($Mrow1 = mysqli_fetch_array($Mobj1))
 {
 	if($Mrow1['CODE_HMOO'] == 1){
-		$Hmoo01_1 = $Mrow1['PA01_1'];
+		$Hmoo01_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo01_2 = $Mrow1['PA01_2'];
 	}elseif($Mrow1['CODE_HMOO'] == 2){
-		$Hmoo02_1 = $Mrow1['PA01_1'];
+		$Hmoo02_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo02_2 = $Mrow1['PA01_2'];
 	}elseif($Mrow1['CODE_HMOO'] == 3){
-		$Hmoo03_1 = $Mrow1['PA01_1'];
+		$Hmoo03_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo03_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 4){
-		$Hmoo04_1 = $Mrow1['PA01_1'];
+		$Hmoo04_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo04_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 5){
-		$Hmoo05_1 = $Mrow1['PA01_1'];
+		$Hmoo05_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo05_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 6){
-		$Hmoo06_1 = $Mrow1['PA01_1'];
+		$Hmoo06_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo06_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 7){
-		$Hmoo07_1 = $Mrow1['PA01_1'];
+		$Hmoo07_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo07_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 8){
-		$Hmoo08_1 = $Mrow1['PA01_1'];
+		$Hmoo08_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo08_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 9){
-		$Hmoo09_1 = $Mrow1['PA01_1'];
+		$Hmoo09_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo09_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 10){
-		$Hmoo10_1 = $Mrow1['PA01_1'];
+		$Hmoo10_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo10_2 = $Mrow1['PA01_2'];
 		
 	}elseif($Mrow1['CODE_HMOO'] == 11){
-		$Hmoo11_1 = $Mrow1['PA01_1'];
+		$Hmoo11_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo11_2 = $Mrow1['PA01_2'];
 
 	}elseif($Mrow1['CODE_HMOO'] == 12){
-		$Hmoo12_1 = $Mrow1['PA01_1'];
+		$Hmoo12_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo12_2 = $Mrow1['PA01_2'];
 	
 	}elseif($Mrow1['CODE_HMOO'] == 13){
-		$Hmoo13_1 = $Mrow1['PA01_1'];
+		$Hmoo13_1 = $Mrow1['PA01_1']+$Mrow1['PA01_3']+$Mrow1['PA01_4'];
 		$Hmoo13_2 = $Mrow1['PA01_2'];
 
 	}
@@ -529,9 +550,9 @@ SELECT
   hg.CODE_PROVINCE,
   hg.HospitalGroup,
   SUM(CASE WHEN pt.positionrole = 'นักจิตวิทยา' AND pt.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'SC01', 
-SUM(CASE WHEN pt.positionrole = 'นักจิตวิทยาคลินิก' AND pt.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'SC02' ,
-SUM(CASE WHEN pt.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)' AND pt.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'SC03', 
-SUM(CASE WHEN pt.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)' AND pt.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'SC04' 
+  SUM(CASE WHEN pt.positionrole = 'นักจิตวิทยาคลินิก' AND pt.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'SC02' ,
+  SUM(CASE WHEN pt.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)' AND pt.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'SC03', 
+  SUM(CASE WHEN pt.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)' AND pt.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'SC04' 
 FROM
   HospitalGroups hg
 JOIN personnel pt ON hg.HospitalID = pt.HospitalID
@@ -693,7 +714,10 @@ $MA04p = $row2p['MA04'];
 $MOOsql1p = "SELECT
   hn.CODE_PROVINCE,
   SUM(CASE WHEN p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_1',
-  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2'
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2',
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_3',
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_4'
+  
 FROM
   hospitalnew hn 
 LEFT JOIN personnel p ON hn.CODE5 = p.HospitalID
@@ -779,13 +803,13 @@ while($row1p = mysqli_fetch_array($Mobj1p))
 		
 		$dHMOO1p =  "'".$row1p['CODE_PROVINCE']."'";
 
-		$vMhoo1_1p = $row1p['PA01_1'];
+		$vMhoo1_1p = $row1p['PA01_1']+$row1p['PA01_3']+$row1p['PA01_4'];
     $vMhoo1_2p = $row1p['PA01_2'];
 
 	}else{
 	$dHMOO1p =  $dHMOO1p.",'".$row1p['CODE_PROVINCE']."'";
 
-	$vMhoo1_1p = $vMhoo1_1p.",".$row1p['PA01_1'];
+	$vMhoo1_1p = $vMhoo1_1p.",".$row1p['PA01_1']+$row1p['PA01_3']+$row1p['PA01_4'];
   $vMhoo1_2p = $vMhoo1_2p.",".$row1p['PA01_2'];
 
 	}
@@ -1492,9 +1516,12 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
       <div class="row">
 		<div class="col-md-12">
 			<div class="card">
-				<!--<div class="card-header">
-					<h3 class="card-title">ข้อมูลแพทย์</h3>
-				</div>-->
+      <div class="card-header">
+					<!--<h3 class="card-title">นักจิตวิทยาปฏิบัติงานวิกฤตสุขภาพจิต (MCATT) รายเขตสุขภาพ﻿</h3>-->
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button6" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
+				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart6" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
@@ -1508,7 +1535,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 labels: ['นักจิตวิทยา', 'นักจิตวิทยาคลินิก'],
                 datasets: [{
                     label: 'ระดับกรมสุขภาพจิต',
-                    data: [<?php echo $PA01_1.",".$PA01_2; ?>],
+                    data: [<?php echo $PA01_1+$PA01_4+$PA01_4.",".$PA01_2; ?>],
                     backgroundColor: '#00cadc',
                     borderColor: '#00cadc',
                     borderWidth: 1,
@@ -1516,7 +1543,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                },
                 {
                     label: 'ระดับจังหวัด',
-                    data: [<?php echo $PA02_1.",".$PA02_2; ?>],
+                    data: [<?php echo $PA02_1+$PA02_3+$PA02_4.",".$PA02_2; ?>],
                     backgroundColor: '#49c3fb',
                     borderColor: '#49c3fb',
                     borderWidth: 1,
@@ -1524,7 +1551,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                  },
                 {
                     label: 'ระดับอำเภอ',
-                    data: [<?php echo $PA03_1.",".$PA03_2; ?>],
+                    data: [<?php echo $PA03_1+$PA03_3+$PA03_4.",".$PA03_2; ?>],
                     backgroundColor: '#65a6fa',
                     borderColor: '#65a6fa',
                     borderWidth: 1,
@@ -1532,7 +1559,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 },
                 {
                     label: 'ระดับตำบล',
-                    data: [<?php echo $PA04_1.",".$PA04_2; ?>],
+                    data: [<?php echo $PA04_1+$PA04_3+$PA04_4.",".$PA04_2; ?>],
                     backgroundColor: '#7e80e7',
                     borderColor: '#7e80e7',
                     borderWidth: 1,
@@ -1551,7 +1578,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton6.addEventListener('click', function() {
     const chartData = myChart6.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;
@@ -1578,6 +1605,9 @@ downloadButton.addEventListener('click', function() {
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">นักจิตวิทยาปฏิบัติงานวิกฤตสุขภาพจิต (MCATT) รายเขตสุขภาพ﻿</h3>
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button7" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
 				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart7" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
@@ -1620,7 +1650,7 @@ downloadButton.addEventListener('click', function() {
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton7.addEventListener('click', function() {
     const chartData = myChart7.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;
@@ -1806,16 +1836,19 @@ downloadButton.addEventListener('click', function() {
 		 <div class="row">
 		<div class="col-md-12">
 			<div class="card">
-				<!--<div class="card-header">
-					<h3 class="card-title">ข้อมูลแพทย์</h3>
-				</div>-->
+      <div class="card-header">
+					<!--<h3 class="card-title">นักจิตวิทยาปฏิบัติงานวิกฤตสุขภาพจิต (MCATT) รายเขตสุขภาพ﻿</h3>-->
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button8" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
+				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart8" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
         const ctx8 = document.getElementById('myChart8');
         
         
-        const downloadButton8 = document.getElementById('download-button');
+        const downloadButton8 = document.getElementById('download-button8');
 
         const myChart8 = new Chart(ctx8, {
           type: 'bar',
@@ -1850,7 +1883,7 @@ downloadButton.addEventListener('click', function() {
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton8.addEventListener('click', function() {
     const chartData = myChart8.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;
@@ -1924,6 +1957,8 @@ downloadButton.addEventListener('click', function() {
 				</div></th>
                     <th width="12%">นักจิตวิทยา (คน)</th>
                     <th width="12%">นักจิตวิทยาคลินิก (คน)</th>
+                    <th width="12%">นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
+                    <th width="12%">นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
                   </tr>
                    </thead>
                   <tbody>
@@ -1938,6 +1973,8 @@ downloadButton.addEventListener('click', function() {
                     <td width="12%"><?php echo $rowall['HospitalGroup'];?></td>
                     <td width="12%"><?php echo $rowall['SC01'];?></td>
                     <td width="12%"><?php echo $rowall['SC02'];?></td>
+                    <td width="12%"><?php echo $rowall['SC03'];?></td>
+                    <td width="12%"><?php echo $rowall['SC04'];?></td>
                   </tr>
                   <?php 
                     }
@@ -1976,6 +2013,8 @@ downloadButton.addEventListener('click', function() {
 				</div></th>
                     <th width="12%">นักจิตวิทยา (คน)</th>
                     <th width="12%">นักจิตวิทยาคลินิก (คน)</th>
+                    <th width="12%">นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
+                    <th width="12%">นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
                   </tr>
                    </thead>
                   <tbody>
@@ -1990,6 +2029,8 @@ downloadButton.addEventListener('click', function() {
                     <td width="12%"><?php echo $rowall1['HospitalGroup'];?></td>
                     <td width="12%"><?php echo $rowall1['SC01'];?></td>
                     <td width="12%"><?php echo $rowall1['SC02'];?></td>
+                    <td width="12%"><?php echo $rowall1['SC03'];?></td>
+                    <td width="12%"><?php echo $rowall1['SC04'];?></td>
                   </tr>
                   <?php 
                     }

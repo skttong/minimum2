@@ -620,8 +620,8 @@ SELECT
     HospitalGroup,
     SUM(CASE WHEN r1 = 'จิตแพทย์ทั่วไป' THEN 1 ELSE 0 END) AS 'dr01',
     SUM(CASE WHEN r1 = 'จิตแพทย์เด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'dr02',
-    SUM(CASE WHEN r1 = 'แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. กับ วว.)' THEN 1 ELSE 0 END) AS 'dr03',
-    SUM(CASE WHEN r1 = 'แพทย์สาขาอื่น' THEN 1 ELSE 0 END) AS 'dr04'
+    SUM(CASE WHEN r1 = 'แพทย์เวชศาสตร์ป้องกันสุขภาพจิตชุมชน (อว. หรือ วว.)' THEN 1 ELSE 0 END) AS 'dr03',
+    SUM(CASE WHEN r1 = 'แพทย์สาขาอื่น ที่ปฏิบัติงานด้านจิตเวชผู้ใหญ่และจิตเวชเด็กและวัยรุ่น' THEN 1 ELSE 0 END) AS 'dr04'
 FROM
     HospitalGroups
 WHERE HospitalGroup <> 'Other'
@@ -1381,6 +1381,9 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">แพทย์</h3>
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
 				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart3" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
@@ -1662,9 +1665,12 @@ downloadButton.addEventListener('click', function() {
       <div class="row">
 		<div class="col-md-12">
 			<div class="card">
-				<!--<div class="card-header">
-					<h3 class="card-title">ข้อมูลแพทย์</h3>
-				</div>-->
+				<div class="card-header">
+					<!--<h3 class="card-title">ข้อมูลแพทย์</h3>-->
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button6" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
+				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart6" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
@@ -1722,7 +1728,7 @@ downloadButton.addEventListener('click', function() {
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton6.addEventListener('click', function() {
     const chartData = myChart6.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;
@@ -1749,6 +1755,9 @@ downloadButton.addEventListener('click', function() {
 			<div class="card">
 				<div class="card-header">
 					<h3 class="card-title">บุคลากรปฏิบัติงานวิกฤตสุขภาพจิต (MCATT) รายเขตสุขภาพ﻿</h3>
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button7" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
 				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart7" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
@@ -1807,7 +1816,7 @@ downloadButton.addEventListener('click', function() {
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton7.addEventListener('click', function() {
     const chartData = myChart7.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;
@@ -1989,16 +1998,19 @@ downloadButton.addEventListener('click', function() {
 		 <div class="row">
 		<div class="col-md-12">
 			<div class="card">
-				<!--<div class="card-header">
-					<h3 class="card-title">ข้อมูลแพทย์</h3>
-				</div>-->
+				<div class="card-header">
+					<!--<h3 class="card-title">ข้อมูลแพทย์</h3>-->
+          <div align="right">
+						<button class="btn btn-navbar" id="download-button8" align="right" ><img width="10%" src="images/downloand.png"></button>
+					</div>
+				</div>
 				<div class="card-body">
 					<a href="#"><canvas id="myChart8" style="min-height: 100%; height: 500px; max-height: 380px; max-width: 100%;"></canvas></a>
 					<script>
         const ctx8 = document.getElementById('myChart8');
         
         
-        const downloadButton8 = document.getElementById('download-button');
+        const downloadButton8 = document.getElementById('download-button8');
 
         const myChart8 = new Chart(ctx8, {
             type: 'bar',
@@ -2049,7 +2061,7 @@ downloadButton.addEventListener('click', function() {
             }
         });
 
-downloadButton.addEventListener('click', function() {
+downloadButton8.addEventListener('click', function() {
     const chartData = myChart8.toBase64Image(); // Get chart image data
     const link = document.createElement('a');
     link.href = chartData;

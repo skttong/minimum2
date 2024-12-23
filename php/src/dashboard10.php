@@ -1775,6 +1775,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 
 
             </div>
+            
             <div class="col-md-6">
                 <div class="card">
                     <div class="card-header">
@@ -1906,7 +1907,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
 
             </div>
         </div>
-
+        <?php /*
         <div class="row">
             <div class="col-md-4">
                 <div class="card">
@@ -2004,6 +2005,8 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                 
 
             </div>
+            */ ?>
+            <?php /*
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header">
@@ -2037,7 +2040,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                         backgroundColor: 'pink',
                                         borderColor: 'pink',
                                         borderWidth: 1
-                                    }*/]
+                                    }*//*]
                                 },
                                 options: {
                                     plugins: {
@@ -2134,7 +2137,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
                                         backgroundColor: 'pink',
                                         borderColor: 'pink',
                                         borderWidth: 1
-                                    }*/]
+                                    }*//*]
                                 },
                                 options: {
                                     plugins: {
@@ -2200,7 +2203,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
             </div>  
         </div>
 
-
+*/ ?>
        
     <!-- Default box -->
     <div class="row">
