@@ -128,27 +128,32 @@ if (isset($_POST['Year'])) {
     }
     }  
 
+   // echo $sql1 ;
+
 $obj1 = mysqli_query($con, $sql1);
 $row1 = mysqli_fetch_array($obj1);
 
 $TC01 =  0;
 $TC02 =  0;
 $TCtotal = 0;
-
+/*
 if (isset($row1)) {
   if($row1['TC01'] == ''){
     $TC01 =  0;
-  }else{
+  }else{*/
     $TC01 =  $row1['TC01'];
-  }
+ /* }
   if($row1['TC02'] == ''){
     $TC02 =  0;
-  }else{
-    $TC01 =  $row1['TC02'];
+  }else{*/
+    $TC02 =  $row1['TC02'];
+    /*
   }
+    */
   $TCtotal =  $TC01 + $TC02;
+  /*
 }
-
+*/
 $sql2 = "SELECT
   SUM(CASE WHEN hn.HOS_TYPE in ('กรมสุขภาพจิต','ศูนย์วิชาการ')AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA01',
   SUM(CASE WHEN hn.HOS_TYPE in ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'MA02',
@@ -502,7 +507,7 @@ $dHMOO1 = "'เขตสุขภาพที่ 1', 'เขตสุขภา�
  //$vMhoo1_4 = $Hmoo01_4.",".$Hmoo02_4.",".$Hmoo03_4.",".$Hmoo04_4.",".$Hmoo05_4.",".$Hmoo06_4.",".$Hmoo07_4.",".$Hmoo08_4.",".$Hmoo09_4.",".$Hmoo10_4.",".$Hmoo11_4.",".$Hmoo12_4.",".$Hmoo13_4 ;
 
 
- $sqlall = "WITH HospitalGroups AS (
+$sqlall = "WITH HospitalGroups AS (
   SELECT
       hn.CODE_PROVINCE,
       hn.CODE5 AS HospitalID,
@@ -751,10 +756,11 @@ if (isset($_POST['Year'])) {
     }
     } 
 
-  $MOOsql1p = $MOOsql1p."
+    $MOOsql1p = $MOOsql1p."
 GROUP BY hn.CODE_PROVINCE 
   ;
 		";
+
 $Mobj1p = mysqli_query($con, $MOOsql1p);
 //$row2 = mysqli_fetch_array($obj2);
 
@@ -1817,7 +1823,7 @@ downloadButton.addEventListener('click', function() {
               labels: [<?php echo $dHMOO1p; ?>],
                 datasets: [{
                     label: 'นักจิตวิทยา',
-                    data: [<?php echo $vMhoo1_1p; ?>],
+                    data: [<?php echo $vMhoo1_2p; ?>],
                     backgroundColor: '#00cadc',
                     borderColor: '#00cadc',
                     borderWidth: 1,
@@ -1825,7 +1831,7 @@ downloadButton.addEventListener('click', function() {
                },
                 {
                     label: 'นักจิตวิทยาคลินิก',
-                    data: [<?php echo $vMhoo1_2p; ?>],
+                    data: [<?php echo $vMhoo1_1p; ?>],
                     backgroundColor: '#49c3fb',
                     borderColor: '#49c3fb',
                     borderWidth: 1,
