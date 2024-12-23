@@ -959,10 +959,10 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
         const myChart3 = new Chart(ctx, {
             type: 'bar',
 			data: {
-        labels: ['พยาบาลเฉพาะทางสุขภาพจิตและจิตเวช', 'พยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น', 'พยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด', 'พยาบาลเฉพาะทางผู้สูงอายุ'],
+        labels: ['ยังไม่ผ่านการอบรมเฉพาะทาง', 'พยาบาลเฉพาะทางสุขภาพจิตและจิตเวช', 'พยาบาลเฉพาะทางจิตเวชเด็กและวัยรุ่น', 'พยาบาลเฉพาะทางผู้ใช้ยาและสารเสพติด', 'พยาบาลเฉพาะทางผู้สูงอายุ'],
         datasets: [{
             label: 'ปฏิบัติงาน',
-            data: [<?php echo $nu02.','.$nu04.','.$nu05.','.$nu03.','.$nu06.','.$nu07;?>],
+            data: [<?php echo $nu01.','.$nu02.','.$nu04.','.$nu05.','.$nu03.','.$nu06.','.$nu07;?>],
             backgroundColor: '#6CE5E8',
             borderColor: '#6CE5E8',
             borderWidth: 1,
@@ -970,7 +970,7 @@ ORDER BY hospitalnew.CODE_HMOO DESC;";
         },
         {
             label: 'กำลังศึกษาต่อเฉพาะทาง',
-            data: [<?php echo $tnu02.','.$tnu04.','.$tnu05.','.$tnu03.','.$tnu06.','.$tnu07;?>],
+            data: [<?php echo $tnu01.','.$tnu02.','.$tnu04.','.$tnu05.','.$tnu03.','.$tnu06.','.$tnu07;?>],
             backgroundColor: '#41B8D5',
             borderColor: '#41B8D5',
             borderWidth: 1,
