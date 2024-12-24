@@ -780,8 +780,15 @@ if (isset($_POST['Year'])) {
     }
     } 
 
-    $MOOsql1p = $MOOsql1p."
+$MOOsql1p = $MOOsql1p."
 GROUP BY hn.CODE_PROVINCE 
+HAVING 
+    PA01_1 > 0 
+    OR PA01_2 > 0 
+    OR PA01_3 > 0 
+    OR PA01_4 > 0
+ORDER BY 
+    hn.CODE_PROVINCE ASC;
   ;
 		";
 

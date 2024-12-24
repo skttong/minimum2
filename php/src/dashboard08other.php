@@ -630,6 +630,10 @@ if (isset($_POST['Year'])) {
 
   $MOOsql1p = $MOOsql1p."
 GROUP BY hn.CODE_PROVINCE 
+HAVING 
+    PA01_1 > 0 
+ORDER BY 
+    hn.CODE_PROVINCE ASC;
   ;
 		";
 $Mobj1p = mysqli_query($con, $MOOsql1p);

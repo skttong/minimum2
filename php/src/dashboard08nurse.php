@@ -1059,10 +1059,20 @@ HospitalCounts AS (
   LEFT JOIN trained_personnel tp ON hosn.CODE5 = tp.HospitalID
   GROUP BY hosn.CODE_PROVINCE
 )
-SELECT * FROM HospitalCounts WHERE nu01_1 > 0 OR nu01_2 > 0 ORDER BY CODE_PROVINCE ASC;
+SELECT * FROM HospitalCounts 
+WHERE nu01_1 > 0 
+   OR nu01_2 > 0 
+   OR nu01_3 > 0 
+   OR nu01_4 > 0 
+   OR nu01_5 > 0 
+   OR nu01_6 > 0 
+   OR nu01_7 > 0 
+ORDER BY CODE_PROVINCE ASC;
 		";
 
-//echo $MOOsql1p;
+    
+
+$MOOsql1p;
 
 $Mobj1p = mysqli_query($con, $MOOsql1p);
 //$row2 = mysqli_fetch_array($obj2);
