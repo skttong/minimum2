@@ -41,7 +41,7 @@ $HospitalID = $t[0];
 		echo "</script>";
 	} else {*/
 		
-	echo $sql = "UPDATE bed
+	 $sql = "UPDATE bed
                 SET
                     Wardall = '$txtWard',
                     Ward_no = '$cheWard',

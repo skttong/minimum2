@@ -8,26 +8,6 @@ $codeprovince   = $_SESSION["codeprovince"];
 $HosMOHP		= $_SESSION["HostHMOO"];
 
 //$PersonnelType	= $_GET['t'];
-
-$SQL = "SELECT 
- SUM(CASE WHEN userhospital.stausloginfirst = '0' THEN 1 ELSE 0 END) AS TC01,
- SUM(CASE WHEN userhospital.stausloginfirst = '1' THEN 1 ELSE 0 END) AS TC02
-FROM userhospital 
-INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
-left JOIN prefix ON userhospital.prefixID = prefix.prefixID
-WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
-AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
-;" ;
-
-$result = mysqli_query($con, $SQL);
-$row = mysqli_fetch_array($result);
-
- $TC01 = $row['TC01']; 
- $TC02 = $row['TC02']; 
-
-
-
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -54,9 +34,9 @@ $row = mysqli_fetch_array($result);
   <!-- Control by jel -->
   <link rel="stylesheet" href="dist/css/fontcontrol.css">
 
-  <?php /*if($_SESSION["TypeUser"] <> "Admin"){ ?>
-    <meta http-equiv="Refresh" content="0;URL=tables-memberall.php">
-	<?php } */ ?>
+  <?php if($_SESSION["TypeUser"] == "Admin"){ ?>
+    <meta http-equiv="Refresh" content="0;URL=tables-memberalladmin.php">
+	<?php } ?>
 	
 	<?php include "header_font.php"; ?>
 	
@@ -192,6 +172,7 @@ hr {
   <?php include "nav_bar.php" ?>
   <!-- /.navbar -->
 
+
   <!-- Main Sidebar Container -->
   <?php include "menu.php" ?>
 
@@ -213,6 +194,7 @@ hr {
       $HOS_NAME = $result_u['HOS_NAME']; 
       $TypeService = $_SESSION["TypeService"];
       $CODE_DISTRICT = $result_u['CODE_DISTRICT'];
+      $NO_PROVINCE = $result_u['NO_PROVINCE'];
 		}
 		?>
          <?php /* <h2 class="card-title">แบบบันทึกข้อมูลทรัพยากร   <?php echo $HOS_NAME ." ระดับ ".$TypeService ;?>  </h2> */ ?>
@@ -243,241 +225,315 @@ hr {
     <section class="content">
       <div class="container-fluid">
       <div class="card-body">
-			<form class="form-valide" action="tables-memberalladmin.php" method="post" id="myform1" name="foml">  
+			<form class="form-valide" action="tables-memberall2.php" method="post" id="myform1" name="foml">  
       <div class="row">
-      <!-- ปีงบประมาณ -->
-    <?php /*
-   <div class="col-md-2">
-            <div class="form-group">
-                <label>ปีงบประมาณ</label>
-                <select class="form-control select2" name="Year" id="Year" style="width: 100%;">
-                   <?PHP for($i=0; $i < (5); $i++) {
-                      
-                      if (date("m") == '10' || date("m") == '11' || date("m") == '12'){
+      <?php if($_SESSION["HosType"] == 'กรมสุขภาพจิต'){ ?>
 
-                      ?>
-                      
-                       <option <?php if ($_POST['Year'] == ((date("Y")+543+1))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543+1))-$i; ?>"><?PHP echo ((date("Y")+543+1))-$i ;?></option>
-                      <?php  
-                      }else{
-                        
-                      ?>
+<div class="col-md-2">
+   <div class="form-group">
+      <label>จังหวัด</label>
+      <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction2()">
+        <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+<?PHP
+$sqlprovince = "SELECT DISTINCT *
+FROM userhospital 
+INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
+WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
+AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
+AND hospitalnew.CODE_HMOO = '$HosMOHP'
+GROUP BY hospitalnew.CODE_PROVINCE";
 
-                    <option <?php if ($_POST['Year'] == ((date("Y")+543))-$i){?> selected="selected" <?php } ?> value="<?PHP echo ((date("Y")+543))-$i; ?>"><?PHP echo ((date("Y")+543))-$i ;?></option>
-                    <?PHP } }?>
-                  </select>
-            </div>
-        </div>
-        */ ?>
-        <!-- เขตสุขภาพ -->
-        <div class="col-md-2">
-            <div class="form-group">
-                <label>เขตสุขภาพ</label>
-                <select class="form-control select2" name="CODE_HMOO" id="CODE_HMOO" style="width: 100%;" onChange="myFunction3()">
-                    <option <?php if (isset($_POST['CODE_HMOO']) && $_POST['CODE_HMOO'] == 'ทั้งหมด' || !isset($_POST['CODE_HMOO'])){?> selected="selected" <?php } ?> value="ทั้งหมด">ทั้งหมด</option>
-                    <?php for ($i = 1; $i <= 13; $i++) { ?>
-                    <option <?php if (isset($_POST['CODE_HMOO']) && $_POST['CODE_HMOO'] == $i){?> selected="selected" <?php } ?> 
-                        value="<?php echo $i; ?>">เขตสุขภาพ <?php echo $i; ?></option>
-                    <?php } ?>
-                </select>
-            </div>
-        </div>
+$objprovince = mysqli_query($con, $sqlprovince);
 
-        <!-- จังหวัด -->
-        <div class="col-md-2">
-            <div class="form-group">
-                <label>จังหวัด</label>
-                <select class="form-control select2" name="CODE_PROVINCE" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction4()">
-                    <option value="ทั้งหมด" <?php if (isset($_POST['CODE_PROVINCE']) && $_POST['CODE_PROVINCE'] == 'ทั้งหมด' || !isset($_POST['CODE_PROVINCE'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
-                </select>
-            </div>
-        </div>
+while($rowprovince = mysqli_fetch_array($objprovince))
 
-        <!-- หน่วยงานใน/นอกสังกัด -->
-        <div class="col-md-3">
-            <div class="form-group">
-                <label>หน่วยงานใน/นอกสังกัดกระทรวงสาธารณสุข</label>
-                <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction5()">
-                    <option value="ทั้งหมด" <?php if (isset($_POST['type_Affiliation']) && $_POST['type_Affiliation'] == 'ทั้งหมด' || !isset($_POST['type_Affiliation'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
-                </select>
-            </div>
-        </div>
+{
 
-        <!-- สังกัด -->
-        <div class="col-md-2">
-            <div class="form-group">
-                <label>สังกัด</label>
-                <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction15()">
-                    <option value="ทั้งหมด" <?php if (isset($_POST['Affiliation']) && $_POST['Affiliation'] == 'ทั้งหมด' || !isset($_POST['Affiliation'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
-                </select>
-            </div>
-        </div>
+?>
+<option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
 
-        <!-- ประเภทหน่วยบริการ -->
-        <div class="col-md-3">
-            <div class="form-group">
-                <label>ระดับหน่วยงาน/ประเภทหน่วยบริการ</label>
-                <select class="form-control select2" name="TYPE_SERVICE" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction2()">
-                    <option value="ทั้งหมด" <?php if (isset($_POST['TYPE_SERVICE']) && $_POST['TYPE_SERVICE'] == 'ทั้งหมด' || !isset($_POST['TYPE_SERVICE'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
-                </select>
-            </div>
-        </div>
+<?PHP
+}
+?>
 
-        <!-- หน่วยบริการ -->
-        <div class="col-md-4">
-            <div class="form-group">
-                <label>หน่วยบริการ/หน่วยงาน</label>
-                <select class="form-control select2" name="CODE_HOS" id="CODE_HOS" style="width: 100%;">
-                    <option value="ทั้งหมด" <?php if (isset($_POST['CODE_HOS']) && $_POST['CODE_HOS'] == 'ทั้งหมด' || !isset($_POST['CODE_HOS'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
-                </select>
-            </div>
-        </div>
+
+      </select>
     </div>
-    
-    <div class="card-footer">
-        <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
-        <button type="reset" class="btn btn-default" id="resetButton"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>
-    </div>  
-</form>
-
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    myFunction3();
-    myFunction4();
-    myFunction5();
-    myFunction15();
-    myFunction2();
-});
+       function myFunction2() {
+        const selectedValue = $('#CODE_PROVINCE').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_affiliationtype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { codeprovince: selectedValue },
+                            success: function(data) {
+                              $('#type_Affiliation').html(data);
+                            }
+                          });
+                    }
+</script> 
+  </div>
 
-// Function for เขตสุขภาพ -> จังหวัด
-function myFunction3() {
-    const selectedValue = $('#CODE_HMOO').val();
-    if (selectedValue) {
-        $.ajax({
-            url: 'get_hmoo.php',
-            data: { moo_id: selectedValue },
-            success: function(data) {
-                $('#CODE_PROVINCE').html(data);
-            }
-        });
-    }
+}elseif($_SESSION["HosType"] == 'ศูนย์วิชาการ'){ ?>
+
+<div class="col-md-2">
+   <div class="form-group">
+      <label>จังหวัด</label>
+      <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction2()">
+        <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+<?PHP
+$sqlprovince = "SELECT DISTINCT *
+FROM userhospital 
+INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
+WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
+AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
+AND hospitalnew.CODE_HMOO = '$HosMOHP'
+GROUP BY hospitalnew.CODE_PROVINCE";
+
+$objprovince = mysqli_query($con, $sqlprovince);
+
+while($rowprovince = mysqli_fetch_array($objprovince))
+
+{
+
+?>
+<option value="<?PHP echo $rowprovince["NO_PROVINCE"];?>" ><?PHP echo $rowprovince["CODE_PROVINCE"];?></option>
+
+<?PHP
 }
-
-// Function for จังหวัด -> หน่วยงานใน/นอกสังกัด
-function myFunction4() {
-    const selectedValue = $('#CODE_PROVINCE').val();
-    if (selectedValue) {
-        $.ajax({
-            url: 'get_affiliationtype.php',
-            data: { codeprovince: selectedValue },
-            success: function(data) {
-                $('#type_Affiliation').html(data);
-            }
-        });
-    }
-}
-
-// Function for หน่วยงานใน/นอกสังกัด -> สังกัด
-function myFunction5() {
-    const selectedValue = $('#type_Affiliation').val();
-    const codeprovince = $('#CODE_PROVINCE').val();
-    if (selectedValue) {
-        $.ajax({
-            url: 'get_affiliation2.php',
-            data: { typeAffiliation: selectedValue, codeprovince: codeprovince },
-            success: function(data) {
-                $('#Affiliation').html(data);
-            }
-        });
-    }
-}
-
-// Function for สังกัด -> ประเภทหน่วยบริการ
-function myFunction15() {
-    const selectedValue = $('#Affiliation').val();
-    const codeprovince = $('#CODE_PROVINCE').val();
-    if (selectedValue) {
-        $.ajax({
-            url: 'get_servicetype.php',
-            data: { Affiliation: selectedValue, codeprovince: codeprovince },
-            success: function(data) {
-                $('#TYPE_SERVICE').html(data);
-            }
-        });
-    }
-}
-
-// Function for ประเภทหน่วยบริการ -> หน่วยบริการ
-function myFunction2() {
-    const selectedValue = $('#TYPE_SERVICE').val();
-    const Affiliation = $('#Affiliation').val();
-    const codeprovince = $('#CODE_PROVINCE').val();
-    const HostHMOO = $('#CODE_HMOO').val();
-    if (selectedValue) {
-        $.ajax({
-            url: 'get_service.php',
-            data: { service_id: selectedValue, codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },
-            success: function(data) {
-                $('#CODE_HOS').html(data);
-            }
-        });
-    }
-}
+?>
 
 
-</script>
+      </select>
+    </div>
+<script>
+       function myFunction2() {
+        const selectedValue = $('#CODE_PROVINCE').val();
+                         // alert(selectedValue);
+                          $.ajax({
+                            url: 'get_affiliationtype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { codeprovince: selectedValue },
+                            success: function(data) {
+                              $('#type_Affiliation').html(data);
+                            }
+                          });
+                    }
+</script> 
+  </div>
+<!-- /.form-group -->
+
+<?php } ?>
+<?php if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุขอำเภอ'){?>
+  
+      <?php   if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){ ?>
+              <div class="col-md-3">
+               <div class="form-group">
+                  <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
+                  <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction15()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?php $sql10 = "SELECT type_Affiliation 
+                                  FROM hospitalnew
+                                  WHERE CODE_PROVINCE = '".$codeprovince."'
+                                  GROUP BY hospitalnew.type_Affiliation 
+                                  ORDER BY hospitalnew.type_Affiliation DESC;"; 
+
+                                  $obj10 = mysqli_query($con, $sql10);
+       
+                                  while($row10 = mysqli_fetch_array($obj10))
+                           
+                                  {
+                                  
+                    ?>
+                    <?PHP 
+                      
+                     ?>
+                    <option value="<?php echo $row10['type_Affiliation']; ?> "><?php echo $row10['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+
+                    <?PHP 
+                       if($_POST['type_Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['type_Affiliation']; ?> "><?php echo $_POST['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+                </div>
+        <?php }else{ ?>
+          <div class="col-md-3">
+          <div class="form-group">
+                  <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
+                  <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction15()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['type_Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['type_Affiliation']; ?> "><?php echo $_POST['type_Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+                </div>
+             <!-- /.form-group -->  
+       <?php } ?>
+       <script>
+                   function myFunction15() {
+                      const selectedValue = $('#type_Affiliation').val();
+                      const codeprovince 		= <?php echo $NO_PROVINCE;?>;
+                          //alert(selectedValue);
+                          $.ajax({
+                            url: 'get_affiliation2.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { typeAffiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#Affiliation').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+            </div>
+            <!-- /.col -->
+            <div class="col-md-2">
+			  <div class="form-group" id="labelservice" >
+              <label>สังกัด</label>
+                  <select class="form-control select2" name="Affiliation" id="Affiliation" style="width: 100%;" onChange="myFunction5()" >
+                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <?PHP 
+                       if($_POST['Affiliation'] <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo $_POST['Affiliation']; ?> "><?php echo $_POST['Affiliation']; ?> </option>
+                    <?php } ?>
+                    <!-- <option value="นอกสังกัด">นอกสังกัด</option>-->
+                  </select>
+             </div>
+             <!-- /.form-group -->  
+             <script>
+                   function myFunction5() {
+                      const selectedValue = $('#Affiliation').val();
+                      const codeprovince 		= <?php echo $NO_PROVINCE;?>;
+                          //alert(selectedValue);
+                          $.ajax({
+                            url: 'get_servicetype.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { Affiliation: selectedValue , codeprovince: codeprovince  },
+                            success: function(data) {
+                              $('#TYPE_SERVICE').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+            </div>
+            <!-- /.col -->
+            <div class="col-md-3">
+<div class="form-group" id="labelservice">
+                  <label>ระดับหน่วยงาน/ประเภทหน่วยบริการ</label>
+                  <select name="TYPE_SERVICE" class="form-control select2" id="TYPE_SERVICE" style="width: 100%;" onChange="myFunction10()">
+                     <option value="ทั้งหมด">ทั้งหมด</option>
+                     <?PHP 
+                       if(trim($_POST['TYPE_SERVICE']) <> ''){
+                     ?>
+                    <option selected="selected"  value="<?php echo trim($_POST['TYPE_SERVICE']); ?> "><?php echo trim($_POST['TYPE_SERVICE']); ?> </option>
+                    <?php } ?>
+                   <!-- <option value="A">A</option>
+                    <option value="S">S</option>
+                    <option value="M1">M1</option>
+                    <option value="M2">M2</option>
+                    <option value="F1">F1</option>
+					          <option value="F2">F2</option>
+					          <option value="F3">F3</option>  -->
+                  </select>
+                </div>
+                <!-- /.form-group -->  
+                <script>
+                   function myFunction10() {
+                    const selectedValue = $('#TYPE_SERVICE').val();
+                      const Affiliation 		= document.getElementById("Affiliation").value;
+                      const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
+                      const HosMOHP 		    = <?PHP echo $HosMOHP;?>;
+                          //alert(HosMOHP);
+                          $.ajax({
+                            url: 'get_service3.php', // ไฟล์ PHP ที่จะประมวลผล
+                            data: { service_id: selectedValue , codeprovince: codeprovince, Affiliation: Affiliation, HosMOHP: HosMOHP},
+                            success: function(data) {
+                              $('#CODE_HOS').html(data);
+                            }
+                          });
+                    }
+			    	</script> 
+     
+           </div>
+           <!-- /.col -->
+           <?php } ?>
+         <?php if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){?>  
+           <div class="col-md-6">
+            <div class="form-group">
+            <label>หน่วยบริการ/หน่วยงาน</label>
+               <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
+                 <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+       <?PHP 
+       $sqlprovince = "SELECT *
+       FROM userhospital 
+       INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
+       WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
+       AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
+       AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
+       if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
+        $sqlprovince = $sqlprovince."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ'  AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขจังหวัด'
+				AND hospitalnew.HOS_TYPE <>'ศูนย์วิชาการ' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลทั่วไป' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลศูนย์'
+         " ;
+       }
+       $objprovince = mysqli_query($con, $sqlprovince);
+       
+       while($rowprovince = mysqli_fetch_array($objprovince))
+
+       {
+
+       ?>
+         <option value="<?PHP echo $rowprovince["CODE5"];?>" ><?PHP echo $rowprovince["HOS_NAME"];?></option>
+         
+       <?PHP
+       } 
+       ?>
+
+               </select>
+             </div>
+           </div>
+           <!-- /.col -->		
+
+       <?php }else{ ?>
+
+        <div class="col-md-6">
+            <div class="form-group">
+               <label>โรงพยาบาล</label>
+               <select name="CODE_HOS" class="form-control select2" id="CODE_HOS" style="width: 100%;">
+                 <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+      
+
+               </select>
+             </div>
+           </div>
+           <!-- /.col -->		
+        
+        <?php } ?>
+         </div>
+         <!-- /.row -->
+
+ 
+   <div class="card-footer">
+       <button type="submit" class="btn btn-primary"> ค้นข้อมูล &nbsp;<i class="fa fas fa-search"></i></button>
+        <button type="reset" class="btn btn-default" id="resetButton"> รีเซต &nbsp;<i class="fa fas fa-undo"></i></button>	
+         <!--<a href="#" class="btn btn-default"> กลับหน้าหลัก &nbsp;<i class="fa fas fa-undo"></i></a>-->
+   </div>  
+		</form>
         </div>
         <!-- /.card -->	 
-
-        <div class="row">
-		<div class="col-md-12 col-sm-12 col-12">
-        <div class="row justify-content-center" >
-			<div class="col-lg-3">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #f08080; color: black;">
-				  <div class="inner">
-                    
-                    <p>ยังไม่ได้ลงทะเบียน</p>
-                    <h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo $TC01;?></h3>
-    
-					
-				  </div>
-				  
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-			  <div class="col-lg-3">
-				<!-- small card -->
-				<div class="small-box" style="background-color: #AADFEF; color: black;">
-				  <div class="inner">
-                    
-                    <p>ลงทะเบียนแล้ว</p>
-					          <h3><i class="fas fa-user" style="color:#FFFFFF;">&nbsp;</i><?php echo $TC02;?></h3>
-					
-				  </div>
-				  
-				 <!-- <a href="#" class="small-box-footer">
-					More info <i class="fas fa-arrow-circle-right"></i>
-				  </a>-->
-				</div>
-			  </div>
-			  <!-- ./col -->
-        </div>
-			</div>
-			<!-- ./row -->	
         <div class="row">
           <div class="col-12">
             
             <div class="card">
-              <div class="card-header">
-                <a href="addmember.php" class="btn btn-danger" onclick="showAlert()" > <i class="fa fas fa-plus"></i></a>&nbsp;&nbsp;เพิ่มผู้ใช้งาน &nbsp;
-              </div>
+              <!--<div class="card-header bg-olive color-palette">
+                <h3 class="card-title">รายชื่อผู้ประสานข้อมูลบุคลากรสุขภาพจิตและจิตเวช</h3>
+              </div>-->
               <!-- /.card-header -->
               <div class="card-body">
-             
+				
                 <table id="example1" class="table table-bordered table-striped">
                   <thead>
                    <tr>
@@ -489,66 +545,42 @@ function myFunction2() {
 					  <th width="5%">สังกัด</th>
 					  <th width="10%">ผู้ส่งข้อมูล</th>
 					  <th width="5%">สถานะการลงทะเบียน</th>
-            <th width="5%">online</th>
 					  <!--<th width="5%">เขต</th>
 					  <th width="8%">วันที่ลงทะเบียน</th>
             <th width="5%">จัดการ</th>-->
-					  <?php if($_SESSION["TypeUser"] == "Admin"){ ?>
+					  <?php /*if($_SESSION["TypeUser"] == "Admin"){ ?>
 					  <th width="5%">จัดการ</th>
-            <th width="5%">แก้ไข</th>
-            <th width="5%">ลบ</th>
-					  <?php } ?>
+					  <?php } */?>
 
 					</tr>
                    </thead>
                   	<tbody>
 				 	<?php
 					if($_SESSION["TypeUser"] == "Admin"){
-					 $sqlservice	= "SELECT *
-                            FROM userhospital 
-                            INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
-                            left JOIN prefix ON userhospital.prefixID = prefix.prefixID
-                            WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
-                            AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'";
-
-if(isset($_POST["CODE_HOS"])){	
-  if($_POST["CODE_HOS"]<>'ทั้งหมด'){					  
-    $sqlservice = $sqlservice."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;
-  }
-}
-if(isset($_POST["type_Affiliation"])){	
-  if(trim($_POST["type_Affiliation"]) <>'ทั้งหมด'){					  
-    $sqlservice = $sqlservice."AND hospitalnew.type_Affiliation LIKE ('".$_POST['type_Affiliation']."%')" ;
-  }
-}
-
-
-if(isset($_POST["TYPE_SERVICE"])){	
-  if(trim($_POST["TYPE_SERVICE"]<>'ทั้งหมด')){					  
-    $sqlservice = $sqlservice."AND hospitalnew.HOS_TYPE LIKE ('".$_POST['TYPE_SERVICE']."%')" ;
-  }
-}
-
-if(isset($_POST["CODE_PROVINCE"])){	
-  if($_POST["CODE_PROVINCE"]<>'ทั้งหมด'){					  
-    $sqlservice = $sqlservice."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
-  }
-}
-
-if($_POST["CODE_HMOO"]==''){	  
-    $sqlservice = $sqlservice."AND userhospital.stausloginfirst = '1' " ;
-}else{
-  if(isset($_POST["CODE_HMOO"])){	
-    if($_POST["CODE_HMOO"]<>'ทั้งหมด'){					  
-      $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO LIKE ('".$_POST['CODE_HMOO']."')" ;
-    }
-  }
- 
-}
-
-$sqlservice = $sqlservice." ORDER BY
-userhospital.stausloginfirst  DESC " ;
-
+					$sqlservice	= "SELECT										
+										prefix.prefixName, 
+										userhospital.`Name`, 
+										userhospital.Lname, 
+										userhospital.telephone, 
+										userhospital.mobile, 
+										userhospital.HospitalID, 
+										hospitalnew.HOS_NAME,
+										hospitalnew.HOS_TYPE, 
+										hospitalnew.CODE_PROVINCE, 
+										hospitalnew.CODE_HMOO, 
+										userhospital.`regupdate`,
+                    userhospital.`position`,
+										DATE_FORMAT(regupdate,'%d') AS D_Reg,
+										DATE_FORMAT(regupdate,'%c') AS M_Reg,
+										DATE_FORMAT(regupdate,'%Y')+543 AS Y_Reg
+									FROM
+									userhospital
+									INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
+									INNER JOIN prefix ON userhospital.prefixID = prefix.prefixID 
+									WHERE
+										userhospital.stausloginfirst = 1
+									ORDER BY
+										userhospital.regupdate DESC";
 					}elseif($_SESSION["TypeUser"] == "User_h09"){ 
 						 	$sqlservice	= "SELECT
 												prefix.prefixName, 
@@ -588,20 +620,47 @@ userhospital.stausloginfirst  DESC " ;
                             left JOIN prefix ON userhospital.prefixID = prefix.prefixID
                             WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
                             AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
-                           AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
+                            AND hospitalnew.CODE_HMOO = '$HosMOHP'";
+                           if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){					  
+                            $sqlservice = $sqlservice."AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
+                          }
+                          // AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
                           if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขอำเภอ'){					  
-                            $sqlservice = $sqlservice."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT'" ;
+                            $sqlservice = $sqlservice."AND hospitalnew.CODE_DISTRICT LIKE  '%$CODE_DISTRICT'
+                            AND hospitalnew.HOS_TYPE <>'โรงพยาบาลชุมชน' AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขอำเภอ'  AND hospitalnew.HOS_TYPE <>'สำนักงานสาธารณสุขจังหวัด'
+				                    AND hospitalnew.HOS_TYPE <>'ศูนย์วิชาการ' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลทั่วไป' AND hospitalnew.HOS_TYPE <>'โรงพยาบาลศูนย์'
+                            
+                            " ;
                           }
 
-                          if(isset($_POST["CODE_HOS"])){	
-                            if($_POST["CODE_HOS"]<>'ทั้งหมด'){					  
-                              $sqlservice = $sqlservice."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;
-                            }
-                          }
-
-                          $sqlservice = $sqlservice."ORDER BY
-												    userhospital.stausloginfirst  DESC " ;
+                         
           }
+
+          if(isset($_POST["CODE_HOS"])){	
+            if($_POST["CODE_HOS"]<>'ทั้งหมด'){					  
+              $sqlservice = $sqlservice."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;
+            }
+          }
+
+          if(isset($_POST["type_Affiliation"])){	
+            if(trim($_POST["type_Affiliation"]) <>'ทั้งหมด'){					  
+              $sqlservice = $sqlservice."AND hospitalnew.type_Affiliation LIKE ('".trim($_POST['type_Affiliation'])."%')" ;
+            }
+          }
+          
+					if(isset($_POST["TYPE_SERVICE"])){	
+						if(trim($_POST["TYPE_SERVICE"]) <>'ทั้งหมด'){					  
+							$sqlservice = $sqlservice."AND hospitalnew.HOS_TYPE LIKE ('".$_POST['TYPE_SERVICE']."%')" ;
+						}
+					}
+
+					if(isset($_POST["CODE_PROVINCE"])){	
+						if($_POST["CODE_PROVINCE"]<>'ทั้งหมด'){					  
+							$sqlservice = $sqlservice."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
+						}
+					}
+
+          $sqlservice = $sqlservice." ORDER BY stausloginfirst DESC " ;
 
           $sqlservice2 =$sqlservice;
 	
@@ -664,8 +723,7 @@ userhospital.stausloginfirst  DESC " ;
 						<td><?php echo $rowservice['CODE_HMOO'];?></td>
 						<td><?php echo $rowservice['D_Reg'].' '.$a_mthai[$rowservice['M_Reg']].' '.$rowservice['Y_Reg'];?></td>
             */ ?>
-             <td><?php echo $rowservice['lock'];?></td>
-						<?php  if($_SESSION["TypeUser"] == "Admin"){ ?>
+						<?php /* if($_SESSION["TypeUser"] == "Admin"){ ?>
 						<td>
 							<button type="button" class="btn btn-block btn-primary" onclick="document.getElementById('id<?php echo $i; ?>').style.display='block'">Reset</button>
 							<?php //echo $i; ?>
@@ -687,7 +745,7 @@ userhospital.stausloginfirst  DESC " ;
 											  <button type="reset" onclick="document.getElementById('id<?php echo $i; ?>').style.display='none'" class="cancelbtn btn btn-secondary  btn-lg">Cancel</button>
 										   </div>
 										  <div class="flex-item-right">
-										   <button type="submit" onclick="document.getElementById('ids<?php echo $i; ?>').style.display='none'" class="deletebtn btn btn-danger btn-lg" >Reset</button>
+										   <button type="submit" onclick="document.getElementById('id<?php echo $i; ?>').style.display='none'" class="deletebtn btn btn-danger btn-lg" disabled>Reset</button>
 										   </div>
 										</div>	
 
@@ -696,16 +754,9 @@ userhospital.stausloginfirst  DESC " ;
 
 							</div>
 						</td>
-            <td>
-                <a href="editmember.php?id=<?php echo $rowservice['UserID'];?>" onclick="showAlert()" ><button type="button" class="btn btn-block btn-info" >Edit</button></a>
-            </td>
-            <td>
-                <a href="admin_del_all.php?id=<?php echo $rowservice['UserID'];?>" onclick="showAlert()" ><button type="button" class="btn btn-block btn-danger" >Delete</button></a>
-            </td>
-						<?php  } ?>
+						<?php /* } */?>
 					</tr>
 					
-
 					<?php } ?> 	
 					</tbody>
 				  </table>
@@ -722,8 +773,7 @@ userhospital.stausloginfirst  DESC " ;
 					</script>	
 
 
-
-<table id="example3" class="table table-bordered table-striped" hidden >
+<table id="example3" class="table table-bordered table-striped" hidden>
                   <thead>
                    <tr>
 					  <th width="2%">#</th>
@@ -842,7 +892,6 @@ userhospital.stausloginfirst  DESC " ;
 	]
     }).buttons().container().appendTo('#example1_wrapper .col-md-6:eq(0)');
   });
-
 </script>
 
 <script>
@@ -852,7 +901,7 @@ userhospital.stausloginfirst  DESC " ;
             //document.getElementById('myForm').reset();
 
            // window.location.reload();
-           window.location.href = 'tables-memberalladmin.php'; 
+           window.location.href = 'tables-memberall2.php'; 
         });
 
       

@@ -113,7 +113,7 @@ if($positiontypeid == '1'){
 	
 	//  $sql = "INSERT INTO personnel( HospitalID, positiontypeID, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate) VALUES ('$HospitalID','$positiontypeid','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now());";
 	
-echo	$sql = "UPDATE personnel SET 
+	$sql = "UPDATE personnel SET 
 								HospitalID		= '$HospitalID',
 								prename			= '$prename',
 								firstname		= '$firstname',
@@ -249,7 +249,7 @@ echo	$sql = "UPDATE personnel SET
 	
 	//$sql = "INSERT INTO personnel( HospitalID, positiontypeID, prename, firstname, lastname, birthday, age, r1, r2, congrat, training, statuscong, positionrole, regislaw, cogratyear, UserID, personnelDate) VALUES ('$HospitalID','$positiontypeid','$prename', '$firstname', '$lastname', '$birthday', '$age', '$r1', '$r2', '$congrat', '$training', '$statuscong', '$positionrole', '$regislaw', '$cogratyear','$UserID', Now());";
 	
-	echo $sql = "UPDATE personnel SET 
+	$sql = "UPDATE personnel SET 
 								HospitalID		='$HospitalID',
 								prename			='$prename',
 								firstname		= '$firstname',

@@ -40,7 +40,7 @@ $HospitalID = $t[0];
 		echo "</script>";
 	} else {
 		
-	echo $sql = "INSERT INTO bed(
+	 $sql = "INSERT INTO bed(
 			hospitalCode5,Wardall,Ward_no,Unit,Unit_no,Integrate,Integrate_no,bedDate, EY1, EY, TN2, MM1, MM2, MM3, MM4, MM5 
 			) 
 			VALUES 
