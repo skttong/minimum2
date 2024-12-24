@@ -193,9 +193,9 @@ hr {
 		?>
          <?php /* <h2 class="card-title">แบบบันทึกข้อมูลทรัพยากร   <?php echo $HOS_NAME ." ระดับ ".$TypeService ;?>  </h2> */ ?>
          <?php if($TypeService <> ''){?>
-			<h4>แบบสำรวจความพึ่งพอใจ   <?php echo $HOS_NAME ." ระดับ ".$TypeService ;?>  </h4>
+			<h4>แบบสำรวจความพึงพอใจ   <?php echo $HOS_NAME ." ระดับ ".$TypeService ;?>  </h4>
           <?php }else{ ?>
-			<h4>แบบสำรวจความพึ่งพอใจ   <?php echo $HOS_NAME ;?>  </h4>
+			<h4>แบบสำรวจความพึงพอใจ   <?php echo $HOS_NAME ;?>  </h4>
          <?php } ?> 
           
 
@@ -206,8 +206,8 @@ hr {
           
           <div class="col-sm-3">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">แบบสำรวจความพึ่งพอใจ</a></li>
-              <li class="breadcrumb-item active">สรุปแบบสำรวจความพึ่งพอใจ</li>
+              <li class="breadcrumb-item"><a href="#">แบบสำรวจความพึงพอใจ</a></li>
+              <li class="breadcrumb-item active">สรุปแบบสำรวจความพึงพอใจ</li>
             </ol>
           </div>
         </div>

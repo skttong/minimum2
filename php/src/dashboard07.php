@@ -1335,12 +1335,17 @@ $objall2_1 = mysqli_query($con, $sqlall2_1);
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+
+  
+
     myFunction3();
     myFunction4();
     myFunction5();
     myFunction15();
     myFunction2();
 });
+
+
 
 // Function for เขตสุขภาพ -> จังหวัด
 function myFunction3() {
@@ -1351,6 +1356,12 @@ function myFunction3() {
             data: { moo_id: selectedValue },
             success: function(data) {
                 $('#CODE_PROVINCE').html(data);
+
+                 // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                 const provinceValue = '<?php echo isset($_POST['CODE_PROVINCE']) ? $_POST['CODE_PROVINCE'] : ''; ?>';
+                if (provinceValue) {
+                    $('#CODE_PROVINCE').val(provinceValue).trigger('change');
+                }
             }
         });
     }
@@ -1365,6 +1376,12 @@ function myFunction4() {
             data: { codeprovince: selectedValue },
             success: function(data) {
                 $('#type_Affiliation').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const provinceValue = '<?php echo isset($_POST['type_Affiliation']) ? $_POST['type_Affiliation'] : ''; ?>';
+                if (provinceValue) {
+                    $('#type_Affiliation').val(provinceValue).trigger('change');
+                }
             }
         });
     }
@@ -1380,6 +1397,12 @@ function myFunction5() {
             data: { typeAffiliation: selectedValue, codeprovince: codeprovince },
             success: function(data) {
                 $('#Affiliation').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const provinceValue = '<?php echo isset($_POST['Affiliation']) ? $_POST['Affiliation'] : ''; ?>';
+                if (provinceValue) {
+                    $('#Affiliation').val(provinceValue).trigger('change');
+                }
             }
         });
     }
@@ -1395,6 +1418,12 @@ function myFunction15() {
             data: { Affiliation: selectedValue, codeprovince: codeprovince },
             success: function(data) {
                 $('#TYPE_SERVICE').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const provinceValue = '<?php echo isset($_POST['TYPE_SERVICE']) ? $_POST['TYPE_SERVICE'] : ''; ?>';
+                if (provinceValue) {
+                    $('#TYPE_SERVICE').val(provinceValue).trigger('change');
+                }
             }
         });
     }
@@ -1412,6 +1441,12 @@ function myFunction2() {
             data: { service_id: selectedValue, codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },
             success: function(data) {
                 $('#CODE_HOS').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const provinceValue = '<?php echo isset($_POST['CODE_HOS']) ? $_POST['CODE_HOS'] : ''; ?>';
+                if (provinceValue) {
+                    $('#CODE_HOS').val(provinceValue).trigger('change');
+                }
             }
         });
     }
@@ -1419,6 +1454,7 @@ function myFunction2() {
 
 
 </script>
+
         </div>
         <!-- /.card -->	  
         <div class="row">

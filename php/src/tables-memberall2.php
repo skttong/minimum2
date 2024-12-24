@@ -225,7 +225,7 @@ hr {
     <section class="content">
       <div class="container-fluid">
       <div class="card-body">
-			<form class="form-valide" action="tables-memberall2.php" method="post" id="myform1" name="foml">  
+			<form class="form-valide" action="tables-memberall2.php" method="post" id="myform1" name="myform1">  
       <div class="row">
               <?php /* ?>
               <div class="col-md-2">
@@ -334,7 +334,9 @@ if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุข�
                <div class="form-group">
                   <label>จังหวัด</label>
                   <select name="CODE_PROVINCE" class="form-control select2" id="CODE_PROVINCE" style="width: 100%;" onChange="myFunction2()">
-                    <option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>
+                    <!--<option selected="selected" value="ทั้งหมด" >ทั้งหมด</option>-->
+                    <option value="ทั้งหมด" <?php if (isset($_POST['CODE_PROVINCE']) && $_POST['CODE_PROVINCE'] == 'ทั้งหมด' || !isset($_POST['CODE_PROVINCE'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
+                    
 					<?PHP
 					$sqlprovince = "SELECT DISTINCT *
 					FROM userhospital 
@@ -368,7 +370,8 @@ if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุข�
                <div class="form-group">
                   <label>หน่วยงานใน/ นอกสังกัดกระทรวงสาธารณสุข</label>
                   <select class="form-control select2" name="type_Affiliation" id="type_Affiliation" style="width: 100%;" onChange="myFunction15()" >
-                    <option value="ทั้งหมด" >ทั้งหมด</option>
+                    <!--<option value="ทั้งหมด" >ทั้งหมด</option>-->
+                    <option value="ทั้งหมด" <?php if (isset($_POST['type_Affiliation']) && $_POST['type_Affiliation'] == 'ทั้งหมด' || !isset($_POST['type_Affiliation'])){?> selected="selected" <?php } ?>>ทั้งหมด</option>
                     <?PHP 
                        if($_POST['type_Affiliation'] <> ''){
                      ?>
