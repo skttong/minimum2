@@ -82,6 +82,13 @@ if (isset($_POST['type_Affiliation'])) {
   }
 }
 
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $MOOsql1 = $MOOsql1."AND hn.Affiliation = '".$Affiliation."'" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
     $mySelect = trim($_POST['TYPE_SERVICE']);
@@ -235,6 +242,13 @@ if (isset($_POST['type_Affiliation'])) {
   }
 }
 
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $sql1 = $sql1."AND hn.Affiliation = '".$Affiliation."'" ;
+  }
+}
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
     $mySelect = trim($_POST['TYPE_SERVICE']);
@@ -276,6 +290,7 @@ $msql1 = "WITH HospitalCounts AS (
         h.TYPE_SERVICE,
         h.NO_PROVINCE,
         h.type_Affiliation,
+        h.Affiliation,
         h.HOS_TYPE,
         s.mhpsDate,
         (SELECT count(*) FROM  hospitalnew hp WHERE h.CODE_PROVINCE = hp.CODE_PROVINCE AND hp.TYPE_SERVICE IN ('โรงพยาบาลชุมชน','โรงพยาบาลทั่วไป','กรมสุขภาพจิต','โรงพยาบาลศูนย์') ) AS total_hospitals,
@@ -293,6 +308,7 @@ SELECT
     hc.NO_PROVINCE,
     hc.type_Affiliation,
     hc.HOS_TYPE,
+    hc.Affiliation,
     hc.Countries1
 FROM HospitalCounts hc
 JOIN mapdetail m ON hc.CODE_PROVINCE = m.CODE_PROVINCE
@@ -330,6 +346,13 @@ if (isset($_POST['type_Affiliation'])) {
   if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
   $type_Affiliation = trim($_POST['type_Affiliation']);
   $msql1 = $msql1."AND hc.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $msql1 = $msql1."AND hc.Affiliation = '".$Affiliation."'" ;
   }
 }
 
@@ -434,6 +457,13 @@ if (isset($_POST['type_Affiliation'])) {
   if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
   $type_Affiliation = trim($_POST['type_Affiliation']);
   $sqlall = $sqlall."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $sqlall = $sqlall."AND hn.Affiliation = '".$Affiliation."'" ;
   }
 }
 

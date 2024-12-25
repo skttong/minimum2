@@ -552,6 +552,12 @@ if(isset($_POST["type_Affiliation"])){
   }
 }
 
+if(isset($_POST["Affiliation"])){	
+  if(trim($_POST["Affiliation"]) <>'ทั้งหมด'){					  
+    $sqlservice = $sqlservice."AND hospitalnew.Affiliation LIKE ('".trim($_POST['Affiliation'])."%')" ;
+  }
+}
+
 
 if(isset($_POST["TYPE_SERVICE"])){	
   if(trim($_POST["TYPE_SERVICE"]<>'ทั้งหมด')){					  

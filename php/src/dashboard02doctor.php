@@ -111,6 +111,14 @@ if (isset($_POST['type_Affiliation'])) {
   }
 }
 
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $sql1 = $sql1."AND e.Affiliation = '".$Affiliation."'" ;
+  }
+}
+
+
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
   $mySelect = trim($_POST['TYPE_SERVICE']);
@@ -190,6 +198,14 @@ if (isset($_POST['type_Affiliation'])) {
   $tsql1 = $tsql1."AND e.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
   }
 }
+
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $tsql1 = $tsql1."AND e.Affiliation = '".$Affiliation."'" ;
+  }
+}
+
 
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -271,6 +287,14 @@ if (isset($_POST['type_Affiliation'])) {
   $msql1 = $msql1."AND h.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
   }
 }
+
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $msql1 = $msql1."AND h.Affiliation = '".$Affiliation."'" ;
+  }
+}
+
 
 if (isset($_POST['TYPE_SERVICE'])) {
   if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -366,6 +390,13 @@ if (isset($_POST['type_Affiliation'])) {
   if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
   $type_Affiliation = trim($_POST['type_Affiliation']);
   $msql2 = $msql2."AND h.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $msql2 = $msql2."AND h.Affiliation = '".$Affiliation."'" ;
   }
 }
 
@@ -472,6 +503,13 @@ if (isset($_POST['type_Affiliation'])) {
   if (trim($_POST['type_Affiliation'])<> 'ทั้งหมด') {
   $type_Affiliation = trim($_POST['type_Affiliation']);
   $sqlall = $sqlall."AND h.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
+  }
+}
+
+if (isset($_POST['Affiliation'])) {
+  if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+  $Affiliation = trim($_POST['Affiliation']);
+  $sqlall = $sqlall."AND h.Affiliation = '".$Affiliation."'" ;
   }
 }
 

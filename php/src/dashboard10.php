@@ -97,6 +97,13 @@ if (isset($_POST['Year'])) {
     $msql1 = $msql1."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $msql1 = $msql1."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -181,6 +188,13 @@ if (isset($_POST['Year'])) {
     $sqlhdc01 = $sqlhdc01."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlhdc01 = $sqlhdc01."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -286,6 +300,13 @@ if (isset($_POST['Year'])) {
     $sqlhdc02 = $sqlhdc02."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlhdc02 = $sqlhdc02."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -398,6 +419,12 @@ if (isset($_POST['Year'])) {
     }
   }
   
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD16 = $sqlHD16."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -477,6 +504,13 @@ if (isset($_POST['Year'])) {
     $sqlHD12 = $sqlHD12."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD12 = $sqlHD12."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -556,6 +590,13 @@ if (isset($_POST['Year'])) {
     $sqlHD13 = $sqlHD13."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD13 = $sqlHD13."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -633,6 +674,13 @@ if (isset($_POST['Year'])) {
     $sqlHD14 = $sqlHD14."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD14 = $sqlHD14."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -711,6 +759,13 @@ if (isset($_POST['Year'])) {
     $sqlHD15 = $sqlHD15."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD15 = $sqlHD15."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -813,6 +868,13 @@ if (isset($_POST['Year'])) {
     $sqlHD23 = $sqlHD23."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD23 = $sqlHD23."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -960,6 +1022,13 @@ if (isset($_POST['Year'])) {
     $sqlHD16_2 = $sqlHD16_2."AND hn.type_Affiliation = '".$type_Affiliation."'" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD16_2 = $sqlHD16_2."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -1046,6 +1115,13 @@ WHERE
     $sqlHD22OLD_1 = $sqlHD22OLD_1."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD22OLD_1 = $sqlHD22OLD_1."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
     if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -1125,6 +1201,13 @@ WHERE
     $sqlHD22OLD = $sqlHD22OLD."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlHD22OLD = $sqlHD22OLD."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   
   if (isset($_POST['TYPE_SERVICE'])) {

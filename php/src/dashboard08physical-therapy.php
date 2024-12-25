@@ -108,6 +108,13 @@ if (isset($_POST['Year'])) {
     $sql1 = $sql1."AND hospitalnew.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sql1 = $sql1."AND hospitalnew.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -190,6 +197,13 @@ if (isset($_POST['Year'])) {
     $sql2 = $sql2."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sql2 = $sql2."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -265,6 +279,13 @@ if (isset($_POST['Year'])) {
     $MOOsql1 = $MOOsql1."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sql2 = $sql2."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -396,6 +417,7 @@ $dHMOO1 = "'เขตสุขภาพที่ 1', 'เขตสุขภา�
       hn.type_Affiliation,
       hn.HOS_TYPE,
       hn.CODE5,
+      hn.Affiliation,
       CASE 
           WHEN hn.HOS_TYPE IN ('กรมสุขภาพจิต','ศูนย์วิชาการ') THEN 'MCATT ระดับกรมสุขภาพจิต'
           WHEN hn.HOS_TYPE IN ('โรงพยาบาลศูนย์','โรงพยาบาลทั่วไป' ,'สำนักงานสาธารณสุขจังหวัด') THEN 'MCATT ระดับจังหวัด'
@@ -410,6 +432,7 @@ SELECT
   hg.CODE_PROVINCE,
   hg.HospitalGroup,
   hg.CODE5,
+  hg.Affiliation,
   COUNT(CASE WHEN pt.positiontypeID = '6' THEN 1 END) AS MD01
 FROM
   HospitalGroups hg
@@ -456,6 +479,13 @@ if (isset($_POST['Year'])) {
     $sqlall = $sqlall."AND hg.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sqlall = $sqlall."AND hg.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -538,6 +568,13 @@ if (isset($_POST['Year'])) {
     $sql2p = $sql2p."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $sql2p = $sql2p."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {
@@ -613,6 +650,13 @@ if (isset($_POST['Year'])) {
     $MOOsql1p = $MOOsql1p."AND hn.type_Affiliation LIKE ('".$type_Affiliation."%')" ;
     }
   }
+
+  if (isset($_POST['Affiliation'])) {
+    if (trim($_POST['Affiliation'])<> 'ทั้งหมด') {
+    $Affiliation = trim($_POST['Affiliation']);
+    $MOOsql1p = $MOOsql1p."AND hn.Affiliation = '".$Affiliation."'" ;
+    }
+    }
   
   if (isset($_POST['TYPE_SERVICE'])) {
 	if (trim($_POST['TYPE_SERVICE'])<> 'ทั้งหมด') {

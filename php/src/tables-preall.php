@@ -654,6 +654,12 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 				$sqlpersonnel = $sqlpersonnel."AND hospitalnew.type_Affiliation LIKE ('".trim($_POST['type_Affiliation'])."%')" ;
 				}
 			}
+
+			if(isset($_POST["Affiliation"])){	
+				if(trim($_POST["Affiliation"]) <>'ทั้งหมด'){					  
+				  $sqlpersonnel = $sqlpersonnel."AND hospitalnew.Affiliation LIKE ('".trim($_POST['Affiliation'])."%')" ;
+				}
+			  }
   
 			if(isset($_POST["TYPE_SERVICE"])){	
 				if(trim($_POST["TYPE_SERVICE"]) <>'ทั้งหมด'){					  
