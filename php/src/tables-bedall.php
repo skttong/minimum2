@@ -803,6 +803,12 @@ function myFunction2() {
 							$sqlpersonnel = "SELECT bed.bedID, bed.hospitalCode5, bed.Wardall, bed.Ward_no, bed.Unit, bed.Unit_no, bed.Integrate, bed.Integrate_no, bed.bedDate ,bed.TN2, bed.MM1, bed.MM2, bed.MM3, hospitalnew.HOS_NAME, hospitalnew.HOS_TYPE  FROM bed join hospitalnew ON hospitalnew.CODE5 = bed.hospitalCode5 
 							WHERE bed.setbeddel = '1' 
 							 ";
+
+            if(isset($_POST["CODE_HMOO"])){	
+              if($_POST["CODE_HMOO"]<>'ทั้งหมด'){					  
+                $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '".$_POST['CODE_HMOO']."'" ;
+              }
+            }
 						}else{
 					 if($HosType == "กรมสุขภาพจิต"){ 
 				  			$sqlpersonnel = "SELECT bed.bedID, bed.hospitalCode5, bed.Wardall, bed.Ward_no, bed.Unit, bed.Unit_no, bed.Integrate, bed.Integrate_no, bed.bedDate ,bed.TN2, bed.MM1, bed.MM2, bed.MM3, hospitalnew.HOS_NAME FROM bed join hospitalnew ON hospitalnew.CODE5 = bed.hospitalCode5 

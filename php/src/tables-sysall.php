@@ -763,6 +763,37 @@ function myFunction2() {
             FROM serviceform
             join hospitalnew ON hospitalnew.CODE5 = serviceform.HospitalID
              ";
+
+if(isset($_POST["CODE_HMOO"])){	
+    if($_POST["CODE_HMOO"]<>'ทั้งหมด'){					  
+      $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '".$_POST['CODE_HMOO']."'" ;
+    }
+  }
+
+if(isset($_POST["CODE_HOS"])){	
+    if($_POST["CODE_HOS"]<>'ทั้งหมด'){					  
+        $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;
+    }
+}
+
+if(isset($_POST["type_Affiliation"])){	
+    if(trim($_POST["type_Affiliation"]) <>'ทั้งหมด'){					  
+        $sqlpersonnel = $sqlpersonnel."AND hospitalnew.type_Affiliation LIKE ('".trim($_POST['type_Affiliation'])."%')" ;
+    }
+}
+
+if(isset($_POST["TYPE_SERVICE"])){	
+    if(trim($_POST["TYPE_SERVICE"]) <>'ทั้งหมด'){					  
+        $sqlpersonnel = $sqlpersonnel."AND hospitalnew.HOS_TYPE LIKE ('".trim($_POST['TYPE_SERVICE'])."%')" ;
+    }
+}
+
+if(isset($_POST["CODE_PROVINCE"])){	
+    if($_POST["CODE_PROVINCE"]<>'ทั้งหมด'){					  
+        $sqlpersonnel = $sqlpersonnel."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
+    }
+}
+
           }else{
 					 if($HosType == "กรมสุขภาพจิต"){ 
             $sqlpersonnel = "SELECT * 

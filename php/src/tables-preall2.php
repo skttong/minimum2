@@ -851,6 +851,12 @@ function myFunction2() {
 								  AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
                                 ";
 
+						if(isset($_POST["CODE_HMOO"])){	
+							if($_POST["CODE_HMOO"]<>'ทั้งหมด'){					  
+							$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '".$_POST['CODE_HMOO']."'" ;
+							}
+						}				
+
 					if(isset($_POST["CODE_HOS"])){	
 						if($_POST["CODE_HOS"]<>'ทั้งหมด'){					  
 							$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;

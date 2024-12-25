@@ -791,6 +791,12 @@ function myFunction2() {
             $sqlpersonnel = "SELECT ect.ID, ect.hospitalCode5, ect.ect, ect.ect_no, ect.tms, ect.tms_no, ect.ectDate, hospitalnew.HOS_NAME FROM ect join hospitalnew ON hospitalnew.CODE5 = ect.hospitalCode5 
             WHERE ect.setectdel = '1'
              ";
+
+            if(isset($_POST["CODE_HMOO"])){	
+              if($_POST["CODE_HMOO"]<>'ทั้งหมด'){					  
+                $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '".$_POST['CODE_HMOO']."'" ;
+              }
+            }
           }else{
 					 
            if($HosType == "กรมสุขภาพจิต"){ 	
