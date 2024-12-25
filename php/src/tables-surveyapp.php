@@ -334,6 +334,12 @@ function myFunction3() {
             data: { moo_id: selectedValue },
             success: function(data) {
                 $('#CODE_PROVINCE').html(data);
+
+                  // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                  const provinceValue = '<?php echo isset($_POST['CODE_PROVINCE']) ? $_POST['CODE_PROVINCE'] : ''; ?>';
+                  if (provinceValue) {
+                    $('#CODE_PROVINCE').val(provinceValue).trigger('change');
+                   }
             }
         });
     }
@@ -348,6 +354,12 @@ function myFunction4() {
             data: { codeprovince: selectedValue },
             success: function(data) {
                 $('#type_Affiliation').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const type_AffiliationValue = '<?php echo isset($_POST['type_Affiliation']) ? $_POST['type_Affiliation'] : ''; ?>';
+                  if (type_AffiliationValue) {
+                    $('#type_Affiliation').val(type_AffiliationValue).trigger('change');
+                   }
             }
         });
     }
@@ -363,11 +375,17 @@ function myFunction5() {
             data: { typeAffiliation: selectedValue, codeprovince: codeprovince },
             success: function(data) {
                 $('#Affiliation').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const AffiliationValue = '<?php echo isset($_POST['Affiliation']) ? $_POST['Affiliation'] : ''; ?>';
+                  if (AffiliationValue) {
+                    $('#Affiliation').val(AffiliationValue).trigger('change');
+                   }
             }
         });
     }
 }
-
+ 
 // Function for สังกัด -> ประเภทหน่วยบริการ
 function myFunction15() {
     const selectedValue = $('#Affiliation').val();
@@ -378,6 +396,12 @@ function myFunction15() {
             data: { Affiliation: selectedValue, codeprovince: codeprovince },
             success: function(data) {
                 $('#TYPE_SERVICE').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const TYPE_SERVICEValue = '<?php echo isset($_POST['TYPE_SERVICE']) ? $_POST['TYPE_SERVICE'] : ''; ?>';
+                  if (TYPE_SERVICEValue) {
+                    $('#TYPE_SERVICE').val(TYPE_SERVICEValue).trigger('change');
+                   }
             }
         });
     }
@@ -395,6 +419,12 @@ function myFunction2() {
             data: { service_id: selectedValue, codeprovince: codeprovince, Affiliation: Affiliation, CODE_HMOO: HostHMOO },
             success: function(data) {
                 $('#CODE_HOS').html(data);
+
+                // ดึงค่า POST ที่สัมพันธ์และเซ็ตกลับ
+                const CODE_HOSValue = '<?php echo isset($_POST['CODE_HOS']) ? $_POST['CODE_HOS'] : ''; ?>';
+                  if (CODE_HOSValue) {
+                    $('#CODE_HOS').val(CODE_HOSValue).trigger('change');
+                   }
             }
         });
     }

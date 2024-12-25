@@ -790,9 +790,17 @@ WHERE
 	}
   } 
 
-  $MOOsql1p = $MOOsql1p." 
+$MOOsql1p = $MOOsql1p." 
 		GROUP BY 
 	hn.CODE_PROVINCE
+HAVING 
+    MA01 > 0 
+    OR MA02 > 0 
+    OR MA03 > 0 
+    OR MA04 > 0
+ORDER BY 
+    hn.CODE_PROVINCE ASC;
+
 	";
 $obj1p = mysqli_query($con, $MOOsql1p);
 //$row2 = mysqli_fetch_array($obj2);

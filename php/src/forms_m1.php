@@ -19,7 +19,7 @@ include('session_permission.php');
   <link rel="stylesheet" href="dist/css/custom.css">
   <!-- Control by jel -->
   <link rel="stylesheet" href="dist/css/fontcontrol.css">
-	
+
 	<?php include "header_font.php"; ?>
 
 	<style>
@@ -153,6 +153,7 @@ include('session_permission.php');
 					</select>
 			   </div>
 				<!-- /.form-group -->
+				 
 			</div>
 			<!-- /.col --> 
 		</div>
