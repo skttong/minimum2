@@ -61,7 +61,9 @@ if (isset($_POST['position'])) {
 
 $sql1 = "SELECT
     SUM(CASE WHEN p.positionrole = 'นักจิตวิทยา' THEN 1 ELSE 0 END) AS TC01,
-    SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก' THEN 1 ELSE 0 END) AS TC02
+    SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก' THEN 1 ELSE 0 END) AS TC02,
+    SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)' THEN 1 ELSE 0 END) AS TC03,
+    SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)' THEN 1 ELSE 0 END) AS TC04
 FROM
     personnel p
 JOIN hospitalnew h ON h.CODE5 = p.HospitalID
@@ -138,13 +140,15 @@ $row1 = mysqli_fetch_array($obj1);
 
 $TC01 =  0;
 $TC02 =  0;
+$TC03 =  0;
+$TC04 =  0;
 $TCtotal = 0;
 
 if (isset($row1)) {
   if($row1['TC01'] == ''){
     $TC01 =  0;
   }else{
-    $TC01 =  $row1['TC01'];
+    $TC01 =  $row1['TC01']+$row1['TC03']+$row1['TC04'];
   }
   if($row1['TC02'] == ''){
     $TC02 =  0;
@@ -156,7 +160,9 @@ if (isset($row1)) {
 
 $sql2 = "SELECT
   SUM(CASE WHEN p.positionrole = 'นักจิตวิทยา'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_1',
-  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2'
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก'AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_2',
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_3',
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_4'
 FROM
   hospitalnew h
 LEFT JOIN personnel p ON h.CODE5 = p.HospitalID
@@ -232,6 +238,8 @@ if (isset($_POST['CODE_PROVINCE'])) {
   
   $PA01_1 =  $row2['PA01_1'];
   $PA01_2 =  $row2['PA01_2'];
+  $PA01_3 =  $row2['PA01_3'];
+  $PA01_4 =  $row2['PA01_4'];
 
   
 
@@ -346,7 +354,9 @@ while($mrow1 = mysqli_fetch_array($mobj1))
 $sqlall = "SELECT
   hn.HOS_NAME,
   SUM(CASE WHEN p.positionrole = 'นักจิตวิทยา' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS PA01_1,
-  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS PA01_2
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS PA01_2,
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา)' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_3', 
+  SUM(CASE WHEN p.positionrole = 'นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา)' AND p.positiontypeID = '4' THEN 1 ELSE 0 END) AS 'PA01_4' 
 FROM
   hospitalnew hn
 JOIN personnel p ON hn.CODE5 = p.HospitalID
@@ -810,7 +820,7 @@ function myFunction2() {
         labels: ['นักจิตวิทยา' ,'นักจิตวิทยาคลินิก'],
         datasets: [{
             label: 'ปฏิบัติงาน',
-            data: [<?php echo $PA01_1.",".$PA01_2 ;?>],
+            data: [<?php echo $PA01_1+$PA01_3+$PA01_4.",".$PA01_2 ;?>],
             backgroundColor: '#6CE5E8',
             borderColor: '#6CE5E8',
             borderWidth: 1,
@@ -855,6 +865,8 @@ downloadButton.addEventListener('click', function() {
 					  <th width="12%">โรงพยาบาล/หน่วยงาน</th>
 					  <th width="15%">นักจิตวิทยา</th>
             <th width="15%">นักจิตวิทยาคลินิก</th>
+            <th width="12%">นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
+            <th width="12%">นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
 				   </tr>
                    </thead>
                   <tbody>
@@ -870,6 +882,8 @@ downloadButton.addEventListener('click', function() {
 						<td width="12%"><?php echo $rowall['HOS_NAME'];?></td>
 						<td width="12%"><?php echo $rowall['PA01_1'];?></td>
             <td width="12%"><?php echo $rowall['PA01_2'];?></td>
+            <td width="12%"><?php echo $rowall['PA01_3'];?></td>
+            <td width="12%"><?php echo $rowall['PA01_4'];?></td>
 						
 				   </tr>
 				   <?php 
@@ -886,6 +900,8 @@ downloadButton.addEventListener('click', function() {
 					  <th width="12%">โรงพยาบาล/หน่วยงาน</th>
 					  <th width="15%">นักจิตวิทยา</th>
             <th width="15%">นักจิตวิทยาคลินิก</th>
+            <th width="12%">นักจิตวิทยาคลินิก (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
+            <th width="12%">นักจิตวิทยาการศึกษา (บรรจุในตำแหน่งนักจิตวิทยา) (คน)</th>
 				   </tr>
                    </thead>
                   <tbody>
@@ -901,6 +917,8 @@ downloadButton.addEventListener('click', function() {
 						<td width="12%"><?php echo $rowall2['HOS_NAME'];?></td>
 						<td width="12%"><?php echo $rowall2['PA01_1'];?></td>
             <td width="12%"><?php echo $rowall2['PA01_2'];?></td>
+            <td width="12%"><?php echo $rowall2['PA01_3'];?></td>
+            <td width="12%"><?php echo $rowall2['PA01_4'];?></td>
 						
 				   </tr>
 				   <?php 
