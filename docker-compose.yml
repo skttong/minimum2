@@ -10,6 +10,8 @@ services:
     volumes:
       - ./php/src:/var/www/html/
       - ./minimum/config/php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - 80:80
     restart: always
 
   db:
@@ -25,13 +27,14 @@ services:
       - "9906:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./my-custom.cnf:/etc/mysql/conf.d/my.cnf
+      - ./my-custom.cnf:/etc/mysql/conf.d/my.cnf # เพิ่มการเชื่อมโยงไฟล์ config
     command: --sql-mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8080:80" # เปลี่ยนจาก 8000 เป็น 8080
+      - "8000:80"
     restart: always
     environment:
       PMA_HOST: db
@@ -52,20 +55,6 @@ services:
       MYSQL_DATABASE: db_minimum
       MYSQL_USER: user123
       MYSQL_PASSWORD: password123
-    restart: always
-
-  nginx-proxy:
-    image: nginx
-    container_name: nginx-proxy
-    ports:
-      - "443:443"
-      - "80:80"
-      - "9090:8080" # เปลี่ยนพอร์ตจาก 8000 เป็น 8080
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf # ไฟล์ config Nginx
-      - ./certs:/etc/nginx/certs           # ไฟล์ SSL Certificates
-    depends_on:
-      - php-apache-environment
     restart: always
 
 volumes:
