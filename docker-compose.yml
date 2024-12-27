@@ -10,10 +10,8 @@ services:
     volumes:
       - ./php/src:/var/www/html/
       - ./minimum/config/php/php.ini:/usr/local/etc/php/php.ini
-      - ./certs:/etc/ssl   # คัดลอกไฟล์ SSL certificate และคีย์เข้าไปใน container
     ports:
       - 80:80
-      - 443:443          # เปิดพอร์ต 443 สำหรับ HTTPS
     restart: always
 
   db:
@@ -29,8 +27,9 @@ services:
       - "9906:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./my-custom.cnf:/etc/mysql/conf.d/my.cnf
+      - ./my-custom.cnf:/etc/mysql/conf.d/my.cnf # เพิ่มการเชื่อมโยงไฟล์ config
     command: --sql-mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
