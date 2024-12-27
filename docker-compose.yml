@@ -64,6 +64,7 @@ services:
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf # ไฟล์ config Nginx
       - ./certs:/etc/nginx/certs           # ไฟล์ SSL Certificates
+      - ./nginx:/etc/nginx
     depends_on:
       - php-apache-environment
     restart: always
