@@ -17,7 +17,45 @@ INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
 left JOIN prefix ON userhospital.prefixID = prefix.prefixID
 WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
-;" ;
+" ;
+
+if(isset($_POST["CODE_HOS"])){	
+  if($_POST["CODE_HOS"]<>'ทั้งหมด'){					  
+    $SQL = $SQL."AND hospitalnew.CODE5 = '".$_POST['CODE_HOS']."'" ;
+  }
+}
+if(isset($_POST["type_Affiliation"])){	
+  if(trim($_POST["type_Affiliation"]) <>'ทั้งหมด'){					  
+    $SQL = $SQL."AND hospitalnew.type_Affiliation LIKE ('".$_POST['type_Affiliation']."%')" ;
+  }
+}
+
+if(isset($_POST["Affiliation"])){	
+  if(trim($_POST["Affiliation"]) <>'ทั้งหมด'){					  
+    $SQL = $SQL."AND hospitalnew.Affiliation LIKE ('".trim($_POST['Affiliation'])."%')" ;
+  }
+}
+
+
+if(isset($_POST["TYPE_SERVICE"])){	
+  if(trim($_POST["TYPE_SERVICE"]<>'ทั้งหมด')){					  
+    $SQL = $SQL."AND hospitalnew.HOS_TYPE LIKE ('".$_POST['TYPE_SERVICE']."%')" ;
+  }
+}
+
+if(isset($_POST["CODE_PROVINCE"])){	
+  if($_POST["CODE_PROVINCE"]<>'ทั้งหมด'){					  
+    $SQL = $SQL."AND hospitalnew.NO_PROVINCE LIKE ('".$_POST['CODE_PROVINCE']."')" ;
+  }
+}
+
+
+if(isset($_POST["CODE_HMOO"])){	
+  if($_POST["CODE_HMOO"]<>'ทั้งหมด'){					  
+    $SQL = $SQL."AND hospitalnew.CODE_HMOO LIKE ('".$_POST['CODE_HMOO']."')" ;
+  }
+}
+ 
 
 $result = mysqli_query($con, $SQL);
 $row = mysqli_fetch_array($result);
