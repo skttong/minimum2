@@ -10,6 +10,8 @@ services:
     volumes:
       - ./php/src:/var/www/html/
       - ./minimum/config/php/php.ini:/usr/local/etc/php/php.ini
+    ports:
+      - 80:80
     restart: always
 
   db:
@@ -25,13 +27,14 @@ services:
       - "9906:3306"
     volumes:
       - db_data:/var/lib/mysql
-      - ./my-custom.cnf:/etc/mysql/conf.d/my.cnf
+      - ./my-custom.cnf:/etc/mysql/conf.d/my.cnf # เพิ่มการเชื่อมโยงไฟล์ config
     command: --sql-mode='STRICT_TRANS_TABLES,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION'
+
 
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     ports:
-      - "8000:80" # Internal HTTP for phpMyAdmin
+      - "8000:80"
     restart: always
     environment:
       PMA_HOST: db
@@ -39,22 +42,21 @@ services:
     depends_on:
       - db
 
-  nginx-proxy:
-    image: nginx
-    container_name: nginx-proxy
-    ports:
-      - "80:80"     # ให้ Nginx ฟังที่พอร์ต 80
-      - "443:443"   # ให้ Nginx ฟังที่พอร์ต 443 (HTTPS)
-      - "8080:8080" # phpMyAdmin Redirect
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf:ro
-      - ./certs:/etc/nginx/certs:ro
-      - ./html:/usr/share/nginx/html:ro
-      - ./plugins:/usr/share/nginx/html/plugins:ro
+  db-backup:
+    container_name: db_backup
+    build:
+      context: ./db-backup
     depends_on:
-      - php-apache-environment
-      - phpmyadmin
+      - db
+    volumes:
+      - ./backup:/backup
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: db_minimum
+      MYSQL_USER: user123
+      MYSQL_PASSWORD: password123
     restart: always
 
 volumes:
   db_data:
+  backup:
