@@ -6,18 +6,6 @@ RUN docker-php-ext-install mysqli && docker-php-ext-enable mysqli \
     && apt-get install -y cron vim default-mysql-client \
     && mysqladmin --version  # เพิ่มการตรวจสอบที่นี่
 
-# ติดตั้ง mod_ssl สำหรับ Apache
-RUN a2enmod ssl
-
-# คัดลอกไฟล์ SSL certificate และคีย์ไปยัง container
-COPY ./certs/Certificate.crt /etc/ssl/certs/
-COPY ./certs/star_dmh_go_th.crt /etc/ssl/certs/
-COPY ./certs/IntermediateCA.crt /etc/ssl/certs/
-COPY ./certs/DigiCertCA.crt /etc/ssl/certs/
-COPY ./certs/PrivateKey.key /etc/ssl/private/
-COPY ./certs/certificate.pem /etc/ssl/certs/
-COPY ./certs/TrustedRoot.crt /etc/ssl/certs/
-
 # สร้าง directory สำหรับ backup และ log
 RUN mkdir -p /backup && touch /var/log/cron.log && touch /backup/cron_error.log
 
@@ -50,16 +38,10 @@ RUN echo "0 0 * * * root echo 'Cron is working' >> /var/log/cron_test.log" >> /e
     echo "50 5 * * * root php /var/www/html/CMSreports.php >> /var/log/cron.log 2>&1" >> /etc/crontab
 
 
-# คัดลอกไฟล์การตั้งค่า Apache สำหรับ SSL
-COPY ./ssl/000-default.conf /etc/apache2/sites-available/
-
-
-# เปิดพอร์ต 443 สำหรับ HTTPS
-EXPOSE 443
-
 # เพิ่ม entrypoint script เพื่อให้แน่ใจว่า MySQL พร้อมใช้งานก่อนที่จะรัน cron
 COPY entrypoint.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # ใช้ entrypoint script เป็น default command
 ENTRYPOINT ["/usr/local/bin/entrypoint.sh"]
+
