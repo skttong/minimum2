@@ -12,6 +12,7 @@ services:
       - ./minimum/config/php/php.ini:/usr/local/etc/php/php.ini
     ports:
       - 80:80
+      - 443:443          # เปิดพอร์ต 443 สำหรับ HTTPS
     restart: always
 
   db:
