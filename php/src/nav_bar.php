@@ -75,7 +75,7 @@
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
           <a class="dropdown-item" href="detail-all.php">ลงข้อมูลทรัพยากร</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="dashboard01.php">ตรวจสอบข้อมูล</a>
+          <!--<a class="dropdown-item" href="dashboard01.php">ตรวจสอบข้อมูล</a>-->
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" href="editmember.php?id=<?php echo $_SESSION["UserID"];?>">แก้ไขข้อมูล</a>
           <div class="dropdown-divider"></div>

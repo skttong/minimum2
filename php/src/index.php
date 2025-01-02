@@ -4,7 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="refresh" content="0;url=dashboard01.php">	<!-- Jel Location index-->
+  <meta http-equiv="refresh" content="0;url=form_login.php">	<!-- Jel Location index-->
+  <!--<meta http-equiv="refresh" content="0;url=dashboard01.php">--> <!-- Jel Location index-->
   <title><?php echo $resultsetting['title_index'];?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
