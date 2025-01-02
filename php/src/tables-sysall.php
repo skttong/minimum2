@@ -341,9 +341,19 @@ function myFunction2() {
                                         FROM userhospital 
                                         INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
                                         WHERE hospitalnew.HOS_TYPE <> 'คลินิกเอกชน'
-                                          AND hospitalnew.HOS_TYPE <> 'โรงพยาบาลเอกชน'
-                                          AND hospitalnew.CODE_HMOO = '$HosMOHP'
-                                        GROUP BY hospitalnew.CODE_PROVINCE";
+                              AND hospitalnew.HOS_TYPE <> 'โรงพยาบาลเอกชน' ";
+                            if($HospitalID =='13775'){
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO in ('$HosMOHP','2') ";
+                            }else if($HospitalID =='12246'){
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO in ('$HosMOHP','3') ";
+                            }else if($HospitalID =='12244'){
+                              $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','6') ";
+                            }else if($HospitalID =='24746'){
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO in ('$HosMOHP','8') ";
+                            }else{
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO = '$HosMOHP' ";
+                            }
+                            $sqlprovince = $sqlprovince."GROUP BY hospitalnew.CODE_PROVINCE";
             
                         $objprovince = mysqli_query($con, $sqlprovince);
             
@@ -573,7 +583,20 @@ function myFunction2() {
                const Affiliation = $('#Affiliation').val();
                 //const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
                 const codeprovince = $('#CODE_PROVINCE').val();
-              const HosMOHP 		    = <?PHP echo $HosMOHP;?>;
+                let HosMOHP; // ประกาศตัวแปรที่นี่
+
+                // ตรวจสอบว่า codeprovince ตรงกับค่าที่ต้องการหรือไม่
+                if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
+                    HosMOHP = '2';
+                }else if(['18','60','61','62','66'].includes(codeprovince)) {
+                    HosMOHP = '3';
+                }else if(['11','20','21','22','23','24','25','27'].includes(codeprovince)) {
+                    HosMOHP = '6';
+                }else if(['39','41','42','43','47','48','38'].includes(codeprovince)) {
+                    HosMOHP = '8';
+                }else{
+                    HosMOHP = <?php echo $HosMOHP; ?>; // PHP ค่าที่ส่งมา
+                }
                   //alert(HosMOHP);
               if (selectedValue) {
                   $.ajax({
@@ -708,7 +731,20 @@ function myFunction2() {
                 //const codeprovince 		= document.getElementById("CODE_PROVINCE").value;
                 //const codeprovince = $('#CODE_PROVINCE').val();
                 const codeprovince 		= <?php echo $NO_PROVINCE;?>;
-                const HosMOHP 		    = <?PHP echo $HosMOHP;?>;
+                let HosMOHP; // ประกาศตัวแปรที่นี่
+
+            // ตรวจสอบว่า codeprovince ตรงกับค่าที่ต้องการหรือไม่
+            if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
+                HosMOHP = '2';
+            }else if(['18','60','61','62','66'].includes(codeprovince)) {
+                HosMOHP = '3';
+            }else if(['11','20','21','22','23','24','25','27'].includes(codeprovince)) {
+                HosMOHP = '6';
+            }else if(['39','41','42','43','47','48','38'].includes(codeprovince)) {
+                HosMOHP = '8';
+            }else{
+                HosMOHP = <?php echo $HosMOHP; ?>; // PHP ค่าที่ส่งมา
+            }
             
                  //   alert(codeprovince);
                 if (selectedValue) {
@@ -805,8 +841,20 @@ if(isset($_POST["CODE_PROVINCE"])){
             $sqlpersonnel = "SELECT * 
             FROM serviceform
             join hospitalnew ON hospitalnew.CODE5 = serviceform.HospitalID						
-            WHERE hospitalnew.CODE_HMOO = '$HosMOHP' 
+            WHERE 1 
              ";
+
+             if($HospitalID =='13775'){
+                 $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','2') ";
+             }else if($HospitalID =='12246'){
+                 $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','3') ";
+             }else if($HospitalID =='12244'){
+                 $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','6') ";
+             }else if($HospitalID =='24746'){
+                 $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','8') ";
+             }else{
+                 $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '$HosMOHP' ";
+             }
 	
 			  		}elseif($HosType == "ศูนย์วิชาการ"){ 
 				  			

@@ -118,8 +118,17 @@ $HosMOHP		= $_SESSION["HostHMOO"];
 					 
            if($HosType == "กรมสุขภาพจิต"){ 	
                  $sqlpersonnel = "SELECT ect.ID, ect.hospitalCode5, ect.ect, ect.ect_no, ect.tms, ect.tms_no, ect.ectDate, hospitalnew.HOS_NAME FROM ect join hospitalnew ON hospitalnew.CODE5 = ect.hospitalCode5 
-               WHERE hospitalnew.CODE_HMOO = '$HosMOHP' 
-               AND ect.setectdel = '1'
+               WHERE hospitalnew.CODE_HMOO = '$HosMOHP'" ;
+              if($HosMOHP = '13775'){
+                $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '2' ";
+              }else if($HosMOHP = '12246'){
+                $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '3' ";
+              }else if($HosMOHP = '12244'){
+                $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '6' ";
+              }else if($HosMOHP = '24746'){
+                $sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '8' ";
+              }
+               $sqlpersonnel = $sqlpersonnel."AND ect.setectdel = '1'
                ORDER BY ect.ectDate DESC; ";	
              }elseif($HosType == "ศูนย์วิชาการ"){ 	
                  $sqlpersonnel = "SELECT ect.ID, ect.hospitalCode5, ect.ect, ect.ect_no, ect.tms, ect.tms_no, ect.ectDate, hospitalnew.HOS_NAME FROM ect join hospitalnew ON hospitalnew.CODE5 = ect.hospitalCode5 

@@ -246,9 +246,19 @@ if($_SESSION["HosType"] <> 'สำนักงานสาธารณสุข�
                             FROM userhospital 
                             INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
                             WHERE hospitalnew.HOS_TYPE <> 'คลินิกเอกชน'
-                              AND hospitalnew.HOS_TYPE <> 'โรงพยาบาลเอกชน'
-                              AND hospitalnew.CODE_HMOO = '$HosMOHP'
-                            GROUP BY hospitalnew.CODE_PROVINCE";
+                              AND hospitalnew.HOS_TYPE <> 'โรงพยาบาลเอกชน' ";
+                            if($HospitalID =='13775'){
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO in ('$HosMOHP','2') ";
+                            }else if($HospitalID =='12246'){
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO in ('$HosMOHP','3') ";
+                            }else if($HospitalID =='12244'){
+                              $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','6') ";
+                            }else if($HospitalID =='24746'){
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO in ('$HosMOHP','8') ";
+                            }else{
+                              $sqlprovince = $sqlprovince."AND hospitalnew.CODE_HMOO = '$HosMOHP' ";
+                            }
+                            $sqlprovince = $sqlprovince."GROUP BY hospitalnew.CODE_PROVINCE";
 
             $objprovince = mysqli_query($con, $sqlprovince);
 
@@ -488,7 +498,20 @@ if (typeof codeprovince === 'undefined') {
   }
 }
 
-  const HosMOHP 		    = <?PHP echo $HosMOHP;?>;
+let HosMOHP; // ประกาศตัวแปรที่นี่
+
+            // ตรวจสอบว่า codeprovince ตรงกับค่าที่ต้องการหรือไม่
+            if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
+                HosMOHP = '2';
+            }else if(['18','60','61','62','66'].includes(codeprovince)) {
+                HosMOHP = '3';
+            }else if(['11','20','21','22','23','24','25','27'].includes(codeprovince)) {
+                HosMOHP = '6';
+            }else if(['39','41','42','43','47','48','38'].includes(codeprovince)) {
+                HosMOHP = '8';
+            }else{
+                HosMOHP = <?php echo $HosMOHP; ?>; // PHP ค่าที่ส่งมา
+            }
       //alert(HosMOHP);
   if (selectedValue) {
       $.ajax({
@@ -641,7 +664,21 @@ function myFunction10() {
         console.error("PHP variable NO_PROVINCE is not set");
     }
   }
-    const HosMOHP 		    = <?PHP echo $HosMOHP;?>;
+    
+  let HosMOHP; // ประกาศตัวแปรที่นี่
+
+            // ตรวจสอบว่า codeprovince ตรงกับค่าที่ต้องการหรือไม่
+            if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
+                HosMOHP = '2';
+            }else if(['18','60','61','62','66'].includes(codeprovince)) {
+                HosMOHP = '3';
+            }else if(['11','20','21','22','23','24','25','27'].includes(codeprovince)) {
+                HosMOHP = '6';
+            }else if(['39','41','42','43','47','48','38'].includes(codeprovince)) {
+                HosMOHP = '8';
+            }else{
+                HosMOHP = <?php echo $HosMOHP; ?>; // PHP ค่าที่ส่งมา
+            }
 
      //   alert(codeprovince);
     if (selectedValue) {
@@ -761,8 +798,19 @@ function myFunction10() {
                             INNER JOIN hospitalnew ON userhospital.HospitalID = hospitalnew.CODE5
                             left JOIN prefix ON userhospital.prefixID = prefix.prefixID
                             WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
-                            AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน'
-                            AND hospitalnew.CODE_HMOO = '$HosMOHP'";
+                            AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน' ";
+                            if($HospitalID =='13775'){
+                              $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','2') ";
+                            }else if($HospitalID =='12246'){
+                              $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','3') ";
+                            }else if($HospitalID =='12244'){
+                              $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','6') ";
+                            }else if($HospitalID =='24746'){
+                              $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','8') ";
+                            }else{
+                              $sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO = '$HosMOHP' ";
+                            }
+                            
                            if($_SESSION["HosType"] == 'สำนักงานสาธารณสุขจังหวัด'){					  
                             $sqlservice = $sqlservice."AND hospitalnew.CODE_PROVINCE LIKE  '%$codeprovince'" ;
                           }
