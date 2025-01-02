@@ -16,7 +16,7 @@ services:
     restart: always
 
   db:
-    container_name: dbmm
+    container_name: db
     image: mysql
     restart: always
     environment:
