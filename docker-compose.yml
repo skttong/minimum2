@@ -12,7 +12,7 @@ services:
       - ./php/src:/var/www/html/
       - ./minimum/config/php/php.ini:/usr/local/etc/php/php.ini
     ports:
-      - 80:80
+      - 8080:80
     restart: always
 
   db:
