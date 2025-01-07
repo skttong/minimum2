@@ -222,7 +222,7 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 			}
 		}else{
 
-		   echo $sqlpersonnel = "SELECT *
+		    $sqlpersonnel = "SELECT *
 		FROM 
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 

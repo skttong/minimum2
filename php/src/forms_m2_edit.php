@@ -32,6 +32,9 @@ $training_chk 	= $row1['training'];
 $training		= explode(",",$training_chk);
 //print_r($training);
 
+$opdipd = $row1['opdipd'];
+$ipd = $row1['ipd'];
+
 
 $statuscong_radi	= $row1['statuscong'];
 $statuscong			= explode(",",$statuscong_radi);
@@ -555,6 +558,66 @@ $statuscong			= explode(",",$statuscong_radi);
 		  <div class="col-md-4">
 			  <div class="form-group"></div>
           </div>
+		</div>
+		<!-- /.row --> 
+
+		<div class="row" style="padding-bottom: 10px;"> 
+		  <div class="col-md-8">
+			  <div class="form-group">
+				<label><i class="fas fa-file-alt"></i>&nbsp;&nbsp;&nbsp;ปฏิบัติงานหลัก</label><label style="color:red;">*</label>
+			  	<br>
+				<div class="custom-control custom-radio">
+					<input type="radio" class="custom-control-input" id="opdipd1" name="opdipd" value="0" onclick="toggleDiv2(false)" required <?php if($opdipd == "0"){echo 'checked';} ?> >
+					<label class="custom-control-label" for="opdipd1"></label>ปฏิบัติงานหลักใน OPD สุขภาพจิต จิตเวชและยาเสพติด
+			    </div>
+				<div class="custom-control custom-radio">
+					<input type="radio" class="custom-control-input" id="opdipd2" name="opdipd" value="1" onclick="toggleDiv2(true)" required <?php if($opdipd == "1"){echo 'checked';} ?> >
+					<label class="custom-control-label" for="opdipd2"></label>ปฏิบัติงานหลักใน IPD
+			    </div>
+				<?php if($opdipd == "1"){ ?>
+					<div id="opdipdtab" >
+
+				<?php }else{?>
+					<div id="opdipdtab" class="disabled">	
+				<?php } ?>
+					<div class="custom-control custom-radio">
+						<input type="radio" class="custom-control-input" id="ipd1" name="ipd" value="0" <?php if($ipd == "0"){echo 'checked';} ?> >
+						<label class="custom-control-label" for="ipd1"></label>ปฏิบัติงานหอผู้ป่วยจิตเวชและยาเสพติด
+					</div>
+					<div class="custom-control custom-radio">
+						<input type="radio" class="custom-control-input" id="ipd2" name="ipd" value="1" <?php if($ipd == "1"){echo 'checked';} ?>>
+						<label class="custom-control-label" for="ipd2"></label>หอผู้ป่วยจิตเวชและยาเสพติดร่วมรักษากับ Ward อื่น (Co-ward)
+					</div>
+				</div>
+
+			
+				
+					<script>
+						function toggleDiv2(disable) {
+							const div = document.getElementById('opdipdtab');
+							var ipd1 = document.getElementById('ipd1');
+							var ipd2 = document.getElementById('ipd2');
+							if (disable) {
+								div.classList.remove('disabled');
+								//opdipd1.checked = false;
+								ipd1.required = true;
+								ipd2.required = true;
+							} else {
+								div.classList.add('disabled');
+								//opdipd2.checked = true;
+								ipd1.required = false;
+								ipd2.required = false;
+							}
+						}
+					</script>  
+				
+				<p></p>
+			  </div>
+			  
+          </div>
+		  <div class="col-md-4">
+			  <div class="form-group"></div>
+		  </div>
 		</div>
 		<!-- /.row --> 
 

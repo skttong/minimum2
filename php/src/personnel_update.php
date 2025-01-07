@@ -101,6 +101,8 @@ if($positiontypeid == '1'){
 		$training = $training.','.$training_6.','.$other_training;	
 	}
 	
+	$opdipd = $_POST['opdipd'];
+	$ipd = $_POST['ipd'];
 	
 	$statuscong 		= $_POST['statuscong'];
 	$other_statuscong 	= $_POST['other_statuscong'];
@@ -135,7 +137,9 @@ if($positiontypeid == '1'){
 								MWac1_7			= '$MWac1_7',
 								MWac1_8			= '$MWac1_8',
 								MWac1_9			= '$MWac1_9',
-								other2_mcatt	= '$other2_mcatt' 
+								other2_mcatt	= '$other2_mcatt' ,
+								opdipd			= '$opdipd',
+								ipd				= '$ipd'
 							WHERE 
 								personnelID = '$personnelID'" ;
 	

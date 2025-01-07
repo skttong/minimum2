@@ -3,9 +3,9 @@ include('connect/sessiontimeout.php');
 include('connect/conn.php');
 include('session_permission.php');
 
-$HosType	 	= $_SESSION["HosType"];
-$codeprovince   = $_SESSION["codeprovince"];
-$HosMOHP		= $_SESSION["HostHMOO"];
+ $HosType	 	= $_SESSION["HosType"];
+ $codeprovince   = $_SESSION["codeprovince"];
+ $HosMOHP		= $_SESSION["HostHMOO"];
 //$codeprovince	= $_SESSION["codeprovince"];
 
 if (isset($_POST["positiontypeID"])) {
@@ -836,7 +836,10 @@ if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
 											personnel.regislaw,
                                             personneltype.Ptypename,
 											personnel.positiontypeID,
-											personnel.Mcatt1
+											personnel.Mcatt1,
+											personnel.other2_mcatt,
+											personnel.opdipd,
+											personnel.ipd
 										FROM 
 											personnel 
                                         JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
@@ -1132,6 +1135,8 @@ if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
 					  <th width="15%">อื่น ๆ</th>
 					  <th width="15%">การอบรมMcatt</th>
 					  <th width="15%">ระบุ</th>
+					  <th width="15%">OPDIPD</th>
+					  <th width="15%">IPD</th>
 				   </tr>
                    </thead>
                   <tbody>
@@ -1177,6 +1182,8 @@ if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
 							<td><?php echo $rowpersonnel2['MWac1_8']; ?></td>
 							<td><?php echo $rowpersonnel2['MWac1_9']; ?></td>
 							<td><?php echo $rowpersonnel2['other2_mcatt']; ?></td>
+							<td><?php echo $rowpersonnel2['opdipd']; ?></td>
+							<td><?php echo $rowpersonnel2['ipd']; ?></td>
 						</tr>
 						<?php } ?> 	
 					</tbody>

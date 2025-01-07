@@ -343,7 +343,9 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnel.MWac1_7,
 											personnel.MWac1_8,
 											personnel.MWac1_9,
-											personnel.other2_mcatt
+											personnel.other2_mcatt,
+											personnel.opdipd,
+											personnel.ipd
 										FROM 
 											personnel 
                                         JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
@@ -388,7 +390,9 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 											personnel.MWac1_7,
 											personnel.MWac1_8,
 											personnel.MWac1_9,
-											personnel.other2_mcatt
+											personnel.other2_mcatt,
+											personnel.opdipd,
+											personnel.ipd
 										FROM 
 											personnel 
                                         JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
@@ -435,7 +439,9 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 			personnel.MWac1_7,
 			personnel.MWac1_8,
 			personnel.MWac1_9,
-			personnel.other2_mcatt
+			personnel.other2_mcatt,
+			personnel.opdipd,
+			personnel.ipd
 		FROM 
 			personnel 
 		JOIN hospitalnew on hospitalnew.CODE5 = personnel.HospitalID 
@@ -524,6 +530,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 					  <th width="15%">อื่น ๆ</th>
 					  <th width="15%">การอบรมMcatt</th>
 					  <th width="15%">ระบุ</th>
+					  <th width="15%">OPDIPD</th>
+					  <th width="15%">IPD</th>
 				   </tr>
                    </thead>
                   <tbody>
@@ -568,6 +576,8 @@ $rowptype   = mysqli_fetch_array($objptype);*/
 							<td><?php echo $rowpersonnel2['MWac1_8']; ?></td>
 							<td><?php echo $rowpersonnel2['MWac1_9']; ?></td>
 							<td><?php echo $rowpersonnel2['other2_mcatt']; ?></td>
+							<td><?php echo $rowpersonnel2['opdipd']; ?></td>
+							<td><?php echo $rowpersonnel2['ipd']; ?></td>
 						</tr>
 						<?php } ?> 	
 					</tbody>
