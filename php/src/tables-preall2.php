@@ -951,15 +951,15 @@ if (['53', '63', '64', '65', '67'].includes(codeprovince)) {
 				WHERE hospitalnew.HOS_TYPE <>'คลินิกเอกชน'
 				AND hospitalnew.HOS_TYPE <>'โรงพยาบาลเอกชน' ";
 				if($HospitalID =='13775'){
-					$sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','2') ";
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','2') ";
 				}else if($HospitalID =='12246'){
-					$sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','3') ";
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','3') ";
 				}else if($HospitalID =='12244'){
-					$sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','6') ";
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','6') ";
 				}else if($HospitalID =='24746'){
-					$sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO in ('$HosMOHP','8') ";
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO in ('$HosMOHP','8') ";
 				}else{
-					$sqlservice = $sqlservice."AND hospitalnew.CODE_HMOO = '$HosMOHP' ";
+					$sqlpersonnel = $sqlpersonnel."AND hospitalnew.CODE_HMOO = '$HosMOHP' ";
 				}
 
 				if(isset($_POST["CODE_HOS"])){	
