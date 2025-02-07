@@ -492,6 +492,10 @@ include('session_permission.php');
 				<label><i class="fas fa-file-alt"></i>&nbsp;&nbsp;&nbsp;ปฏิบัติงานหลัก</label><label style="color:red;">*</label>
 			  	<br>
 				<div class="custom-control custom-radio">
+					<input type="radio" class="custom-control-input" id="opdipd3" name="opdipd" value="2" onclick="toggleDiv2(false)" required>
+					<label class="custom-control-label" for="opdipd3"></label>ไม่ได้ปฏิบัติงานใน OPD และ IPD
+			    </div>
+				<div class="custom-control custom-radio">
 					<input type="radio" class="custom-control-input" id="opdipd1" name="opdipd" value="0" onclick="toggleDiv2(false)" required>
 					<label class="custom-control-label" for="opdipd1"></label>ปฏิบัติงานหลักใน OPD สุขภาพจิต จิตเวชและยาเสพติด
 			    </div>
